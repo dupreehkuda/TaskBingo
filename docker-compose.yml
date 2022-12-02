@@ -1,27 +1,27 @@
 version: '3.9'
 
 services:
-  bingoapp:
-    build:
-      dockerfile: ./BingoApp/Dockerfile
-    container_name: bingo_app
-    ports:
-      - '8080:8080'
-    restart: on-failure
-    volumes:
-      - .:/app
-    depends_on:
-      user_service:
-        condition: service_started
-      user_database:
-        condition: service_started
+#  bingo-app:
+#    build:
+#      dockerfile: ./bingo-app/Dockerfile
+#    container_name: bingo-app
+#    ports:
+#      - '5173:5173'
+#    restart: on-failure
+#    volumes:
+#      - .:/app
+#    depends_on:
+#      user-service:
+#        condition: service_started
+#      user-database:
+#        condition: service_started
 
-  user_service:
+  user-service:
     build:
       dockerfile: ./user-data-service/Dockerfile
-    container_name: user_service
+    container_name: user-service
     environment:
-      - DATABASE_URI=postgresql://${DB_USER}:${DB_PASSWORD}@users_db:${DB_PORT}/${DB_NAME}
+      - DATABASE_URI=postgresql://${DB_USER}:${DB_PASSWORD}@user-db:${DB_PORT}/${DB_NAME}
       - RUN_ADDRESS=${ADDRESS}
     env_file: .env
     ports:
@@ -30,12 +30,12 @@ services:
     volumes:
       - .:/user_service
     depends_on:
-      user_database:
+      user-database:
         condition: service_started
 
-  user_database:
+  user-database:
     image: postgres:latest
-    container_name: users_db
+    container_name: user-db
     restart: on-failure
     env_file: .env
     environment:
