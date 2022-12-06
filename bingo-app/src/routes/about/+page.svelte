@@ -1,11 +1,9 @@
-<script lang="ts">
-    import Header from "./Header.svelte";
-    import GetPoints from "./GetPoints.svelte";
+<script>
+    import Header from "../Header.svelte";
 </script>
 
 <header>
     <Header/>
-    <GetPoints/>
 </header>
 
 <style>

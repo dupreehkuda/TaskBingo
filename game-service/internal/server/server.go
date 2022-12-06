@@ -1,20 +1,21 @@
-package api
+package server
 
 import (
 	"context"
 	"errors"
-	"github.com/dupreehkuda/TaskBingo/internal/config"
-	"github.com/dupreehkuda/TaskBingo/internal/handlers"
-	"github.com/dupreehkuda/TaskBingo/internal/logger"
-	"github.com/dupreehkuda/TaskBingo/internal/storage"
-	"go.uber.org/zap"
 	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
 	"time"
 
-	i "github.com/dupreehkuda/TaskBingo/internal/interfaces"
+	"go.uber.org/zap"
+
+	"github.com/dupreehkuda/TaskBingo/game-service/internal/config"
+	"github.com/dupreehkuda/TaskBingo/game-service/internal/handlers"
+	i "github.com/dupreehkuda/TaskBingo/game-service/internal/interfaces"
+	"github.com/dupreehkuda/TaskBingo/game-service/internal/logger"
+	user_client "github.com/dupreehkuda/TaskBingo/game-service/internal/user-client"
 )
 
 type api struct {
@@ -27,10 +28,9 @@ func NewByConfig() *api {
 	log := logger.InitializeLogger()
 	cfg := config.New(log)
 
-	store := storage.New(cfg.DatabasePath, log)
-	store.CreateSchema()
+	uc := user_client.New(log)
 
-	handle := handlers.New(store, log)
+	handle := handlers.New(uc, log)
 
 	return &api{
 		handlers: handle,

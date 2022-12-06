@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package api;
+
+option go_package = "./";
+
+service Users {
+  rpc Get(GetRequest) returns (GetResponse) {}
+}
+
+message GetRequest {
+  string id = 1;
+}
+
+message GetResponse {
+  string nickname = 1;
+  int32 points = 2;
+  string email = 3;
+}

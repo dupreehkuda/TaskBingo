@@ -1,8 +1,8 @@
 package main
 
-import "github.com/dupreehkuda/TaskBingo/internal/api"
+import "github.com/dupreehkuda/TaskBingo/user-data-service/internal/server"
 
 func main() {
-	srv := api.NewByConfig()
+	srv := server.NewByConfig()
 	srv.Run()
 }

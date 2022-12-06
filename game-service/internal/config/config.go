@@ -8,8 +8,7 @@ import (
 )
 
 type Config struct {
-	Address      string `env:"RUN_ADDRESS" envDefault:":8081"`
-	DatabasePath string `env:"DATABASE_URI"`
+	Address string `env:"RUN_ADDRESS" envDefault:":8082"`
 }
 
 // New creates new Config
@@ -21,7 +20,6 @@ func New(logger *zap.Logger) *Config {
 	}
 
 	flag.StringVar(&config.Address, "a", config.Address, "Launch address")
-	flag.StringVar(&config.DatabasePath, "d", config.DatabasePath, "Path to database")
 	flag.Parse()
 
 	return &config

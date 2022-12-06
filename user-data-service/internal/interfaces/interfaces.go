@@ -1,11 +1,14 @@
 package interfaces
 
-import "net/http"
+import (
+	"github.com/dupreehkuda/TaskBingo/user-data-service/internal/models"
+	api "github.com/dupreehkuda/TaskBingo/user-data-service/pkg/api"
+)
 
 type Handlers interface {
-	Ping(w http.ResponseWriter, r *http.Request)
+	api.UsersServer
 }
 
 type Stored interface {
-	Ping(userID string) ([]byte, error)
+	Ping(userID string) (models.Response, error)
 }

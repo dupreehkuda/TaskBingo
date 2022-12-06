@@ -2,38 +2,28 @@ package storage
 
 import (
 	"context"
-	"encoding/json"
 
 	"go.uber.org/zap"
+
+	"github.com/dupreehkuda/TaskBingo/user-data-service/internal/models"
 )
 
-type response struct {
-	UserID string `json:"userID"`
-	Points int    `json:"points"`
-}
-
-func (s storage) Ping(userID string) ([]byte, error) {
+func (s storage) Ping(userID string) (models.Response, error) {
 	ctx := context.Background()
 	conn, err := s.pool.Acquire(ctx)
 	if err != nil {
 		s.logger.Error("Error while acquiring connection", zap.Error(err))
-		return nil, err
+		return models.Response{}, err
 	}
 	defer conn.Release()
 
-	var resp response
+	var resp models.Response
 
-	err = conn.QueryRow(ctx, "SELECT nickname, wins FROM users WHERE id = $1", userID).Scan(&resp.UserID, &resp.Points)
+	err = conn.QueryRow(ctx, "SELECT nickname, wins, email FROM users WHERE id = $1", userID).Scan(&resp.UserID, &resp.Points, &resp.Email)
 	if err != nil {
 		s.logger.Error("Error when executing statement", zap.Error(err))
-		return nil, err
+		return resp, err
 	}
 
-	resultJSON, err := json.Marshal(resp)
-	if err != nil {
-		s.logger.Error("Error marshaling data", zap.Error(err))
-		return nil, err
-	}
-
-	return resultJSON, nil
+	return resp, nil
 }

@@ -16,13 +16,31 @@ services:
 #      user-database:
 #        condition: service_started
 
+  game-service:
+    build:
+      dockerfile: ./game-service/Dockerfile
+    container_name: game-service
+    environment:
+      - RUN_ADDRESS=${GAME_SERVICE_ADDRESS}
+    env_file: .env
+    ports:
+      - '8082:8082'
+    restart: on-failure
+    volumes:
+      - .:/game_service
+    depends_on:
+      user-database:
+        condition: service_started
+      user-service:
+        condition: service_started
+
   user-service:
     build:
       dockerfile: ./user-data-service/Dockerfile
     container_name: user-service
     environment:
-      - DATABASE_URI=postgresql://${DB_USER}:${DB_PASSWORD}@user-db:${DB_PORT}/${DB_NAME}
-      - RUN_ADDRESS=${ADDRESS}
+      - DATABASE_URI=postgresql://${PSQL_DB_USER}:${PSQL_DB_PASSWORD}@user-db:${PSQL_DB_PORT}/${PSQL_DB_NAME}
+      - RUN_ADDRESS=${USER_SERVICE_ADDRESS}
     env_file: .env
     ports:
       - '8081:8081'
@@ -39,9 +57,9 @@ services:
     restart: on-failure
     env_file: .env
     environment:
-      - POSTGRES_USER=${DB_USER}
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
-      - POSTGRES_DB=${DB_NAME}
-      - DATABASE_HOST=${DB_HOST}
+      - POSTGRES_USER=${PSQL_DB_USER}
+      - POSTGRES_PASSWORD=${PSQL_DB_PASSWORD}
+      - POSTGRES_DB=${PSQL_DB_NAME}
+      - DATABASE_HOST=${PSQL_DB_HOST}
     ports:
       - '5432:5432'
