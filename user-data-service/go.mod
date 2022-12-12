@@ -11,6 +11,7 @@ require (
 )
 
 require (
+	github.com/georgysavva/scany/v2 v2.0.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20200714003250-2b9c44734f2b // indirect

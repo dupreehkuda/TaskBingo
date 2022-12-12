@@ -16,6 +16,7 @@ import (
 	"github.com/dupreehkuda/TaskBingo/user-data-service/internal/handlers"
 	i "github.com/dupreehkuda/TaskBingo/user-data-service/internal/interfaces"
 	"github.com/dupreehkuda/TaskBingo/user-data-service/internal/logger"
+	"github.com/dupreehkuda/TaskBingo/user-data-service/internal/processors"
 	"github.com/dupreehkuda/TaskBingo/user-data-service/internal/storage"
 	api "github.com/dupreehkuda/TaskBingo/user-data-service/pkg/api"
 )
@@ -26,6 +27,7 @@ type server struct {
 	logger   *zap.Logger
 }
 
+// NewByConfig returns server instance with default config
 func NewByConfig() *server {
 	log := logger.InitializeLogger()
 	cfg := config.New(log)
@@ -33,7 +35,9 @@ func NewByConfig() *server {
 	store := storage.New(cfg.DatabasePath, log)
 	store.CreateSchema()
 
-	handle := handlers.New(store, log)
+	proc := processors.New(store, log)
+
+	handle := handlers.New(proc, log)
 
 	return &server{
 		handlers: handle,

@@ -16,19 +16,19 @@ type storage struct {
 var schema = `
 CREATE TABLE IF NOT EXISTS "users" (
    "id" text PRIMARY KEY NOT NULL UNIQUE,
-   "nickname" text NOT NULL UNIQUE,
+   "login" text NOT NULL UNIQUE,
    "email" text NOT NULL UNIQUE,
-   "registrated" timestamptz NOT NULL ,
+   "registered" timestamptz NOT NULL ,
    "wins" integer DEFAULT 0 
 );
 
 CREATE TABLE IF NOT EXISTS "login" (
-	"login" text PRIMARY KEY NOT NULL UNIQUE,
+	"id" text PRIMARY KEY NOT NULL UNIQUE,
 	"passwordhash" text NOT NULL UNIQUE,
 	"passwordsalt" text NOT NULL UNIQUE 
 );
 
-ALTER TABLE "login" ADD FOREIGN KEY ("login") REFERENCES "users" ("id");`
+ALTER TABLE "login" ADD FOREIGN KEY ("id") REFERENCES "users" ("id");`
 
 // New creates a new instance of database layer and migrates it
 func New(path string, logger *zap.Logger) *storage {

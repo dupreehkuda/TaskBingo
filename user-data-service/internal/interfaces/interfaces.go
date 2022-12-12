@@ -5,10 +5,22 @@ import (
 	api "github.com/dupreehkuda/TaskBingo/user-data-service/pkg/api"
 )
 
+// Handlers is interface for handlers
 type Handlers interface {
 	api.UsersServer
 }
 
+// Processor is interface for business-logic
+type Processor interface {
+	RegisterUser(login, password, email string) error
+	LoginUser(login, password string) error
+	GetUserData(userId string) (*models.GetUserDataResponse, error)
+}
+
+// Stored is interface for storage
 type Stored interface {
-	Ping(userID string) (models.Response, error)
+	GetUserData(login string) (models.GetUserDataResponse, error)
+	CheckDuplicateUser(login string) (bool, error)
+	CreateUser(login, email, passwordHash, passwordSalt string) error
+	LoginUser(login string) (*models.LoginUserResponse, error)
 }
