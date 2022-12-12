@@ -21,7 +21,10 @@ services:
       dockerfile: ./game-service/Dockerfile
     container_name: game-service
     environment:
-      - RUN_ADDRESS=${GAME_SERVICE_ADDRESS}
+      - GAME_SERVICE_ADDRESS=${GAME_SERVICE_ADDRESS}
+      - FULL_USER_SERVICE_ADDRESS=${FULL_USER_SERVICE_ADDRESS}
+      - FULL_TASK_SERVICE_ADDRESS=${FULL_TASK_SERVICE_ADDRESS}
+      - secret=vladimir
     env_file: .env
     ports:
       - '8082:8082'

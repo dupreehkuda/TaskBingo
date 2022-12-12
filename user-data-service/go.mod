@@ -4,6 +4,7 @@ go 1.19
 
 require (
 	github.com/caarlos0/env/v6 v6.10.1
+	github.com/georgysavva/scany/v2 v2.0.0
 	github.com/jackc/pgx/v5 v5.1.1
 	go.uber.org/zap v1.24.0
 	google.golang.org/grpc v1.51.0
@@ -11,7 +12,6 @@ require (
 )
 
 require (
-	github.com/georgysavva/scany/v2 v2.0.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20200714003250-2b9c44734f2b // indirect

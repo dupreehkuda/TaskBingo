@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package api;
+
+option go_package = "./";
+
+service Users {
+  rpc GetUserData(GetUserDataRequest) returns (GetUserDataResponse) {}
+  rpc RegisterUser(RegisterUserRequest) returns (RegisterUserResponse) {}
+  rpc LoginUser(LoginUserRequest) returns (LoginUserResponse) {}
+}
+
+message GetUserDataRequest {
+  string login = 1;
+}
+
+message GetUserDataResponse {
+  string login = 1;
+  int32 points = 2;
+  string email = 3;
+}
+
+message RegisterUserRequest {
+  string login = 1;
+  string email = 2;
+  string password = 3;
+}
+
+message RegisterUserResponse {
+  string error = 1;
+}
+
+message LoginUserRequest {
+  string login = 1;
+  string password = 2;
+}
+
+message LoginUserResponse {
+  string error = 1;
+}

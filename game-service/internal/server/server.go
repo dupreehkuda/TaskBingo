@@ -15,27 +15,34 @@ import (
 	"github.com/dupreehkuda/TaskBingo/game-service/internal/handlers"
 	i "github.com/dupreehkuda/TaskBingo/game-service/internal/interfaces"
 	"github.com/dupreehkuda/TaskBingo/game-service/internal/logger"
+	"github.com/dupreehkuda/TaskBingo/game-service/internal/middleware"
+	"github.com/dupreehkuda/TaskBingo/game-service/internal/processors"
 	user_client "github.com/dupreehkuda/TaskBingo/game-service/internal/user-client"
 )
 
 type api struct {
-	handlers i.Handlers
-	config   *config.Config
-	logger   *zap.Logger
+	handlers   i.Handlers
+	middleware i.Middleware
+	config     *config.Config
+	logger     *zap.Logger
 }
 
 func NewByConfig() *api {
 	log := logger.InitializeLogger()
 	cfg := config.New(log)
 
-	uc := user_client.New(log)
+	uc := user_client.New(cfg.UserServiceAddress, log)
+	mv := middleware.New(log)
 
-	handle := handlers.New(uc, log)
+	logic := processors.New(uc, log)
+
+	handle := handlers.New(logic, log)
 
 	return &api{
-		handlers: handle,
-		logger:   log,
-		config:   cfg,
+		handlers:   handle,
+		middleware: mv,
+		logger:     log,
+		config:     cfg,
 	}
 }
 
