@@ -1,6 +1,35 @@
 <script>
-    import { Label, Input, Helper, Button } from 'flowbite-svelte'
+    import { Label, Input, Button } from 'flowbite-svelte'
     import Header from "../Header.svelte";
+
+    async function submit(e) {
+        e.preventDefault()
+
+        const formData = new FormData(e.target);
+        const data = {};
+        for (let field of formData) {
+            const [key, value] = field;
+            data[key] = value;
+        }
+
+        const newResp = {
+            login: data.login,
+            password: data.password
+        }
+
+        console.log(data)
+        console.log(JSON.stringify(newResp))
+
+        const res = await fetch('http://localhost:8082/api/user/login', {
+            method: 'POST',
+            body: JSON.stringify(newResp)
+        })
+
+        console.log(res.headers.get("set-cookie"))
+
+        const json = await res.json()
+        console.log(JSON.stringify(json))
+    }
 </script>
 
 <header>
@@ -8,18 +37,18 @@
 </header>
 <main>
     <Label class='block mb-3'>Login</Label>
-    <div class="mb-4">
-        <Input label="Email" id="email" name="email" required placeholder="john@example.com"/>
-    </div>
+    <form on:submit={submit}>
+        <div class="mb-4">
+            <Input label="login" id="login" name="login" required placeholder="Login"/>
+        </div>
 
-    <div class="mb-4">
-        <Input label="Password" id="password" name="password" required placeholder="password"/>
-    </div>
+        <div class="mb-4">
+            <Input label="Password" id="password" name="password" required placeholder="password"/>
+        </div>
 
-<!--    <Helper class='text-sm mt-2'>We will not send you any marketing materials. We promise.</Helper>-->
-
-    <Button href="/register" gradient color="teal">Register</Button>
-    <Button gradient color="teal">Login</Button>
+        <Button href="/register" gradient color="teal">Register</Button>
+        <Button type="submit" gradient color="teal">Login</Button>
+    </form>
 </main>
 
 <style>

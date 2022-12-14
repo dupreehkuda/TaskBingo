@@ -19,7 +19,7 @@ func (s storage) CheckDuplicateUser(login string) (bool, error) {
 
 	conn.QueryRow(context.Background(), "SELECT login FROM users WHERE login=$1", login).Scan(&dbLogin)
 
-	if dbLogin != "" {
+	if dbLogin == login {
 		return true, nil
 	}
 

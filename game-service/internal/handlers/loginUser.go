@@ -39,6 +39,7 @@ func (h handlers) LoginUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	w.Header().Add("Access-Control-Allow-Origin", "*")
 	http.SetCookie(w, &http.Cookie{
 		Name:  "auth",
 		Value: token,

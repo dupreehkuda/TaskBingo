@@ -9,7 +9,7 @@
     let result = null
 
     async function doPost() {
-        const res = await fetch('http://localhost:8082/api', {
+        const res = await fetch('http://localhost:8082/api/user/getUserData', {
             method: 'POST',
             body: JSON.stringify(newResp)
         })
