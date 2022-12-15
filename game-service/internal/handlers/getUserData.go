@@ -31,7 +31,9 @@ func (h handlers) GetUserData(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Header().Add("Access-Control-Allow-Origin", "*")
+	w.Header().Add("Access-Control-Allow-Credentials", "true")
+	w.Header().Add("Access-Control-Allow-Origin", "http://taskbingo.com")
+	
 	_, err = w.Write(resultJSON)
 	if err != nil {
 		h.logger.Error("Unable to write response", zap.Error(err))

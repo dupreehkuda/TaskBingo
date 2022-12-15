@@ -1,4 +1,4 @@
-version: '3.9'
+version: '3.4'
 
 services:
 #  bingo-app:
@@ -17,8 +17,7 @@ services:
 #        condition: service_started
 
   game-service:
-    build:
-      dockerfile: ./game-service/Dockerfile
+    build: ./game-service
     container_name: game-service
     environment:
       - GAME_SERVICE_ADDRESS=${GAME_SERVICE_ADDRESS}
@@ -28,18 +27,15 @@ services:
     env_file: .env
     ports:
       - '8082:8082'
-    restart: on-failure
+    restart: always
     volumes:
       - .:/game_service
     depends_on:
-      user-database:
-        condition: service_started
-      user-service:
-        condition: service_started
-
+      - user-database
+      - user-service
+ 
   user-service:
-    build:
-      dockerfile: ./user-data-service/Dockerfile
+    build: ./user-data-service
     container_name: user-service
     environment:
       - DATABASE_URI=postgresql://${PSQL_DB_USER}:${PSQL_DB_PASSWORD}@user-db:${PSQL_DB_PORT}/${PSQL_DB_NAME}
@@ -47,17 +43,16 @@ services:
     env_file: .env
     ports:
       - '8081:8081'
-    restart: on-failure
+    restart: always
     volumes:
       - .:/user_service
     depends_on:
-      user-database:
-        condition: service_started
+      - user-database
 
   user-database:
     image: postgres:latest
     container_name: user-db
-    restart: on-failure
+    restart: always
     env_file: .env
     environment:
       - POSTGRES_USER=${PSQL_DB_USER}

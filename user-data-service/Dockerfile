@@ -2,7 +2,7 @@ FROM golang:alpine AS builder
 
 WORKDIR /build
 
-COPY ./user-data-service .
+COPY . .
 
 RUN go build -o build cmd/main.go
 

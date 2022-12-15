@@ -1,4 +1,4 @@
-<script>
+<script lang='ts'>
     import { Label, Input, Button } from 'flowbite-svelte'
     import Header from "../Header.svelte";
 
@@ -20,8 +20,9 @@
         console.log(data)
         console.log(JSON.stringify(newResp))
 
-        const res = await fetch('http://localhost:8082/api/user/login', {
+        const res = await fetch('https://taskbingo.com/api/user/login', {
             method: 'POST',
+            headers: {'Origin': 'taskbingo.com'},
             body: JSON.stringify(newResp)
         })
 

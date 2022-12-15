@@ -24,8 +24,9 @@
         console.log(data)
         console.log(JSON.stringify(newResp))
 
-        const res = await fetch('http://localhost:8082/api/user/register', {
+        const res = await fetch('https://taskbingo.com/api/user/register', {
             method: 'POST',
+            headers: {'Origin': 'taskbingo.com'},
             body: JSON.stringify(newResp)
         })
 

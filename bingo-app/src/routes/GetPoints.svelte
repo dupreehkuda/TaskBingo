@@ -9,8 +9,9 @@
     let result = null
 
     async function doPost() {
-        const res = await fetch('http://localhost:8082/api/user/getUserData', {
+        const res = await fetch('https://taskbingo.com/api/user/getUserData', {
             method: 'POST',
+            headers: {'Origin': 'taskbingo.com'},
             body: JSON.stringify(newResp)
         })
 

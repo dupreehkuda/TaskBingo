@@ -3,7 +3,7 @@
 </script>
 
 <main>
-    <Navbar let:hidden let:toggle rounded color="form">
+    <Navbar let:hidden let:toggle rounded color="dark" fluid>
         <NavBrand href="/">
             <img
                     src="https://flowbite.com/docs/images/logo.svg"
@@ -14,7 +14,7 @@
         </NavBrand>
         <NavHamburger on:click={toggle}/>
         <NavUl {hidden}>
-            <NavLi href="/" active={true}>Home</NavLi>
+            <NavLi href="/">Home</NavLi>
             <NavLi href="/about">About</NavLi>
             <NavLi href="/login">Login</NavLi>
         </NavUl>

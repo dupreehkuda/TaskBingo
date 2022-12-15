@@ -4,6 +4,7 @@
 
 <header>
     <Header/>
+    <h1>u stupid?</h1>
 </header>
 
 <style>

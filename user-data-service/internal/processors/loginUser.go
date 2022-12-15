@@ -10,12 +10,12 @@ func (p processor) LoginUser(login, password string) error {
 	resp, err := p.storage.LoginUser(login)
 	if err != nil {
 		p.logger.Error("Error occurred in call to storage", zap.Error(err))
-		return nil
+		return errs.ErrWrongCredentials
 	}
 
 	if resp == nil {
 		p.logger.Error("Something went wrong. resp == nil")
-		return nil
+		return errs.ErrWrongCredentials
 	}
 
 	checkHash := mdHash(password, resp.PasswordSalt)
