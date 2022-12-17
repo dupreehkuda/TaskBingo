@@ -23,7 +23,7 @@ services:
       - GAME_SERVICE_ADDRESS=${GAME_SERVICE_ADDRESS}
       - FULL_USER_SERVICE_ADDRESS=${FULL_USER_SERVICE_ADDRESS}
       - FULL_TASK_SERVICE_ADDRESS=${FULL_TASK_SERVICE_ADDRESS}
-      - secret=vladimir
+      - secret=gennadiy
     env_file: .env
     ports:
       - '8082:8082'
@@ -61,3 +61,10 @@ services:
       - DATABASE_HOST=${PSQL_DB_HOST}
     ports:
       - '5432:5432'
+
+  task-database:
+    image: redislabs/rejson:latest
+    container_name: task-db
+    restart: always
+    ports: 
+      - '6379:6379'
