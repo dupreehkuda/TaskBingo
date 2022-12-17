@@ -13,6 +13,7 @@ func (p processor) RegisterUser(login, password, email string) error {
 		return err
 	}
 
+	p.logger.Debug("User in reg proc", zap.Bool("exists", exists), zap.String("login", login), zap.String("email", email), zap.String("password", password))
 	if exists {
 		return errs.ErrCredentialsInUse
 	}

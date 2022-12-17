@@ -33,24 +33,26 @@
     }
 </script>
 
-<header>
-    <Header/>
-</header>
-<main>
-    <Label class='block mb-3'>Login</Label>
-    <form on:submit={submit}>
-        <div class="mb-4">
-            <Input label="login" id="login" name="login" required placeholder="Login"/>
-        </div>
+<title>Login</title>
+<body>
+    <main>
+        <Label color="disabled" class='text block mb-3 dark'>Login</Label>
+        <form on:submit={submit}>
+            <div class="dark mb-4">
+                <Input label="login" id="login" name="login" required placeholder="Login"/>
+            </div>
 
-        <div class="mb-4">
-            <Input label="Password" id="password" name="password" required placeholder="password"/>
-        </div>
+            <div class="dark mb-4">
+                <Input label="Password" id="password" name="password" required placeholder="Password"/>
+            </div>
 
-        <Button href="/register" gradient color="teal">Register</Button>
-        <Button type="submit" gradient color="teal">Login</Button>
-    </form>
-</main>
+            <div class="dark mb-4">
+                <Button href="/register" gradient color="teal">Register</Button>
+                <Button type="submit" gradient color="teal">Login</Button>
+            </div>
+        </form>
+    </main>
+</body>
 
 <style>
     main {
@@ -58,12 +60,7 @@
         padding: 1em;
         max-width: 440px;
         margin: 0 auto;
-    }
-
-    header {
-        text-align: center;
-        padding: 1em;
-        /*max-width: 500px;*/
-        margin: 0 auto;
+        background-color: #11202d;
+        color: rgb(238, 237, 197);
     }
 </style>

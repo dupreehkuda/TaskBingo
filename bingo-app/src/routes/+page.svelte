@@ -3,25 +3,24 @@
     import GetPoints from "./GetPoints.svelte";
 </script>
 
-<body>
-    <header>
-        <Header/>
-        <GetPoints/>
-        <h1>Nothing here. Go fuck yourself.</h1>
-    </header>
-</body>
-
+<title>Task Bingo</title>
+<div>
+    <body> 
+            <!-- <GetPoints/> -->
+            <h1>Welcome to Task Bingo!</h1>
+            <span>[ Currently in Development ]</span>
+    </body>
+</div>
 
 <style>
-    /* body {
-		background-color: #11202d;
-		color: rgb(217, 223, 227);
-	} */
+    h1 {
+        font-family: Unbounded;
+        font-size: xx-large;
+    }
 
-    header {
-        text-align: center;
-        padding: 1em;
-        /*max-width: 500px;*/
-        margin: 0 auto;
+    span {
+        font-family: Unbounded;
+        font-size: medium;
+        color: rgb(238, 237, 197);
     }
 </style>

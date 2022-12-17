@@ -6,7 +6,7 @@
     }
 
     let userID = 'dupreeh'
-    let result = null
+    let result: any = null
 
     async function doPost() {
         const res = await fetch('https://taskbingo.com/api/user/getUserData', {

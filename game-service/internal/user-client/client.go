@@ -63,6 +63,7 @@ func (u userClient) RegisterUser(login, email, password string) error {
 	_, err := u.conn.RegisterUser(context.Background(), &data)
 
 	statusCode, _ := status.FromError(err)
+	u.logger.Debug("incoming code", zap.Int("code", int(statusCode.Code())))
 
 	if statusCode.Code() == codes.AlreadyExists {
 		return errs.ErrCredentialsInUse
@@ -80,6 +81,7 @@ func (u userClient) LoginUser(login, password string) error {
 	_, err := u.conn.LoginUser(context.Background(), &data)
 
 	statusCode, _ := status.FromError(err)
+	u.logger.Debug("incoming code", zap.Int("code", int(statusCode.Code())))
 
 	if statusCode.Code() == codes.Unauthenticated {
 		return errs.ErrWrongCredentials
