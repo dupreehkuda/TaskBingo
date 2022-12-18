@@ -24,6 +24,9 @@ func (a api) router() http.Handler {
 
 		r.Route("/task", func(r chi.Router) {
 			r.Use(a.middleware.CheckToken)
+
+			r.Post("/getTaskPack", a.handlers.GetTaskPack)
+			r.Post("/setTaskPack", a.handlers.SetTaskPack)
 		})
 	})
 

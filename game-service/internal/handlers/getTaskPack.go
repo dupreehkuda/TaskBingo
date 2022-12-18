@@ -6,10 +6,11 @@ import (
 
 	"go.uber.org/zap"
 
+	errs "github.com/dupreehkuda/TaskBingo/game-service/internal/customErrors"
 	"github.com/dupreehkuda/TaskBingo/game-service/internal/models"
 )
 
-func (h handlers) GetUserData(w http.ResponseWriter, r *http.Request) {
+func (h handlers) GetTaskPack(w http.ResponseWriter, r *http.Request) {
 	var ctxKey models.LoginKey = "login"
 	login := r.Context().Value(ctxKey).(string)
 
@@ -18,9 +19,30 @@ func (h handlers) GetUserData(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 	}
 
-	resp, err := h.processor.GetUserData(login)
+	var req models.TaskPackRequest
+
+	decoder := json.NewDecoder(r.Body)
+	err := decoder.Decode(&req)
 	if err != nil {
-		h.logger.Error("Unable to call user microservice", zap.Error(err))
+		h.logger.Error("Unable to decode JSON", zap.Error(err))
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	if req.TaskID == "" {
+		h.logger.Info("Request empty")
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	resp, err := h.processor.GetTaskPack(req.TaskID)
+
+	switch {
+	case err == errs.ErrNoSuchPack:
+		w.WriteHeader(http.StatusNoContent)
+		return
+	case err != nil:
+		h.logger.Error("Unable to return task pack", zap.Error(err))
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
@@ -40,6 +62,4 @@ func (h handlers) GetUserData(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-
-	h.logger.Debug("everything good")
 }

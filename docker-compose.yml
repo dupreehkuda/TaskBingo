@@ -33,7 +33,21 @@ services:
     depends_on:
       - user-database
       - user-service
- 
+
+  task-service:
+    build: ./task-data-service
+    container_name: task-service
+    environment:
+      - REDIS_ADDR=${REDIS_ADDR}
+    env_file: .env
+    ports:
+      - '8083:8083'
+    restart: always
+    volumes:
+      - .:/task_service
+    depends_on:
+      - task-database
+
   user-service:
     build: ./user-data-service
     container_name: user-service

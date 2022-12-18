@@ -27,3 +27,12 @@ type AuthResponse struct {
 	Login string `json:"login"`
 	Token string `json:"token"`
 }
+
+type TaskPack struct {
+	TaskID string   `json:"id"`
+	Tasks  []string `json:"tasks"`
+}
+
+type TaskPackRequest struct {
+	TaskID string `json:"id"`
+}

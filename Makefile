@@ -10,3 +10,9 @@ compose-down:
 rebuild:
 	docker-compose down --remove-orphans
 	docker-compose build
+
+.PHONY: fast
+fast:
+	docker-compose down --remove-orphans
+	docker-compose build
+	docker-compose up
