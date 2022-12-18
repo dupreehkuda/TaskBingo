@@ -9,6 +9,7 @@ import (
 	"github.com/dupreehkuda/TaskBingo/task-data-service/internal/models"
 )
 
+// GetTaskPack retrieves a task pack from database
 func (s storage) GetTaskPack(taskId string) (*models.TaskPack, error) {
 	res, err := s.handle.JSONGet(taskId, ".")
 	if err != nil {

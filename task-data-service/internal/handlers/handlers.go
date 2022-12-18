@@ -6,6 +6,7 @@ import (
 	i "github.com/dupreehkuda/TaskBingo/task-data-service/internal/interfaces"
 )
 
+// Handlers provides access to service
 type Handlers struct {
 	processor i.Processor
 	logger    *zap.Logger

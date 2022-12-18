@@ -6,6 +6,7 @@ import (
 	"github.com/dupreehkuda/TaskBingo/game-service/internal/models"
 )
 
+// GetTaskPack gets task pack by provided packID
 func (p processor) GetTaskPack(packID string) (*models.TaskPack, error) {
 	resp, err := p.taskStorage.GetTaskPack(packID)
 	if err != nil {

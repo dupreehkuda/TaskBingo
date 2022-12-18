@@ -6,6 +6,7 @@ import (
 	"github.com/dupreehkuda/TaskBingo/task-data-service/internal/models"
 )
 
+// AddTaskPack adds new task pack to storage
 func (p processor) AddTaskPack(pack *models.TaskPack) error {
 	err := p.storage.AddTaskPack(pack)
 	if err != nil {

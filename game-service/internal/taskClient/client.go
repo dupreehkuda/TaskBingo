@@ -4,10 +4,11 @@ import (
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
-	
+
 	api "github.com/dupreehkuda/TaskBingo/game-service/pkg/api"
 )
 
+// taskClient provides connection to task service
 type taskClient struct {
 	conn   api.TasksClient
 	logger *zap.Logger

@@ -6,10 +6,11 @@ import (
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
-	
+
 	api "github.com/dupreehkuda/TaskBingo/game-service/pkg/api"
 )
 
+// userClient provides connection to user service
 type userClient struct {
 	conn   api.UsersClient
 	logger *zap.Logger

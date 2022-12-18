@@ -21,6 +21,7 @@ import (
 	api "github.com/dupreehkuda/TaskBingo/task-data-service/pkg/api"
 )
 
+// server provides single configuration out of all components
 type server struct {
 	handlers i.Handlers
 	config   *config.Config

@@ -10,6 +10,7 @@ import (
 	api "github.com/dupreehkuda/TaskBingo/user-data-service/pkg/api"
 )
 
+// RegisterUser handles user register operation
 func (h *Handlers) RegisterUser(ctx context.Context, req *api.RegisterUserRequest) (*api.RegisterUserResponse, error) {
 	err := h.processor.RegisterUser(req.Login, req.Password, req.Email)
 

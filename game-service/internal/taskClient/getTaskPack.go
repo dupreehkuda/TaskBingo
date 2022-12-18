@@ -12,6 +12,7 @@ import (
 	api "github.com/dupreehkuda/TaskBingo/game-service/pkg/api"
 )
 
+// GetTaskPack retrieves a task pack from task service
 func (t taskClient) GetTaskPack(packID string) (*models.TaskPack, error) {
 	resp, err := t.conn.GetOneTaskPack(context.Background(), &api.TaskPackRequest{Id: packID})
 

@@ -9,6 +9,7 @@ import (
 	"github.com/dupreehkuda/TaskBingo/game-service/internal/models"
 )
 
+// SetTaskPack handles addition of setting new task packs
 func (h handlers) SetTaskPack(w http.ResponseWriter, r *http.Request) {
 	var ctxKey models.LoginKey = "login"
 	login := r.Context().Value(ctxKey).(string)

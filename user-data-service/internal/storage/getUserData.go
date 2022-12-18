@@ -8,6 +8,7 @@ import (
 	"github.com/dupreehkuda/TaskBingo/user-data-service/internal/models"
 )
 
+// GetUserData retrieves user data from database
 func (s storage) GetUserData(login string) (models.GetUserDataResponse, error) {
 	ctx := context.Background()
 	conn, err := s.pool.Acquire(ctx)

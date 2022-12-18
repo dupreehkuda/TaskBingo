@@ -10,6 +10,7 @@ import (
 	"github.com/dupreehkuda/TaskBingo/game-service/internal/models"
 )
 
+// LoginUser handles user login operations
 func (h handlers) LoginUser(w http.ResponseWriter, r *http.Request) {
 	var logCredit models.LoginCredentials
 

@@ -6,6 +6,7 @@ import (
 	"github.com/dupreehkuda/TaskBingo/task-data-service/internal/models"
 )
 
+// AddTaskPack adds task pack to the database
 func (s storage) AddTaskPack(pack *models.TaskPack) error {
 	_, err := s.handle.JSONSet(pack.TaskID, ".", pack.Tasks)
 	if err != nil {

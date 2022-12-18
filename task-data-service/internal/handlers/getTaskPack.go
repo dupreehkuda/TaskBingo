@@ -10,6 +10,7 @@ import (
 	api "github.com/dupreehkuda/TaskBingo/task-data-service/pkg/api"
 )
 
+// GetOneTaskPack handles getting one task pack operation
 func (h *Handlers) GetOneTaskPack(ctx context.Context, req *api.TaskPackRequest) (*api.TaskPackResponse, error) {
 	resp, err := h.processor.GetTaskPack(req.Id)
 

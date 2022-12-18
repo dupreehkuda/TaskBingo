@@ -6,6 +6,7 @@ import (
 	errs "github.com/dupreehkuda/TaskBingo/user-data-service/internal/customErrors"
 )
 
+// LoginUser checks provided credentials and logs user
 func (p processor) LoginUser(login, password string) error {
 	resp, err := p.storage.LoginUser(login)
 	if err != nil {

@@ -21,6 +21,7 @@ import (
 	api "github.com/dupreehkuda/TaskBingo/user-data-service/pkg/api"
 )
 
+// server gathers all service components and runs it
 type server struct {
 	handlers i.Handlers
 	config   *config.Config

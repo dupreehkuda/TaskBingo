@@ -8,6 +8,7 @@ import (
 	"go.uber.org/zap"
 )
 
+// storage provides a database connection
 type storage struct {
 	handle *rejson.Handler
 	logger *zap.Logger

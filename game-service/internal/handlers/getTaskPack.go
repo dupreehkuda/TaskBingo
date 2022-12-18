@@ -10,6 +10,7 @@ import (
 	"github.com/dupreehkuda/TaskBingo/game-service/internal/models"
 )
 
+// GetTaskPack handles getting one task pack operations
 func (h handlers) GetTaskPack(w http.ResponseWriter, r *http.Request) {
 	var ctxKey models.LoginKey = "login"
 	login := r.Context().Value(ctxKey).(string)

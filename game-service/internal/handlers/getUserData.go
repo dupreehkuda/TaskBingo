@@ -9,6 +9,7 @@ import (
 	"github.com/dupreehkuda/TaskBingo/game-service/internal/models"
 )
 
+// GetUserData handles getting user's data operations
 func (h handlers) GetUserData(w http.ResponseWriter, r *http.Request) {
 	var ctxKey models.LoginKey = "login"
 	login := r.Context().Value(ctxKey).(string)

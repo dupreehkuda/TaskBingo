@@ -1,38 +1,46 @@
 package models
 
+// LoginKey is type for context keys
 type LoginKey string
 
+// Response provides user data response
 type Response struct {
 	UserID string `json:"userID"`
 	Points int    `json:"points"`
 	Email  string `json:"email"`
 }
 
+// Request provides user data request
 type Request struct {
 	UserID string `json:"userID"`
 }
 
+// RegisterCredentials provides users register credentials request
 type RegisterCredentials struct {
 	Login    string `json:"login"`
 	Email    string `json:"email"`
 	Password string `json:"password"`
 }
 
+// LoginCredentials provides users login credentials request
 type LoginCredentials struct {
 	Login    string `json:"login"`
 	Password string `json:"password"`
 }
 
+// AuthResponse provides users authorization response
 type AuthResponse struct {
 	Login string `json:"login"`
 	Token string `json:"token"`
 }
 
+// TaskPack provides complete task pack ingo
 type TaskPack struct {
 	TaskID string   `json:"id"`
 	Tasks  []string `json:"tasks"`
 }
 
+// TaskPackRequest provides task pack request
 type TaskPackRequest struct {
 	TaskID string `json:"id"`
 }

@@ -7,6 +7,7 @@ import (
 	"go.uber.org/zap"
 )
 
+// Config provides service address and paths to database
 type Config struct {
 	Address            string `env:"GAME_SERVICE_ADDRESS" envDefault:":8082"`
 	UserServiceAddress string `env:"FULL_USER_SERVICE_ADDRESS"`

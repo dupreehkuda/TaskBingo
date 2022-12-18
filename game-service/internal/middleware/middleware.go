@@ -2,6 +2,7 @@ package middleware
 
 import "go.uber.org/zap"
 
+// middleware provides services middleware
 type middleware struct {
 	logger *zap.Logger
 }

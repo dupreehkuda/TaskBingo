@@ -6,6 +6,7 @@ import (
 	"github.com/dupreehkuda/TaskBingo/game-service/internal/models"
 )
 
+// GetUserData gets user's most important info
 func (p processor) GetUserData(login string) (*models.Response, error) {
 	resp, err := p.userStorage.GetUserData(login)
 	if err != nil {

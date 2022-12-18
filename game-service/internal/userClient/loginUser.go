@@ -11,6 +11,7 @@ import (
 	api "github.com/dupreehkuda/TaskBingo/game-service/pkg/api"
 )
 
+// LoginUser sends login request to user service
 func (u userClient) LoginUser(login, password string) error {
 	data := api.LoginUserRequest{
 		Login:    login,

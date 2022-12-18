@@ -11,6 +11,7 @@ import (
 	api "github.com/dupreehkuda/TaskBingo/game-service/pkg/api"
 )
 
+// SetTaskPack sets a new task pack in task service
 func (t taskClient) SetTaskPack(pack *models.TaskPack) error {
 	tasks, err := json.Marshal(pack)
 

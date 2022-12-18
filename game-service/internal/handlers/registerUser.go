@@ -10,6 +10,7 @@ import (
 	"github.com/dupreehkuda/TaskBingo/game-service/internal/models"
 )
 
+// RegisterUser handles user registration operations
 func (h handlers) RegisterUser(w http.ResponseWriter, r *http.Request) {
 	var regCredit models.RegisterCredentials
 

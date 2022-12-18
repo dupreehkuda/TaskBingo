@@ -6,6 +6,7 @@ import (
 	"github.com/dupreehkuda/TaskBingo/game-service/internal/models"
 )
 
+// SetTaskPack sets new task pack
 func (p processor) SetTaskPack(pack *models.TaskPack) error {
 	err := p.taskStorage.SetTaskPack(pack)
 	if err != nil {

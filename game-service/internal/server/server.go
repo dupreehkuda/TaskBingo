@@ -21,6 +21,7 @@ import (
 	userClient "github.com/dupreehkuda/TaskBingo/game-service/internal/userClient"
 )
 
+// api provides single configuration out of all components
 type api struct {
 	handlers   i.Handlers
 	middleware i.Middleware
@@ -28,6 +29,7 @@ type api struct {
 	logger     *zap.Logger
 }
 
+// NewByConfig returns server instance with default config
 func NewByConfig() *api {
 	log := logger.InitializeLogger()
 	cfg := config.New(log)

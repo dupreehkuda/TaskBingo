@@ -1,10 +1,12 @@
 package processors
 
 import (
-	"github.com/dupreehkuda/TaskBingo/user-data-service/internal/models"
 	"go.uber.org/zap"
+
+	"github.com/dupreehkuda/TaskBingo/user-data-service/internal/models"
 )
 
+// GetUserData gets some important account data
 func (p processor) GetUserData(userId string) (*models.GetUserDataResponse, error) {
 	resp, err := p.storage.GetUserData(userId)
 	if err != nil {

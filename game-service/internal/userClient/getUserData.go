@@ -7,6 +7,7 @@ import (
 	api "github.com/dupreehkuda/TaskBingo/game-service/pkg/api"
 )
 
+// GetUserData retrieves user data from user service
 func (u userClient) GetUserData(login string) (*models.Response, error) {
 	resp, err := u.conn.GetUserData(context.Background(), &api.GetUserDataRequest{Login: login})
 	if err != nil {

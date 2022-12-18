@@ -6,6 +6,7 @@ import (
 	errs "github.com/dupreehkuda/TaskBingo/user-data-service/internal/customErrors"
 )
 
+// RegisterUser checks user duplicate and registers new user
 func (p processor) RegisterUser(login, password, email string) error {
 	exists, err := p.storage.CheckDuplicateUser(login)
 	if err != nil {

@@ -6,6 +6,7 @@ import (
 	i "github.com/dupreehkuda/TaskBingo/user-data-service/internal/interfaces"
 )
 
+// Processor provides service's business logic
 type processor struct {
 	storage i.Stored
 	logger  *zap.Logger

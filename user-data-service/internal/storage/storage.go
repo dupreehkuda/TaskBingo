@@ -8,6 +8,7 @@ import (
 	"go.uber.org/zap"
 )
 
+// storage provide a connection with database
 type storage struct {
 	pool   *pgxpool.Pool
 	logger *zap.Logger

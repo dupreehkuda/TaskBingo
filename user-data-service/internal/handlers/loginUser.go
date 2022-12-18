@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"context"
+
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
@@ -9,6 +10,7 @@ import (
 	api "github.com/dupreehkuda/TaskBingo/user-data-service/pkg/api"
 )
 
+// LoginUser handles user login operation
 func (h *Handlers) LoginUser(ctx context.Context, req *api.LoginUserRequest) (*api.LoginUserResponse, error) {
 	err := h.processor.LoginUser(req.Login, req.Password)
 

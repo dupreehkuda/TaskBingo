@@ -1,21 +1,6 @@
 version: '3.4'
 
 services:
-#  bingo-app:
-#    build:
-#      dockerfile: ./bingo-app/Dockerfile
-#    container_name: bingo-app
-#    ports:
-#      - '5173:5173'
-#    restart: on-failure
-#    volumes:
-#      - .:/app
-#    depends_on:
-#      user-service:
-#        condition: service_started
-#      user-database:
-#        condition: service_started
-
   game-service:
     build: ./game-service
     container_name: game-service
