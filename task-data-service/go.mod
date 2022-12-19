@@ -5,7 +5,6 @@ go 1.19
 require (
 	github.com/caarlos0/env/v6 v6.10.1
 	github.com/go-redis/redis/v8 v8.11.5
-	github.com/gomodule/redigo v1.8.3
 	github.com/nitishm/go-rejson/v4 v4.1.0
 	go.uber.org/zap v1.24.0
 	google.golang.org/grpc v1.51.0
