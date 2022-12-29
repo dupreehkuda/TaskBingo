@@ -1,157 +1,87 @@
 <script lang="ts">
     import { Button, Card } from "flowbite-svelte";
+
+    const data = {
+        "name":"dupreeh",
+        "wins":7,
+        "lose":3,
+        "scoreboard":1,
+        "friends": [
+            "zonedberg",
+            "estepina",
+            "hokage",
+            "mrak",
+        ],
+        "packs": [
+            {
+                "name":"First Ever Pack",
+                "tasks": [
+                    "30s guitar solo",
+                    "30 lines of code",
+                    "Learn new dish",
+                    "Room clean up",
+                    "Topic in music theory",
+                    "Read 5 chapters of fiction",
+                    "200 push ups",
+                    "Make complicated origami",
+                    "Make a crossword",
+                    "Practice math exam",
+                    "Write an essay",
+                    "30min sport",
+                    "Topic in finances/economy",
+                    "Make some art",
+                    "Solve linguistic task",
+                    "Learn by heart 30 geo objects",
+                ]
+            }
+        ]
+    }
 </script>
 
 <main>
     <div class="leftspace spacer">
         <!-- <h3 class="mb-1">Profile</h3> -->
-        <h1>dupreeh
-            <span class="leftspace win">7</span>
+        <h1>{data.name}
+            <span class="leftspace win">{data.wins}</span>
             <span>:</span>
-            <span class="lose">3</span>
+            <span class="lose">{data.lose}</span>
         </h1>
         <div class="leftspace">
-            <span class="leftspace">Winrate: 70%</span>
-            <span>Scoreboard: 1</span>
+            <span class="leftspace">Winrate: {(data.wins / (data.wins + data.lose)) * 100}%</span>
+            <span>Scoreboard: {data.scoreboard}</span>
         </div>
     </div>
 
     <div class="leftspaceheading"><h3 class="mb-2">Friends</h3></div>
     <div class="scrolling-wrapper spacer">
-        <Card padding="sm" class="card">
-            <div class="flex flex-col items-center pb-4">
-                <h5 class="mb-1">zonedberg</h5>
-                <span class="text-sm text-gray-300">7/1</span>
-                <div class="flex mt-4 space-x-3 lg:mt-6">
-                    <Button color="light" class="fonty dark:text-white">Play</Button>
+        {#each data.friends as friend}
+            <Card padding="sm" class="card">
+                <div class="flex flex-col items-center pb-4">
+                    <h5 class="mb-1">{friend}</h5>
+                    <span class="text-sm text-gray-300">7/1</span>
+                    <div class="flex mt-4 space-x-3 lg:mt-6">
+                        <Button color="light" class="fonty dark:text-white">Play</Button>
+                    </div>
                 </div>
-            </div>
-        </Card>
-  
-        <Card padding="sm" class="card">
-            <div class="flex flex-col items-center pb-4">
-                <h5 class="mb-1">estepina</h5>
-                <span class="text-sm text-gray-300">1/5</span>
-                <div class="flex mt-4 space-x-3 lg:mt-6">
-                    <Button color="light" class="fonty dark:text-white">Play</Button>
-                </div>
-            </div>
-        </Card>   
-
-        <Card padding="sm" class="card">
-            <div class="flex flex-col items-center pb-4">
-                <h5 class="mb-1">dupreeh</h5>
-                <span class="text-sm text-gray-300">2/1</span>
-                <div class="flex mt-4 space-x-3 lg:mt-6">
-                    <Button color="light" class="fonty dark:text-white">Play</Button>
-                </div>
-            </div>
-        </Card>
-        
-        <Card padding="sm" class="card">
-            <div class="flex flex-col items-center pb-4">
-                <h5 class="mb-1">zonedberg</h5>
-                <span class="text-sm text-gray-300">7/1</span>
-                <div class="flex mt-4 space-x-3 lg:mt-6">
-                    <Button color="light" class="fonty dark:text-white">Play</Button>
-                </div>
-            </div>
-        </Card>
-  
-        <Card padding="sm" class="card">
-            <div class="flex flex-col items-center pb-4">
-                <h5 class="mb-1">estepina</h5>
-                <span class="text-sm text-gray-300">1/5</span>
-                <div class="flex mt-4 space-x-3 lg:mt-6">
-                    <Button color="light" class="fonty dark:text-white">Play</Button>
-                </div>
-            </div>
-        </Card>   
-
-        <Card padding="sm" class="card">
-            <div class="flex flex-col items-center pb-4">
-                <h5 class="mb-1">dupreeh</h5>
-                <span class="text-sm text-gray-300">2/1</span>
-                <div class="flex mt-4 space-x-3 lg:mt-6">
-                    <Button color="light" class="fonty dark:text-white">Play</Button>
-                </div>
-            </div>
-        </Card>
-        
+            </Card>
+        {/each}
     </div>
 
     <div class="leftspaceheading"><h3 class="mb-2">Packs</h3></div>
     <div class="scrolling-wrapper spacer packs">
+        {#each data.packs as pack}
           <Card size="md" padding="xl" class="card">
-            <h5 class="mb-4 text-xl">First Ever Edition</h5>
+            <h5 class="mb-4 text-xl">{pack.name}</h5>
             <ul class="my-7 space-y-2">
-                <li class="flex space-x-2">
-                    <span class="leading-tight">1</span>
-                    <span class="leading-tight text-gray-300">30s guitar solo</span>
-                </li>
-                <li class="flex space-x-2">
-                    <span class="leading-tight">2</span>
-                    <span class="leading-tight text-gray-300">30 lines of code</span>
-                </li>
-                <li class="flex space-x-2">
-                    <span class="leading-tight">3</span>
-                    <span class="leading-tight text-gray-300">Learn new dish</span>
-                </li>
-                <li class="flex space-x-2">
-                    <span class="leading-tight">4</span>
-                    <span class="leading-tight text-gray-300">Room clean up</span>
-                </li>
-                <li class="flex space-x-2">
-                    <span class="leading-tight">5</span>
-                    <span class="leading-tight text-gray-300">Topic in music theory</span>
-                </li>
-                <li class="flex space-x-2">
-                    <span class="leading-tight">6</span>
-                    <span class="leading-tight text-gray-300">Read 5 chapters of fiction</span>
-                </li>
-                <li class="flex space-x-2">
-                    <span class="leading-tight">7</span>
-                    <span class="leading-tight text-gray-300">200 push ups</span>
-                </li>
-                <li class="flex space-x-2">
-                    <span class="leading-tight">8</span>
-                    <span class="leading-tight text-gray-300">Make complicated origami</span>
-                </li>
-                <li class="flex space-x-2">
-                    <span class="leading-tight">9</span>
-                    <span class="leading-tight text-gray-300">Make a crossword</span>
-                </li>
-                <li class="flex space-x-2">
-                    <span class="leading-tight">10</span>
-                    <span class="leading-tight text-gray-300">Practice math exam</span>
-                </li>
-                <li class="flex space-x-2">
-                    <span class="leading-tight">11</span>
-                    <span class="leading-tight text-gray-300">Write an essay</span>
-                </li>
-                <li class="flex space-x-2">
-                    <span class="leading-tight">12</span>
-                    <span class="leading-tight text-gray-300">30min sport</span>
-                </li>
-                <li class="flex space-x-2">
-                    <span class="leading-tight">13</span>
-                    <span class="leading-tight text-gray-300">Topic in finances/economy</span>
-                </li>
-                <li class="flex space-x-2">
-                    <span class="leading-tight">14</span>
-                    <span class="leading-tight text-gray-300">Make some art</span>
-                </li>
-                <li class="flex space-x-2">
-                    <span class="leading-tight">15</span>
-                    <span class="leading-tight text-gray-300">Solve linguistic task</span>
-                </li>
-                <li class="flex space-x-2">
-                    <span class="leading-tight">16</span>
-                    <span class="leading-tight text-gray-300">Learn by heart 30 geo objects</span>
-                </li>
-            </ul>
+                {#each pack.tasks as task, i}
+                    <li class="flex space-x-2">
+                        <span class="leading-tight">{i+1}</span>
+                        <span class="leading-tight text-gray-300">{task}</span>
+                    </li>
+                {/each}
             <Button color="light" class="fonty  w-full">Choose pack</Button>
           </Card>
+          {/each}
     </div>
 </main>
 
@@ -209,8 +139,8 @@
     }
 
     main {
+        min-width: 50%;
         text-align: center;
-
         max-width: max-content;
         margin: 0 auto;
     }
