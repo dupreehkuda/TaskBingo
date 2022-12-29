@@ -3,14 +3,31 @@
 
     const data = {
         "name":"dupreeh",
+        "city": "Sliema",
         "wins":7,
         "lose":3,
         "scoreboard":1,
         "friends": [
-            "zonedberg",
-            "estepina",
-            "hokage",
-            "mrak",
+            {
+                "name": "zonedberg",
+                "city": "Barcelona",
+                "score":"7/2",
+            },
+            {
+                "name": "estepina",
+                "city": "Moscow",
+                "score":"2/2",
+            },
+            {
+                "name": "hokage",
+                "city": "Japan",
+                "score":"3/4",
+            },
+            {
+                "name": "mrak",
+                "city": "Jopen",
+                "score":"4/2",
+            },
         ],
         "packs": [
             {
@@ -40,12 +57,14 @@
 
 <main>
     <div class="leftspace spacer">
-        <!-- <h3 class="mb-1">Profile</h3> -->
         <h1>{data.name}
             <span class="leftspace win">{data.wins}</span>
             <span>:</span>
             <span class="lose">{data.lose}</span>
         </h1>
+        
+        <h4>{data.city}</h4>
+
         <div class="leftspace">
             <span class="leftspace">Winrate: {(data.wins / (data.wins + data.lose)) * 100}%</span>
             <span>Scoreboard: {data.scoreboard}</span>
@@ -57,10 +76,13 @@
         {#each data.friends as friend}
             <Card padding="sm" class="card">
                 <div class="flex flex-col items-center pb-4">
-                    <h5 class="mb-1">{friend}</h5>
-                    <span class="text-sm text-gray-300">7/1</span>
+                    <div class="mb-1">
+                        <h5>{friend.name}</h5>
+                        <span class="text-xs text-gray-300">{friend.city}</span>
+                    </div>
+                    <span class="text-sm text-gray-300">{friend.score}</span>
                     <div class="flex mt-4 space-x-3 lg:mt-6">
-                        <Button color="light" class="fonty dark:text-white">Play</Button>
+                        <Button class="dark fonty dark:text-white">Play</Button>
                     </div>
                 </div>
             </Card>
@@ -79,7 +101,7 @@
                         <span class="leading-tight text-gray-300">{task}</span>
                     </li>
                 {/each}
-            <Button color="light" class="fonty  w-full">Choose pack</Button>
+            <Button class="fonty dark w-full">Choose pack</Button>
           </Card>
           {/each}
     </div>
@@ -103,6 +125,14 @@
         text-align: left;
         margin-left: 0.35em;
         font-family: Unbounded;
+    }
+
+    h4 {
+        text-align: left;
+        margin-left: 0.70em;
+        font-family: Unbounded;
+        font-weight: 200;
+        margin-bottom: 1em;
     }
 
     .scrolling-wrapper {

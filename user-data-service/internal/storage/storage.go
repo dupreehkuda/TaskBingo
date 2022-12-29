@@ -19,8 +19,13 @@ CREATE TABLE IF NOT EXISTS "users" (
    "id" text PRIMARY KEY NOT NULL UNIQUE,
    "login" text NOT NULL UNIQUE,
    "email" text NOT NULL UNIQUE,
+   "city" text NOT NULL,
    "registered" timestamptz NOT NULL ,
-   "wins" integer DEFAULT 0 
+   "wins" integer DEFAULT 0,
+   "lose" integer DEFAULT 0,
+   "scoreboard" integer DEFAULT 0,
+   "friends" string[],
+   "packs" string[]
 );
 
 CREATE TABLE IF NOT EXISTS "login" (
