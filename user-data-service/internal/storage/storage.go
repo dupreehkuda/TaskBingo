@@ -24,8 +24,8 @@ CREATE TABLE IF NOT EXISTS "users" (
    "wins" integer DEFAULT 0,
    "lose" integer DEFAULT 0,
    "scoreboard" integer DEFAULT 0,
-   "friends" string[],
-   "packs" string[]
+   "friends" text[],
+   "packs" text[]
 );
 
 CREATE TABLE IF NOT EXISTS "login" (

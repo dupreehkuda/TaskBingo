@@ -41,6 +41,4 @@ func (h handlers) GetUserData(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-
-	h.logger.Debug("everything good")
 }

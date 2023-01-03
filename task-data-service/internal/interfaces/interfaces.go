@@ -14,10 +14,12 @@ type Handlers interface {
 type Processor interface {
 	GetTaskPack(taskId string) (*models.TaskPack, error)
 	AddTaskPack(pack *models.TaskPack) error
+	GetMultiplePacks(ids []string) (*[]models.TaskPack, error)
 }
 
 // Stored is interface for storage
 type Stored interface {
 	GetTaskPack(taskId string) (*models.TaskPack, error)
 	AddTaskPack(pack *models.TaskPack) error
+	GetMultiplePacks(ids []string) (*[]models.TaskPack, error)
 }

@@ -2,8 +2,10 @@ package handlers
 
 import (
 	"context"
-	api "github.com/dupreehkuda/TaskBingo/user-data-service/pkg/api"
+
 	"go.uber.org/zap"
+
+	api "github.com/dupreehkuda/TaskBingo/user-data-service/pkg/api"
 )
 
 // GetUserData gets some important user data for the account
@@ -14,9 +16,23 @@ func (h *Handlers) GetUserData(ctx context.Context, req *api.GetUserDataRequest)
 		return nil, err
 	}
 
-	return &api.GetUserDataResponse{
-		Login:  resp.UserID,
-		Points: int32(resp.Points),
-		Email:  resp.Email,
-	}, nil
+	ans := &api.GetUserDataResponse{
+		Login:      resp.Login,
+		City:       resp.City,
+		Wins:       int32(resp.Wins),
+		Loses:      int32(resp.Lose),
+		Scoreboard: int32(resp.Scoreboard),
+		Friends:    nil,
+		Packs:      resp.Packs,
+	}
+
+	for _, val := range resp.Friends {
+		ans.Friends = append(ans.Friends, &api.FriendInfo{
+			Login: val.Login,
+			City:  val.City,
+			Score: val.Score,
+		})
+	}
+
+	return ans, nil
 }

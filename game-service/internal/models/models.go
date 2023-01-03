@@ -44,3 +44,30 @@ type TaskPack struct {
 type TaskPackRequest struct {
 	TaskID string `json:"id"`
 }
+
+type FriendsInfo struct {
+	Login string `json:"login"`
+	City  string `json:"city"`
+	Score string `json:"score"`
+}
+
+// UserAccountInfo provides basic account info
+type UserAccountInfo struct {
+	Login      string        `json:"login"`
+	City       string        `json:"city"`
+	Wins       int           `json:"wins"`
+	Lose       int           `json:"lose"`
+	Scoreboard int           `json:"scoreboard"`
+	Friends    []FriendsInfo `json:"friends"`
+	Packs      []TaskPack    `json:"packs"`
+}
+
+type UserAccountInfoResponse struct {
+	Login      string        `json:"login"`
+	City       string        `json:"city"`
+	Wins       int           `json:"wins"`
+	Lose       int           `json:"lose"`
+	Scoreboard int           `json:"scoreboard"`
+	Friends    []FriendsInfo `json:"friends"`
+	Packs      []string      `json:"packs"`
+}

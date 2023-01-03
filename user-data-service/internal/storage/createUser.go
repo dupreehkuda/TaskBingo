@@ -25,7 +25,7 @@ func (s storage) CreateUser(login, email, passwordHash, passwordSalt string) err
 		return err
 	}
 
-	tx.Exec(ctx, "INSERT INTO users (id, login, email, registered) VALUES ($1, $1, $2, $3)", login, email, time.Now())
+	tx.Exec(ctx, "INSERT INTO users (id, login, email, registered, city) VALUES ($1, $1, $2, $3, 'moskvak')", login, email, time.Now())
 	tx.Exec(ctx, "INSERT INTO login (id, passwordhash, passwordsalt) VALUES ($1, $2, $3);", login, passwordHash, passwordSalt)
 
 	err = tx.Commit(ctx)

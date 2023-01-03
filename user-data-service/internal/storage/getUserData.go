@@ -20,7 +20,8 @@ func (s storage) GetUserData(login string) (models.GetUserDataResponse, error) {
 
 	var resp models.GetUserDataResponse
 
-	err = conn.QueryRow(ctx, "SELECT login, wins, email FROM users WHERE login = $1", login).Scan(&resp.UserID, &resp.Points, &resp.Email)
+	row := conn.QueryRow(ctx, "SELECT login, city, wins, lose, scoreboard, friends, packs FROM users WHERE login = $1", login)
+	err = row.Scan(&resp.Login, &resp.City, &resp.Wins, &resp.Lose, &resp.Scoreboard, &resp.Friends, &resp.Packs)
 	if err != nil {
 		s.logger.Error("Error when executing statement", zap.Error(err))
 		return resp, err

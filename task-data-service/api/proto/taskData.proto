@@ -7,6 +7,7 @@ option go_package = "./";
 service Tasks {
   rpc GetOneTaskPack(TaskPackRequest) returns (TaskPackResponse) {}
   rpc AddOneTaskPack(NewTaskPackRequest) returns (NewTaskPackResponse) {}
+  rpc GetMultiplePacks(GetMultiplePacksRequest) returns (GetMultiplePacksResponse) {}
 }
 
 message TaskPackRequest {
@@ -25,4 +26,12 @@ message NewTaskPackRequest {
 
 message NewTaskPackResponse {
   string id = 1;
+}
+
+message GetMultiplePacksRequest {
+  repeated string id = 1;
+}
+
+message GetMultiplePacksResponse {
+  repeated TaskPackResponse packs = 1;
 }

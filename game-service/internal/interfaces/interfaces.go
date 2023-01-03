@@ -17,7 +17,7 @@ type Handlers interface {
 
 // UserDataClient is an interface for user data service
 type UserDataClient interface {
-	GetUserData(login string) (*models.Response, error)
+	GetUserData(login string) (*models.UserAccountInfoResponse, error)
 	RegisterUser(login, email, password string) error
 	LoginUser(login, password string) error
 }
@@ -26,6 +26,7 @@ type UserDataClient interface {
 type TaskDataClient interface {
 	GetTaskPack(packID string) (*models.TaskPack, error)
 	SetTaskPack(pack *models.TaskPack) error
+	GetFavouritePacks(packIDs []string) (*[]models.TaskPack, error)
 }
 
 // Middleware is an interface for middleware layer
@@ -35,7 +36,7 @@ type Middleware interface {
 
 // Processor is an interface for business-logic
 type Processor interface {
-	GetUserData(login string) (*models.Response, error)
+	GetUserData(login string) (*models.UserAccountInfo, error)
 	LoginUser(login, password string) (string, error)
 	RegisterUser(login, email, password string) (string, error)
 	GetTaskPack(packID string) (*models.TaskPack, error)

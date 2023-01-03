@@ -228,6 +228,100 @@ func (x *NewTaskPackResponse) GetId() string {
 	return ""
 }
 
+type GetMultiplePacksRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id []string `protobuf:"bytes,1,rep,name=id,proto3" json:"id,omitempty"`
+}
+
+func (x *GetMultiplePacksRequest) Reset() {
+	*x = GetMultiplePacksRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_taskData_proto_msgTypes[4]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetMultiplePacksRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetMultiplePacksRequest) ProtoMessage() {}
+
+func (x *GetMultiplePacksRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_taskData_proto_msgTypes[4]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetMultiplePacksRequest.ProtoReflect.Descriptor instead.
+func (*GetMultiplePacksRequest) Descriptor() ([]byte, []int) {
+	return file_taskData_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *GetMultiplePacksRequest) GetId() []string {
+	if x != nil {
+		return x.Id
+	}
+	return nil
+}
+
+type GetMultiplePacksResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Packs []*TaskPackResponse `protobuf:"bytes,1,rep,name=packs,proto3" json:"packs,omitempty"`
+}
+
+func (x *GetMultiplePacksResponse) Reset() {
+	*x = GetMultiplePacksResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_taskData_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetMultiplePacksResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetMultiplePacksResponse) ProtoMessage() {}
+
+func (x *GetMultiplePacksResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_taskData_proto_msgTypes[5]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetMultiplePacksResponse.ProtoReflect.Descriptor instead.
+func (*GetMultiplePacksResponse) Descriptor() ([]byte, []int) {
+	return file_taskData_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *GetMultiplePacksResponse) GetPacks() []*TaskPackResponse {
+	if x != nil {
+		return x.Packs
+	}
+	return nil
+}
+
 var File_taskData_proto protoreflect.FileDescriptor
 
 var file_taskData_proto_rawDesc = []byte{
@@ -244,17 +338,29 @@ var file_taskData_proto_rawDesc = []byte{
 	0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x09, 0x52, 0x05, 0x74, 0x61, 0x73, 0x6b, 0x73, 0x22, 0x25,
 	0x0a, 0x13, 0x4e, 0x65, 0x77, 0x54, 0x61, 0x73, 0x6b, 0x50, 0x61, 0x63, 0x6b, 0x52, 0x65, 0x73,
 	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28,
-	0x09, 0x52, 0x02, 0x69, 0x64, 0x32, 0x8f, 0x01, 0x0a, 0x05, 0x54, 0x61, 0x73, 0x6b, 0x73, 0x12,
-	0x3f, 0x0a, 0x0e, 0x47, 0x65, 0x74, 0x4f, 0x6e, 0x65, 0x54, 0x61, 0x73, 0x6b, 0x50, 0x61, 0x63,
-	0x6b, 0x12, 0x14, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x54, 0x61, 0x73, 0x6b, 0x50, 0x61, 0x63, 0x6b,
-	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x15, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x54, 0x61,
-	0x73, 0x6b, 0x50, 0x61, 0x63, 0x6b, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00,
-	0x12, 0x45, 0x0a, 0x0e, 0x41, 0x64, 0x64, 0x4f, 0x6e, 0x65, 0x54, 0x61, 0x73, 0x6b, 0x50, 0x61,
-	0x63, 0x6b, 0x12, 0x17, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x4e, 0x65, 0x77, 0x54, 0x61, 0x73, 0x6b,
-	0x50, 0x61, 0x63, 0x6b, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x18, 0x2e, 0x61, 0x70,
-	0x69, 0x2e, 0x4e, 0x65, 0x77, 0x54, 0x61, 0x73, 0x6b, 0x50, 0x61, 0x63, 0x6b, 0x52, 0x65, 0x73,
-	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x42, 0x04, 0x5a, 0x02, 0x2e, 0x2f, 0x62, 0x06, 0x70,
-	0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x09, 0x52, 0x02, 0x69, 0x64, 0x22, 0x29, 0x0a, 0x17, 0x47, 0x65, 0x74, 0x4d, 0x75, 0x6c, 0x74,
+	0x69, 0x70, 0x6c, 0x65, 0x50, 0x61, 0x63, 0x6b, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64,
+	0x22, 0x47, 0x0a, 0x18, 0x47, 0x65, 0x74, 0x4d, 0x75, 0x6c, 0x74, 0x69, 0x70, 0x6c, 0x65, 0x50,
+	0x61, 0x63, 0x6b, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x2b, 0x0a, 0x05,
+	0x70, 0x61, 0x63, 0x6b, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x15, 0x2e, 0x61, 0x70,
+	0x69, 0x2e, 0x54, 0x61, 0x73, 0x6b, 0x50, 0x61, 0x63, 0x6b, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x52, 0x05, 0x70, 0x61, 0x63, 0x6b, 0x73, 0x32, 0xe2, 0x01, 0x0a, 0x05, 0x54, 0x61,
+	0x73, 0x6b, 0x73, 0x12, 0x3f, 0x0a, 0x0e, 0x47, 0x65, 0x74, 0x4f, 0x6e, 0x65, 0x54, 0x61, 0x73,
+	0x6b, 0x50, 0x61, 0x63, 0x6b, 0x12, 0x14, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x54, 0x61, 0x73, 0x6b,
+	0x50, 0x61, 0x63, 0x6b, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x15, 0x2e, 0x61, 0x70,
+	0x69, 0x2e, 0x54, 0x61, 0x73, 0x6b, 0x50, 0x61, 0x63, 0x6b, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x22, 0x00, 0x12, 0x45, 0x0a, 0x0e, 0x41, 0x64, 0x64, 0x4f, 0x6e, 0x65, 0x54, 0x61,
+	0x73, 0x6b, 0x50, 0x61, 0x63, 0x6b, 0x12, 0x17, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x4e, 0x65, 0x77,
+	0x54, 0x61, 0x73, 0x6b, 0x50, 0x61, 0x63, 0x6b, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a,
+	0x18, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x4e, 0x65, 0x77, 0x54, 0x61, 0x73, 0x6b, 0x50, 0x61, 0x63,
+	0x6b, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x51, 0x0a, 0x10, 0x47,
+	0x65, 0x74, 0x4d, 0x75, 0x6c, 0x74, 0x69, 0x70, 0x6c, 0x65, 0x50, 0x61, 0x63, 0x6b, 0x73, 0x12,
+	0x1c, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x47, 0x65, 0x74, 0x4d, 0x75, 0x6c, 0x74, 0x69, 0x70, 0x6c,
+	0x65, 0x50, 0x61, 0x63, 0x6b, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1d, 0x2e,
+	0x61, 0x70, 0x69, 0x2e, 0x47, 0x65, 0x74, 0x4d, 0x75, 0x6c, 0x74, 0x69, 0x70, 0x6c, 0x65, 0x50,
+	0x61, 0x63, 0x6b, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x42, 0x04,
+	0x5a, 0x02, 0x2e, 0x2f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -269,23 +375,28 @@ func file_taskData_proto_rawDescGZIP() []byte {
 	return file_taskData_proto_rawDescData
 }
 
-var file_taskData_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_taskData_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_taskData_proto_goTypes = []interface{}{
-	(*TaskPackRequest)(nil),     // 0: api.TaskPackRequest
-	(*TaskPackResponse)(nil),    // 1: api.TaskPackResponse
-	(*NewTaskPackRequest)(nil),  // 2: api.NewTaskPackRequest
-	(*NewTaskPackResponse)(nil), // 3: api.NewTaskPackResponse
+	(*TaskPackRequest)(nil),          // 0: api.TaskPackRequest
+	(*TaskPackResponse)(nil),         // 1: api.TaskPackResponse
+	(*NewTaskPackRequest)(nil),       // 2: api.NewTaskPackRequest
+	(*NewTaskPackResponse)(nil),      // 3: api.NewTaskPackResponse
+	(*GetMultiplePacksRequest)(nil),  // 4: api.GetMultiplePacksRequest
+	(*GetMultiplePacksResponse)(nil), // 5: api.GetMultiplePacksResponse
 }
 var file_taskData_proto_depIdxs = []int32{
-	0, // 0: api.Tasks.GetOneTaskPack:input_type -> api.TaskPackRequest
-	2, // 1: api.Tasks.AddOneTaskPack:input_type -> api.NewTaskPackRequest
-	1, // 2: api.Tasks.GetOneTaskPack:output_type -> api.TaskPackResponse
-	3, // 3: api.Tasks.AddOneTaskPack:output_type -> api.NewTaskPackResponse
-	2, // [2:4] is the sub-list for method output_type
-	0, // [0:2] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	1, // 0: api.GetMultiplePacksResponse.packs:type_name -> api.TaskPackResponse
+	0, // 1: api.Tasks.GetOneTaskPack:input_type -> api.TaskPackRequest
+	2, // 2: api.Tasks.AddOneTaskPack:input_type -> api.NewTaskPackRequest
+	4, // 3: api.Tasks.GetMultiplePacks:input_type -> api.GetMultiplePacksRequest
+	1, // 4: api.Tasks.GetOneTaskPack:output_type -> api.TaskPackResponse
+	3, // 5: api.Tasks.AddOneTaskPack:output_type -> api.NewTaskPackResponse
+	5, // 6: api.Tasks.GetMultiplePacks:output_type -> api.GetMultiplePacksResponse
+	4, // [4:7] is the sub-list for method output_type
+	1, // [1:4] is the sub-list for method input_type
+	1, // [1:1] is the sub-list for extension type_name
+	1, // [1:1] is the sub-list for extension extendee
+	0, // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_taskData_proto_init() }
@@ -342,6 +453,30 @@ func file_taskData_proto_init() {
 				return nil
 			}
 		}
+		file_taskData_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetMultiplePacksRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_taskData_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetMultiplePacksResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -349,7 +484,7 @@ func file_taskData_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_taskData_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
@@ -377,6 +512,7 @@ const _ = grpc.SupportPackageIsVersion6
 type TasksClient interface {
 	GetOneTaskPack(ctx context.Context, in *TaskPackRequest, opts ...grpc.CallOption) (*TaskPackResponse, error)
 	AddOneTaskPack(ctx context.Context, in *NewTaskPackRequest, opts ...grpc.CallOption) (*NewTaskPackResponse, error)
+	GetMultiplePacks(ctx context.Context, in *GetMultiplePacksRequest, opts ...grpc.CallOption) (*GetMultiplePacksResponse, error)
 }
 
 type tasksClient struct {
@@ -405,10 +541,20 @@ func (c *tasksClient) AddOneTaskPack(ctx context.Context, in *NewTaskPackRequest
 	return out, nil
 }
 
+func (c *tasksClient) GetMultiplePacks(ctx context.Context, in *GetMultiplePacksRequest, opts ...grpc.CallOption) (*GetMultiplePacksResponse, error) {
+	out := new(GetMultiplePacksResponse)
+	err := c.cc.Invoke(ctx, "/api.Tasks/GetMultiplePacks", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // TasksServer is the server API for Tasks service.
 type TasksServer interface {
 	GetOneTaskPack(context.Context, *TaskPackRequest) (*TaskPackResponse, error)
 	AddOneTaskPack(context.Context, *NewTaskPackRequest) (*NewTaskPackResponse, error)
+	GetMultiplePacks(context.Context, *GetMultiplePacksRequest) (*GetMultiplePacksResponse, error)
 }
 
 // UnimplementedTasksServer can be embedded to have forward compatible implementations.
@@ -420,6 +566,9 @@ func (*UnimplementedTasksServer) GetOneTaskPack(context.Context, *TaskPackReques
 }
 func (*UnimplementedTasksServer) AddOneTaskPack(context.Context, *NewTaskPackRequest) (*NewTaskPackResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddOneTaskPack not implemented")
+}
+func (*UnimplementedTasksServer) GetMultiplePacks(context.Context, *GetMultiplePacksRequest) (*GetMultiplePacksResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMultiplePacks not implemented")
 }
 
 func RegisterTasksServer(s *grpc.Server, srv TasksServer) {
@@ -462,6 +611,24 @@ func _Tasks_AddOneTaskPack_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Tasks_GetMultiplePacks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetMultiplePacksRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TasksServer).GetMultiplePacks(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.Tasks/GetMultiplePacks",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TasksServer).GetMultiplePacks(ctx, req.(*GetMultiplePacksRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Tasks_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "api.Tasks",
 	HandlerType: (*TasksServer)(nil),
@@ -473,6 +640,10 @@ var _Tasks_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AddOneTaskPack",
 			Handler:    _Tasks_AddOneTaskPack_Handler,
+		},
+		{
+			MethodName: "GetMultiplePacks",
+			Handler:    _Tasks_GetMultiplePacks_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

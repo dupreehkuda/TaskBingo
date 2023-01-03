@@ -21,13 +21,11 @@ func (s storage) GetTaskPack(taskId string) (*models.TaskPack, error) {
 	}
 
 	var tasks models.TaskPack
-	err = json.Unmarshal(res.([]byte), &tasks.Tasks)
+	err = json.Unmarshal(res.([]byte), &tasks)
 	if err != nil {
 		s.logger.Error("Error occurred when unmarshaling data", zap.Error(err))
 		return nil, err
 	}
-
-	tasks.TaskID = taskId
 
 	return &tasks, nil
 }

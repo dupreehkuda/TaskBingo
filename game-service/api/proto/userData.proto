@@ -16,8 +16,18 @@ message GetUserDataRequest {
 
 message GetUserDataResponse {
   string login = 1;
-  int32 points = 2;
-  string email = 3;
+  string city = 2;
+  int32 wins = 3;
+  int32 loses = 4;
+  int32 scoreboard = 5;
+  repeated FriendInfo friends = 6;
+  repeated string packs = 7;
+}
+
+message FriendInfo {
+  string login = 1;
+  string city = 2;
+  string score = 3;
 }
 
 message RegisterUserRequest {
