@@ -33,7 +33,8 @@ message FriendInfo {
 message RegisterUserRequest {
   string login = 1;
   string email = 2;
-  string password = 3;
+  string city = 3;
+  string password = 4;
 }
 
 message RegisterUserResponse {

@@ -18,7 +18,7 @@ type Handlers interface {
 // UserDataClient is an interface for user data service
 type UserDataClient interface {
 	GetUserData(login string) (*models.UserAccountInfoResponse, error)
-	RegisterUser(login, email, password string) error
+	RegisterUser(creds *models.RegisterCredentials) error
 	LoginUser(login, password string) error
 }
 
@@ -38,7 +38,7 @@ type Middleware interface {
 type Processor interface {
 	GetUserData(login string) (*models.UserAccountInfo, error)
 	LoginUser(login, password string) (string, error)
-	RegisterUser(login, email, password string) (string, error)
+	RegisterUser(creds *models.RegisterCredentials) (string, error)
 	GetTaskPack(packID string) (*models.TaskPack, error)
 	SetTaskPack(pack *models.TaskPack) error
 }

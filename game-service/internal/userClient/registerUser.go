@@ -8,15 +8,17 @@ import (
 	"google.golang.org/grpc/status"
 
 	errs "github.com/dupreehkuda/TaskBingo/game-service/internal/customErrors"
+	"github.com/dupreehkuda/TaskBingo/game-service/internal/models"
 	api "github.com/dupreehkuda/TaskBingo/game-service/pkg/api"
 )
 
 // RegisterUser sends register request to user service
-func (u userClient) RegisterUser(login, email, password string) error {
+func (u userClient) RegisterUser(creds *models.RegisterCredentials) error {
 	data := api.RegisterUserRequest{
-		Login:    login,
-		Email:    email,
-		Password: password,
+		Login:    creds.Login,
+		Email:    creds.Email,
+		City:     creds.City,
+		Password: creds.Password,
 	}
 
 	_, err := u.conn.RegisterUser(context.Background(), &data)

@@ -19,6 +19,7 @@ type Request struct {
 type RegisterCredentials struct {
 	Login    string `json:"login"`
 	Email    string `json:"email"`
+	City     string `json:"city"`
 	Password string `json:"password"`
 }
 

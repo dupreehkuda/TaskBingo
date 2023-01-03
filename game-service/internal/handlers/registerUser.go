@@ -28,7 +28,7 @@ func (h handlers) RegisterUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	token, err := h.processor.RegisterUser(regCredit.Login, regCredit.Email, regCredit.Password)
+	token, err := h.processor.RegisterUser(&regCredit)
 
 	switch {
 	case err == errs.ErrCredentialsInUse:

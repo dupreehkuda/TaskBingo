@@ -7,14 +7,13 @@ import (
 )
 
 // RegisterUser checks user duplicate and registers new user
-func (p processor) RegisterUser(login, password, email string) error {
+func (p processor) RegisterUser(login, password, email, city string) error {
 	exists, err := p.storage.CheckDuplicateUser(login)
 	if err != nil {
 		p.logger.Error("User check db error", zap.Error(err))
 		return err
 	}
 
-	p.logger.Debug("User in reg proc", zap.Bool("exists", exists), zap.String("login", login), zap.String("email", email), zap.String("password", password))
 	if exists {
 		return errs.ErrCredentialsInUse
 	}
@@ -27,7 +26,7 @@ func (p processor) RegisterUser(login, password, email string) error {
 
 	passwordHash := mdHash(password, passwordSalt)
 
-	err = p.storage.CreateUser(login, email, passwordHash, passwordSalt)
+	err = p.storage.CreateUser(login, email, passwordHash, passwordSalt, city)
 	if err != nil {
 		p.logger.Error("User creation db error", zap.Error(err))
 		return err

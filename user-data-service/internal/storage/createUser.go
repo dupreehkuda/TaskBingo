@@ -8,7 +8,7 @@ import (
 )
 
 // CreateUser inserts new user's data in the database
-func (s storage) CreateUser(login, email, passwordHash, passwordSalt string) error {
+func (s storage) CreateUser(login, email, passwordHash, passwordSalt, city string) error {
 	conn, err := s.pool.Acquire(context.Background())
 	if err != nil {
 		s.logger.Error("Error while acquiring connection", zap.Error(err))
@@ -25,7 +25,7 @@ func (s storage) CreateUser(login, email, passwordHash, passwordSalt string) err
 		return err
 	}
 
-	tx.Exec(ctx, "INSERT INTO users (id, login, email, registered, city) VALUES ($1, $1, $2, $3, 'moskvak')", login, email, time.Now())
+	tx.Exec(ctx, "INSERT INTO users (id, login, email, registered, city) VALUES ($1, $1, $2, $3, $4)", login, email, time.Now(), city)
 	tx.Exec(ctx, "INSERT INTO login (id, passwordhash, passwordsalt) VALUES ($1, $2, $3);", login, passwordHash, passwordSalt)
 
 	err = tx.Commit(ctx)

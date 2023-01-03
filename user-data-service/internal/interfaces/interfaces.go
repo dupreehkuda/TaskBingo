@@ -12,7 +12,7 @@ type Handlers interface {
 
 // Processor is interface for business-logic
 type Processor interface {
-	RegisterUser(login, password, email string) error
+	RegisterUser(login, password, email, city string) error
 	LoginUser(login, password string) error
 	GetUserData(userId string) (*models.GetUserDataResponse, error)
 }
@@ -21,6 +21,6 @@ type Processor interface {
 type Stored interface {
 	GetUserData(login string) (models.GetUserDataResponse, error)
 	CheckDuplicateUser(login string) (bool, error)
-	CreateUser(login, email, passwordHash, passwordSalt string) error
+	CreateUser(login, email, passwordHash, passwordSalt, city string) error
 	LoginUser(login string) (*models.LoginUserResponse, error)
 }
