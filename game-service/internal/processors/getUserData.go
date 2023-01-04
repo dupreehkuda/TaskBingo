@@ -21,6 +21,7 @@ func (p processor) GetUserData(login string) (*models.UserAccountInfo, error) {
 		Lose:       userInfo.Lose,
 		Scoreboard: userInfo.Scoreboard,
 		Friends:    userInfo.Friends,
+		Packs:      []models.TaskPack{},
 	}
 
 	if len(userInfo.Packs) != 0 {
