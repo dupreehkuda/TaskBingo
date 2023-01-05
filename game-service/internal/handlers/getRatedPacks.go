@@ -9,8 +9,8 @@ import (
 	"github.com/dupreehkuda/TaskBingo/game-service/internal/models"
 )
 
-// GetUserData handles getting user's data operations
-func (h handlers) GetUserData(w http.ResponseWriter, r *http.Request) {
+// GetRatedPacks handles getting rated packs operation
+func (h handlers) GetRatedPacks(w http.ResponseWriter, r *http.Request) {
 	var ctxKey models.LoginKey = "login"
 	login := r.Context().Value(ctxKey).(string)
 
@@ -20,10 +20,10 @@ func (h handlers) GetUserData(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	resp, err := h.processor.GetUserData(login)
+	resp, err := h.processor.GetRatedPacks()
 	if err != nil {
-		h.logger.Error("Unable to call user microservice", zap.Error(err))
-		w.WriteHeader(http.StatusInternalServerError)
+		h.logger.Error("Error in call to processor", zap.Error(err))
+		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 

@@ -10,7 +10,7 @@ import (
 	api "github.com/dupreehkuda/TaskBingo/user-data-service/pkg/api"
 )
 
-// LoginUser handles user login operation
+// LoginUser handles the operation of user's logging in
 func (h *Handlers) LoginUser(ctx context.Context, req *api.LoginUserRequest) (*api.LoginUserResponse, error) {
 	err := h.processor.LoginUser(req.Login, req.Password)
 

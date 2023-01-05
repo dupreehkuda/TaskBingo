@@ -8,7 +8,7 @@ import (
 	api "github.com/dupreehkuda/TaskBingo/user-data-service/pkg/api"
 )
 
-// GetUserData gets some important user data for the account
+// GetUserData handles the operation of getting some important user data for the account
 func (h *Handlers) GetUserData(ctx context.Context, req *api.GetUserDataRequest) (*api.GetUserDataResponse, error) {
 	resp, err := h.processor.GetUserData(req.Login)
 	if err != nil {

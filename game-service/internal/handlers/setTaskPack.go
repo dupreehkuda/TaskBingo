@@ -17,6 +17,7 @@ func (h handlers) SetTaskPack(w http.ResponseWriter, r *http.Request) {
 	if login == "" {
 		h.logger.Error("Bad login")
 		w.WriteHeader(http.StatusBadRequest)
+		return
 	}
 
 	req := &models.TaskPack{}
@@ -37,7 +38,7 @@ func (h handlers) SetTaskPack(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.processor.SetTaskPack(req)
+	err = h.processor.SetTaskPack(login, req)
 	if err != nil {
 		h.logger.Error("Error occurred in call to processor", zap.Error(err))
 		w.WriteHeader(http.StatusInternalServerError)

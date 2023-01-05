@@ -20,6 +20,10 @@ func (a api) router() http.Handler {
 				r.Use(a.middleware.CheckToken)
 
 				r.Post("/getUserData", a.handlers.GetUserData)
+				r.Post("/likePack", a.handlers.LikeTaskPack)
+				r.Post("/dislikePack", a.handlers.DislikeTaskPack)
+				r.Post("/ratePack", a.handlers.RateTaskPack)
+				r.Post("/unratePack", a.handlers.UnrateTaskPack)
 			})
 		})
 
@@ -28,6 +32,7 @@ func (a api) router() http.Handler {
 
 			r.Post("/getTaskPack", a.handlers.GetTaskPack)
 			r.Post("/setTaskPack", a.handlers.SetTaskPack)
+			r.Get("/getPacks", a.handlers.GetRatedPacks)
 		})
 	})
 

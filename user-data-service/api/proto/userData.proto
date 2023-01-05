@@ -5,9 +5,15 @@ package api;
 option go_package = "./";
 
 service Users {
-  rpc GetUserData(GetUserDataRequest) returns (GetUserDataResponse) {}
-  rpc RegisterUser(RegisterUserRequest) returns (RegisterUserResponse) {}
-  rpc LoginUser(LoginUserRequest) returns (LoginUserResponse) {}
+  rpc GetUserData(GetUserDataRequest) returns (GetUserDataResponse);
+  rpc RegisterUser(RegisterUserRequest) returns (RegisterUserResponse);
+  rpc LoginUser(LoginUserRequest) returns (LoginUserResponse);
+  rpc LikePack(LikePackRequest) returns (Empty);
+  rpc DislikePack(LikePackRequest) returns (Empty);
+  rpc RatePack(RatePackRequest) returns (Empty);
+  rpc UnratePack(RatePackRequest) returns (Empty);
+  rpc GetRatedPacks(Empty) returns (RatedPacksResponse);
+  rpc AssignNewPack(AssignNewPackRequest) returns (Empty);
 }
 
 message GetUserDataRequest {
@@ -49,3 +55,24 @@ message LoginUserRequest {
 message LoginUserResponse {
   string error = 1;
 }
+
+message LikePackRequest {
+  string login = 1;
+  string pack = 2;
+}
+
+message RatePackRequest {
+  string pack = 1;
+}
+
+message RatedPacksResponse {
+  repeated string packs = 1;
+}
+
+message AssignNewPackRequest {
+  string login = 1;
+  string pack = 2;
+}
+
+message Empty {}
+

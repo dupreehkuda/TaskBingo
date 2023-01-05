@@ -25,7 +25,7 @@ func (p processor) GetUserData(login string) (*models.UserAccountInfo, error) {
 	}
 
 	if len(userInfo.Packs) != 0 {
-		tasks, err := p.taskStorage.GetFavouritePacks(userInfo.Packs)
+		tasks, err := p.taskStorage.GetMultiplePacks(userInfo.Packs)
 		if err != nil {
 			p.logger.Error("Error occurred in call to task service", zap.Error(err))
 			return nil, err

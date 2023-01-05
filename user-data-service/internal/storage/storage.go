@@ -34,7 +34,17 @@ CREATE TABLE IF NOT EXISTS "login" (
 	"passwordsalt" text NOT NULL UNIQUE 
 );
 
-ALTER TABLE "login" ADD FOREIGN KEY ("id") REFERENCES "users" ("id");`
+CREATE TABLE IF NOT EXISTS "ratings" (
+	"id" text PRIMARY KEY NOT NULL UNIQUE,
+	"rating" integer NOT NULL DEFAULT 0,
+	"liked" integer NOT NULL DEFAULT 1,
+	"played" integer NOT NULL DEFAULT 0,
+	"creator" text NOT NULL,
+	"created" timestamptz NOT NULL
+);
+
+ALTER TABLE "login" ADD FOREIGN KEY ("id") REFERENCES "users" ("id");
+ALTER TABLE "ratings" ADD FOREIGN KEY ("creator") REFERENCES "users" ("id")`
 
 // New creates a new instance of database layer and migrates it
 func New(path string, logger *zap.Logger) *storage {

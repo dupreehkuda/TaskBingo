@@ -8,7 +8,7 @@ import (
 
 // RegisterUser checks user duplicate and registers new user
 func (p processor) RegisterUser(login, password, email, city string) error {
-	exists, err := p.storage.CheckDuplicateUser(login)
+	exists, err := p.storage.CheckDuplicateUser(login, email)
 	if err != nil {
 		p.logger.Error("User check db error", zap.Error(err))
 		return err
