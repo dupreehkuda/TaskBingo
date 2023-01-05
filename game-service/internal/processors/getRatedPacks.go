@@ -14,6 +14,10 @@ func (p processor) GetRatedPacks() (*[]models.TaskPack, error) {
 		return nil, err
 	}
 
+	if len(rated) == 0 {
+		return &[]models.TaskPack{}, nil
+	}
+
 	packs, err := p.taskStorage.GetMultiplePacks(rated)
 	if err != nil {
 		p.logger.Error("Error occurred in call to task storage", zap.Error(err))
