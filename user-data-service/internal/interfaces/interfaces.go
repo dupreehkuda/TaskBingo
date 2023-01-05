@@ -15,12 +15,20 @@ type Processor interface {
 	RegisterUser(login, password, email, city string) error
 	LoginUser(login, password string) error
 	GetUserData(userId string) (*models.GetUserDataResponse, error)
+	GetRatedPacks() ([]string, error)
+	LikePack(login, pack string, inc int) error
+	RatePack(pack string, inc int) error
+	AssignNewPack(login, pack string) error
 }
 
 // Stored is interface for storage
 type Stored interface {
 	GetUserData(login string) (models.GetUserDataResponse, error)
-	CheckDuplicateUser(login string) (bool, error)
+	CheckDuplicateUser(login, email string) (bool, error)
 	CreateUser(login, email, passwordHash, passwordSalt, city string) error
 	LoginUser(login string) (*models.LoginUserResponse, error)
+	GetRatedPacks() ([]string, error)
+	LikePack(login, pack string, inc int) error
+	RatePack(pack string, inc int) error
+	AssignNewPack(login, pack string) error
 }

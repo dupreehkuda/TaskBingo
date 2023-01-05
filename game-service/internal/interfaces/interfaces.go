@@ -13,6 +13,11 @@ type Handlers interface {
 	GetUserData(w http.ResponseWriter, r *http.Request)
 	GetTaskPack(w http.ResponseWriter, r *http.Request)
 	SetTaskPack(w http.ResponseWriter, r *http.Request)
+	LikeTaskPack(w http.ResponseWriter, r *http.Request)
+	DislikeTaskPack(w http.ResponseWriter, r *http.Request)
+	RateTaskPack(w http.ResponseWriter, r *http.Request)
+	UnrateTaskPack(w http.ResponseWriter, r *http.Request)
+	GetRatedPacks(w http.ResponseWriter, r *http.Request)
 }
 
 // UserDataClient is an interface for user data service
@@ -20,13 +25,19 @@ type UserDataClient interface {
 	GetUserData(login string) (*models.UserAccountInfoResponse, error)
 	RegisterUser(creds *models.RegisterCredentials) error
 	LoginUser(login, password string) error
+	GetRatedPacks() ([]string, error)
+	LikeTaskPack(login, pack string) error
+	DislikeTaskPack(login, pack string) error
+	RateTaskPack(pack string) error
+	UnrateTaskPack(pack string) error
+	AssignNewPack(login, pack string) error
 }
 
 // TaskDataClient is an interface for task data service
 type TaskDataClient interface {
 	GetTaskPack(packID string) (*models.TaskPack, error)
 	SetTaskPack(pack *models.TaskPack) error
-	GetFavouritePacks(packIDs []string) (*[]models.TaskPack, error)
+	GetMultiplePacks(packIDs []string) (*[]models.TaskPack, error)
 }
 
 // Middleware is an interface for middleware layer
@@ -40,5 +51,10 @@ type Processor interface {
 	LoginUser(login, password string) (string, error)
 	RegisterUser(creds *models.RegisterCredentials) (string, error)
 	GetTaskPack(packID string) (*models.TaskPack, error)
-	SetTaskPack(pack *models.TaskPack) error
+	SetTaskPack(login string, pack *models.TaskPack) error
+	LikeTaskPack(login, pack string) error
+	DislikeTaskPack(login, pack string) error
+	RateTaskPack(pack string) error
+	UnrateTaskPack(pack string) error
+	GetRatedPacks() (*[]models.TaskPack, error)
 }

@@ -18,6 +18,7 @@ func (h handlers) GetTaskPack(w http.ResponseWriter, r *http.Request) {
 	if login == "" {
 		h.logger.Error("Bad login")
 		w.WriteHeader(http.StatusBadRequest)
+		return
 	}
 
 	var req models.TaskPackRequest

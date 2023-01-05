@@ -12,8 +12,8 @@ import (
 	api "github.com/dupreehkuda/TaskBingo/game-service/pkg/api"
 )
 
-// GetFavouritePacks retrieves multiple task packs from task service
-func (t taskClient) GetFavouritePacks(packIDs []string) (*[]models.TaskPack, error) {
+// GetMultiplePacks retrieves multiple task packs from task service
+func (t taskClient) GetMultiplePacks(packIDs []string) (*[]models.TaskPack, error) {
 	resp, err := t.conn.GetMultiplePacks(context.Background(), &api.GetMultiplePacksRequest{Id: packIDs})
 
 	statusCode, _ := status.FromError(err)

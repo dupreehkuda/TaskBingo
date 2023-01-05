@@ -449,6 +449,248 @@ func (x *LoginUserResponse) GetError() string {
 	return ""
 }
 
+type LikePackRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Login string `protobuf:"bytes,1,opt,name=login,proto3" json:"login,omitempty"`
+	Pack  string `protobuf:"bytes,2,opt,name=pack,proto3" json:"pack,omitempty"`
+}
+
+func (x *LikePackRequest) Reset() {
+	*x = LikePackRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_userData_proto_msgTypes[7]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *LikePackRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LikePackRequest) ProtoMessage() {}
+
+func (x *LikePackRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_userData_proto_msgTypes[7]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LikePackRequest.ProtoReflect.Descriptor instead.
+func (*LikePackRequest) Descriptor() ([]byte, []int) {
+	return file_userData_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *LikePackRequest) GetLogin() string {
+	if x != nil {
+		return x.Login
+	}
+	return ""
+}
+
+func (x *LikePackRequest) GetPack() string {
+	if x != nil {
+		return x.Pack
+	}
+	return ""
+}
+
+type RatePackRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Pack string `protobuf:"bytes,1,opt,name=pack,proto3" json:"pack,omitempty"`
+}
+
+func (x *RatePackRequest) Reset() {
+	*x = RatePackRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_userData_proto_msgTypes[8]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RatePackRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RatePackRequest) ProtoMessage() {}
+
+func (x *RatePackRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_userData_proto_msgTypes[8]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RatePackRequest.ProtoReflect.Descriptor instead.
+func (*RatePackRequest) Descriptor() ([]byte, []int) {
+	return file_userData_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *RatePackRequest) GetPack() string {
+	if x != nil {
+		return x.Pack
+	}
+	return ""
+}
+
+type RatedPacksResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Packs []string `protobuf:"bytes,1,rep,name=packs,proto3" json:"packs,omitempty"`
+}
+
+func (x *RatedPacksResponse) Reset() {
+	*x = RatedPacksResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_userData_proto_msgTypes[9]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RatedPacksResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RatedPacksResponse) ProtoMessage() {}
+
+func (x *RatedPacksResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_userData_proto_msgTypes[9]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RatedPacksResponse.ProtoReflect.Descriptor instead.
+func (*RatedPacksResponse) Descriptor() ([]byte, []int) {
+	return file_userData_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *RatedPacksResponse) GetPacks() []string {
+	if x != nil {
+		return x.Packs
+	}
+	return nil
+}
+
+type AssignNewPackRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Login string `protobuf:"bytes,1,opt,name=login,proto3" json:"login,omitempty"`
+	Pack  string `protobuf:"bytes,2,opt,name=pack,proto3" json:"pack,omitempty"`
+}
+
+func (x *AssignNewPackRequest) Reset() {
+	*x = AssignNewPackRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_userData_proto_msgTypes[10]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *AssignNewPackRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AssignNewPackRequest) ProtoMessage() {}
+
+func (x *AssignNewPackRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_userData_proto_msgTypes[10]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AssignNewPackRequest.ProtoReflect.Descriptor instead.
+func (*AssignNewPackRequest) Descriptor() ([]byte, []int) {
+	return file_userData_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *AssignNewPackRequest) GetLogin() string {
+	if x != nil {
+		return x.Login
+	}
+	return ""
+}
+
+func (x *AssignNewPackRequest) GetPack() string {
+	if x != nil {
+		return x.Pack
+	}
+	return ""
+}
+
+type Empty struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *Empty) Reset() {
+	*x = Empty{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_userData_proto_msgTypes[11]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Empty) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Empty) ProtoMessage() {}
+
+func (x *Empty) ProtoReflect() protoreflect.Message {
+	mi := &file_userData_proto_msgTypes[11]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Empty.ProtoReflect.Descriptor instead.
+func (*Empty) Descriptor() ([]byte, []int) {
+	return file_userData_proto_rawDescGZIP(), []int{11}
+}
+
 var File_userData_proto protoreflect.FileDescriptor
 
 var file_userData_proto_rawDesc = []byte{
@@ -490,21 +732,53 @@ var file_userData_proto_rawDesc = []byte{
 	0x6f, 0x72, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x70, 0x61, 0x73, 0x73, 0x77,
 	0x6f, 0x72, 0x64, 0x22, 0x29, 0x0a, 0x11, 0x4c, 0x6f, 0x67, 0x69, 0x6e, 0x55, 0x73, 0x65, 0x72,
 	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x65, 0x72, 0x72, 0x6f,
-	0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x65, 0x72, 0x72, 0x6f, 0x72, 0x32, 0xd0,
-	0x01, 0x0a, 0x05, 0x55, 0x73, 0x65, 0x72, 0x73, 0x12, 0x42, 0x0a, 0x0b, 0x47, 0x65, 0x74, 0x55,
-	0x73, 0x65, 0x72, 0x44, 0x61, 0x74, 0x61, 0x12, 0x17, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x47, 0x65,
-	0x74, 0x55, 0x73, 0x65, 0x72, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
-	0x1a, 0x18, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x47, 0x65, 0x74, 0x55, 0x73, 0x65, 0x72, 0x44, 0x61,
-	0x74, 0x61, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x45, 0x0a, 0x0c,
-	0x52, 0x65, 0x67, 0x69, 0x73, 0x74, 0x65, 0x72, 0x55, 0x73, 0x65, 0x72, 0x12, 0x18, 0x2e, 0x61,
-	0x70, 0x69, 0x2e, 0x52, 0x65, 0x67, 0x69, 0x73, 0x74, 0x65, 0x72, 0x55, 0x73, 0x65, 0x72, 0x52,
-	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x19, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x52, 0x65, 0x67,
-	0x69, 0x73, 0x74, 0x65, 0x72, 0x55, 0x73, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
-	0x65, 0x22, 0x00, 0x12, 0x3c, 0x0a, 0x09, 0x4c, 0x6f, 0x67, 0x69, 0x6e, 0x55, 0x73, 0x65, 0x72,
-	0x12, 0x15, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x4c, 0x6f, 0x67, 0x69, 0x6e, 0x55, 0x73, 0x65, 0x72,
-	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x16, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x4c, 0x6f,
-	0x67, 0x69, 0x6e, 0x55, 0x73, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22,
-	0x00, 0x42, 0x04, 0x5a, 0x02, 0x2e, 0x2f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x65, 0x72, 0x72, 0x6f, 0x72, 0x22, 0x3b,
+	0x0a, 0x0f, 0x4c, 0x69, 0x6b, 0x65, 0x50, 0x61, 0x63, 0x6b, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x12, 0x14, 0x0a, 0x05, 0x6c, 0x6f, 0x67, 0x69, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x05, 0x6c, 0x6f, 0x67, 0x69, 0x6e, 0x12, 0x12, 0x0a, 0x04, 0x70, 0x61, 0x63, 0x6b, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x70, 0x61, 0x63, 0x6b, 0x22, 0x25, 0x0a, 0x0f, 0x52,
+	0x61, 0x74, 0x65, 0x50, 0x61, 0x63, 0x6b, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x12,
+	0x0a, 0x04, 0x70, 0x61, 0x63, 0x6b, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x70, 0x61,
+	0x63, 0x6b, 0x22, 0x2a, 0x0a, 0x12, 0x52, 0x61, 0x74, 0x65, 0x64, 0x50, 0x61, 0x63, 0x6b, 0x73,
+	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x70, 0x61, 0x63, 0x6b,
+	0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x05, 0x70, 0x61, 0x63, 0x6b, 0x73, 0x22, 0x40,
+	0x0a, 0x14, 0x41, 0x73, 0x73, 0x69, 0x67, 0x6e, 0x4e, 0x65, 0x77, 0x50, 0x61, 0x63, 0x6b, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x14, 0x0a, 0x05, 0x6c, 0x6f, 0x67, 0x69, 0x6e, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x6c, 0x6f, 0x67, 0x69, 0x6e, 0x12, 0x12, 0x0a, 0x04,
+	0x70, 0x61, 0x63, 0x6b, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x70, 0x61, 0x63, 0x6b,
+	0x22, 0x07, 0x0a, 0x05, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x32, 0xf5, 0x03, 0x0a, 0x05, 0x55, 0x73,
+	0x65, 0x72, 0x73, 0x12, 0x40, 0x0a, 0x0b, 0x47, 0x65, 0x74, 0x55, 0x73, 0x65, 0x72, 0x44, 0x61,
+	0x74, 0x61, 0x12, 0x17, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x47, 0x65, 0x74, 0x55, 0x73, 0x65, 0x72,
+	0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x18, 0x2e, 0x61, 0x70,
+	0x69, 0x2e, 0x47, 0x65, 0x74, 0x55, 0x73, 0x65, 0x72, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x43, 0x0a, 0x0c, 0x52, 0x65, 0x67, 0x69, 0x73, 0x74, 0x65,
+	0x72, 0x55, 0x73, 0x65, 0x72, 0x12, 0x18, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x52, 0x65, 0x67, 0x69,
+	0x73, 0x74, 0x65, 0x72, 0x55, 0x73, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a,
+	0x19, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x52, 0x65, 0x67, 0x69, 0x73, 0x74, 0x65, 0x72, 0x55, 0x73,
+	0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x3a, 0x0a, 0x09, 0x4c, 0x6f,
+	0x67, 0x69, 0x6e, 0x55, 0x73, 0x65, 0x72, 0x12, 0x15, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x4c, 0x6f,
+	0x67, 0x69, 0x6e, 0x55, 0x73, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x16,
+	0x2e, 0x61, 0x70, 0x69, 0x2e, 0x4c, 0x6f, 0x67, 0x69, 0x6e, 0x55, 0x73, 0x65, 0x72, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x2c, 0x0a, 0x08, 0x4c, 0x69, 0x6b, 0x65, 0x50, 0x61,
+	0x63, 0x6b, 0x12, 0x14, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x4c, 0x69, 0x6b, 0x65, 0x50, 0x61, 0x63,
+	0x6b, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x0a, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x45,
+	0x6d, 0x70, 0x74, 0x79, 0x12, 0x2f, 0x0a, 0x0b, 0x44, 0x69, 0x73, 0x6c, 0x69, 0x6b, 0x65, 0x50,
+	0x61, 0x63, 0x6b, 0x12, 0x14, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x4c, 0x69, 0x6b, 0x65, 0x50, 0x61,
+	0x63, 0x6b, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x0a, 0x2e, 0x61, 0x70, 0x69, 0x2e,
+	0x45, 0x6d, 0x70, 0x74, 0x79, 0x12, 0x2c, 0x0a, 0x08, 0x52, 0x61, 0x74, 0x65, 0x50, 0x61, 0x63,
+	0x6b, 0x12, 0x14, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x52, 0x61, 0x74, 0x65, 0x50, 0x61, 0x63, 0x6b,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x0a, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x45, 0x6d,
+	0x70, 0x74, 0x79, 0x12, 0x2e, 0x0a, 0x0a, 0x55, 0x6e, 0x72, 0x61, 0x74, 0x65, 0x50, 0x61, 0x63,
+	0x6b, 0x12, 0x14, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x52, 0x61, 0x74, 0x65, 0x50, 0x61, 0x63, 0x6b,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x0a, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x45, 0x6d,
+	0x70, 0x74, 0x79, 0x12, 0x34, 0x0a, 0x0d, 0x47, 0x65, 0x74, 0x52, 0x61, 0x74, 0x65, 0x64, 0x50,
+	0x61, 0x63, 0x6b, 0x73, 0x12, 0x0a, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79,
+	0x1a, 0x17, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x52, 0x61, 0x74, 0x65, 0x64, 0x50, 0x61, 0x63, 0x6b,
+	0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x36, 0x0a, 0x0d, 0x41, 0x73, 0x73,
+	0x69, 0x67, 0x6e, 0x4e, 0x65, 0x77, 0x50, 0x61, 0x63, 0x6b, 0x12, 0x19, 0x2e, 0x61, 0x70, 0x69,
+	0x2e, 0x41, 0x73, 0x73, 0x69, 0x67, 0x6e, 0x4e, 0x65, 0x77, 0x50, 0x61, 0x63, 0x6b, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x0a, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x45, 0x6d, 0x70, 0x74,
+	0x79, 0x42, 0x04, 0x5a, 0x02, 0x2e, 0x2f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -519,7 +793,7 @@ func file_userData_proto_rawDescGZIP() []byte {
 	return file_userData_proto_rawDescData
 }
 
-var file_userData_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
+var file_userData_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
 var file_userData_proto_goTypes = []interface{}{
 	(*GetUserDataRequest)(nil),   // 0: api.GetUserDataRequest
 	(*GetUserDataResponse)(nil),  // 1: api.GetUserDataResponse
@@ -528,20 +802,37 @@ var file_userData_proto_goTypes = []interface{}{
 	(*RegisterUserResponse)(nil), // 4: api.RegisterUserResponse
 	(*LoginUserRequest)(nil),     // 5: api.LoginUserRequest
 	(*LoginUserResponse)(nil),    // 6: api.LoginUserResponse
+	(*LikePackRequest)(nil),      // 7: api.LikePackRequest
+	(*RatePackRequest)(nil),      // 8: api.RatePackRequest
+	(*RatedPacksResponse)(nil),   // 9: api.RatedPacksResponse
+	(*AssignNewPackRequest)(nil), // 10: api.AssignNewPackRequest
+	(*Empty)(nil),                // 11: api.Empty
 }
 var file_userData_proto_depIdxs = []int32{
-	2, // 0: api.GetUserDataResponse.friends:type_name -> api.FriendInfo
-	0, // 1: api.Users.GetUserData:input_type -> api.GetUserDataRequest
-	3, // 2: api.Users.RegisterUser:input_type -> api.RegisterUserRequest
-	5, // 3: api.Users.LoginUser:input_type -> api.LoginUserRequest
-	1, // 4: api.Users.GetUserData:output_type -> api.GetUserDataResponse
-	4, // 5: api.Users.RegisterUser:output_type -> api.RegisterUserResponse
-	6, // 6: api.Users.LoginUser:output_type -> api.LoginUserResponse
-	4, // [4:7] is the sub-list for method output_type
-	1, // [1:4] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	2,  // 0: api.GetUserDataResponse.friends:type_name -> api.FriendInfo
+	0,  // 1: api.Users.GetUserData:input_type -> api.GetUserDataRequest
+	3,  // 2: api.Users.RegisterUser:input_type -> api.RegisterUserRequest
+	5,  // 3: api.Users.LoginUser:input_type -> api.LoginUserRequest
+	7,  // 4: api.Users.LikePack:input_type -> api.LikePackRequest
+	7,  // 5: api.Users.DislikePack:input_type -> api.LikePackRequest
+	8,  // 6: api.Users.RatePack:input_type -> api.RatePackRequest
+	8,  // 7: api.Users.UnratePack:input_type -> api.RatePackRequest
+	11, // 8: api.Users.GetRatedPacks:input_type -> api.Empty
+	10, // 9: api.Users.AssignNewPack:input_type -> api.AssignNewPackRequest
+	1,  // 10: api.Users.GetUserData:output_type -> api.GetUserDataResponse
+	4,  // 11: api.Users.RegisterUser:output_type -> api.RegisterUserResponse
+	6,  // 12: api.Users.LoginUser:output_type -> api.LoginUserResponse
+	11, // 13: api.Users.LikePack:output_type -> api.Empty
+	11, // 14: api.Users.DislikePack:output_type -> api.Empty
+	11, // 15: api.Users.RatePack:output_type -> api.Empty
+	11, // 16: api.Users.UnratePack:output_type -> api.Empty
+	9,  // 17: api.Users.GetRatedPacks:output_type -> api.RatedPacksResponse
+	11, // 18: api.Users.AssignNewPack:output_type -> api.Empty
+	10, // [10:19] is the sub-list for method output_type
+	1,  // [1:10] is the sub-list for method input_type
+	1,  // [1:1] is the sub-list for extension type_name
+	1,  // [1:1] is the sub-list for extension extendee
+	0,  // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_userData_proto_init() }
@@ -634,6 +925,66 @@ func file_userData_proto_init() {
 				return nil
 			}
 		}
+		file_userData_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*LikePackRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_userData_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RatePackRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_userData_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RatedPacksResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_userData_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*AssignNewPackRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_userData_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Empty); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -641,7 +992,7 @@ func file_userData_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_userData_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   7,
+			NumMessages:   12,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
@@ -670,6 +1021,12 @@ type UsersClient interface {
 	GetUserData(ctx context.Context, in *GetUserDataRequest, opts ...grpc.CallOption) (*GetUserDataResponse, error)
 	RegisterUser(ctx context.Context, in *RegisterUserRequest, opts ...grpc.CallOption) (*RegisterUserResponse, error)
 	LoginUser(ctx context.Context, in *LoginUserRequest, opts ...grpc.CallOption) (*LoginUserResponse, error)
+	LikePack(ctx context.Context, in *LikePackRequest, opts ...grpc.CallOption) (*Empty, error)
+	DislikePack(ctx context.Context, in *LikePackRequest, opts ...grpc.CallOption) (*Empty, error)
+	RatePack(ctx context.Context, in *RatePackRequest, opts ...grpc.CallOption) (*Empty, error)
+	UnratePack(ctx context.Context, in *RatePackRequest, opts ...grpc.CallOption) (*Empty, error)
+	GetRatedPacks(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*RatedPacksResponse, error)
+	AssignNewPack(ctx context.Context, in *AssignNewPackRequest, opts ...grpc.CallOption) (*Empty, error)
 }
 
 type usersClient struct {
@@ -707,11 +1064,71 @@ func (c *usersClient) LoginUser(ctx context.Context, in *LoginUserRequest, opts 
 	return out, nil
 }
 
+func (c *usersClient) LikePack(ctx context.Context, in *LikePackRequest, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, "/api.Users/LikePack", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usersClient) DislikePack(ctx context.Context, in *LikePackRequest, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, "/api.Users/DislikePack", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usersClient) RatePack(ctx context.Context, in *RatePackRequest, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, "/api.Users/RatePack", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usersClient) UnratePack(ctx context.Context, in *RatePackRequest, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, "/api.Users/UnratePack", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usersClient) GetRatedPacks(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*RatedPacksResponse, error) {
+	out := new(RatedPacksResponse)
+	err := c.cc.Invoke(ctx, "/api.Users/GetRatedPacks", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usersClient) AssignNewPack(ctx context.Context, in *AssignNewPackRequest, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, "/api.Users/AssignNewPack", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UsersServer is the server API for Users service.
 type UsersServer interface {
 	GetUserData(context.Context, *GetUserDataRequest) (*GetUserDataResponse, error)
 	RegisterUser(context.Context, *RegisterUserRequest) (*RegisterUserResponse, error)
 	LoginUser(context.Context, *LoginUserRequest) (*LoginUserResponse, error)
+	LikePack(context.Context, *LikePackRequest) (*Empty, error)
+	DislikePack(context.Context, *LikePackRequest) (*Empty, error)
+	RatePack(context.Context, *RatePackRequest) (*Empty, error)
+	UnratePack(context.Context, *RatePackRequest) (*Empty, error)
+	GetRatedPacks(context.Context, *Empty) (*RatedPacksResponse, error)
+	AssignNewPack(context.Context, *AssignNewPackRequest) (*Empty, error)
 }
 
 // UnimplementedUsersServer can be embedded to have forward compatible implementations.
@@ -726,6 +1143,24 @@ func (*UnimplementedUsersServer) RegisterUser(context.Context, *RegisterUserRequ
 }
 func (*UnimplementedUsersServer) LoginUser(context.Context, *LoginUserRequest) (*LoginUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LoginUser not implemented")
+}
+func (*UnimplementedUsersServer) LikePack(context.Context, *LikePackRequest) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LikePack not implemented")
+}
+func (*UnimplementedUsersServer) DislikePack(context.Context, *LikePackRequest) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DislikePack not implemented")
+}
+func (*UnimplementedUsersServer) RatePack(context.Context, *RatePackRequest) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RatePack not implemented")
+}
+func (*UnimplementedUsersServer) UnratePack(context.Context, *RatePackRequest) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UnratePack not implemented")
+}
+func (*UnimplementedUsersServer) GetRatedPacks(context.Context, *Empty) (*RatedPacksResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetRatedPacks not implemented")
+}
+func (*UnimplementedUsersServer) AssignNewPack(context.Context, *AssignNewPackRequest) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AssignNewPack not implemented")
 }
 
 func RegisterUsersServer(s *grpc.Server, srv UsersServer) {
@@ -786,6 +1221,114 @@ func _Users_LoginUser_Handler(srv interface{}, ctx context.Context, dec func(int
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Users_LikePack_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LikePackRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsersServer).LikePack(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.Users/LikePack",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsersServer).LikePack(ctx, req.(*LikePackRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Users_DislikePack_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LikePackRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsersServer).DislikePack(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.Users/DislikePack",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsersServer).DislikePack(ctx, req.(*LikePackRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Users_RatePack_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RatePackRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsersServer).RatePack(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.Users/RatePack",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsersServer).RatePack(ctx, req.(*RatePackRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Users_UnratePack_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RatePackRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsersServer).UnratePack(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.Users/UnratePack",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsersServer).UnratePack(ctx, req.(*RatePackRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Users_GetRatedPacks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsersServer).GetRatedPacks(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.Users/GetRatedPacks",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsersServer).GetRatedPacks(ctx, req.(*Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Users_AssignNewPack_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AssignNewPackRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsersServer).AssignNewPack(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.Users/AssignNewPack",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsersServer).AssignNewPack(ctx, req.(*AssignNewPackRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Users_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "api.Users",
 	HandlerType: (*UsersServer)(nil),
@@ -801,6 +1344,30 @@ var _Users_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "LoginUser",
 			Handler:    _Users_LoginUser_Handler,
+		},
+		{
+			MethodName: "LikePack",
+			Handler:    _Users_LikePack_Handler,
+		},
+		{
+			MethodName: "DislikePack",
+			Handler:    _Users_DislikePack_Handler,
+		},
+		{
+			MethodName: "RatePack",
+			Handler:    _Users_RatePack_Handler,
+		},
+		{
+			MethodName: "UnratePack",
+			Handler:    _Users_UnratePack_Handler,
+		},
+		{
+			MethodName: "GetRatedPacks",
+			Handler:    _Users_GetRatedPacks_Handler,
+		},
+		{
+			MethodName: "AssignNewPack",
+			Handler:    _Users_AssignNewPack_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
