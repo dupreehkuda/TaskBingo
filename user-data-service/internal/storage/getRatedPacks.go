@@ -24,7 +24,7 @@ func (s storage) GetRatedPacks() ([]string, error) {
 
 	var resp []string
 
-	if rows.Next() {
+	for rows.Next() {
 		var r string
 		err = rows.Scan(&r)
 		if err != nil {
