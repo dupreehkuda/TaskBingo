@@ -4,11 +4,13 @@ export async function Submit(event: any): Promise<number> {
 
     const login = data.get('login') as string;
     const email = data.get('email') as string;
+    const city = data.get('city') as string;
     const password = data.get('password') as string;
 
     const newResp = {
         login: login,
         email: email,
+        city: city,
         password: password
     }
 

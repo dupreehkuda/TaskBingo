@@ -1,6 +1,6 @@
 <script lang="ts">
     import { Navbar, NavBrand, NavLi, NavUl, NavHamburger } from 'flowbite-svelte'
-    import {onMount} from "svelte";
+    import { onMount } from "svelte";
 
     onMount(() => {
         isAuthorized()
@@ -38,7 +38,7 @@
             <NavLi nonActiveClass="fonty" href="/">Home</NavLi>
             <NavLi nonActiveClass="fonty" href="/about">About</NavLi>
             {#if show}
-                <NavLi nonActiveClass="fonty" href="/account">Account</NavLi>
+                <NavLi nonActiveClass="fonty" href="/account" data-sveltekit-prefetch>Account</NavLi>
             {:else}
                 <NavLi nonActiveClass="fonty" href="/login">Login</NavLi>
             {/if}

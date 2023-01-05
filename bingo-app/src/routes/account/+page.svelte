@@ -1,83 +1,45 @@
 <script lang="ts">
     import { Button, Card } from "flowbite-svelte";
+	import { load } from "./+page";
+    import { onMount } from "svelte";
 
-    const data = {
-        "name":"dupreeh",
-        "city": "Sliema",
-        "wins":7,
-        "lose":3,
-        "scoreboard":1,
-        "friends": [
-            {
-                "name": "zonedberg",
-                "city": "Barcelona",
-                "score":"7/2",
-            },
-            {
-                "name": "estepina",
-                "city": "Moscow",
-                "score":"2/2",
-            },
-            {
-                "name": "hokage",
-                "city": "Japan",
-                "score":"3/4",
-            },
-            {
-                "name": "mrak",
-                "city": "Jopen",
-                "score":"4/2",
-            },
-        ],
-        "packs": [
-            {
-                "name":"First Ever Pack",
-                "tasks": [
-                    "30s guitar solo",
-                    "30 lines of code",
-                    "Learn new dish",
-                    "Room clean up",
-                    "Topic in music theory",
-                    "Read 5 chapters of fiction",
-                    "200 push ups",
-                    "Make complicated origami",
-                    "Make a crossword",
-                    "Practice math exam",
-                    "Write an essay",
-                    "30min sport",
-                    "Topic in finances/economy",
-                    "Make some art",
-                    "Solve linguistic task",
-                    "Learn by heart 30 geo objects",
-                ]
-            }
-        ]
-    }
+    onMount(() => {
+        load
+    })
+
+    export let data;
+    const { userInfo } = data
+
+    console.log(userInfo)
 </script>
+
+<svelte:head>
+    <title>Account</title>
+</svelte:head>
 
 <main>
     <div class="leftspace spacer">
-        <h1>{data.name}
-            <span class="leftspace win">{data.wins}</span>
+        <h1>{userInfo.login}
+            <span class="leftspace win">{userInfo.wins}</span>
             <span>:</span>
-            <span class="lose">{data.lose}</span>
+            <span class="lose">{userInfo.lose}</span>
         </h1>
         
-        <h4>{data.city}</h4>
+        <h4>{userInfo.city}</h4>
 
         <div class="leftspace">
-            <span class="leftspace">Winrate: {(data.wins / (data.wins + data.lose)) * 100}%</span>
-            <span>Scoreboard: {data.scoreboard}</span>
+            <span class="leftspace">Winrate: {userInfo.wins === 0 && userInfo.lose === 0 ? "null" : (userInfo.wins / (userInfo.wins + userInfo.lose)) * 100 + "%"}</span>
+            <span>Scoreboard: {userInfo.scoreboard === 0 ? "null" : userInfo.scoreboard}</span>
         </div>
     </div>
 
     <div class="leftspaceheading"><h3 class="mb-2">Friends</h3></div>
     <div class="scrolling-wrapper spacer">
-        {#each data.friends as friend}
+        {#each userInfo.friends as friend}
             <Card padding="sm" class="card">
                 <div class="flex flex-col items-center pb-4">
                     <div class="mb-1">
-                        <h5>{friend.name}</h5>
+                        <h5>{friend.login}</h5>
                         <span class="text-xs text-gray-300">{friend.city}</span>
                     </div>
                     <span class="text-sm text-gray-300">{friend.score}</span>
@@ -91,7 +53,7 @@
 
     <div class="leftspaceheading"><h3 class="mb-2">Packs</h3></div>
     <div class="scrolling-wrapper spacer packs">
-        {#each data.packs as pack}
+        {#each userInfo.packs as pack}
           <Card size="md" padding="xl" class="card">
             <h5 class="mb-4 text-xl">{pack.name}</h5>
             <ul class="my-7 space-y-2">

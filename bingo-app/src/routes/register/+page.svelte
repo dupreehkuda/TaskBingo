@@ -35,6 +35,11 @@
                     <Input label="Email" id="email" name="email" required placeholder="john@example.com"/>
                 </div>
 
+                <div class="dark mb-4">
+                    <Label color="disabled" for="input-group-1" class="block mb-2">City</Label>
+                    <Input label="City" id="city" name="city" required placeholder="New York"/>
+                </div>
+
                 <Label color="disabled" for="password" class="mb-2">Your password</Label>
                 <ButtonGroup class="dark mb-3 w-full">
                     <InputAddon>
