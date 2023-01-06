@@ -33,7 +33,7 @@ func NewByConfig() *server {
 	log := logger.InitializeLogger()
 	cfg := config.New(log)
 
-	store := storage.New(cfg.DatabasePath, log)
+	store := storage.New(cfg.DatabasePath, cfg.DatabasePass, log)
 
 	proc := processors.New(store, log)
 

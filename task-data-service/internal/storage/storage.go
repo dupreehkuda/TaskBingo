@@ -15,7 +15,7 @@ type storage struct {
 }
 
 // New creates a new instance of database layer and migrates it
-func New(path string, logger *zap.Logger) *storage {
+func New(path, pass string, logger *zap.Logger) *storage {
 	// Wait until database initialize in container
 	time.Sleep(1 * time.Second)
 	rh := rejson.NewReJSONHandler()
@@ -23,8 +23,8 @@ func New(path string, logger *zap.Logger) *storage {
 	logger.Debug("redis", zap.String("path", path))
 	rdb := redis.NewClient(&redis.Options{
 		Addr:     path,
-		Password: "", // no password set
-		DB:       0,  // use default DB
+		Password: pass, // no password set
+		DB:       0,    // use default DB
 	})
 
 	rh.SetGoRedisClient(rdb)
