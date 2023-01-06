@@ -28,8 +28,12 @@
         <h4>{userInfo.city}</h4>
 
         <div class="leftspace">
-            <span class="leftspace">Winrate: {userInfo.wins === 0 && userInfo.lose === 0 ? "null" : (userInfo.wins / (userInfo.wins + userInfo.lose)) * 100 + "%"}</span>
-            <span>Scoreboard: {userInfo.scoreboard === 0 ? "null" : userInfo.scoreboard}</span>
+            {#if userInfo.wins === 0 && userInfo.lose === 0}
+                <span class="leftspace">Here will be your winrate when you play at least one game</span>
+            {:else}
+                <span class="leftspace">Winrate: {userInfo.wins === 0 && userInfo.lose === 0 ? "null" : (userInfo.wins / (userInfo.wins + userInfo.lose)) * 100 + "%"}</span>
+                <span>Scoreboard: {userInfo.scoreboard === 0 ? "null" : userInfo.scoreboard}</span>
+            {/if}
         </div>
     </div>
 
@@ -55,7 +59,7 @@
     <div class="scrolling-wrapper spacer packs">
         {#each userInfo.packs as pack}
           <Card size="md" padding="xl" class="card">
-            <h5 class="mb-4 text-xl">{pack.name}</h5>
+            <h5 class="mb-4 text-xl">{pack.id}</h5>
             <ul class="my-7 space-y-2">
                 {#each pack.tasks as task, i}
                     <li class="flex space-x-2">
@@ -97,11 +101,6 @@
         margin-bottom: 1em;
     }
 
-    .scrolling-wrapper {
-        display: flex;
-        flex-wrap: nowrap;
-    }
-
     .spacer {
         margin-bottom: 2em;
     }
@@ -115,35 +114,10 @@
         font-weight: 300;
         color: #eb1a0f;
     }
-
-    .leftspace {
-        margin-left: 0.35em;
-        text-align: left;
-    }
-
-    .leftspaceheading {
-        margin-left: 0.7em;
-        text-align: left;
-    }
-
-    .packs {
-        max-width: min-content;
-    }
-
     main {
         min-width: 50%;
         text-align: center;
         max-width: max-content;
         margin: 0 auto;
-    }
-
-    div {
-        -ms-overflow-style: none; /* for Internet Explorer, Edge */
-        scrollbar-width: none; /* for Firefox */
-        overflow-y: scroll; 
-    }
-
-    div::-webkit-scrollbar {
-        display: none; /* for Chrome, Safari, and Opera */
     }
 </style>

@@ -3,7 +3,6 @@ package taskClient
 import (
 	"context"
 
-	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
@@ -20,8 +19,6 @@ func (t taskClient) GetTaskPack(packID string) (*models.TaskPack, error) {
 	if statusCode.Code() == codes.NotFound {
 		return nil, errs.ErrNoSuchPack
 	}
-
-	t.logger.Debug("code", zap.String("received code", statusCode.Code().String()))
 
 	tasks := models.TaskPack{
 		TaskID: resp.Id,

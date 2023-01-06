@@ -36,3 +36,36 @@ body {
     margin-left: 0.35em;
     margin-right: 0.35em;
 }
+
+.scrolling-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.spacer {
+    margin-bottom: 2em;
+}
+
+.packs {
+    max-width: min-content;
+}
+
+div {
+    -ms-overflow-style: none; /* for Internet Explorer, Edge */
+    scrollbar-width: none; /* for Firefox */
+    overflow-y: scroll; 
+}
+
+div::-webkit-scrollbar {
+    display: none; /* for Chrome, Safari, and Opera */
+}
+
+.leftspace {
+    margin-left: 0.35em;
+    text-align: left;
+}
+
+.leftspaceheading {
+    margin-left: 0.7em;
+    text-align: left;
+}

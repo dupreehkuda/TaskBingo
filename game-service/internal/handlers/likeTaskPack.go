@@ -43,7 +43,7 @@ func (h handlers) LikeTaskPack(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Add("Access-Control-Allow-Credentials", "true")
-	w.Header().Add("Access-Control-Allow-Origin", "https://taskbingo.com")
+	w.Header().Add("Access-Control-Allow-Origin", "*")
 }
 
 // DislikeTaskPack handles user's dislike operations

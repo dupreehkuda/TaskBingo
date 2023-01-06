@@ -1,24 +1,26 @@
 <script lang="ts">
-    import type { PageData } from './$types';
-    import { Button, Card } from "flowbite-svelte";
-	import { Rate, Like, load } from "./+page";
-    import { onMount } from "svelte";
+    // import type { PageData } from './$types';
+    // import { Button, Card } from "flowbite-svelte";
+	// // import { load } from "./+page.server";
+    // import { onMount } from "svelte";
 
-    onMount(() => {
-        load
-    })
+    // onMount(() => {
+    //     load
+    // })
 
-    export let data: PageData;
-    const { packs } = data
+    // export let data: PageData;
+    // const { people } = data
+
 </script>
 
 <svelte:head>
-    <title>Packs</title>
+    <title>People</title>
 </svelte:head>
 
 <main>
-    <div class="scrolling-wrapper spacer">
-        {#each packs as pack}
+    <h5>Nothing here</h5>
+    <div class="scrolling-wrapper spacer packs">
+        <!-- {#each packs as pack}
             <div>
                 <Card size="sm" padding="sm" class="card">
                     <h5 class="mb-4 text-xl">{pack.id}</h5>
@@ -29,20 +31,19 @@
                                 <span class="leading-tight text-gray-300">{task}</span>
                             </li>
                         {/each}
-                    <!-- <Button class="fonty dark w-full">Choose pack</Button> -->
                     <li style="margin-top:2em" class="flex space-x-2">
                         <Button class="fonty dark w-full">Play</Button>
-                        <Button class="fonty dark w-full" on:click={() => Rate(pack.id)}><img src="star-regular.svg" alt="regular star"/></Button>
-                        <Button class="fonty dark w-full" on:click={() => Like(pack.id)}><img src="heart-regular.svg" alt="regular heart"/></Button>
+                        <Button class="fonty dark w-full" on:click={rate}><img src="star-regular.svg" alt="filled star"/></Button>
+                        <Button class="fonty dark w-full" on:click={like}><img src="heart-regular.svg" alt="filled star"/></Button>
                     </li>
                 </Card>
             </div>
-        {/each}
+        {/each} -->
     </div>
 </main>
 
 <style>
-    span {
+    /* span {
         text-align: left;
         font-weight: 300;
     }
@@ -53,12 +54,8 @@
         margin: 0 auto;
     }
 
-    /* .icons {
-        max-block-size: 150%;
-    } */
-
     img {
         size-adjust: 150%;
         block-size: 150%;
-    }
+    } */
 </style>

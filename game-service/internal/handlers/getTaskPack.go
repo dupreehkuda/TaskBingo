@@ -56,7 +56,7 @@ func (h handlers) GetTaskPack(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Add("Access-Control-Allow-Credentials", "true")
-	w.Header().Add("Access-Control-Allow-Origin", "https://taskbingo.com")
+	w.Header().Add("Access-Control-Allow-Origin", "*")
 
 	_, err = w.Write(resultJSON)
 	if err != nil {

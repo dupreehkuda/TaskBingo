@@ -41,7 +41,7 @@ func (h handlers) LoginUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Add("Access-Control-Allow-Credentials", "true")
-	w.Header().Add("Access-Control-Allow-Origin", "https://taskbingo.com")
+	w.Header().Add("Access-Control-Allow-Origin", "*")
 
 	http.SetCookie(w, &http.Cookie{
 		Name:   "auth",

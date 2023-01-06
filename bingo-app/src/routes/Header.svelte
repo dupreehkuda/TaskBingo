@@ -35,7 +35,10 @@
         </NavBrand>
         <NavHamburger on:click={toggle}/>
         <NavUl {hidden}>
-            <NavLi nonActiveClass="fonty" href="/">Home</NavLi>
+            {#if show}
+                <NavLi nonActiveClass="fonty" href="/people" data-sveltekit-prefetch>People</NavLi>
+                <NavLi nonActiveClass="fonty" href="/packs" data-sveltekit-prefetch>Packs</NavLi>
+            {/if}
             <NavLi nonActiveClass="fonty" href="/about">About</NavLi>
             {#if show}
                 <NavLi nonActiveClass="fonty" href="/account" data-sveltekit-prefetch>Account</NavLi>

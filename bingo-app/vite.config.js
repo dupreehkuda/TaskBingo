@@ -8,7 +8,7 @@ const config = {
 		strictPort:false,
 	},
 	preview:{
-	port:4173,
+	port:3000,
 		strictPort:false,
 	}
 };
