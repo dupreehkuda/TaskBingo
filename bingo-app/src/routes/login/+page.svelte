@@ -27,8 +27,6 @@
             body: JSON.stringify(newResp)
         })
 
-        console.log(res.headers.get("set-cookie"))
-
         const json = await res.json()
         console.log(JSON.stringify(json))
     }

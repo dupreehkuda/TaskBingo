@@ -8,6 +8,9 @@
         load
     })
 
+    $: liked = false
+    $: rated = false
+
     export let data: PageData;
     const { packs } = data
 </script>
@@ -29,12 +32,28 @@
                                 <span class="leading-tight text-gray-300">{task}</span>
                             </li>
                         {/each}
-                    <!-- <Button class="fonty dark w-full">Choose pack</Button> -->
-                    <li style="margin-top:2em" class="flex space-x-2">
-                        <Button class="fonty dark w-full">Play</Button>
-                        <Button class="fonty dark w-full" on:click={() => Rate(pack.id)}><img src="star-regular.svg" alt="regular star"/></Button>
-                        <Button class="fonty dark w-full" on:click={() => Like(pack.id)}><img src="heart-regular.svg" alt="regular heart"/></Button>
-                    </li>
+
+                        <div>
+                            <li style="margin-top:2em" class="flex space-x-2">
+                                <Button class="fonty dark w-full">Play</Button>
+        
+                                <Button class="fonty dark w-full" on:click={() => Rate(pack.id, rated)} on:click={() => (rated = !rated)}>
+                                    {#if rated}
+                                        <img src="star-solid.svg" alt="solid star"/>
+                                    {:else}
+                                        <img src="star-regular.svg" alt="regular star"/>
+                                    {/if}
+                                </Button>
+        
+                                <Button class="fonty dark w-full" on:click={() => Like(pack.id, liked)} on:click={() => (liked = !liked)}>
+                                    {#if liked}
+                                        <img src="heart-solid.svg" alt="solid heart"/>
+                                    {:else}
+                                        <img src="heart-regular.svg" alt="regular heart"/>
+                                    {/if}
+                                </Button>
+                            </li>
+                        </div>
                 </Card>
             </div>
         {/each}
