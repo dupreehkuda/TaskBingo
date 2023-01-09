@@ -2,33 +2,31 @@
     import { ButtonGroup, InputAddon, Label, Input, Button } from 'flowbite-svelte'
 
     let show = false;
+    let logined = false;
 
-    async function submit(e) {
+    async function submit(e: any) {
         e.preventDefault()
 
         const formData = new FormData(e.target);
-        const data = {};
+        const data: any = {};
         for (let field of formData) {
             const [key, value] = field;
             data[key] = value;
         }
 
-        const newResp = {
+        const newReq = {
             login: data.login,
             password: data.password
         }
 
-        console.log(data)
-        console.log(JSON.stringify(newResp))
-
         const res = await fetch('https://taskbingo.com/api/user/login', {
             method: 'POST',
             headers: {'Origin': 'taskbingo.com'},
-            body: JSON.stringify(newResp)
+            body: JSON.stringify(newReq)
         })
-
-        const json = await res.json()
-        console.log(JSON.stringify(json))
+        
+        // todo: logic for redirect
+        if (res.ok) { logined = true }
     }
 </script>
 

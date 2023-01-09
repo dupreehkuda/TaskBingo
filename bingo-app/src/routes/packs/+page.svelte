@@ -1,12 +1,7 @@
 <script lang="ts">
     import type { PageData } from './$types';
     import { Button, Card } from "flowbite-svelte";
-	import { Rate, Like, load } from "./+page";
-    import { onMount } from "svelte";
-
-    onMount(() => {
-        load
-    })
+	import { Rate, Like } from "./+page";
 
     $: liked = false
     $: rated = false

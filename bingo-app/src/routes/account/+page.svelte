@@ -1,16 +1,7 @@
 <script lang="ts">
     import { Button, Card } from "flowbite-svelte";
-	import { load } from "./+page";
-    import { onMount } from "svelte";
 
-    onMount(() => {
-        load
-    })
-
-    export let data;
-    const { userInfo } = data
-
-    console.log(userInfo)
+    import Account from "../accountStore";
 </script>
 
 <svelte:head>
@@ -19,27 +10,27 @@
 
 <main>
     <div class="leftspace spacer">
-        <h1>{userInfo.login}
-            <span class="leftspace win">{userInfo.wins}</span>
+        <h1>{$Account.login}
+            <span class="leftspace win">{$Account.wins}</span>
             <span>:</span>
-            <span class="lose">{userInfo.lose}</span>
+            <span class="lose">{$Account.lose}</span>
         </h1>
         
-        <h4>{userInfo.city}</h4>
+        <h4>{$Account.city}</h4>
 
         <div class="leftspace">
-            {#if userInfo.wins === 0 && userInfo.lose === 0}
+            {#if $Account.wins === 0 && $Account.lose === 0}
                 <span class="leftspace">Here will be your winrate when you play at least one game</span>
             {:else}
-                <span class="leftspace">Winrate: {userInfo.wins === 0 && userInfo.lose === 0 ? "null" : (userInfo.wins / (userInfo.wins + userInfo.lose)) * 100 + "%"}</span>
-                <span>Scoreboard: {userInfo.scoreboard === 0 ? "null" : userInfo.scoreboard}</span>
+                <span class="leftspace">Winrate: {$Account.wins === 0 && $Account.lose === 0 ? "null" : ($Account.wins / ($Account.wins + $Account.lose)) * 100 + "%"}</span>
+                <span>Scoreboard: {$Account.scoreboard === 0 ? "null" : $Account.scoreboard}</span>
             {/if}
         </div>
     </div>
 
     <div class="leftspaceheading"><h3 class="mb-2">Friends</h3></div>
     <div class="scrolling-wrapper spacer">
-        {#each userInfo.friends as friend}
+        {#each $Account.friends as friend}
             <Card padding="sm" class="card">
                 <div class="flex flex-col items-center pb-4">
                     <div class="mb-1">
@@ -57,7 +48,7 @@
 
     <div class="leftspaceheading"><h3 class="mb-2">Packs</h3></div>
     <div class="scrolling-wrapper spacer packs">
-        {#each userInfo.packs as pack}
+        {#each $Account.packs as pack}
           <Card size="md" padding="xl" class="card">
             <h5 class="mb-4 text-xl">{pack.id}</h5>
             <ul class="my-7 space-y-2">
