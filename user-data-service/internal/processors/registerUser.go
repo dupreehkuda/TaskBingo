@@ -2,6 +2,8 @@ package processors
 
 import (
 	"go.uber.org/zap"
+	"golang.org/x/text/cases"
+	"golang.org/x/text/language"
 
 	errs "github.com/dupreehkuda/TaskBingo/user-data-service/internal/customErrors"
 )
@@ -26,7 +28,7 @@ func (p processor) RegisterUser(login, password, email, city string) error {
 
 	passwordHash := mdHash(password, passwordSalt)
 
-	err = p.storage.CreateUser(login, email, passwordHash, passwordSalt, city)
+	err = p.storage.CreateUser(login, email, passwordHash, passwordSalt, cases.Title(language.English).String(city))
 	if err != nil {
 		p.logger.Error("User creation db error", zap.Error(err))
 		return err

@@ -18,6 +18,7 @@ type Handlers interface {
 	RateTaskPack(w http.ResponseWriter, r *http.Request)
 	UnrateTaskPack(w http.ResponseWriter, r *http.Request)
 	GetRatedPacks(w http.ResponseWriter, r *http.Request)
+	GetAllUsers(w http.ResponseWriter, r *http.Request)
 }
 
 // UserDataClient is an interface for user data service
@@ -31,6 +32,7 @@ type UserDataClient interface {
 	RateTaskPack(pack string) error
 	UnrateTaskPack(pack string) error
 	AssignNewPack(login, pack string) error
+	GetAllUsers() (*[]models.User, error)
 }
 
 // TaskDataClient is an interface for task data service
@@ -57,4 +59,5 @@ type Processor interface {
 	RateTaskPack(pack string) error
 	UnrateTaskPack(pack string) error
 	GetRatedPacks() (*[]models.TaskPack, error)
+	GetAllUsers() (*[]models.User, error)
 }

@@ -72,3 +72,8 @@ type UserAccountInfoResponse struct {
 	Friends    []FriendsInfo `json:"friends"`
 	Packs      []string      `json:"packs"`
 }
+
+type User struct {
+	Login string `json:"login"`
+	City  string `json:"city"`
+}

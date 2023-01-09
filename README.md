@@ -23,7 +23,7 @@ using p5.js and ngrok. It looked kinda quirky:
 
 At the end of the lockdown, I lost the game, but we figured out how to work at home, stay productive and not go insane.
 
-A lot has changed since then, and I still want to beat him but not in the game, but in app creation, as you already noticed. 
+A lot has changed since then, and I still want to beat him but not in the game, but in app creation, as you maybe noticed. 
 I wanted to do it in late May'22 with React.js [(you can check it here)](https://github.com/dupreehkuda/ReactiveBingo), 
 but I understood it was not the right time for revenge.
 

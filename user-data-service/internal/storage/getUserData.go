@@ -9,12 +9,12 @@ import (
 )
 
 // GetUserData retrieves user data from database
-func (s storage) GetUserData(login string) (models.GetUserDataResponse, error) {
+func (s storage) GetUserData(login string) (*models.GetUserDataResponse, error) {
 	ctx := context.Background()
 	conn, err := s.pool.Acquire(ctx)
 	if err != nil {
 		s.logger.Error("Error while acquiring connection", zap.Error(err))
-		return models.GetUserDataResponse{}, err
+		return &models.GetUserDataResponse{}, err
 	}
 	defer conn.Release()
 
@@ -24,8 +24,8 @@ func (s storage) GetUserData(login string) (models.GetUserDataResponse, error) {
 	err = row.Scan(&resp.Login, &resp.City, &resp.Wins, &resp.Lose, &resp.Scoreboard, &resp.Friends, &resp.Packs)
 	if err != nil {
 		s.logger.Error("Error when executing statement", zap.Error(err))
-		return resp, err
+		return &resp, err
 	}
 
-	return resp, nil
+	return &resp, nil
 }

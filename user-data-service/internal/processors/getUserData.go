@@ -14,5 +14,5 @@ func (p processor) GetUserData(userId string) (*models.GetUserDataResponse, erro
 		return nil, err
 	}
 
-	return &resp, nil
+	return resp, nil
 }

@@ -22,3 +22,8 @@ type LoginUserResponse struct {
 	PasswordHash string `db:"passwordhash"`
 	PasswordSalt string `db:"passwordsalt"`
 }
+
+type AllUsers struct {
+	Login string `json:"login"`
+	City  string `json:"city"`
+}

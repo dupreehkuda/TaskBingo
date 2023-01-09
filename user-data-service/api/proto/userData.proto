@@ -14,6 +14,7 @@ service Users {
   rpc UnratePack(RatePackRequest) returns (Empty);
   rpc GetRatedPacks(Empty) returns (RatedPacksResponse);
   rpc AssignNewPack(AssignNewPackRequest) returns (Empty);
+  rpc GetAllPeople(Empty) returns (People);
 }
 
 message GetUserDataRequest {
@@ -72,6 +73,15 @@ message RatedPacksResponse {
 message AssignNewPackRequest {
   string login = 1;
   string pack = 2;
+}
+
+message PersonInfo {
+  string login = 1;
+  string city = 2;
+}
+
+message People {
+  repeated PersonInfo person = 1;
 }
 
 message Empty {}

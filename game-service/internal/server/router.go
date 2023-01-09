@@ -19,11 +19,12 @@ func (a api) router() http.Handler {
 			r.Group(func(r chi.Router) {
 				r.Use(a.middleware.CheckToken)
 
-				r.Post("/getUserData", a.handlers.GetUserData)
+				r.Get("/getUserData", a.handlers.GetUserData)
 				r.Post("/likePack", a.handlers.LikeTaskPack)
 				r.Post("/dislikePack", a.handlers.DislikeTaskPack)
 				r.Post("/ratePack", a.handlers.RateTaskPack)
 				r.Post("/unratePack", a.handlers.UnrateTaskPack)
+				r.Get("/getAllUsers", a.handlers.GetAllUsers)
 			})
 		})
 
