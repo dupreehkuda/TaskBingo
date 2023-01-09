@@ -1,7 +1,7 @@
 import type { PageLoad } from './$types';
 
 export const load = (async ({ fetch }) => {
-  const res = await fetch('https://taskbingo.com/api/user/getUsers', {
+  const res = await fetch('https://taskbingo.com/api/user/getAllUsers', {
     method: 'GET',
     headers: {'Origin': 'taskbingo.com'},
   })

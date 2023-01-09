@@ -3,7 +3,7 @@ import Account from '../accountStore'
 
 export const load = (async ({ fetch }) => {
   const res = await fetch('https://taskbingo.com/api/user/getUserData', {
-        method: 'POST',
+        method: 'GET',
         headers: {'Origin': 'taskbingo.com'},
     })
 
