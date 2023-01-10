@@ -12,34 +12,41 @@
     <body>
         <h1>About</h1>
         <p>Made by @dupreehkuda</p>
-        <a class="link" href="https://github.com/dupreehkuda/taskbingo">Github</a>
+        <p>Repo on <a class="link" href="https://github.com/dupreehkuda/taskbingo">Github</a></p>
     </body>
 </div>
 <div class="text">
     <Timeline>
-      <TimelineItem customTimeClass="text" title="Rebirth" date="January 2023">
+      <TimelineItem date="January 2023">
+        <h3>New Era</h3>
         <p class="mb-4 text-base font-normal">
-          Yep. This is a perfect pet-project
+          Yep. This is a perfect pet-project to work with SvelteKit, gRPC, Redis, microservices and also help
+          some people to be more productive and happy.
         </p>
       </TimelineItem>
-      <TimelineItem customTimeClass="text" title="Rebirth" date="December 2022">
+      <TimelineItem date="December 2022">
+        <h3>Rebirth</h3>
         <p class="mb-4 text-base font-normal">
-          Wait a minuite, this app can help a lot of people, maybe this is the perfect pet-project...
+          Wait a minuite, this app can help a lot of people, maybe I can make a pet-project out of it to learn nowadays
+          industry technologies, concepts, standarts...
         </p>
       </TimelineItem>
-      <TimelineItem title="End of task bingo" date="August 2020">
+      <TimelineItem date="August 2020">
+        <h3>End of task bingo</h3>
         <p class="mb-4 text-base font-normal">
           The quarantine ended. We were focused, productive, sporty and happy. 
-          That was time to move on and files of original bingo was lost in abbys of other projects, plans and routine.
+          That was time to move on and files of the original bingo was lost in abbys of other projects, plans and routine.
         </p>
       </TimelineItem>
-      <TimelineItem title="First steps" date="June 2020">
+      <TimelineItem date="June 2020">
+        <h3>First steps</h3>
         <p class="text-base font-normal">
           Very quirky version was built quick and dirty, 
-          so two people could at least start playing and be more productive
+          so two people could at least start playing and be more productive.
         </p>
       </TimelineItem>
-      <TimelineItem title="The birth of the idea" date="May 2020">
+      <TimelineItem date="May 2020">
+        <h3>The birth of the idea</h3>
         <p class="text-base font-normal">
           Covid lockdowns. Decreased productivity. Feeling depressed.
           The idea of task bingo was born and implemented then. Yeah.
@@ -52,7 +59,8 @@
 <style>
     .link {
         font-family: Unbounded;
-        color: #2ee6e3;
+        color: #23ebe7;
+        font-weight: 400;
     }
 
     .text {
@@ -72,6 +80,12 @@
         padding-inline: 1em;
         font-family: Unbounded;
         font-size: medium;
-        font-weight: 300;
+        font-weight: 200;
+        color: aliceblue;
+    }
+
+    h3 {
+      font-weight: 400;
+      color: aliceblue;
     }
 </style>
