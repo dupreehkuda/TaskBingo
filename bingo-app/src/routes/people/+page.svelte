@@ -51,7 +51,6 @@
         background-color: #0f4879;
         margin-bottom: 0.5em;
         padding: 0.6em;
-        min-width: 23em;
-        
+        min-width: 23em; 
     }
 </style>

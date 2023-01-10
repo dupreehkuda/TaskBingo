@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Button, Card } from "flowbite-svelte";
+    import { Button } from "flowbite-svelte";
 
     import Account from "../accountStore";
 </script>
@@ -9,58 +9,60 @@
 </svelte:head>
 
 <main>
-    <div class="leftspace spacer">
+    <div class="leftalign spacer">
         <h1>{$Account.login}
-            <span class="leftspace win">{$Account.wins}</span>
+            <span class="leftalign win">{$Account.wins}</span>
             <span>:</span>
             <span class="lose">{$Account.lose}</span>
         </h1>
         
         <h4>{$Account.city}</h4>
 
-        <div class="leftspace">
+        <div class="leftalign">
             {#if $Account.wins === 0 && $Account.lose === 0}
-                <span class="leftspace">Here will be your winrate when you play at least one game</span>
+                <span class="leftalign">Here will be your winrate when you play at least one game</span>
             {:else}
-                <span class="leftspace">Winrate: {$Account.wins === 0 && $Account.lose === 0 ? "null" : ($Account.wins / ($Account.wins + $Account.lose)) * 100 + "%"}</span>
+                <span class="leftalign">Winrate: {$Account.wins === 0 && $Account.lose === 0 ? "null" : ($Account.wins / ($Account.wins + $Account.lose)) * 100 + "%"}</span>
                 <span>Scoreboard: {$Account.scoreboard === 0 ? "null" : $Account.scoreboard}</span>
             {/if}
         </div>
     </div>
 
     <div class="leftspaceheading"><h3 class="mb-2">Friends</h3></div>
-    <div class="scrolling-wrapper spacer">
+    <div class="leftspace scrolling-wrapper">
         {#each $Account.friends as friend}
-            <Card padding="sm" class="card">
-                <div class="flex flex-col items-center pb-4">
-                    <div class="mb-1">
-                        <h5>{friend.login}</h5>
-                        <span class="text-xs text-gray-300">{friend.city}</span>
-                    </div>
-                    <span class="text-sm text-gray-300">{friend.score}</span>
-                    <div class="flex mt-4 space-x-3 lg:mt-6">
-                        <Button class="dark fonty dark:text-white">Play</Button>
-                    </div>
+            <div class="friend flex flex-col">
+                <div class="basis-2/3">
+                    <h5>{friend.login}</h5>
+                    <span class="text-xs text-gray-300">{friend.city}</span>
                 </div>
-            </Card>
+                
+                <div class="flex flex-col basis-1/3">
+                    <Button class="fonty">Play</Button>
+                </div>
+            </div>
         {/each}
     </div>
 
     <div class="leftspaceheading"><h3 class="mb-2">Packs</h3></div>
-    <div class="scrolling-wrapper spacer packs">
+    <div class="leftspace scrolling-wrapper spacer">
         {#each $Account.packs as pack}
-          <Card size="md" padding="xl" class="card">
-            <h5 class="mb-4 text-xl">{pack.id}</h5>
-            <ul class="my-7 space-y-2">
-                {#each pack.tasks as task, i}
-                    <li class="flex space-x-2">
-                        <span class="leading-tight">{i+1}</span>
-                        <span class="leading-tight text-gray-300">{task}</span>
-                    </li>
-                {/each}
-            <Button class="fonty dark w-full">Choose pack</Button>
-          </Card>
-          {/each}
+            <div class="pack flex flex-col">
+                <h5 class="mb-2 text-xl">{pack.id}</h5>
+                <ul class="my-1 space-y-1.5">
+                    {#each pack.tasks as task, i}
+                        <li class="flex flex-row leftspace">
+                            <span class="basis-1/5 leading-tight">{i+1}</span>
+                            <span class="basis-4/5 leading-tight text-gray-300">{task}</span>
+                        </li>
+                    {/each}
+
+                    <div class="flex flex-col">
+                        <Button class="fonty">Choose pack</Button>
+                    </div>
+                </ul>
+            </div>
+        {/each}
     </div>
 </main>
 
@@ -110,5 +112,23 @@
         text-align: center;
         max-width: max-content;
         margin: 0 auto;
+    }
+
+    .pack {
+        border-radius: 10px; 
+        background-color: #0f4879;
+        margin-bottom: 0.5em;
+        padding: 0.6em;
+        /* min-width: 23em;  */
+    }
+
+    .friend {
+        border-radius: 10px; 
+        background-color: #0f4879;
+        margin-bottom: 1em;
+        padding: 0.5em;
+        padding-top: 1em;
+        min-height: 9em;
+        min-width: 10em;
     }
 </style>

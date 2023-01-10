@@ -15,10 +15,10 @@
 <main>
     <div class="scrolling-wrapper spacer">
         {#each packs as pack}
-            <div>
-                <Card size="sm" padding="sm" class="card">
-                    <h5 class="mb-4 text-xl">{pack.id}</h5>
-                    <ul class="my-7 space-y-2">
+            <div class="rectangle flex flex-col">
+                <!-- <Card size="sm" padding="sm" class="card"> -->
+                    <h5 class="mb-2 text-xl">{pack.id}</h5>
+                    <ul class="my-1 space-y-1.5">
                         {#each pack.tasks as task, i}
                             <li class="flex space-x-2">
                                 <span class="leading-tight">{i+1}</span>
@@ -26,9 +26,9 @@
                             </li>
                         {/each}
 
-                        <div>
-                            <li style="margin-top:2em" class="flex space-x-2">
-                                <Button class="fonty dark w-full">Play</Button>
+                        <div class="flex flex-col">
+                            <li class="flex space-x-2">
+                                <Button class="basis-4/5 fonty">Play</Button>
         
                                 <!-- <Button class="fonty dark w-full" on:click={() => Rate(pack.id, rated)} on:click={() => (rated = !rated)}>
                                     {#if rated}
@@ -38,7 +38,7 @@
                                     {/if}
                                 </Button> -->
         
-                                <Button class="fonty dark w-full" on:click={() => Like(pack, $Account?.packs.some(e => e.id === pack.id))}>
+                                <Button class="basis-1/5" color="light" on:click={() => Like(pack, $Account?.packs.some(e => e.id === pack.id))}>
                                     {#if $Account?.packs.some(e => e.id === pack.id)}
                                         <img src="heart-solid.svg" alt="solid heart"/>
                                     {:else}
@@ -47,7 +47,8 @@
                                 </Button>
                             </li>
                         </div>
-                </Card>
+                        </ul>
+                <!-- </Card> -->
             </div>
         {/each}
     </div>
@@ -65,12 +66,16 @@
         margin: 0 auto;
     }
 
-    /* .icons {
-        max-block-size: 150%;
-    } */
-
     img {
         size-adjust: 150%;
         block-size: 150%;
+    }
+
+    .rectangle {
+        border-radius: 10px; 
+        background-color: #0f4879;
+        /* margin-bottom: 0.5em; */
+        padding: 0.6em;
+        min-width: 23em; 
     }
 </style>
