@@ -73,6 +73,4 @@ func (s storage) CreateSchema() {
 	if err != nil {
 		s.logger.Error("Error occurred while executing schema", zap.Error(err))
 	}
-
-	s.logger.Info("Launched with pgx. Database created.")
 }

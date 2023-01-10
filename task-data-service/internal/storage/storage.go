@@ -20,7 +20,6 @@ func New(path, pass string, logger *zap.Logger) *storage {
 	time.Sleep(1 * time.Second)
 	rh := rejson.NewReJSONHandler()
 
-	logger.Debug("redis", zap.String("path", path))
 	rdb := redis.NewClient(&redis.Options{
 		Addr:     path,
 		Password: pass, // no password set
