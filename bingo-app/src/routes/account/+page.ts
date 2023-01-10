@@ -3,11 +3,11 @@ import Account from '../accountStore'
 
 export const load = (async ({ fetch }) => {
   const res = await fetch('https://taskbingo.com/api/user/getUserData', {
-        method: 'GET',
-        headers: {'Origin': 'taskbingo.com'},
-    })
+    method: 'GET',
+    headers: {'Origin': 'taskbingo.com'},
+  })
 
-    const userInfo = await res.json()
+  const userInfo = await res.json()
 
-    Account.set(userInfo)
+  Account.set(userInfo)
 }) satisfies PageLoad;

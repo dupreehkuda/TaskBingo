@@ -1,10 +1,8 @@
 <script lang="ts">
     import type { PageData } from './$types';
     import { Button, Card } from "flowbite-svelte";
-	import { Rate, Like } from "./+page";
-
-    $: liked = false
-    $: rated = false
+	import { Like } from "./+page";
+    import Account from "../accountStore";
 
     export let data: PageData;
     const { packs } = data
@@ -32,16 +30,16 @@
                             <li style="margin-top:2em" class="flex space-x-2">
                                 <Button class="fonty dark w-full">Play</Button>
         
-                                <Button class="fonty dark w-full" on:click={() => Rate(pack.id, rated)} on:click={() => (rated = !rated)}>
+                                <!-- <Button class="fonty dark w-full" on:click={() => Rate(pack.id, rated)} on:click={() => (rated = !rated)}>
                                     {#if rated}
                                         <img src="star-solid.svg" alt="solid star"/>
                                     {:else}
                                         <img src="star-regular.svg" alt="regular star"/>
                                     {/if}
-                                </Button>
+                                </Button> -->
         
-                                <Button class="fonty dark w-full" on:click={() => Like(pack.id, liked)} on:click={() => (liked = !liked)}>
-                                    {#if liked}
+                                <Button class="fonty dark w-full" on:click={() => Like(pack, $Account?.packs.some(e => e.id === pack.id))}>
+                                    {#if $Account?.packs.some(e => e.id === pack.id)}
                                         <img src="heart-solid.svg" alt="solid heart"/>
                                     {:else}
                                         <img src="heart-regular.svg" alt="regular heart"/>
