@@ -18,7 +18,7 @@ func (s storage) GetAllUsers() (*[]models.AllUsers, error) {
 	}
 	defer conn.Release()
 
-	rows, err := conn.Query(ctx, "SELECT login, city FROM users ORDER BY scoreboard DESC;")
+	rows, err := conn.Query(ctx, "SELECT login, city FROM users ORDER BY bingo DESC;")
 	if err != nil {
 		s.logger.Error("Error while executing query", zap.Error(err))
 		return nil, err

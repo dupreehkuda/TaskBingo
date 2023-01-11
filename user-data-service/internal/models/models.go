@@ -3,18 +3,18 @@ package models
 type FriendsInfo struct {
 	Login string `json:"login"`
 	City  string `json:"city"`
-	Score string `json:"score"`
+	Bingo string `json:"bingo"`
 }
 
 // GetUserDataResponse provides response for user data request
 type GetUserDataResponse struct {
-	Login      string        `json:"login"`
-	City       string        `json:"city"`
-	Wins       int           `json:"wins"`
-	Lose       int           `json:"lose"`
-	Scoreboard int           `json:"scoreboard"`
-	Friends    []FriendsInfo `json:"friends"`
-	Packs      []string      `json:"packs"`
+	Login   string        `json:"login"`
+	City    string        `json:"city"`
+	Wins    int           `json:"wins"`
+	Lose    int           `json:"lose"`
+	Bingo   int           `json:"bingo"`
+	Friends []FriendsInfo `json:"friends"`
+	Packs   []string      `json:"packs"`
 }
 
 // LoginUserResponse provides response for user login request

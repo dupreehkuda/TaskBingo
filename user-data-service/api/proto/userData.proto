@@ -26,7 +26,7 @@ message GetUserDataResponse {
   string city = 2;
   int32 wins = 3;
   int32 loses = 4;
-  int32 scoreboard = 5;
+  int32 bingo = 5;
   repeated FriendInfo friends = 6;
   repeated string packs = 7;
 }
@@ -34,7 +34,7 @@ message GetUserDataResponse {
 message FriendInfo {
   string login = 1;
   string city = 2;
-  string score = 3;
+  string bingo = 3;
 }
 
 message RegisterUserRequest {

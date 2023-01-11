@@ -49,28 +49,28 @@ type TaskPackRequest struct {
 type FriendsInfo struct {
 	Login string `json:"login"`
 	City  string `json:"city"`
-	Score string `json:"score"`
+	Bingo string `json:"bingo"`
 }
 
 // UserAccountInfo provides basic account info
 type UserAccountInfo struct {
-	Login      string        `json:"login"`
-	City       string        `json:"city"`
-	Wins       int           `json:"wins"`
-	Lose       int           `json:"lose"`
-	Scoreboard int           `json:"scoreboard"`
-	Friends    []FriendsInfo `json:"friends"`
-	Packs      []TaskPack    `json:"packs"`
+	Login   string        `json:"login"`
+	City    string        `json:"city"`
+	Wins    int           `json:"wins"`
+	Lose    int           `json:"lose"`
+	Bingo   int           `json:"bingo"`
+	Friends []FriendsInfo `json:"friends"`
+	Packs   []TaskPack    `json:"packs"`
 }
 
 type UserAccountInfoResponse struct {
-	Login      string        `json:"login"`
-	City       string        `json:"city"`
-	Wins       int           `json:"wins"`
-	Lose       int           `json:"lose"`
-	Scoreboard int           `json:"scoreboard"`
-	Friends    []FriendsInfo `json:"friends"`
-	Packs      []string      `json:"packs"`
+	Login   string        `json:"login"`
+	City    string        `json:"city"`
+	Wins    int           `json:"wins"`
+	Lose    int           `json:"lose"`
+	Bingo   int           `json:"bingo"`
+	Friends []FriendsInfo `json:"friends"`
+	Packs   []string      `json:"packs"`
 }
 
 type User struct {

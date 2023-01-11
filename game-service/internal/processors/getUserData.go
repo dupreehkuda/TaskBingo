@@ -15,13 +15,13 @@ func (p processor) GetUserData(login string) (*models.UserAccountInfo, error) {
 	}
 
 	resp := &models.UserAccountInfo{
-		Login:      userInfo.Login,
-		City:       userInfo.City,
-		Wins:       userInfo.Wins,
-		Lose:       userInfo.Lose,
-		Scoreboard: userInfo.Scoreboard,
-		Friends:    userInfo.Friends,
-		Packs:      []models.TaskPack{},
+		Login:   userInfo.Login,
+		City:    userInfo.City,
+		Wins:    userInfo.Wins,
+		Lose:    userInfo.Lose,
+		Bingo:   userInfo.Bingo,
+		Friends: userInfo.Friends,
+		Packs:   []models.TaskPack{},
 	}
 
 	if len(userInfo.Packs) != 0 {

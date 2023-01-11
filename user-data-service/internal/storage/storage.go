@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS "users" (
    "registered" timestamptz NOT NULL ,
    "wins" integer DEFAULT 0,
    "lose" integer DEFAULT 0,
-   "scoreboard" integer DEFAULT 0,
+   "bingo" integer DEFAULT 0,
    "friends" text[],
    "packs" text[]
 );

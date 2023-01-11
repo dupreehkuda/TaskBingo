@@ -20,9 +20,13 @@ func (s storage) CheckDuplicateUser(login, email string) (bool, error) {
 	}
 	defer conn.Release()
 
-	conn.QueryRow(context.Background(), "SELECT login, email FROM users WHERE login=$1", login).Scan(&dbLogin, &dbEmail)
+	conn.QueryRow(context.Background(), "SELECT login FROM users WHERE login=$1", login).Scan(&dbLogin)
+	if dbLogin == login {
+		return true, nil
+	}
 
-	if dbLogin == login || dbEmail == email {
+	conn.QueryRow(context.Background(), "SELECT email FROM users WHERE email=$1", email).Scan(&dbEmail)
+	if dbEmail == email {
 		return true, nil
 	}
 

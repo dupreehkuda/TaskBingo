@@ -17,20 +17,20 @@ func (h *Handlers) GetUserData(ctx context.Context, req *api.GetUserDataRequest)
 	}
 
 	ans := &api.GetUserDataResponse{
-		Login:      resp.Login,
-		City:       resp.City,
-		Wins:       int32(resp.Wins),
-		Loses:      int32(resp.Lose),
-		Scoreboard: int32(resp.Scoreboard),
-		Friends:    nil,
-		Packs:      resp.Packs,
+		Login:   resp.Login,
+		City:    resp.City,
+		Wins:    int32(resp.Wins),
+		Loses:   int32(resp.Lose),
+		Bingo:   int32(resp.Bingo),
+		Friends: nil,
+		Packs:   resp.Packs,
 	}
 
 	for _, val := range resp.Friends {
 		ans.Friends = append(ans.Friends, &api.FriendInfo{
 			Login: val.Login,
 			City:  val.City,
-			Score: val.Score,
+			Bingo: val.Bingo,
 		})
 	}
 
