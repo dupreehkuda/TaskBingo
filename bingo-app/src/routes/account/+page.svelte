@@ -1,5 +1,6 @@
 <script lang="ts">
     import { Button } from "flowbite-svelte";
+    import { Like } from "./+page"
 
     import Account from "../accountStore";
 </script>
@@ -41,8 +42,9 @@
                     <span class="text-xs text-gray-300">{friend.bingo}</span>
                 </div>
                 
-                <div class="flex flex-col basis-1/3">
-                    <Button class="fonty">Play</Button>
+                <div class="flex flex-row gap-2 basis-1/3">
+                    <Button class="basis-2/3 fonty">Play</Button>
+                    <Button size="xs" color="red" class="basis-1/3">X</Button>
                 </div>
             </div>
         {/each}
@@ -61,8 +63,15 @@
                         </li>
                     {/each}
 
-                    <div class="flex flex-col">
-                        <Button class="fonty">Choose pack</Button>
+                    <div class="flex flex-row gap-2">
+                        <Button class="basis-4/5 fonty">Choose pack</Button>
+                        <Button class="basis-1/5" color="light" on:click={() => Like(pack, $Account?.packs.some(e => e.id === pack.id))}>
+                            {#if $Account?.packs.some(e => e.id === pack.id)}
+                                <img src="heart-solid.svg" alt="solid heart"/>
+                            {:else}
+                                <img src="heart-regular.svg" alt="regular heart"/>
+                            {/if}
+                        </Button>
                     </div>
                 </ul>
             </div>

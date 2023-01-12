@@ -23,6 +23,10 @@
                             <Button size="xs">Play</Button>
                             <Button size="xs" color="red" class="dark:!text-white-800">X</Button>
                         </div>
+                    {:else if user.login == $Account?.login}
+                        <div class="basis-3/12">
+                            <Button href="/account" size="xs">Account</Button>
+                        </div>
                     {:else}
                         <div class="basis-3/12">
                             <Button size="xs">Add friend</Button>
