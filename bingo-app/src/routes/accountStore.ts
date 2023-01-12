@@ -5,7 +5,7 @@ export interface AccountData {
     city:       string;
     wins:       number;
     lose:       number;
-    scoreboard: number;
+    bingo: number;
     friends:    Friend[];
     packs:      Pack[];
 }
@@ -13,7 +13,7 @@ export interface AccountData {
 export interface Friend {
     login: string;
     city:  string;
-    score: string;
+    bingo: number;
 }
 
 export interface Pack {

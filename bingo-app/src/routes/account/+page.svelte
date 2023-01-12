@@ -23,7 +23,7 @@
                 <span class="leftalign">Here will be your winrate when you play at least one game</span>
             {:else}
                 <span class="leftalign">Winrate: {$Account.wins === 0 && $Account.lose === 0 ? "null" : ($Account.wins / ($Account.wins + $Account.lose)) * 100 + "%"}</span>
-                <span>Scoreboard: {$Account.scoreboard === 0 ? "null" : $Account.scoreboard}</span>
+                <span>Total bingo: {$Account.bingo === 0 ? "null" : $Account.bingo}</span>
             {/if}
         </div>
     </div>
@@ -32,9 +32,13 @@
     <div class="leftspace scrolling-wrapper">
         {#each $Account.friends as friend}
             <div class="friend flex flex-col">
-                <div class="basis-2/3">
+                <div class="basis-1/3">
                     <h5>{friend.login}</h5>
                     <span class="text-xs text-gray-300">{friend.city}</span>
+                </div>
+
+                <div class="basis-1/3">
+                    <span class="text-xs text-gray-300">{friend.bingo}</span>
                 </div>
                 
                 <div class="flex flex-col basis-1/3">
@@ -128,7 +132,7 @@
         margin-bottom: 1em;
         padding: 0.5em;
         padding-top: 1em;
-        min-height: 9em;
+        min-height: 10em;
         min-width: 10em;
     }
 </style>
