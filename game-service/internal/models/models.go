@@ -76,4 +76,5 @@ type UserAccountInfoResponse struct {
 type User struct {
 	Login string `json:"login"`
 	City  string `json:"city"`
+	Bingo int    `json:"bingo"`
 }

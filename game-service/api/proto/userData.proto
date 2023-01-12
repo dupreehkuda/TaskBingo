@@ -78,6 +78,7 @@ message AssignNewPackRequest {
 message PersonInfo {
   string login = 1;
   string city = 2;
+  int32 bingo = 3;
 }
 
 message People {
@@ -85,4 +86,3 @@ message People {
 }
 
 message Empty {}
-

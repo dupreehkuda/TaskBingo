@@ -23,6 +23,7 @@ func (u userClient) GetAllUsers() (*[]models.User, error) {
 		users = append(users, models.User{
 			Login: person.Login,
 			City:  person.City,
+			Bingo: int(person.Bingo),
 		})
 	}
 

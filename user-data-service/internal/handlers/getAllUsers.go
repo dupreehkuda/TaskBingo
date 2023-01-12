@@ -21,6 +21,7 @@ func (h *Handlers) GetAllPeople(ctx context.Context, _ *api.Empty) (*api.People,
 		resp = append(resp, &api.PersonInfo{
 			Login: person.Login,
 			City:  person.City,
+			Bingo: int32(person.Bingo),
 		})
 	}
 

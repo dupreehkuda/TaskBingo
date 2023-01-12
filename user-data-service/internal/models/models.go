@@ -26,4 +26,5 @@ type LoginUserResponse struct {
 type AllUsers struct {
 	Login string `json:"login"`
 	City  string `json:"city"`
+	Bingo int    `json:"bingo"`
 }
