@@ -2,7 +2,7 @@
     import { ButtonGroup, InputAddon, Label, Input, Button } from 'flowbite-svelte'
 
     let show = false;
-    let logined = false;
+    // let logined = false;
 
     async function submit(e: any) {
         e.preventDefault()
@@ -25,8 +25,7 @@
             body: JSON.stringify(newReq)
         })
         
-        // todo: logic for redirect
-        if (res.ok) { logined = true }
+        if (res.ok) { window.location.href = "https://taskbingo.com/account"; }
     }
 </script>
 
@@ -53,8 +52,8 @@
             </ButtonGroup>
 
             <div class="dark mb-4">
-                <Button href="/register" gradient color="teal">Register</Button>
-                <Button type="submit" gradient color="teal">Login</Button>
+                <Button href="/register" color="light">Register</Button>
+                <Button type="submit" color="light">Login</Button>
             </div>
         </form>
     </main>

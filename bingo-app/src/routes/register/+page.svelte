@@ -20,7 +20,7 @@
             {#if status === 409}
                 <div class="mb-4">
                     <Alert color="yellow">
-                        <span class="font-medium">Username already in use.</span>
+                        <span class="font-medium">Username or email already in use.</span>
                     </Alert>
                 </div>
             {/if}
@@ -32,7 +32,7 @@
 
                 <div class="dark mb-4">
                     <Label color="disabled" for="input-group-1" class="block mb-2">Email</Label>
-                    <Input label="Email" id="email" name="email" required placeholder="john@example.com"/>
+                    <Input type="email" label="Email" id="email" name="email" required placeholder="john@example.com"/>
                 </div>
 
                 <div class="dark mb-4">
@@ -54,11 +54,11 @@
                     <Input id="password" name="password" type={show ? 'text' : 'password'} placeholder="Password" />
                 </ButtonGroup>
 
-                <Button class="mb-3" type="submit" gradient color="teal">Register</Button>
+                <Button class="mb-3" type="submit" color="dark">Register</Button>
             </form>
         {:else if status === 200}
             <Alert color="green">
-                <span class=" font-medium">Successfull registration!</span>
+                <span class=" font-medium">Successfull registration! Go to <a href="/account">Account</a></span>
             </Alert>
         {/if}
     </main>
@@ -71,5 +71,9 @@
         padding: 1em;
         max-width: 440px;
         margin: 0 auto;
+    }
+
+    a {
+        color: aliceblue;
     }
 </style>
