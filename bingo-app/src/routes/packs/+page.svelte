@@ -15,14 +15,14 @@
 <main>
     <div class="scrolling-wrapper spacer">
         {#each packs as pack}
-            <div class="rectangle flex flex-col">
+            <div class="rectangle flex flex-col justify-between mx-1">
                 <!-- <Card size="sm" padding="sm" class="card"> -->
                     <h5 class="mb-2 text-xl">{pack.id}</h5>
                     <ul class="my-1 space-y-1.5">
                         {#each pack.tasks as task, i}
-                            <li class="flex space-x-2">
-                                <span class="leading-tight">{i+1}</span>
-                                <span class="leading-tight text-gray-300">{task}</span>
+                            <li class="flex flex-row leftspace">
+                                <span class="basis-1/5 leading-tight">{i+1}</span>
+                                <span class="basis-4/5 leading-tight text-gray-300">{task}</span>
                             </li>
                         {/each}
 

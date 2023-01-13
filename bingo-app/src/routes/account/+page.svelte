@@ -51,9 +51,12 @@
     </div>
 
     <div class="leftspaceheading"><h3 class="mb-2">Packs</h3></div>
-    <div class="leftspace scrolling-wrapper spacer">
+    <div class="flex leftalign spacer05">
+        <Button href="/newpack" class="fonty">Create new pack</Button>
+    </div>
+    <div class="scrolling-wrapper spacer">
         {#each $Account.packs as pack}
-            <div class="pack flex flex-col">
+            <div class="pack flex flex-col justify-between mx-1">
                 <h5 class="mb-2 text-xl">{pack.id}</h5>
                 <ul class="my-1 space-y-1.5">
                     {#each pack.tasks as task, i}
@@ -132,7 +135,7 @@
         background-color: #0f4879;
         margin-bottom: 0.5em;
         padding: 0.6em;
-        /* min-width: 23em;  */
+        min-width: 22em; 
     }
 
     .friend {
