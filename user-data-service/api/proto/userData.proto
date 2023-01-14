@@ -8,10 +8,10 @@ service Users {
   rpc GetUserData(GetUserDataRequest) returns (GetUserDataResponse);
   rpc RegisterUser(RegisterUserRequest) returns (RegisterUserResponse);
   rpc LoginUser(LoginUserRequest) returns (LoginUserResponse);
-  rpc LikePack(LikePackRequest) returns (Empty);
-  rpc DislikePack(LikePackRequest) returns (Empty);
-  rpc RatePack(RatePackRequest) returns (Empty);
-  rpc UnratePack(RatePackRequest) returns (Empty);
+  rpc LikePack(LikeOrRatePackRequest) returns (Empty);
+  rpc DislikePack(LikeOrRatePackRequest) returns (Empty);
+  rpc RatePack(LikeOrRatePackRequest) returns (Empty);
+  rpc UnratePack(LikeOrRatePackRequest) returns (Empty);
   rpc GetRatedPacks(Empty) returns (RatedPacksResponse);
   rpc AssignNewPack(AssignNewPackRequest) returns (Empty);
   rpc GetAllPeople(Empty) returns (People);
@@ -28,13 +28,17 @@ message GetUserDataResponse {
   int32 loses = 4;
   int32 bingo = 5;
   repeated FriendInfo friends = 6;
-  repeated string packs = 7;
+  repeated string likedPacks = 7;
+  repeated string ratedPacks = 8;
 }
 
 message FriendInfo {
   string login = 1;
   string city = 2;
-  string bingo = 3;
+  int32 bingo = 3;
+  int32 status = 4;
+  int32 wins = 5;
+  int32 loses = 6;
 }
 
 message RegisterUserRequest {
@@ -57,13 +61,9 @@ message LoginUserResponse {
   string error = 1;
 }
 
-message LikePackRequest {
+message LikeOrRatePackRequest {
   string login = 1;
   string pack = 2;
-}
-
-message RatePackRequest {
-  string pack = 1;
 }
 
 message RatedPacksResponse {

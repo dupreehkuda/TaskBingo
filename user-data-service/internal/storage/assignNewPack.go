@@ -20,7 +20,7 @@ func (s storage) AssignNewPack(login, pack string) error {
 	tx, err := conn.Begin(ctx)
 
 	tx.Exec(ctx, "INSERT INTO ratings (id, creator, created) VALUES ($1, $2, $3);", pack, login, time.Now())
-	tx.Exec(ctx, "UPDATE users SET packs = ARRAY_APPEND(packs, $1) WHERE login = $2;", pack, login)
+	tx.Exec(ctx, "UPDATE users SET likedPacks = ARRAY_APPEND(likedPacks, $1) WHERE login = $2;", pack, login)
 
 	err = tx.Commit(ctx)
 	if err != nil {

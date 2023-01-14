@@ -1,5 +1,7 @@
 package models
 
+import "time"
+
 // LoginKey is type for context keys
 type LoginKey string
 
@@ -47,30 +49,36 @@ type TaskPackRequest struct {
 }
 
 type FriendsInfo struct {
-	Login string `json:"login"`
-	City  string `json:"city"`
-	Bingo string `json:"bingo"`
+	Login        string    `json:"login"`
+	City         string    `json:"city"`
+	Bingo        int       `json:"bingo"`
+	Status       int       `json:"status"`
+	Wins         int       `json:"wins"`
+	Loses        int       `json:"loses"`
+	FriendsSince time.Time `json:"friendsSince"`
 }
 
 // UserAccountInfo provides basic account info
 type UserAccountInfo struct {
-	Login   string        `json:"login"`
-	City    string        `json:"city"`
-	Wins    int           `json:"wins"`
-	Lose    int           `json:"lose"`
-	Bingo   int           `json:"bingo"`
-	Friends []FriendsInfo `json:"friends"`
-	Packs   []TaskPack    `json:"packs"`
+	Login      string        `json:"login"`
+	City       string        `json:"city"`
+	Wins       int           `json:"wins"`
+	Lose       int           `json:"lose"`
+	Bingo      int           `json:"bingo"`
+	Friends    []FriendsInfo `json:"friends"`
+	LikedPacks []TaskPack    `json:"likedPacks"`
+	RatedPacks []string      `json:"ratedPacks"`
 }
 
 type UserAccountInfoResponse struct {
-	Login   string        `json:"login"`
-	City    string        `json:"city"`
-	Wins    int           `json:"wins"`
-	Lose    int           `json:"lose"`
-	Bingo   int           `json:"bingo"`
-	Friends []FriendsInfo `json:"friends"`
-	Packs   []string      `json:"packs"`
+	Login      string        `json:"login"`
+	City       string        `json:"city"`
+	Wins       int           `json:"wins"`
+	Lose       int           `json:"lose"`
+	Bingo      int           `json:"bingo"`
+	Friends    []FriendsInfo `json:"friends"`
+	LikedPacks []string      `json:"likedPacks"`
+	RatedPacks []string      `json:"ratedPacks"`
 }
 
 type User struct {

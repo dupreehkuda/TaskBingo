@@ -36,7 +36,7 @@ func (h handlers) RateTaskPack(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.processor.RateTaskPack(req.TaskID)
+	err = h.processor.RateTaskPack(login, req.TaskID)
 	if err != nil {
 		h.logger.Error("Error getting data", zap.Error(err))
 		return
@@ -73,7 +73,7 @@ func (h handlers) UnrateTaskPack(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.processor.UnrateTaskPack(req.TaskID)
+	err = h.processor.UnrateTaskPack(login, req.TaskID)
 	if err != nil {
 		h.logger.Error("Error getting data", zap.Error(err))
 		return

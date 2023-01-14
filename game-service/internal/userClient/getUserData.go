@@ -16,20 +16,24 @@ func (u userClient) GetUserData(login string) (*models.UserAccountInfoResponse, 
 	}
 
 	res := models.UserAccountInfoResponse{
-		Login:   resp.Login,
-		City:    resp.City,
-		Wins:    int(resp.Wins),
-		Lose:    int(resp.Loses),
-		Bingo:   int(resp.Bingo),
-		Friends: []models.FriendsInfo{},
-		Packs:   resp.Packs,
+		Login:      resp.Login,
+		City:       resp.City,
+		Wins:       int(resp.Wins),
+		Lose:       int(resp.Loses),
+		Bingo:      int(resp.Bingo),
+		Friends:    []models.FriendsInfo{},
+		LikedPacks: resp.LikedPacks,
+		RatedPacks: resp.RatedPacks,
 	}
 
 	for _, val := range resp.Friends {
 		res.Friends = append(res.Friends, models.FriendsInfo{
-			Login: val.Login,
-			City:  val.City,
-			Bingo: val.Bingo,
+			Login:  val.Login,
+			City:   val.City,
+			Bingo:  int(val.Bingo),
+			Status: int(val.Status),
+			Wins:   int(val.Wins),
+			Loses:  int(val.Loses),
 		})
 	}
 

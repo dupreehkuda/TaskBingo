@@ -10,7 +10,7 @@ import (
 
 // LikeTaskPack calls user service to like pack by user
 func (u userClient) LikeTaskPack(login, pack string) error {
-	_, err := u.conn.LikePack(context.Background(), &api.LikePackRequest{
+	_, err := u.conn.LikePack(context.Background(), &api.LikeOrRatePackRequest{
 		Login: login,
 		Pack:  pack,
 	})
@@ -25,7 +25,7 @@ func (u userClient) LikeTaskPack(login, pack string) error {
 
 // DislikeTaskPack calls user service to dislike pack by user
 func (u userClient) DislikeTaskPack(login, pack string) error {
-	_, err := u.conn.DislikePack(context.Background(), &api.LikePackRequest{
+	_, err := u.conn.DislikePack(context.Background(), &api.LikeOrRatePackRequest{
 		Login: login,
 		Pack:  pack,
 	})

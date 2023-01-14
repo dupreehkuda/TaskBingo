@@ -29,8 +29,8 @@ type UserDataClient interface {
 	GetRatedPacks() ([]string, error)
 	LikeTaskPack(login, pack string) error
 	DislikeTaskPack(login, pack string) error
-	RateTaskPack(pack string) error
-	UnrateTaskPack(pack string) error
+	RateTaskPack(login, pack string) error
+	UnrateTaskPack(login, pack string) error
 	AssignNewPack(login, pack string) error
 	GetAllUsers() (*[]models.User, error)
 }
@@ -56,8 +56,8 @@ type Processor interface {
 	SetTaskPack(login string, pack *models.TaskPack) error
 	LikeTaskPack(login, pack string) error
 	DislikeTaskPack(login, pack string) error
-	RateTaskPack(pack string) error
-	UnrateTaskPack(pack string) error
+	RateTaskPack(login, pack string) error
+	UnrateTaskPack(login, pack string) error
 	GetRatedPacks() (*[]models.TaskPack, error)
 	GetAllUsers() (*[]models.User, error)
 }

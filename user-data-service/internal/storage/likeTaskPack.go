@@ -22,10 +22,10 @@ func (s storage) LikePack(login, pack string, inc int) error {
 
 	if inc == 1 {
 		// add pack id to the liked array
-		tx.Exec(ctx, "UPDATE users SET packs = ARRAY_APPEND(packs, $1) WHERE login = $2;", pack, login)
+		tx.Exec(ctx, "UPDATE users SET likedpacks = ARRAY_APPEND(likedpacks, $1) WHERE login = $2;", pack, login)
 	} else {
 		// remove pack id from the liked array
-		tx.Exec(ctx, "UPDATE users SET packs = ARRAY_REMOVE(packs, $1) WHERE login = $2;", pack, login)
+		tx.Exec(ctx, "UPDATE users SET likedpacks = ARRAY_REMOVE(likedpacks, $1) WHERE login = $2;", pack, login)
 	}
 
 	err = tx.Commit(ctx)

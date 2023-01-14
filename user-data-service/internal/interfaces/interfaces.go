@@ -17,7 +17,7 @@ type Processor interface {
 	GetUserData(userId string) (*models.GetUserDataResponse, error)
 	GetRatedPacks() ([]string, error)
 	LikePack(login, pack string, inc int) error
-	RatePack(pack string, inc int) error
+	RatePack(login, pack string, inc int) error
 	AssignNewPack(login, pack string) error
 	GetAllUsers() (*[]models.AllUsers, error)
 }
@@ -30,7 +30,7 @@ type Stored interface {
 	LoginUser(login string) (*models.LoginUserResponse, error)
 	GetRatedPacks() ([]string, error)
 	LikePack(login, pack string, inc int) error
-	RatePack(pack string, inc int) error
+	RatePack(login, pack string, inc int) error
 	AssignNewPack(login, pack string) error
 	GetAllUsers() (*[]models.AllUsers, error)
 }

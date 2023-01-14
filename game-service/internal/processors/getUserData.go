@@ -15,23 +15,24 @@ func (p processor) GetUserData(login string) (*models.UserAccountInfo, error) {
 	}
 
 	resp := &models.UserAccountInfo{
-		Login:   userInfo.Login,
-		City:    userInfo.City,
-		Wins:    userInfo.Wins,
-		Lose:    userInfo.Lose,
-		Bingo:   userInfo.Bingo,
-		Friends: userInfo.Friends,
-		Packs:   []models.TaskPack{},
+		Login:      userInfo.Login,
+		City:       userInfo.City,
+		Wins:       userInfo.Wins,
+		Lose:       userInfo.Lose,
+		Bingo:      userInfo.Bingo,
+		Friends:    userInfo.Friends,
+		LikedPacks: []models.TaskPack{},
+		RatedPacks: userInfo.RatedPacks,
 	}
 
-	if len(userInfo.Packs) != 0 {
-		tasks, err := p.taskStorage.GetMultiplePacks(userInfo.Packs)
+	if len(userInfo.LikedPacks) != 0 {
+		tasks, err := p.taskStorage.GetMultiplePacks(userInfo.LikedPacks)
 		if err != nil {
 			p.logger.Error("Error occurred in call to task service", zap.Error(err))
 			return nil, err
 		}
 
-		resp.Packs = *tasks
+		resp.LikedPacks = *tasks
 		return resp, nil
 	}
 

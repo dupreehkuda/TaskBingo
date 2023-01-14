@@ -20,12 +20,13 @@ CREATE TABLE IF NOT EXISTS "users" (
    "login" text NOT NULL UNIQUE,
    "email" text NOT NULL UNIQUE,
    "city" text NOT NULL,
-   "registered" timestamptz NOT NULL ,
    "wins" integer DEFAULT 0,
    "lose" integer DEFAULT 0,
    "bingo" integer DEFAULT 0,
-   "friends" text[],
-   "packs" text[]
+   "friends" json,
+   "likedpacks" text[] DEFAULT '{}',
+   "ratedpacks" text[] DEFAULT '{}',
+   "registered" timestamptz NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS "login" (
