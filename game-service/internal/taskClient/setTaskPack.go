@@ -5,8 +5,11 @@ import (
 	"encoding/json"
 
 	"go.uber.org/zap"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/encoding/protojson"
 
+	errs "github.com/dupreehkuda/TaskBingo/game-service/internal/customErrors"
 	"github.com/dupreehkuda/TaskBingo/game-service/internal/models"
 	api "github.com/dupreehkuda/TaskBingo/game-service/pkg/api"
 )
@@ -23,6 +26,11 @@ func (t taskClient) SetTaskPack(pack *models.TaskPack) error {
 	}
 
 	_, err = t.conn.AddOneTaskPack(context.Background(), msg)
+
+	statusCode, _ := status.FromError(err)
+	if statusCode.Code() == codes.NotFound {
+		return errs.ErrPackAlreadyExists
+	}
 
 	if err != nil {
 		t.logger.Error("Error occurred in call to task service", zap.Error(err))

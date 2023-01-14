@@ -4,7 +4,10 @@ import (
 	"context"
 
 	"go.uber.org/zap"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 
+	errs "github.com/dupreehkuda/TaskBingo/task-data-service/internal/customErrors"
 	"github.com/dupreehkuda/TaskBingo/task-data-service/internal/models"
 	api "github.com/dupreehkuda/TaskBingo/task-data-service/pkg/api"
 )
@@ -17,7 +20,11 @@ func (h *Handlers) AddOneTaskPack(ctx context.Context, req *api.NewTaskPackReque
 	}
 
 	err := h.processor.AddTaskPack(&data)
-	if err != nil {
+
+	switch {
+	case err == errs.ErrPackAlreadyExists:
+		return nil, status.Error(codes.AlreadyExists, "Exists")
+	case err != nil:
 		h.logger.Error("Error in call to processor", zap.Error(err))
 		return nil, err
 	}

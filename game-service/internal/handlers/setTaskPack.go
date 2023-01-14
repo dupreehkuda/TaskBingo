@@ -6,6 +6,7 @@ import (
 
 	"go.uber.org/zap"
 
+	errs "github.com/dupreehkuda/TaskBingo/game-service/internal/customErrors"
 	"github.com/dupreehkuda/TaskBingo/game-service/internal/models"
 )
 
@@ -30,8 +31,6 @@ func (h handlers) SetTaskPack(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	h.logger.Debug("wtf", zap.String("id", req.TaskID), zap.Strings("tasks", req.Tasks))
-
 	if req.TaskID == "" {
 		h.logger.Info("Request empty")
 		w.WriteHeader(http.StatusBadRequest)
@@ -39,7 +38,12 @@ func (h handlers) SetTaskPack(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = h.processor.SetTaskPack(login, req)
-	if err != nil {
+
+	switch {
+	case err == errs.ErrPackAlreadyExists:
+		w.WriteHeader(http.StatusConflict)
+		return
+	case err != nil:
 		h.logger.Error("Error occurred in call to processor", zap.Error(err))
 		w.WriteHeader(http.StatusInternalServerError)
 		return
