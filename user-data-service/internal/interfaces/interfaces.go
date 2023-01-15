@@ -20,6 +20,9 @@ type Processor interface {
 	RatePack(login, pack string, inc int) error
 	AssignNewPack(login, pack string) error
 	GetAllUsers() (*[]models.AllUsers, error)
+	AcceptFriend(login, person string) error
+	DeleteFriend(login, person string) error
+	RequestFriend(login, person string) error
 }
 
 // Stored is interface for storage
@@ -33,4 +36,7 @@ type Stored interface {
 	RatePack(login, pack string, inc int) error
 	AssignNewPack(login, pack string) error
 	GetAllUsers() (*[]models.AllUsers, error)
+	AcceptFriend(login, person string) error
+	DeleteFriend(login, person string) error
+	RequestFriend(login, person string) error
 }

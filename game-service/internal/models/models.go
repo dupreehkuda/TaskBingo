@@ -86,3 +86,7 @@ type User struct {
 	City  string `json:"city"`
 	Bingo int    `json:"bingo"`
 }
+
+type FriendRequest struct {
+	Person string `json:"person"`
+}

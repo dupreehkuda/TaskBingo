@@ -15,6 +15,14 @@ service Users {
   rpc GetRatedPacks(Empty) returns (RatedPacksResponse);
   rpc AssignNewPack(AssignNewPackRequest) returns (Empty);
   rpc GetAllPeople(Empty) returns (People);
+  rpc RequestFriend(FriendRequest) returns (Empty);
+  rpc AcceptFriend(FriendRequest) returns (Empty);
+  rpc DeleteFriend(FriendRequest) returns (Empty);
+}
+
+message FriendRequest {
+  string login = 1;
+  string person = 2;
 }
 
 message GetUserDataRequest {

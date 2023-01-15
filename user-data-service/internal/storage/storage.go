@@ -8,6 +8,14 @@ import (
 	"go.uber.org/zap"
 )
 
+// Enumeration for friend status column
+const (
+	_ = iota
+	Requested
+	Responce
+	Friend
+)
+
 // storage provide a connection with database
 type storage struct {
 	pool   *pgxpool.Pool
@@ -23,7 +31,7 @@ CREATE TABLE IF NOT EXISTS "users" (
    "wins" integer DEFAULT 0,
    "lose" integer DEFAULT 0,
    "bingo" integer DEFAULT 0,
-   "friends" json,
+   "friends" jsonb DEFAULT '[]',
    "likedpacks" text[] DEFAULT '{}',
    "ratedpacks" text[] DEFAULT '{}',
    "registered" timestamptz NOT NULL
@@ -44,8 +52,18 @@ CREATE TABLE IF NOT EXISTS "ratings" (
 	"created" timestamptz NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS "friends" (
+	"id" text PRIMARY KEY NOT NULL UNIQUE,
+	"friend" text NOT NULL ,
+	"status" integer NOT NULL,
+	"wins" integer NOT NULL DEFAULT 0,
+	"loses" integer NOT NULL DEFAULT 0,
+	"since" timestamptz NOT NULL
+);
+
 ALTER TABLE "login" ADD FOREIGN KEY ("id") REFERENCES "users" ("id");
-ALTER TABLE "ratings" ADD FOREIGN KEY ("creator") REFERENCES "users" ("id")`
+ALTER TABLE "ratings" ADD FOREIGN KEY ("creator") REFERENCES "users" ("id");
+ALTER TABLE "friends" ADD FOREIGN KEY ("id") REFERENCES "users" ("id");`
 
 // New creates a new instance of database layer and migrates it
 func New(path string, logger *zap.Logger) *storage {

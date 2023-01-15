@@ -25,6 +25,9 @@ func (a api) router() http.Handler {
 				r.Post("/ratePack", a.handlers.RateTaskPack)
 				r.Post("/unratePack", a.handlers.UnrateTaskPack)
 				r.Get("/getAllUsers", a.handlers.GetAllUsers)
+				r.Post("/requestFriend", a.handlers.RequestFriend)
+				r.Post("/acceptFriend", a.handlers.AcceptFriend)
+				r.Post("/deleteFriend", a.handlers.DeleteFriend)
 			})
 		})
 
