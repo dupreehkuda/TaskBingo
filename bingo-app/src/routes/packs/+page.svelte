@@ -38,8 +38,8 @@
                                     {/if}
                                 </Button> -->
         
-                                <Button class="basis-1/5" color="light" on:click={() => Like(pack, $Account?.packs.some(e => e.id === pack.id))}>
-                                    {#if $Account?.packs.some(e => e.id === pack.id)}
+                                <Button class="basis-1/5" color="light" on:click={() => Like(pack, $Account?.likedPacks.some(e => e.id === pack.id))}>
+                                    {#if $Account?.likedPacks.some(e => e.id === pack.id)}
                                         <img src="heart-solid.svg" alt="solid heart"/>
                                     {:else}
                                         <img src="heart-regular.svg" alt="regular heart"/>

@@ -35,11 +35,10 @@
             <div class="friend flex flex-col">
                 <div class="basis-1/3">
                     <h5>{friend.login}</h5>
-                    <span class="text-xs text-gray-300">{friend.city}</span>
                 </div>
 
                 <div class="basis-1/3">
-                    <span class="text-xs text-gray-300">{friend.bingo}</span>
+                    <span class="text-xs text-gray-300">{friend.wins}/{friend.loses}</span>
                 </div>
                 
                 <div class="flex flex-row gap-2 basis-1/3">
@@ -55,7 +54,7 @@
         <Button href="/newpack" class="fonty">Create new pack</Button>
     </div>
     <div class="scrolling-wrapper spacer">
-        {#each $Account.packs as pack}
+        {#each $Account.likedPacks as pack}
             <div class="pack flex flex-col justify-between mx-1">
                 <h5 class="mb-2 text-xl">{pack.id}</h5>
                 <ul class="my-1 space-y-1.5">
@@ -68,8 +67,8 @@
 
                     <div class="flex flex-row gap-2">
                         <Button class="basis-4/5 fonty">Choose pack</Button>
-                        <Button class="basis-1/5" color="light" on:click={() => Like(pack, $Account?.packs.some(e => e.id === pack.id))}>
-                            {#if $Account?.packs.some(e => e.id === pack.id)}
+                        <Button class="basis-1/5" color="light" on:click={() => Like(pack, $Account?.likedPacks.some(e => e.id === pack.id))}>
+                            {#if $Account?.likedPacks.some(e => e.id === pack.id)}
                                 <img src="heart-solid.svg" alt="solid heart"/>
                             {:else}
                                 <img src="heart-regular.svg" alt="regular heart"/>

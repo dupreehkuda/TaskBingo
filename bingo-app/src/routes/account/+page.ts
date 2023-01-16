@@ -26,7 +26,7 @@ export async function Like(pack: any, liked: boolean) {
     })
 
     let account = get(Account)
-    account.packs = account.packs.filter(e => e.id !== pack.id)
+    account.likedPacks = account.likedPacks.filter(e => e.id !== pack.id)
     Account.set(account)
 
   } else {
@@ -37,7 +37,7 @@ export async function Like(pack: any, liked: boolean) {
     })
 
     let account = get(Account)
-    account.packs.push({id: pack.id, tasks: pack.tasks})
+    account.likedPacks.push({id: pack.id, tasks: pack.tasks})
     Account.set(account)
   }
 };

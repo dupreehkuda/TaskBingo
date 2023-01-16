@@ -5,15 +5,17 @@ export interface AccountData {
     city:       string;
     wins:       number;
     lose:       number;
-    bingo: number;
+    bingo:      number;
     friends:    Friend[];
-    packs:      Pack[];
+    likedPacks: Pack[];
+    ratedPacks: string[]
 }
 
 export interface Friend {
     login: string;
-    city:  string;
-    bingo: number;
+    status: number;
+    wins: number;
+    loses: number;
 }
 
 export interface Pack {
