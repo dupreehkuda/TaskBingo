@@ -51,26 +51,31 @@ export async function Like(pack: any, liked: boolean) {
   }
 };
 
-// export async function Rate(id: any, rated: boolean) {
-//   const newResp = {
-//     id: id,
-//   } 
+export async function Rate(pack: any, rated: boolean) {
+  const newResp = {
+    id: pack.id,
+  } 
 
-//   if (rated) {
-//     const res = await fetch('https://taskbingo.com/api/user/unratePack', {
-//       method: 'POST',
-//       headers: {'Origin': 'taskbingo.com'},
-//       body: JSON.stringify(newResp)
-//     })
+  if (rated) {
+    const res = await fetch('https://taskbingo.com/api/user/unratePack', {
+      method: 'POST',
+      headers: {'Origin': 'taskbingo.com'},
+      body: JSON.stringify(newResp)
+    })
 
-//     console.log(res.status)
-//   } else {
-//     const res = await fetch('https://taskbingo.com/api/user/ratePack', {
-//       method: 'POST',
-//       headers: {'Origin': 'taskbingo.com'},
-//       body: JSON.stringify(newResp)
-//     })
+    let account = get(Account)
+    account.ratedPacks = account.ratedPacks.filter(e => e !== pack.id)
+    Account.set(account)
 
-//     console.log(res.status)
-//   }
-// };
+  } else {
+    const res = await fetch('https://taskbingo.com/api/user/ratePack', {
+      method: 'POST',
+      headers: {'Origin': 'taskbingo.com'},
+      body: JSON.stringify(newResp)
+    })
+
+    let account = get(Account)
+    account.ratedPacks.push(pack.id)
+    Account.set(account)
+  }
+};

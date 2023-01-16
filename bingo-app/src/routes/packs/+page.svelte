@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { PageData } from './$types';
-    import { Button, Card } from "flowbite-svelte";
-	import { Like } from "./+page";
+    import { Button } from "flowbite-svelte";
+	import { Like, Rate } from "./+page";
     import Account from "../accountStore";
 
     export let data: PageData;
@@ -28,15 +28,15 @@
 
                         <div class="flex flex-col">
                             <li class="flex space-x-2">
-                                <Button class="basis-4/5 fonty">Play</Button>
+                                <Button class="basis-3/5 fonty">Play</Button>
         
-                                <!-- <Button class="fonty dark w-full" on:click={() => Rate(pack.id, rated)} on:click={() => (rated = !rated)}>
-                                    {#if rated}
+                                <Button class="basis-1/5" color="light" on:click={() => Rate(pack, $Account?.ratedPacks.some(e => e === pack.id))}>
+                                    {#if $Account?.ratedPacks.some(e => e === pack.id)}
                                         <img src="star-solid.svg" alt="solid star"/>
                                     {:else}
                                         <img src="star-regular.svg" alt="regular star"/>
                                     {/if}
-                                </Button> -->
+                                </Button>
         
                                 <Button class="basis-1/5" color="light" on:click={() => Like(pack, $Account?.likedPacks.some(e => e.id === pack.id))}>
                                     {#if $Account?.likedPacks.some(e => e.id === pack.id)}
