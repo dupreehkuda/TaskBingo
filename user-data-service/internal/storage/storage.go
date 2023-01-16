@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS "ratings" (
 );
 
 CREATE TABLE IF NOT EXISTS "friends" (
-	"id" text PRIMARY KEY NOT NULL UNIQUE,
+	"id" text NOT NULL,
 	"friend" text NOT NULL ,
 	"status" integer NOT NULL,
 	"wins" integer NOT NULL DEFAULT 0,

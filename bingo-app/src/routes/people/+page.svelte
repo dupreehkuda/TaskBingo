@@ -2,6 +2,7 @@
     import type { PageData } from './$types';
     import { Button } from "flowbite-svelte";
     import Account from "../accountStore";
+	import { DeleteFriend, RequestFriend, AcceptFriend } from './+page';
 
     export let data: PageData;
     const { users } = data
@@ -18,18 +19,28 @@
                     <div class="lefty basis-1/12"><span class="text-md whiteBingoText">{user.bingo}</span></div>
                     <div class="lefty basis-8/12"><span class="text-lg font-medium">{user.login} <span class="mt-2 mb-4 text-sm">{user.city}</span></span></div>
 
-                    {#if $Account?.friends.some(e => e.login === user.login)}
+                    {#if $Account?.friends.some(e => e.login === user.login && e.status === 3)}
                         <div class="basis-3/12">
                             <Button size="xs">Play</Button>
-                            <Button size="xs" color="red" class="dark:!text-white-800">X</Button>
+                            <Button size="xs" color="red" class="dark:!text-white-800" on:click={() => DeleteFriend(user.login)}>X</Button>
                         </div>
+                    {:else if $Account?.friends.some(e => e.login === user.login && e.status === 1)}
+                        <div class="basis-3/12">
+                            <Button disabled size="xs">Requested</Button>
+                            <Button size="xs" color="red" class="dark:!text-white-800" on:click={() => DeleteFriend(user.login)}>X</Button>
+                        </div> 
+                    {:else if $Account?.friends.some(e => e.login === user.login && e.status === 2)}
+                        <div class="basis-3/12">
+                            <Button size="xs" on:click={() => AcceptFriend(user.login)}>Accept</Button>
+                            <Button size="xs" color="red" class="dark:!text-white-800" on:click={() => DeleteFriend(user.login)}>X</Button>
+                        </div>   
                     {:else if user.login == $Account?.login}
                         <div class="basis-3/12">
                             <Button href="/account" size="xs">Account</Button>
                         </div>
                     {:else}
                         <div class="basis-3/12">
-                            <Button size="xs">Add friend</Button>
+                            <Button size="xs" on:click={() => RequestFriend(user.login)}>Add friend</Button>
                         </div>
                     {/if}
                     

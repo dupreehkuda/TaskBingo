@@ -16,39 +16,37 @@
     <div class="scrolling-wrapper spacer">
         {#each packs as pack}
             <div class="rectangle flex flex-col justify-between mx-1">
-                <!-- <Card size="sm" padding="sm" class="card"> -->
-                    <h5 class="mb-2 text-xl">{pack.id}</h5>
-                    <ul class="my-1 space-y-1.5">
-                        {#each pack.tasks as task, i}
-                            <li class="flex flex-row leftspace">
-                                <span class="basis-1/5 leading-tight">{i+1}</span>
-                                <span class="basis-4/5 leading-tight text-gray-300">{task}</span>
-                            </li>
-                        {/each}
+                <h5 class="mb-2 text-xl">{pack.id}</h5>
+                <ul class="my-1 space-y-1.5">
+                    {#each pack.tasks as task, i}
+                        <li class="flex flex-row leftspace">
+                            <span class="basis-1/5 leading-tight">{i+1}</span>
+                            <span class="basis-4/5 leading-tight text-gray-300">{task}</span>
+                        </li>
+                    {/each}
 
-                        <div class="flex flex-col">
-                            <li class="flex space-x-2">
-                                <Button class="basis-3/5 fonty">Play</Button>
-        
-                                <Button class="basis-1/5" color="light" on:click={() => Rate(pack, $Account?.ratedPacks.some(e => e === pack.id))}>
-                                    {#if $Account?.ratedPacks.some(e => e === pack.id)}
-                                        <img src="star-solid.svg" alt="solid star"/>
-                                    {:else}
-                                        <img src="star-regular.svg" alt="regular star"/>
-                                    {/if}
-                                </Button>
-        
-                                <Button class="basis-1/5" color="light" on:click={() => Like(pack, $Account?.likedPacks.some(e => e.id === pack.id))}>
-                                    {#if $Account?.likedPacks.some(e => e.id === pack.id)}
-                                        <img src="heart-solid.svg" alt="solid heart"/>
-                                    {:else}
-                                        <img src="heart-regular.svg" alt="regular heart"/>
-                                    {/if}
-                                </Button>
-                            </li>
-                        </div>
-                        </ul>
-                <!-- </Card> -->
+                    <div class="flex flex-col">
+                        <li class="flex space-x-2">
+                            <Button class="basis-3/5 fonty">Play</Button>
+    
+                            <Button class="basis-1/5" color="light" on:click={() => Rate(pack, $Account?.ratedPacks.some(e => e === pack.id))}>
+                                {#if $Account?.ratedPacks.some(e => e === pack.id)}
+                                    <img src="star-solid.svg" alt="solid star"/>
+                                {:else}
+                                    <img src="star-regular.svg" alt="regular star"/>
+                                {/if}
+                            </Button>
+    
+                            <Button class="basis-1/5" color="light" on:click={() => Like(pack, $Account?.likedPacks.some(e => e.id === pack.id))}>
+                                {#if $Account?.likedPacks.some(e => e.id === pack.id)}
+                                    <img src="heart-solid.svg" alt="solid heart"/>
+                                {:else}
+                                    <img src="heart-regular.svg" alt="regular heart"/>
+                                {/if}
+                            </Button>
+                        </li>
+                    </div>
+                </ul>
             </div>
         {/each}
     </div>
