@@ -36,5 +36,9 @@ func (p processor) GetUserData(login string) (*models.UserAccountInfo, error) {
 		return resp, nil
 	}
 
+	if len(userInfo.RatedPacks) == 0 {
+		resp.RatedPacks = []string{}
+	}
+
 	return resp, nil
 }
