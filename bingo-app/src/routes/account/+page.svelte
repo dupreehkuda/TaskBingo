@@ -1,6 +1,7 @@
 <script lang="ts">
     import { Button } from "flowbite-svelte";
     import { Like } from "./+page"
+    import { DeleteFriend, RequestFriend, AcceptFriend } from '../friendRequests';
 
     import Account from "../accountStore";
 </script>
@@ -30,7 +31,7 @@
     </div>
 
     <div class="leftspaceheading"><h3 class="mb-2">Friends</h3></div>
-    <div class="leftspace scrolling-wrapper">
+    <div class="leftspace scrolling-wrapper gap-1.5">
         {#each $Account.friends as friend}
             <div class="friend flex flex-col">
                 <div class="basis-1/3">
@@ -40,11 +41,22 @@
                 <div class="basis-1/3">
                     <span class="text-xs text-gray-300">{friend.wins}/{friend.loses}</span>
                 </div>
-                
-                <div class="flex flex-row gap-2 basis-1/3">
-                    <Button class="basis-2/3 fonty">Play</Button>
-                    <Button size="xs" color="red" class="basis-1/3">X</Button>
-                </div>
+                {#if friend.status == 3}
+                    <div class="flex flex-row gap-1.5 basis-1/3">
+                        <Button class="basis-2/3 fonty" size="xs">Play</Button>
+                        <Button class="basis-1/3 dark:!text-white-800" size="xs" color="red" on:click={() => DeleteFriend(friend.login)}>X</Button>
+                    </div>
+                {:else if friend.status == 2}
+                    <div class="flex flex-row gap-1.5 basis-1/3">
+                        <Button class="basis-2/3 fonty" size="xs" on:click={() => AcceptFriend(friend.login)}>Accept</Button>
+                        <Button class="basis-1/3 dark:!text-white-800" size="xs" color="red" on:click={() => DeleteFriend(friend.login)}>X</Button>
+                    </div>
+                {:else if friend.status == 1}
+                    <div class="flex flex-row gap-1.5 basis-1/3">
+                        <Button class="basis-2/3 fonty" disabled size="xs" on:click={() => AcceptFriend(friend.login)}>Sent</Button>
+                        <Button class="basis-1/3 dark:!text-white-800" size="xs" color="red" on:click={() => DeleteFriend(friend.login)}>X</Button>
+                    </div>
+                {/if}
             </div>
         {/each}
     </div>
