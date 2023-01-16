@@ -31,7 +31,6 @@ CREATE TABLE IF NOT EXISTS "users" (
    "wins" integer DEFAULT 0,
    "lose" integer DEFAULT 0,
    "bingo" integer DEFAULT 0,
-   "friends" jsonb DEFAULT '[]',
    "likedpacks" text[] DEFAULT '{}',
    "ratedpacks" text[] DEFAULT '{}',
    "registered" timestamptz NOT NULL
@@ -58,7 +57,7 @@ CREATE TABLE IF NOT EXISTS "friends" (
 	"status" integer NOT NULL,
 	"wins" integer NOT NULL DEFAULT 0,
 	"loses" integer NOT NULL DEFAULT 0,
-	"since" timestamptz NOT NULL
+	"since" timestamptz
 );
 
 ALTER TABLE "login" ADD FOREIGN KEY ("id") REFERENCES "users" ("id");

@@ -19,20 +19,15 @@ func (s storage) GetUserData(login string) (*models.GetUserDataResponse, error) 
 	defer conn.Release()
 
 	var resp models.GetUserDataResponse
-	var friends []string
 
-	row := conn.QueryRow(ctx, "SELECT login, city, wins, lose, bingo, friends, likedPacks, ratedPacks FROM users WHERE login = $1", login)
-	err = row.Scan(&resp.Login, &resp.City, &resp.Wins, &resp.Lose, &resp.Bingo, &resp.Friends, &resp.LikedPacks, &resp.RatedPacks)
+	row := conn.QueryRow(ctx, "SELECT login, city, wins, lose, bingo, likedPacks, ratedPacks FROM users WHERE login = $1", login)
+	err = row.Scan(&resp.Login, &resp.City, &resp.Wins, &resp.Lose, &resp.Bingo, &resp.LikedPacks, &resp.RatedPacks)
 	if err != nil {
 		s.logger.Error("Error when executing statement", zap.Error(err))
 		return &resp, err
 	}
 
-	for _, friend := range resp.Friends {
-		friends = append(friends, friend.Login)
-	}
-
-	rows, err := conn.Query(ctx, "SELECT login, city, bingo FROM users WHERE id = ANY($1);", friends)
+	rows, err := conn.Query(ctx, "SELECT friend, status, wins, loses FROM friends where id = $1;", login)
 	if err != nil {
 		s.logger.Error("Error when executing statement", zap.Error(err))
 		return nil, err
@@ -40,17 +35,13 @@ func (s storage) GetUserData(login string) (*models.GetUserDataResponse, error) 
 
 	for rows.Next() {
 		var nf models.FriendsInfo
-		err = rows.Scan(&nf.Login, &nf.City, &nf.Bingo)
+		err = rows.Scan(&nf.Login, &nf.Status, &nf.Wins, &nf.Loses)
 		if err != nil {
 			s.logger.Error("Error when scanning data", zap.Error(err))
 			return nil, err
 		}
 
-		for _, friend := range resp.Friends {
-			if friend.Login == nf.Login {
-				friend.City, friend.Bingo = nf.City, nf.Bingo
-			}
-		}
+		resp.Friends = append(resp.Friends, nf)
 	}
 
 	return &resp, nil

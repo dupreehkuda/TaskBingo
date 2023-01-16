@@ -42,11 +42,9 @@ message GetUserDataResponse {
 
 message FriendInfo {
   string login = 1;
-  string city = 2;
-  int32 bingo = 3;
-  int32 status = 4;
-  int32 wins = 5;
-  int32 loses = 6;
+  int32 status = 2;
+  int32 wins = 3;
+  int32 loses = 4;
 }
 
 message RegisterUserRequest {

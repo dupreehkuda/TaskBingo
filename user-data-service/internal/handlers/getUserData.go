@@ -30,8 +30,6 @@ func (h *Handlers) GetUserData(ctx context.Context, req *api.GetUserDataRequest)
 	for _, val := range resp.Friends {
 		ans.Friends = append(ans.Friends, &api.FriendInfo{
 			Login:  val.Login,
-			City:   val.City,
-			Bingo:  int32(val.Bingo),
 			Status: int32(val.Status),
 			Wins:   int32(val.Wins),
 			Loses:  int32(val.Loses),

@@ -4,8 +4,6 @@ import "time"
 
 type FriendsInfo struct {
 	Login        string    `json:"login"`
-	City         string    `json:"city"`
-	Bingo        int       `json:"bingo"`
 	Status       int       `json:"status"`
 	Wins         int       `json:"wins"`
 	Loses        int       `json:"loses"`

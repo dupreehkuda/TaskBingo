@@ -43,7 +43,8 @@ func (s storage) AcceptFriend(login, person string) error {
 
 	tx, err := conn.Begin(ctx)
 
-	tx.Exec(ctx, "UPDATE friends SET status = $1 and since = $4 where id = $2 and id = $3;", Friend, login, person, time.Now())
+	tx.Exec(ctx, "UPDATE friends SET status = $1, since = $3 where id = $2;", Friend, login, time.Now())
+	tx.Exec(ctx, "UPDATE friends SET status = $1, since = $3 where id = $2;", Friend, person, time.Now())
 
 	err = tx.Commit(ctx)
 	if err != nil {
@@ -66,7 +67,8 @@ func (s storage) DeleteFriend(login, person string) error {
 
 	tx, err := conn.Begin(ctx)
 
-	tx.Exec(ctx, "DELETE FROM friends WHERE id = $1 and id = $2;", login, person)
+	tx.Exec(ctx, "DELETE FROM friends WHERE id = $1 and friend = $2;", login, person)
+	tx.Exec(ctx, "DELETE FROM friends WHERE id = $1 and friend = $2;", person, login)
 
 	err = tx.Commit(ctx)
 	if err != nil {
