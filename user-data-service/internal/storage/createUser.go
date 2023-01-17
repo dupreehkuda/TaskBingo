@@ -2,6 +2,7 @@ package storage
 
 import (
 	"context"
+	"strings"
 	"time"
 
 	"go.uber.org/zap"
@@ -25,8 +26,8 @@ func (s storage) CreateUser(login, email, passwordHash, passwordSalt, city strin
 		return err
 	}
 
-	tx.Exec(ctx, "INSERT INTO users (id, login, email, registered, city) VALUES ($1, $1, $2, $3, $4)", login, email, time.Now(), city)
-	tx.Exec(ctx, "INSERT INTO login (id, passwordhash, passwordsalt) VALUES ($1, $2, $3);", login, passwordHash, passwordSalt)
+	tx.Exec(ctx, "INSERT INTO users (id, login, email, registered, city) VALUES ($1, $1, $2, $3, $4)", strings.TrimSpace(login), email, time.Now(), city)
+	tx.Exec(ctx, "INSERT INTO login (id, passwordhash, passwordsalt) VALUES ($1, $2, $3);", strings.TrimSpace(login), passwordHash, passwordSalt)
 
 	err = tx.Commit(ctx)
 	if err != nil {
