@@ -38,6 +38,12 @@ func (a api) router() http.Handler {
 			r.Post("/setTaskPack", a.handlers.SetTaskPack)
 			r.Get("/getPacks", a.handlers.GetRatedPacks)
 		})
+
+		r.Route("/game", func(r chi.Router) {
+			r.Use(a.middleware.CheckToken)
+
+			r.Post("/create", a.handlers.CreateGame)
+		})
 	})
 
 	return r

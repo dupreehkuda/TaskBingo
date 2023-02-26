@@ -22,6 +22,7 @@ type Handlers interface {
 	RequestFriend(w http.ResponseWriter, r *http.Request)
 	AcceptFriend(w http.ResponseWriter, r *http.Request)
 	DeleteFriend(w http.ResponseWriter, r *http.Request)
+	CreateGame(w http.ResponseWriter, r *http.Request)
 }
 
 // UserDataClient is an interface for user data service
@@ -39,6 +40,7 @@ type UserDataClient interface {
 	AcceptFriend(login, person string) error
 	DeleteFriend(login, person string) error
 	RequestFriend(login, person string) error
+	CreateGame(game *models.Game) error
 }
 
 // TaskDataClient is an interface for task data service
@@ -69,4 +71,5 @@ type Processor interface {
 	AcceptFriend(login, person string) error
 	DeleteFriend(login, person string) error
 	RequestFriend(login, person string) error
+	CreateGame(user1, user2, packID string) error
 }

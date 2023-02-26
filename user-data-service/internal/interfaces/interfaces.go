@@ -23,6 +23,7 @@ type Processor interface {
 	AcceptFriend(login, person string) error
 	DeleteFriend(login, person string) error
 	RequestFriend(login, person string) error
+	CreateGame(game *models.Game) error
 }
 
 // Stored is interface for storage
@@ -39,4 +40,5 @@ type Stored interface {
 	AcceptFriend(login, person string) error
 	DeleteFriend(login, person string) error
 	RequestFriend(login, person string) error
+	CreateGame(game *models.Game) error
 }

@@ -18,6 +18,26 @@ service Users {
   rpc RequestFriend(FriendRequest) returns (Empty);
   rpc AcceptFriend(FriendRequest) returns (Empty);
   rpc DeleteFriend(FriendRequest) returns (Empty);
+  rpc CreateGame(NewGameRequest) returns (Empty);
+  rpc AcceptGame(UUID) returns (Empty);
+}
+
+message UUID {
+  string value = 1;
+}
+
+message NewGameRequest {
+  UUID gameID = 1;
+  string user1id = 2;
+  string user2id = 3;
+  string pack = 4;
+  int32 status = 5;
+  int32 user1bingo = 6;
+  int32 user2bingo = 7;
+  string winner = 8;
+  repeated int32 numbers = 9;
+  repeated int32 user1numbers = 10;
+  repeated int32 user2numbers = 11;
 }
 
 message FriendRequest {

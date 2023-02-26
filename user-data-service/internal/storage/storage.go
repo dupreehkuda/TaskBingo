@@ -12,7 +12,7 @@ import (
 const (
 	_ = iota
 	Requested
-	Responce
+	Response
 	Friend
 )
 
@@ -23,41 +23,60 @@ type storage struct {
 }
 
 var schema = `
-CREATE TABLE IF NOT EXISTS "users" (
-   "id" text PRIMARY KEY NOT NULL UNIQUE,
-   "login" text NOT NULL UNIQUE,
-   "email" text NOT NULL UNIQUE,
-   "city" text NOT NULL,
-   "wins" integer DEFAULT 0,
-   "lose" integer DEFAULT 0,
-   "bingo" integer DEFAULT 0,
-   "likedpacks" text[] DEFAULT '{}',
-   "ratedpacks" text[] DEFAULT '{}',
-   "registered" timestamptz NOT NULL
+CREATE TABLE IF NOT EXISTS users (
+   id text PRIMARY KEY NOT NULL UNIQUE,
+   login text NOT NULL UNIQUE,
+   email text NOT NULL UNIQUE,
+   city text NOT NULL,
+   wins integer DEFAULT 0,
+   lose integer DEFAULT 0,
+   bingo integer DEFAULT 0,
+   likedpacks text[] DEFAULT '{}',
+   ratedpacks text[] DEFAULT '{}',
+   registered timestamptz NOT NULL,
+   activegames uuid[] DEFAULT '{}',
+   pastgames uuid[] DEFAULT '{}',
+   requestedgames uuid[] DEFAULT '{}',
+   createdgames uuid[] DEFAULT '{}'
 );
 
-CREATE TABLE IF NOT EXISTS "login" (
-	"id" text PRIMARY KEY NOT NULL UNIQUE,
-	"passwordhash" text NOT NULL UNIQUE,
-	"passwordsalt" text NOT NULL UNIQUE 
+CREATE TABLE IF NOT EXISTS login (
+	id text PRIMARY KEY NOT NULL UNIQUE,
+	passwordhash text NOT NULL UNIQUE,
+	passwordsalt text NOT NULL UNIQUE 
 );
 
-CREATE TABLE IF NOT EXISTS "ratings" (
-	"id" text PRIMARY KEY NOT NULL UNIQUE,
-	"rating" integer NOT NULL DEFAULT 0,
-	"liked" integer NOT NULL DEFAULT 1,
-	"played" integer NOT NULL DEFAULT 0,
-	"creator" text NOT NULL,
-	"created" timestamptz NOT NULL
+CREATE TABLE IF NOT EXISTS ratings (
+	id text PRIMARY KEY NOT NULL UNIQUE,
+	rating integer NOT NULL DEFAULT 0,
+	liked integer NOT NULL DEFAULT 1,
+	played integer NOT NULL DEFAULT 0,
+	creator text NOT NULL,
+	created timestamptz NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS "friends" (
-	"id" text NOT NULL,
-	"friend" text NOT NULL ,
-	"status" integer NOT NULL,
-	"wins" integer NOT NULL DEFAULT 0,
-	"loses" integer NOT NULL DEFAULT 0,
-	"since" timestamptz
+CREATE TABLE IF NOT EXISTS friends (
+	id text NOT NULL,
+	friend text NOT NULL,
+	status integer NOT NULL,
+	wins integer NOT NULL DEFAULT 0,
+	loses integer NOT NULL DEFAULT 0,
+	since timestamptz
+);
+
+CREATE TABLE IF NOT EXISTS games (
+  	uuid uuid NOT NULL,
+  	user1_id text NOT NULL,
+  	user2_id text NOT NULL,
+  	pack_id text NOT NULL,
+  	status integer NOT NULL,
+  	user1_bingo integer default 0,
+  	user2_bingo integer default 0,
+  	winner text,
+  	numbers integer[] default '{}',
+  	user1_numbers integer[] default '{}',
+  	user2_numbers integer[] default '{}',
+  	created timestamptz
 );
 
 ALTER TABLE "login" ADD FOREIGN KEY ("id") REFERENCES "users" ("id");
