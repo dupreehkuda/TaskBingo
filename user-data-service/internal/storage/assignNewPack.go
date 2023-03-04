@@ -4,11 +4,12 @@ import (
 	"context"
 	"time"
 
+	"github.com/google/uuid"
 	"go.uber.org/zap"
 )
 
 // AssignNewPack assigns fresh pack to creator and adds pack to ratings
-func (s storage) AssignNewPack(login, pack string) error {
+func (s storage) AssignNewPack(userID, packID uuid.UUID, packName string) error {
 	ctx := context.Background()
 	conn, err := s.pool.Acquire(ctx)
 	if err != nil {
@@ -19,8 +20,8 @@ func (s storage) AssignNewPack(login, pack string) error {
 
 	tx, err := conn.Begin(ctx)
 
-	tx.Exec(ctx, "INSERT INTO ratings (id, creator, created) VALUES ($1, $2, $3);", pack, login, time.Now())
-	tx.Exec(ctx, "UPDATE users SET likedPacks = ARRAY_APPEND(likedPacks, $1) WHERE login = $2;", pack, login)
+	tx.Exec(ctx, "INSERT INTO ratings (id, pack, creator, created) VALUES ($1, $2, $3, $4);", packID, packName, userID, time.Now())
+	tx.Exec(ctx, "UPDATE users SET likedPacks = ARRAY_APPEND(likedPacks, $1) WHERE id = $2;", packID, userID)
 
 	err = tx.Commit(ctx)
 	if err != nil {

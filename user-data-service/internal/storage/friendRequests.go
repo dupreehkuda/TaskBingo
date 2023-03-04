@@ -4,11 +4,12 @@ import (
 	"context"
 	"time"
 
+	"github.com/google/uuid"
 	"go.uber.org/zap"
 )
 
 // RequestFriend requests friendship to user
-func (s storage) RequestFriend(login, person string) error {
+func (s storage) RequestFriend(userID, friendID uuid.UUID) error {
 	ctx := context.Background()
 	conn, err := s.pool.Acquire(ctx)
 	if err != nil {
@@ -19,8 +20,8 @@ func (s storage) RequestFriend(login, person string) error {
 
 	tx, err := conn.Begin(ctx)
 
-	tx.Exec(ctx, "INSERT INTO friends (id, friend, status) VALUES ($1, $2, $3);", login, person, Requested)
-	tx.Exec(ctx, "INSERT INTO friends (id, friend, status) VALUES ($1, $2, $3);", person, login, Response)
+	tx.Exec(ctx, "INSERT INTO friends (id, friend, status) VALUES ($1, $2, $3);", userID, friendID, Requested)
+	tx.Exec(ctx, "INSERT INTO friends (id, friend, status) VALUES ($1, $2, $3);", friendID, userID, Response)
 
 	err = tx.Commit(ctx)
 	if err != nil {
@@ -32,7 +33,7 @@ func (s storage) RequestFriend(login, person string) error {
 }
 
 // AcceptFriend accepts friendship request
-func (s storage) AcceptFriend(login, person string) error {
+func (s storage) AcceptFriend(userID, friendID uuid.UUID) error {
 	ctx := context.Background()
 	conn, err := s.pool.Acquire(ctx)
 	if err != nil {
@@ -43,8 +44,8 @@ func (s storage) AcceptFriend(login, person string) error {
 
 	tx, err := conn.Begin(ctx)
 
-	tx.Exec(ctx, "UPDATE friends SET status = $1, since = $3 where id = $2 and friend = $4;", Friend, login, time.Now(), person)
-	tx.Exec(ctx, "UPDATE friends SET status = $1, since = $3 where id = $2 and friend = $4;", Friend, person, time.Now(), login)
+	tx.Exec(ctx, "UPDATE friends SET status = $1, since = $3 where id = $2 and friend = $4;", Friend, userID, time.Now(), friendID)
+	tx.Exec(ctx, "UPDATE friends SET status = $1, since = $3 where id = $2 and friend = $4;", Friend, friendID, time.Now(), userID)
 
 	err = tx.Commit(ctx)
 	if err != nil {
@@ -56,7 +57,7 @@ func (s storage) AcceptFriend(login, person string) error {
 }
 
 // DeleteFriend deletes friendship or cancels request
-func (s storage) DeleteFriend(login, person string) error {
+func (s storage) DeleteFriend(userID, friendID uuid.UUID) error {
 	ctx := context.Background()
 	conn, err := s.pool.Acquire(ctx)
 	if err != nil {
@@ -67,8 +68,8 @@ func (s storage) DeleteFriend(login, person string) error {
 
 	tx, err := conn.Begin(ctx)
 
-	tx.Exec(ctx, "DELETE FROM friends WHERE id = $1 and friend = $2;", login, person)
-	tx.Exec(ctx, "DELETE FROM friends WHERE id = $1 and friend = $2;", person, login)
+	tx.Exec(ctx, "DELETE FROM friends WHERE id = $1 and friend = $2;", userID, friendID)
+	tx.Exec(ctx, "DELETE FROM friends WHERE id = $1 and friend = $2;", friendID, userID)
 
 	err = tx.Commit(ctx)
 	if err != nil {

@@ -16,5 +16,10 @@ func (h *Handlers) GetRatedPacks(ctx context.Context, _ *api.Empty) (*api.RatedP
 		return nil, err
 	}
 
-	return &api.RatedPacksResponse{Packs: resp}, nil
+	var ans []*api.UUID
+	for _, val := range resp {
+		ans = append(ans, &api.UUID{Id: val.String()})
+	}
+
+	return &api.RatedPacksResponse{Packs: ans}, nil
 }

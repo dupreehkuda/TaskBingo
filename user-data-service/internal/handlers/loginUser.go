@@ -12,14 +12,17 @@ import (
 
 // LoginUser handles the operation of user's logging in
 func (h *Handlers) LoginUser(ctx context.Context, req *api.LoginUserRequest) (*api.LoginUserResponse, error) {
-	err := h.processor.LoginUser(req.Login, req.Password)
+	userID, err := h.processor.LoginUser(req.Username, req.Password)
 
 	switch {
 	case err == errs.ErrWrongCredentials:
-		return &api.LoginUserResponse{}, status.Error(codes.Unauthenticated, "WC")
+		return &api.LoginUserResponse{}, status.Error(codes.Unauthenticated, "Wrong Credentials")
 	case err != nil:
-		return &api.LoginUserResponse{Error: err.Error()}, err
+		return &api.LoginUserResponse{}, err
 	}
 
-	return &api.LoginUserResponse{}, nil
+	return &api.LoginUserResponse{
+		UserID:   &api.UUID{Id: userID},
+		Username: req.Username,
+	}, nil
 }

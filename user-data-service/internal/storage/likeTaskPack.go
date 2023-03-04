@@ -3,11 +3,12 @@ package storage
 import (
 	"context"
 
+	"github.com/google/uuid"
 	"go.uber.org/zap"
 )
 
 // LikePack likes or dislikes pack on user
-func (s storage) LikePack(login, pack string, inc int) error {
+func (s storage) LikePack(userID, pack uuid.UUID, inc int) error {
 	ctx := context.Background()
 	conn, err := s.pool.Acquire(ctx)
 	if err != nil {
@@ -22,10 +23,10 @@ func (s storage) LikePack(login, pack string, inc int) error {
 
 	if inc == 1 {
 		// add pack id to the liked array
-		tx.Exec(ctx, "UPDATE users SET likedpacks = ARRAY_APPEND(likedpacks, $1) WHERE login = $2;", pack, login)
+		tx.Exec(ctx, "UPDATE users SET likedpacks = ARRAY_APPEND(likedpacks, $1) WHERE id = $2;", pack, userID)
 	} else {
 		// remove pack id from the liked array
-		tx.Exec(ctx, "UPDATE users SET likedpacks = ARRAY_REMOVE(likedpacks, $1) WHERE login = $2;", pack, login)
+		tx.Exec(ctx, "UPDATE users SET likedpacks = ARRAY_REMOVE(likedpacks, $1) WHERE id = $2;", pack, userID)
 	}
 
 	err = tx.Commit(ctx)

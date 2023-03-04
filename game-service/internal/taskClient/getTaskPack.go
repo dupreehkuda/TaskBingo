@@ -21,8 +21,8 @@ func (t taskClient) GetTaskPack(packID string) (*models.TaskPack, error) {
 	}
 
 	tasks := models.TaskPack{
-		TaskID: resp.Id,
-		Tasks:  resp.Tasks,
+		Name:  resp.Id,
+		Tasks: resp.Tasks,
 	}
 
 	return &tasks, nil

@@ -19,9 +19,10 @@ func (h *Handlers) GetAllPeople(ctx context.Context, _ *api.Empty) (*api.People,
 
 	for _, person := range *users {
 		resp = append(resp, &api.PersonInfo{
-			Login: person.Login,
-			City:  person.City,
-			Bingo: int32(person.Bingo),
+			UserID:   &api.UUID{Id: person.UserID},
+			Username: person.Username,
+			City:     person.City,
+			Bingo:    int32(person.Bingo),
 		})
 	}
 

@@ -22,7 +22,7 @@ func (h handlers) RegisterUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if regCredit.UserID == "" && regCredit.Password == "" && regCredit.Email == "" && regCredit.Username == "" {
+	if regCredit.Username == "" && regCredit.Password == "" && regCredit.Email == "" {
 		h.logger.Info("Credentials empty")
 		w.WriteHeader(http.StatusBadRequest)
 		return

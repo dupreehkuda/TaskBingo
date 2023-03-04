@@ -19,7 +19,6 @@ type Response struct {
 
 // RegisterCredentials provides users register credentials request
 type RegisterCredentials struct {
-	UserID   string `json:"userID"`
 	Username string `json:"username"`
 	Email    string `json:"email"`
 	City     string `json:"city"`
@@ -34,8 +33,8 @@ type LoginCredentials struct {
 
 // TaskPack provides complete task pack ingo
 type TaskPack struct {
-	TaskID string   `json:"id"`
-	Tasks  []string `json:"tasks"`
+	Name  string   `json:"Name"`
+	Tasks []string `json:"tasks"`
 }
 
 // TaskPackRequest provides task pack request

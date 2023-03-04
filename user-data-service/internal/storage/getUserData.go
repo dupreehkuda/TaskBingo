@@ -3,13 +3,14 @@ package storage
 import (
 	"context"
 
+	"github.com/google/uuid"
 	"go.uber.org/zap"
 
 	"github.com/dupreehkuda/TaskBingo/user-data-service/internal/models"
 )
 
 // GetUserData retrieves user data from database
-func (s storage) GetUserData(login string) (*models.GetUserDataResponse, error) {
+func (s storage) GetUserData(userID uuid.UUID) (*models.GetUserDataResponse, error) {
 	ctx := context.Background()
 	conn, err := s.pool.Acquire(ctx)
 	if err != nil {
@@ -20,14 +21,14 @@ func (s storage) GetUserData(login string) (*models.GetUserDataResponse, error) 
 
 	var resp models.GetUserDataResponse
 
-	row := conn.QueryRow(ctx, "SELECT login, city, wins, lose, bingo, likedPacks, ratedPacks FROM users WHERE login = $1", login)
-	err = row.Scan(&resp.Login, &resp.City, &resp.Wins, &resp.Lose, &resp.Bingo, &resp.LikedPacks, &resp.RatedPacks)
+	row := conn.QueryRow(ctx, "SELECT id, username, city, wins, lose, bingo, likedPacks, ratedPacks FROM users WHERE id = $1", userID)
+	err = row.Scan(&resp.UserID, &resp.Username, &resp.City, &resp.Wins, &resp.Lose, &resp.Bingo, &resp.LikedPacks, &resp.RatedPacks)
 	if err != nil {
 		s.logger.Error("Error when executing statement", zap.Error(err))
 		return &resp, err
 	}
 
-	rows, err := conn.Query(ctx, "SELECT friend, status, wins, loses FROM friends where id = $1;", login)
+	rows, err := conn.Query(ctx, "SELECT friend_id, friend_username, status, wins, loses FROM friends where id = $1;", userID)
 	if err != nil {
 		s.logger.Error("Error when executing statement", zap.Error(err))
 		return nil, err
@@ -35,7 +36,7 @@ func (s storage) GetUserData(login string) (*models.GetUserDataResponse, error) 
 
 	for rows.Next() {
 		var nf models.FriendsInfo
-		err = rows.Scan(&nf.Login, &nf.Status, &nf.Wins, &nf.Loses)
+		err = rows.Scan(&nf.UserID, &nf.Username, &nf.Status, &nf.Wins, &nf.Loses)
 		if err != nil {
 			s.logger.Error("Error when scanning data", zap.Error(err))
 			return nil, err

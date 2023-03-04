@@ -7,7 +7,8 @@ import (
 )
 
 type FriendsInfo struct {
-	Login        string    `json:"login"`
+	UserID       string    `json:"userID"`
+	Username     string    `json:"username"`
 	Status       int       `json:"status"`
 	Wins         int       `json:"wins"`
 	Loses        int       `json:"loses"`
@@ -16,7 +17,8 @@ type FriendsInfo struct {
 
 // GetUserDataResponse provides response for user data request
 type GetUserDataResponse struct {
-	Login      string        `json:"login"`
+	UserID     string        `json:"userID"`
+	Username   string        `json:"username"`
 	City       string        `json:"city"`
 	Wins       int           `json:"wins"`
 	Lose       int           `json:"lose"`
@@ -28,14 +30,16 @@ type GetUserDataResponse struct {
 
 // LoginUserResponse provides response for user login request
 type LoginUserResponse struct {
-	PasswordHash string `db:"passwordhash"`
-	PasswordSalt string `db:"passwordsalt"`
+	UserID       uuid.UUID `db:"id"`
+	PasswordHash string    `db:"passwordhash"`
+	PasswordSalt string    `db:"passwordsalt"`
 }
 
 type AllUsers struct {
-	Login string `json:"login"`
-	City  string `json:"city"`
-	Bingo int    `json:"bingo"`
+	UserID   string `json:"userID"`
+	Username string `json:"username"`
+	City     string `json:"city"`
+	Bingo    int    `json:"bingo"`
 }
 
 // Game provides game instance

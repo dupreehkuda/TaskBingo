@@ -31,7 +31,7 @@ func (h handlers) SetTaskPack(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if req.TaskID == "" {
+	if req.Name == "" {
 		h.logger.Info("Request empty")
 		w.WriteHeader(http.StatusBadRequest)
 		return

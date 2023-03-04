@@ -1,9 +1,12 @@
 package processors
 
-import "go.uber.org/zap"
+import (
+	"github.com/google/uuid"
+	"go.uber.org/zap"
+)
 
-func (p processor) AcceptFriend(login, person string) error {
-	err := p.storage.AcceptFriend(login, person)
+func (p processor) AcceptFriend(userID, friendID uuid.UUID) error {
+	err := p.storage.AcceptFriend(userID, friendID)
 	if err != nil {
 		p.logger.Error("Error occurred in call to storage", zap.Error(err))
 		return err
@@ -12,8 +15,8 @@ func (p processor) AcceptFriend(login, person string) error {
 	return nil
 }
 
-func (p processor) DeleteFriend(login, person string) error {
-	err := p.storage.DeleteFriend(login, person)
+func (p processor) DeleteFriend(userID, friendID uuid.UUID) error {
+	err := p.storage.DeleteFriend(userID, friendID)
 	if err != nil {
 		p.logger.Error("Error occurred in call to storage", zap.Error(err))
 		return err
@@ -22,8 +25,8 @@ func (p processor) DeleteFriend(login, person string) error {
 	return nil
 }
 
-func (p processor) RequestFriend(login, person string) error {
-	err := p.storage.RequestFriend(login, person)
+func (p processor) RequestFriend(userID, friendID uuid.UUID) error {
+	err := p.storage.RequestFriend(userID, friendID)
 	if err != nil {
 		p.logger.Error("Error occurred in call to storage", zap.Error(err))
 		return err

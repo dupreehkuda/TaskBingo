@@ -24,8 +24,8 @@ func (t taskClient) GetMultiplePacks(packIDs []string) (*[]models.TaskPack, erro
 
 	for _, val := range resp.Packs {
 		packs = append(packs, models.TaskPack{
-			TaskID: val.Id,
-			Tasks:  val.Tasks,
+			Name:  val.Id,
+			Tasks: val.Tasks,
 		})
 	}
 

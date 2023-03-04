@@ -16,5 +16,10 @@ func (u userClient) GetRatedPacks() ([]string, error) {
 		return nil, err
 	}
 
-	return resp.Packs, nil
+	var ans []string
+	for _, val := range resp.Packs {
+		ans = append(ans, val.Id)
+	}
+
+	return ans, nil
 }

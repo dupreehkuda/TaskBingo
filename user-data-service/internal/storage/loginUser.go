@@ -5,17 +5,18 @@ import (
 
 	"go.uber.org/zap"
 
-	"github.com/dupreehkuda/TaskBingo/user-data-service/internal/models"
 	"github.com/georgysavva/scany/v2/pgxscan"
+
+	"github.com/dupreehkuda/TaskBingo/user-data-service/internal/models"
 )
 
 // LoginUser gets user's data from the database to check for correct credentials
-func (s storage) LoginUser(login string) (*models.LoginUserResponse, error) {
+func (s storage) LoginUser(username string) (*models.LoginUserResponse, error) {
 	var data models.LoginUserResponse
 
-	const query = "SELECT passwordhash, passwordsalt FROM login WHERE id = $1;"
-
-	err := pgxscan.Get(context.Background(), s.pool, &data, query, login)
+	const query = "SELECT id, passwordhash, passwordsalt FROM login WHERE id = $1;"
+	// TODO remake query with pgx
+	err := pgxscan.Get(context.Background(), s.pool, &data, query, username)
 	if err != nil {
 		s.logger.Error("Error occurred while getting login data", zap.Error(err))
 		return nil, err

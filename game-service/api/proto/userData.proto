@@ -6,7 +6,7 @@ option go_package = "./";
 
 service Users {
   rpc GetUserData(GetUserDataRequest) returns (GetUserDataResponse);
-  rpc RegisterUser(RegisterUserRequest) returns (Empty);
+  rpc RegisterUser(RegisterUserRequest) returns (RegisterUserResponse);
   rpc LoginUser(LoginUserRequest) returns (LoginUserResponse);
   rpc LikePack(LikeOrRatePackRequest) returns (Empty);
   rpc DislikePack(LikeOrRatePackRequest) returns (Empty);
@@ -24,6 +24,11 @@ service Users {
 
 message UUID {
   string id = 1;
+}
+
+message RegisterUserResponse {
+  UUID userID = 1;
+  string username = 2;
 }
 
 message LoginUserResponse {
@@ -75,15 +80,14 @@ message FriendInfo {
 }
 
 message RegisterUserRequest {
-  UUID userID = 1;
-  string username = 2;
-  string email = 3;
-  string city = 4;
-  string password = 5;
+  string username = 1;
+  string email = 2;
+  string city = 3;
+  string password = 4;
 }
 
 message LoginUserRequest {
-  UUID userID = 1;
+  string username = 1;
   string password = 2;
 }
 
@@ -93,12 +97,13 @@ message LikeOrRatePackRequest {
 }
 
 message RatedPacksResponse {
-  repeated string packs = 1;
+  repeated UUID packs = 1;
 }
 
 message AssignNewPackRequest {
   UUID userID = 1;
-  string pack = 2;
+  UUID packID = 2;
+  string packName = 3;
 }
 
 message PersonInfo {

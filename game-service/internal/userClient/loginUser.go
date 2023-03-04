@@ -12,9 +12,9 @@ import (
 )
 
 // LoginUser sends login request to user service
-func (u userClient) LoginUser(userID, password string) (string, error) {
+func (u userClient) LoginUser(username, password string) (string, error) {
 	data := api.LoginUserRequest{
-		UserID:   &api.UUID{Id: userID},
+		Username: username,
 		Password: password,
 	}
 

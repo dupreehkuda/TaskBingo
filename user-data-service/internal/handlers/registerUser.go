@@ -12,14 +12,14 @@ import (
 
 // RegisterUser handles the operation of user's registration
 func (h *Handlers) RegisterUser(ctx context.Context, req *api.RegisterUserRequest) (*api.RegisterUserResponse, error) {
-	err := h.processor.RegisterUser(req.Login, req.Password, req.Email, req.City)
+	userID, err := h.processor.RegisterUser(req.Username, req.Password, req.Email, req.City)
 
 	switch {
 	case err == errs.ErrCredentialsInUse:
 		return &api.RegisterUserResponse{}, status.Error(codes.AlreadyExists, "CIU")
 	case err != nil:
-		return &api.RegisterUserResponse{Error: err.Error()}, err
+		return &api.RegisterUserResponse{}, err
 	}
 
-	return &api.RegisterUserResponse{}, nil
+	return &api.RegisterUserResponse{UserID: &api.UUID{Id: userID}, Username: req.Username}, nil
 }

@@ -4,8 +4,9 @@ import (
 	"context"
 	"time"
 
-	"github.com/dupreehkuda/TaskBingo/user-data-service/internal/models"
 	"go.uber.org/zap"
+
+	"github.com/dupreehkuda/TaskBingo/user-data-service/internal/models"
 )
 
 // CreateGame writes new game to db and changes users game arrays
@@ -20,11 +21,11 @@ func (s storage) CreateGame(game *models.Game) error {
 
 	tx, err := conn.Begin(ctx)
 
-	tx.Exec(ctx, `INSERT INTO games (uuid, user1_id, user2_id, pack_id, status, created) VALUES ($1, $2, $3, $4, $5, $6)`,
+	tx.Exec(ctx, `INSERT INTO games (id, user1_id, user2_id, pack_id, status, created) VALUES ($1, $2, $3, $4, $5, $6)`,
 		game.GameID, game.User1Id, game.User2Id, game.PackId, game.Status, time.Now())
 
-	tx.Exec(ctx, `UPDATE users SET createdgames = ARRAY_APPEND(createdgames, $1) WHERE login = $2`, game.GameID, game.User1Id)
-	tx.Exec(ctx, `UPDATE users SET requestedgames = ARRAY_APPEND(requestedgames, $1) WHERE login = $2`, game.GameID, game.User2Id)
+	tx.Exec(ctx, `UPDATE users SET games = ARRAY_APPEND(games, $1) WHERE id = $2`, game.GameID, game.User1Id)
+	tx.Exec(ctx, `UPDATE users SET games = ARRAY_APPEND(games, $1) WHERE id = $2`, game.GameID, game.User2Id)
 
 	err = tx.Commit(ctx)
 	if err != nil {
