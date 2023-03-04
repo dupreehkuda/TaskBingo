@@ -10,21 +10,21 @@ import (
 
 // Processor is an interface for business-logic
 type Processor interface {
-	GetUserData(login string) (*models.UserAccountInfo, error)
-	LoginUser(login, password string) (string, error)
-	RegisterUser(creds *models.RegisterCredentials) (string, error)
+	GetUserData(userID string) (*models.UserAccountInfo, error)
+	LoginUser(username, password string) (string, error)
+	RegisterUser(credits *models.RegisterCredentials) (string, error)
 	GetTaskPack(packID string) (*models.TaskPack, error)
-	SetTaskPack(login string, pack *models.TaskPack) error
-	LikeTaskPack(login, pack string) error
-	DislikeTaskPack(login, pack string) error
-	RateTaskPack(login, pack string) error
-	UnrateTaskPack(login, pack string) error
+	SetTaskPack(userID string, pack *models.TaskPack) error
+	LikeTaskPack(userID, pack string) error
+	DislikeTaskPack(userID, pack string) error
+	RateTaskPack(userID, pack string) error
+	UnrateTaskPack(userID, pack string) error
 	GetRatedPacks() (*[]models.TaskPack, error)
 	GetAllUsers() (*[]models.User, error)
-	AcceptFriend(login, person string) error
-	DeleteFriend(login, person string) error
-	RequestFriend(login, person string) error
-	CreateGame(user1, user2, packID string) error
+	AcceptFriend(userID, friendID string) error
+	DeleteFriend(userID, friendID string) error
+	RequestFriend(userID, friendID string) error
+	CreateGame(userID, opponentID, packID string) error
 }
 
 // processor provides service's business-logic

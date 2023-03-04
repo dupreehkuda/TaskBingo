@@ -6,7 +6,7 @@ option go_package = "./";
 
 service Users {
   rpc GetUserData(GetUserDataRequest) returns (GetUserDataResponse);
-  rpc RegisterUser(RegisterUserRequest) returns (RegisterUserResponse);
+  rpc RegisterUser(RegisterUserRequest) returns (Empty);
   rpc LoginUser(LoginUserRequest) returns (LoginUserResponse);
   rpc LikePack(LikeOrRatePackRequest) returns (Empty);
   rpc DislikePack(LikeOrRatePackRequest) returns (Empty);
@@ -23,72 +23,72 @@ service Users {
 }
 
 message UUID {
-  string value = 1;
+  string id = 1;
+}
+
+message LoginUserResponse {
+  UUID userID = 1;
+  string username = 2;
 }
 
 message NewGameRequest {
   UUID gameID = 1;
-  string user1id = 2;
-  string user2id = 3;
+  UUID user1id = 2;
+  UUID user2id = 3;
   string pack = 4;
   int32 status = 5;
   int32 user1bingo = 6;
   int32 user2bingo = 7;
-  string winner = 8;
+  UUID winner = 8;
   repeated int32 numbers = 9;
   repeated int32 user1numbers = 10;
   repeated int32 user2numbers = 11;
 }
 
 message FriendRequest {
-  string login = 1;
-  string person = 2;
+  UUID userID = 1;
+  UUID friendID = 2;
 }
 
 message GetUserDataRequest {
-  string login = 1;
+  UUID userID = 1;
 }
 
 message GetUserDataResponse {
-  string login = 1;
-  string city = 2;
-  int32 wins = 3;
-  int32 loses = 4;
-  int32 bingo = 5;
-  repeated FriendInfo friends = 6;
-  repeated string likedPacks = 7;
-  repeated string ratedPacks = 8;
+  UUID userID = 1;
+  string username = 2;
+  string city = 3;
+  int32 wins = 4;
+  int32 loses = 5;
+  int32 bingo = 6;
+  repeated FriendInfo friends = 7;
+  repeated string likedPacks = 8;
+  repeated string ratedPacks = 9;
 }
 
 message FriendInfo {
-  string login = 1;
-  int32 status = 2;
-  int32 wins = 3;
-  int32 loses = 4;
+  UUID userID = 1;
+  string username = 2;
+  int32 status = 3;
+  int32 wins = 4;
+  int32 loses = 5;
 }
 
 message RegisterUserRequest {
-  string login = 1;
-  string email = 2;
-  string city = 3;
-  string password = 4;
-}
-
-message RegisterUserResponse {
-  string error = 1;
+  UUID userID = 1;
+  string username = 2;
+  string email = 3;
+  string city = 4;
+  string password = 5;
 }
 
 message LoginUserRequest {
-  string login = 1;
+  UUID userID = 1;
   string password = 2;
 }
 
-message LoginUserResponse {
-  string error = 1;
-}
-
 message LikeOrRatePackRequest {
-  string login = 1;
+  UUID userID = 1;
   string pack = 2;
 }
 
@@ -97,14 +97,15 @@ message RatedPacksResponse {
 }
 
 message AssignNewPackRequest {
-  string login = 1;
+  UUID userID = 1;
   string pack = 2;
 }
 
 message PersonInfo {
-  string login = 1;
-  string city = 2;
-  int32 bingo = 3;
+  UUID userID = 1;
+  string username = 2;
+  string city = 3;
+  int32 bingo = 4;
 }
 
 message People {

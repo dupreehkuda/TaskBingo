@@ -8,10 +8,10 @@ import (
 	api "github.com/dupreehkuda/TaskBingo/game-service/pkg/api"
 )
 
-func (u userClient) RequestFriend(login, person string) error {
+func (u userClient) RequestFriend(userID, friendID string) error {
 	_, err := u.conn.RequestFriend(context.Background(), &api.FriendRequest{
-		Login:  login,
-		Person: person,
+		UserID:   &api.UUID{Id: userID},
+		FriendID: &api.UUID{Id: friendID},
 	})
 
 	if err != nil {
@@ -22,10 +22,10 @@ func (u userClient) RequestFriend(login, person string) error {
 	return nil
 }
 
-func (u userClient) AcceptFriend(login, person string) error {
+func (u userClient) AcceptFriend(userID, friendID string) error {
 	_, err := u.conn.AcceptFriend(context.Background(), &api.FriendRequest{
-		Login:  login,
-		Person: person,
+		UserID:   &api.UUID{Id: userID},
+		FriendID: &api.UUID{Id: friendID},
 	})
 
 	if err != nil {
@@ -36,10 +36,10 @@ func (u userClient) AcceptFriend(login, person string) error {
 	return nil
 }
 
-func (u userClient) DeleteFriend(login, person string) error {
+func (u userClient) DeleteFriend(userID, friendID string) error {
 	_, err := u.conn.DeleteFriend(context.Background(), &api.FriendRequest{
-		Login:  login,
-		Person: person,
+		UserID:   &api.UUID{Id: userID},
+		FriendID: &api.UUID{Id: friendID},
 	})
 
 	if err != nil {

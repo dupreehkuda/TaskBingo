@@ -11,10 +11,10 @@ import (
 
 // RateTaskPack handles pack star operations
 func (h handlers) RateTaskPack(w http.ResponseWriter, r *http.Request) {
-	var ctxKey models.LoginKey = "login"
-	login := r.Context().Value(ctxKey).(string)
+	var ctxKey models.UserIDKey = "userID"
+	userID := r.Context().Value(ctxKey).(string)
 
-	if login == "" {
+	if userID == "" {
 		h.logger.Error("Bad login")
 		w.WriteHeader(http.StatusBadRequest)
 		return
@@ -36,7 +36,7 @@ func (h handlers) RateTaskPack(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.processor.RateTaskPack(login, req.TaskID)
+	err = h.processor.RateTaskPack(userID, req.TaskID)
 	if err != nil {
 		h.logger.Error("Error getting data", zap.Error(err))
 		return
@@ -48,10 +48,10 @@ func (h handlers) RateTaskPack(w http.ResponseWriter, r *http.Request) {
 
 // UnrateTaskPack handles pack unstar operations
 func (h handlers) UnrateTaskPack(w http.ResponseWriter, r *http.Request) {
-	var ctxKey models.LoginKey = "login"
-	login := r.Context().Value(ctxKey).(string)
+	var ctxKey models.UserIDKey = "userID"
+	userID := r.Context().Value(ctxKey).(string)
 
-	if login == "" {
+	if userID == "" {
 		h.logger.Error("Bad login")
 		w.WriteHeader(http.StatusBadRequest)
 		return
@@ -73,7 +73,7 @@ func (h handlers) UnrateTaskPack(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.processor.UnrateTaskPack(login, req.TaskID)
+	err = h.processor.UnrateTaskPack(userID, req.TaskID)
 	if err != nil {
 		h.logger.Error("Error getting data", zap.Error(err))
 		return

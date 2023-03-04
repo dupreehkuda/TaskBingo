@@ -12,20 +12,20 @@ import (
 )
 
 // LoginUser sends login request to user service
-func (u userClient) LoginUser(login, password string) error {
+func (u userClient) LoginUser(userID, password string) (string, error) {
 	data := api.LoginUserRequest{
-		Login:    login,
+		UserID:   &api.UUID{Id: userID},
 		Password: password,
 	}
 
-	_, err := u.conn.LoginUser(context.Background(), &data)
+	resp, err := u.conn.LoginUser(context.Background(), &data)
 
 	statusCode, _ := status.FromError(err)
 	u.logger.Debug("incoming code", zap.Int("code", int(statusCode.Code())))
 
 	if statusCode.Code() == codes.Unauthenticated {
-		return errs.ErrWrongCredentials
+		return "", errs.ErrWrongCredentials
 	}
 
-	return nil
+	return resp.UserID.Id, nil
 }

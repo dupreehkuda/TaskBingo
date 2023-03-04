@@ -9,10 +9,10 @@ import (
 )
 
 // LikeTaskPack calls user service to like pack by user
-func (u userClient) LikeTaskPack(login, pack string) error {
+func (u userClient) LikeTaskPack(userID, pack string) error {
 	_, err := u.conn.LikePack(context.Background(), &api.LikeOrRatePackRequest{
-		Login: login,
-		Pack:  pack,
+		UserID: &api.UUID{Id: userID},
+		Pack:   pack,
 	})
 
 	if err != nil {
@@ -24,10 +24,10 @@ func (u userClient) LikeTaskPack(login, pack string) error {
 }
 
 // DislikeTaskPack calls user service to dislike pack by user
-func (u userClient) DislikeTaskPack(login, pack string) error {
+func (u userClient) DislikeTaskPack(userID, pack string) error {
 	_, err := u.conn.DislikePack(context.Background(), &api.LikeOrRatePackRequest{
-		Login: login,
-		Pack:  pack,
+		UserID: &api.UUID{Id: userID},
+		Pack:   pack,
 	})
 
 	if err != nil {

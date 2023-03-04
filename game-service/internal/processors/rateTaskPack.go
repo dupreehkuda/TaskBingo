@@ -3,8 +3,8 @@ package processors
 import "go.uber.org/zap"
 
 // RateTaskPack adds to pack rating
-func (p processor) RateTaskPack(login, pack string) error {
-	err := p.userStorage.RateTaskPack(login, pack)
+func (p processor) RateTaskPack(userID, pack string) error {
+	err := p.userStorage.RateTaskPack(userID, pack)
 	if err != nil {
 		p.logger.Error("Error occurred calling user storage", zap.Error(err))
 		return err
@@ -14,8 +14,8 @@ func (p processor) RateTaskPack(login, pack string) error {
 }
 
 // UnrateTaskPack removes from pack rating
-func (p processor) UnrateTaskPack(login, pack string) error {
-	err := p.userStorage.UnrateTaskPack(login, pack)
+func (p processor) UnrateTaskPack(userID, pack string) error {
+	err := p.userStorage.UnrateTaskPack(userID, pack)
 	if err != nil {
 		p.logger.Error("Error occurred calling user storage", zap.Error(err))
 		return err

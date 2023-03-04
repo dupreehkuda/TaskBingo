@@ -12,10 +12,10 @@ import (
 
 // GetTaskPack handles getting one task pack operations
 func (h handlers) GetTaskPack(w http.ResponseWriter, r *http.Request) {
-	var ctxKey models.LoginKey = "login"
-	login := r.Context().Value(ctxKey).(string)
+	var ctxKey models.UserIDKey = "userID"
+	userID := r.Context().Value(ctxKey).(string)
 
-	if login == "" {
+	if userID == "" {
 		h.logger.Error("Bad login")
 		w.WriteHeader(http.StatusBadRequest)
 		return

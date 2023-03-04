@@ -7,15 +7,16 @@ import (
 )
 
 // GetUserData gets user's most important info
-func (p processor) GetUserData(login string) (*models.UserAccountInfo, error) {
-	userInfo, err := p.userStorage.GetUserData(login)
+func (p processor) GetUserData(userID string) (*models.UserAccountInfo, error) {
+	userInfo, err := p.userStorage.GetUserData(userID)
 	if err != nil {
 		p.logger.Error("Error occurred in call to user service", zap.Error(err))
 		return nil, err
 	}
 
 	resp := &models.UserAccountInfo{
-		Login:      userInfo.Login,
+		UserID:     userInfo.UserID,
+		Username:   userInfo.Username,
 		City:       userInfo.City,
 		Wins:       userInfo.Wins,
 		Lose:       userInfo.Lose,

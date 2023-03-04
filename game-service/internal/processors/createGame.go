@@ -1,9 +1,10 @@
 package processors
 
 import (
-	"github.com/dupreehkuda/TaskBingo/game-service/internal/models"
 	"github.com/google/uuid"
 	"go.uber.org/zap"
+
+	"github.com/dupreehkuda/TaskBingo/game-service/internal/models"
 )
 
 // Enumeration for game status
@@ -15,11 +16,11 @@ const (
 )
 
 // CreateGame creates new game instance
-func (p processor) CreateGame(user1, user2, packID string) error {
+func (p processor) CreateGame(userID, opponentID, packID string) error {
 	var newGame = models.Game{
 		GameID:       uuid.New(),
-		User1Id:      user1,
-		User2Id:      user2,
+		User1Id:      userID,
+		User2Id:      opponentID,
 		PackId:       packID,
 		Status:       Requested,
 		User1Bingo:   0,

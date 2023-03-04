@@ -12,10 +12,10 @@ import (
 
 // SetTaskPack handles addition of setting new task packs
 func (h handlers) SetTaskPack(w http.ResponseWriter, r *http.Request) {
-	var ctxKey models.LoginKey = "login"
-	login := r.Context().Value(ctxKey).(string)
+	var ctxKey models.UserIDKey = "userID"
+	userID := r.Context().Value(ctxKey).(string)
 
-	if login == "" {
+	if userID == "" {
 		h.logger.Error("Bad login")
 		w.WriteHeader(http.StatusBadRequest)
 		return
@@ -37,7 +37,7 @@ func (h handlers) SetTaskPack(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.processor.SetTaskPack(login, req)
+	err = h.processor.SetTaskPack(userID, req)
 
 	switch {
 	case err == errs.ErrPackAlreadyExists:

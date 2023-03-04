@@ -6,24 +6,21 @@ import (
 	"github.com/google/uuid"
 )
 
-// LoginKey is type for context keys
-type LoginKey string
+// UserIDKey is type for context keys
+type UserIDKey string
 
 // Response provides user data response
 type Response struct {
-	UserID string `json:"userID"`
-	Points int    `json:"points"`
-	Email  string `json:"email"`
-}
-
-// Request provides user data request
-type Request struct {
-	UserID string `json:"userID"`
+	UserID   string `json:"userID"`
+	Username string `json:"username"`
+	Points   int    `json:"points"`
+	Email    string `json:"email"`
 }
 
 // RegisterCredentials provides users register credentials request
 type RegisterCredentials struct {
-	Login    string `json:"login"`
+	UserID   string `json:"userID"`
+	Username string `json:"username"`
 	Email    string `json:"email"`
 	City     string `json:"city"`
 	Password string `json:"password"`
@@ -31,14 +28,8 @@ type RegisterCredentials struct {
 
 // LoginCredentials provides users login credentials request
 type LoginCredentials struct {
-	Login    string `json:"login"`
+	UserID   string `json:"userID"`
 	Password string `json:"password"`
-}
-
-// AuthResponse provides users authorization response
-type AuthResponse struct {
-	Login string `json:"login"`
-	Token string `json:"token"`
 }
 
 // TaskPack provides complete task pack ingo
@@ -53,7 +44,8 @@ type TaskPackRequest struct {
 }
 
 type FriendsInfo struct {
-	Login        string    `json:"login"`
+	UserID       string    `json:"userID"`
+	Username     string    `json:"username"`
 	Status       int       `json:"status"`
 	Wins         int       `json:"wins"`
 	Loses        int       `json:"loses"`
@@ -62,7 +54,8 @@ type FriendsInfo struct {
 
 // UserAccountInfo provides basic account info
 type UserAccountInfo struct {
-	Login      string        `json:"login"`
+	UserID     string        `json:"userID"`
+	Username   string        `json:"username"`
 	City       string        `json:"city"`
 	Wins       int           `json:"wins"`
 	Lose       int           `json:"lose"`
@@ -73,7 +66,8 @@ type UserAccountInfo struct {
 }
 
 type UserAccountInfoResponse struct {
-	Login      string        `json:"login"`
+	UserID     string        `json:"userID"`
+	Username   string        `json:"username"`
 	City       string        `json:"city"`
 	Wins       int           `json:"wins"`
 	Lose       int           `json:"lose"`
@@ -84,9 +78,10 @@ type UserAccountInfoResponse struct {
 }
 
 type User struct {
-	Login string `json:"login"`
-	City  string `json:"city"`
-	Bingo int    `json:"bingo"`
+	UserID   string `json:"userID"`
+	Username string `json:"username"`
+	City     string `json:"city"`
+	Bingo    int    `json:"bingo"`
 }
 
 type FriendRequest struct {
@@ -109,6 +104,6 @@ type Game struct {
 }
 
 type NewGameRequest struct {
-	User string `json:"user"`
-	Pack string `json:"pack"`
+	OpponentID string `json:"opponentID"`
+	Pack       string `json:"pack"`
 }

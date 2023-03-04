@@ -8,13 +8,13 @@ import (
 )
 
 // RegisterUser calls user service to register new user and returns JWT-token
-func (p processor) RegisterUser(creds *models.RegisterCredentials) (string, error) {
-	err := p.userStorage.RegisterUser(creds)
+func (p processor) RegisterUser(credits *models.RegisterCredentials) (string, error) {
+	err := p.userStorage.RegisterUser(credits)
 	if err != nil {
 		return "", err
 	}
 
-	token, err := tokens.GenerateJWT(creds.Login)
+	token, err := tokens.GenerateJWT(credits.UserID, credits.Username)
 	if err != nil {
 		p.logger.Error("Error while generating jwt", zap.Error(err))
 		return "", err

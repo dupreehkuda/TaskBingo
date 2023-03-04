@@ -8,7 +8,7 @@ import (
 )
 
 // SetTaskPack sets new task pack and assigns it to creator
-func (p processor) SetTaskPack(login string, pack *models.TaskPack) error {
+func (p processor) SetTaskPack(userID string, pack *models.TaskPack) error {
 	err := p.taskStorage.SetTaskPack(pack)
 
 	switch {
@@ -18,8 +18,8 @@ func (p processor) SetTaskPack(login string, pack *models.TaskPack) error {
 		p.logger.Error("Error in call to task storage", zap.Error(err))
 		return err
 	}
-	
-	err = p.userStorage.AssignNewPack(login, pack.TaskID)
+
+	err = p.userStorage.AssignNewPack(userID, pack.TaskID)
 	if err != nil {
 		p.logger.Error("Error in call to user storage", zap.Error(err))
 		return err

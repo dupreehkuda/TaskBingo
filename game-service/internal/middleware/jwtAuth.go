@@ -52,9 +52,17 @@ func (m middleware) CheckToken(next http.Handler) http.Handler {
 			}
 
 			if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-				var ctxKey models.LoginKey = "login"
-				login := claims["user"].(string)
-				ctx := context.WithValue(r.Context(), ctxKey, login)
+				var (
+					ctxUserIDKey   models.UserIDKey = "userID"
+					ctxUsernameKey models.UserIDKey = "username"
+				)
+
+				userID := claims["userID"].(string)
+				username := claims["username"].(string)
+
+				ctx := context.WithValue(r.Context(), ctxUserIDKey, userID)
+				ctx = context.WithValue(ctx, ctxUsernameKey, username)
+				
 				next.ServeHTTP(w, r.WithContext(ctx))
 				return
 			}

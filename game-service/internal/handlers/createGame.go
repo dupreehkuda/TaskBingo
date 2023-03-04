@@ -4,16 +4,17 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/dupreehkuda/TaskBingo/game-service/internal/models"
 	"go.uber.org/zap"
+
+	"github.com/dupreehkuda/TaskBingo/game-service/internal/models"
 )
 
 // CreateGame handles the operation of creating new game
 func (h handlers) CreateGame(w http.ResponseWriter, r *http.Request) {
-	var ctxKey models.LoginKey = "login"
-	login := r.Context().Value(ctxKey).(string)
+	var ctxKey models.UserIDKey = "userID"
+	userID := r.Context().Value(ctxKey).(string)
 
-	if login == "" {
+	if userID == "" {
 		h.logger.Error("Bad login")
 		w.WriteHeader(http.StatusBadRequest)
 		return
@@ -29,13 +30,13 @@ func (h handlers) CreateGame(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if req.User == "" || req.Pack == "" {
+	if req.OpponentID == "" || req.Pack == "" {
 		h.logger.Info("Request empty")
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
-	err = h.processor.CreateGame(login, req.User, req.Pack)
+	err = h.processor.CreateGame(userID, req.OpponentID, req.Pack)
 	if err != nil {
 		h.logger.Error("Error getting data", zap.Error(err))
 		return

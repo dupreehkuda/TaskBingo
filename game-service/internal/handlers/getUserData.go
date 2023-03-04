@@ -11,16 +11,16 @@ import (
 
 // GetUserData handles getting user's data operations
 func (h handlers) GetUserData(w http.ResponseWriter, r *http.Request) {
-	var ctxKey models.LoginKey = "login"
-	login := r.Context().Value(ctxKey).(string)
+	var ctxKey models.UserIDKey = "userID"
+	userID := r.Context().Value(ctxKey).(string)
 
-	if login == "" {
+	if userID == "" {
 		h.logger.Error("Bad login")
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
-	resp, err := h.processor.GetUserData(login)
+	resp, err := h.processor.GetUserData(userID)
 	if err != nil {
 		h.logger.Error("Unable to call user microservice", zap.Error(err))
 		w.WriteHeader(http.StatusInternalServerError)

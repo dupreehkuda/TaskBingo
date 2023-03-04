@@ -4,8 +4,8 @@ import (
 	"go.uber.org/zap"
 )
 
-func (p processor) RequestFriend(login, person string) error {
-	err := p.userStorage.RequestFriend(login, person)
+func (p processor) RequestFriend(userID, friendID string) error {
+	err := p.userStorage.RequestFriend(userID, friendID)
 	if err != nil {
 		p.logger.Error("Error occurred in call to user service", zap.Error(err))
 		return err
@@ -14,8 +14,8 @@ func (p processor) RequestFriend(login, person string) error {
 	return nil
 }
 
-func (p processor) AcceptFriend(login, person string) error {
-	err := p.userStorage.AcceptFriend(login, person)
+func (p processor) AcceptFriend(userID, friendID string) error {
+	err := p.userStorage.AcceptFriend(userID, friendID)
 	if err != nil {
 		p.logger.Error("Error occurred in call to user service", zap.Error(err))
 		return err
@@ -24,8 +24,8 @@ func (p processor) AcceptFriend(login, person string) error {
 	return nil
 }
 
-func (p processor) DeleteFriend(login, person string) error {
-	err := p.userStorage.DeleteFriend(login, person)
+func (p processor) DeleteFriend(userID, friendID string) error {
+	err := p.userStorage.DeleteFriend(userID, friendID)
 	if err != nil {
 		p.logger.Error("Error occurred in call to user service", zap.Error(err))
 		return err

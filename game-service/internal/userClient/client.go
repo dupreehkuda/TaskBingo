@@ -13,19 +13,19 @@ import (
 
 // UserDataClient is an interface for user data service
 type UserDataClient interface {
-	GetUserData(login string) (*models.UserAccountInfoResponse, error)
-	RegisterUser(creds *models.RegisterCredentials) error
-	LoginUser(login, password string) error
+	GetUserData(userID string) (*models.UserAccountInfoResponse, error)
+	RegisterUser(credits *models.RegisterCredentials) error
+	LoginUser(userID, password string) (string, error)
 	GetRatedPacks() ([]string, error)
-	LikeTaskPack(login, pack string) error
-	DislikeTaskPack(login, pack string) error
-	RateTaskPack(login, pack string) error
-	UnrateTaskPack(login, pack string) error
-	AssignNewPack(login, pack string) error
+	LikeTaskPack(userID, pack string) error
+	DislikeTaskPack(userID, pack string) error
+	RateTaskPack(userID, pack string) error
+	UnrateTaskPack(userID, pack string) error
+	AssignNewPack(userID, pack string) error
 	GetAllUsers() (*[]models.User, error)
-	AcceptFriend(login, person string) error
-	DeleteFriend(login, person string) error
-	RequestFriend(login, person string) error
+	AcceptFriend(userID, friendID string) error
+	DeleteFriend(userID, friendID string) error
+	RequestFriend(userID, friendID string) error
 	CreateGame(game *models.Game) error
 }
 

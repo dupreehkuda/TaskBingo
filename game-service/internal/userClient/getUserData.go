@@ -8,15 +8,16 @@ import (
 )
 
 // GetUserData retrieves user data from user service
-func (u userClient) GetUserData(login string) (*models.UserAccountInfoResponse, error) {
-	resp, err := u.conn.GetUserData(context.Background(), &api.GetUserDataRequest{Login: login})
+func (u userClient) GetUserData(userID string) (*models.UserAccountInfoResponse, error) {
+	resp, err := u.conn.GetUserData(context.Background(), &api.GetUserDataRequest{UserID: &api.UUID{Id: userID}})
 	if err != nil {
 		u.logger.Error("Error when getting user data")
 		return nil, err
 	}
 
 	res := models.UserAccountInfoResponse{
-		Login:      resp.Login,
+		UserID:     resp.UserID.Id,
+		Username:   resp.Username,
 		City:       resp.City,
 		Wins:       int(resp.Wins),
 		Lose:       int(resp.Loses),
@@ -28,10 +29,11 @@ func (u userClient) GetUserData(login string) (*models.UserAccountInfoResponse, 
 
 	for _, val := range resp.Friends {
 		res.Friends = append(res.Friends, models.FriendsInfo{
-			Login:  val.Login,
-			Status: int(val.Status),
-			Wins:   int(val.Wins),
-			Loses:  int(val.Loses),
+			UserID:   val.UserID.Id,
+			Username: val.Username,
+			Status:   int(val.Status),
+			Wins:     int(val.Wins),
+			Loses:    int(val.Loses),
 		})
 	}
 

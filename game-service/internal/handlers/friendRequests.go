@@ -11,10 +11,10 @@ import (
 
 // RequestFriend handles the operation of requesting friendship
 func (h handlers) RequestFriend(w http.ResponseWriter, r *http.Request) {
-	var ctxKey models.LoginKey = "login"
-	login := r.Context().Value(ctxKey).(string)
+	var ctxKey models.UserIDKey = "userID"
+	userID := r.Context().Value(ctxKey).(string)
 
-	if login == "" {
+	if userID == "" {
 		h.logger.Error("Bad login")
 		w.WriteHeader(http.StatusBadRequest)
 		return
@@ -36,7 +36,7 @@ func (h handlers) RequestFriend(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.processor.RequestFriend(login, req.Person)
+	err = h.processor.RequestFriend(userID, req.Person)
 	if err != nil {
 		h.logger.Error("Error getting data", zap.Error(err))
 		return
@@ -48,10 +48,10 @@ func (h handlers) RequestFriend(w http.ResponseWriter, r *http.Request) {
 
 // AcceptFriend handles the operation of accepting friendship
 func (h handlers) AcceptFriend(w http.ResponseWriter, r *http.Request) {
-	var ctxKey models.LoginKey = "login"
-	login := r.Context().Value(ctxKey).(string)
+	var ctxKey models.UserIDKey = "userID"
+	userID := r.Context().Value(ctxKey).(string)
 
-	if login == "" {
+	if userID == "" {
 		h.logger.Error("Bad login")
 		w.WriteHeader(http.StatusBadRequest)
 		return
@@ -73,7 +73,7 @@ func (h handlers) AcceptFriend(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.processor.AcceptFriend(login, req.Person)
+	err = h.processor.AcceptFriend(userID, req.Person)
 	if err != nil {
 		h.logger.Error("Error getting data", zap.Error(err))
 		return
@@ -85,10 +85,10 @@ func (h handlers) AcceptFriend(w http.ResponseWriter, r *http.Request) {
 
 // DeleteFriend handles the operation of deleting friendship or canceling request
 func (h handlers) DeleteFriend(w http.ResponseWriter, r *http.Request) {
-	var ctxKey models.LoginKey = "login"
-	login := r.Context().Value(ctxKey).(string)
+	var ctxKey models.UserIDKey = "userID"
+	userID := r.Context().Value(ctxKey).(string)
 
-	if login == "" {
+	if userID == "" {
 		h.logger.Error("Bad login")
 		w.WriteHeader(http.StatusBadRequest)
 		return
@@ -110,7 +110,7 @@ func (h handlers) DeleteFriend(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.processor.DeleteFriend(login, req.Person)
+	err = h.processor.DeleteFriend(userID, req.Person)
 	if err != nil {
 		h.logger.Error("Error getting data", zap.Error(err))
 		return

@@ -13,12 +13,13 @@ import (
 )
 
 // RegisterUser sends register request to user service
-func (u userClient) RegisterUser(creds *models.RegisterCredentials) error {
+func (u userClient) RegisterUser(credits *models.RegisterCredentials) error {
 	data := api.RegisterUserRequest{
-		Login:    creds.Login,
-		Email:    creds.Email,
-		City:     creds.City,
-		Password: creds.Password,
+		UserID:   &api.UUID{Id: credits.UserID},
+		Username: credits.Username,
+		Email:    credits.Email,
+		City:     credits.City,
+		Password: credits.Password,
 	}
 
 	_, err := u.conn.RegisterUser(context.Background(), &data)
