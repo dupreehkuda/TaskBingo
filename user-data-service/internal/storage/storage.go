@@ -6,7 +6,26 @@ import (
 
 	"github.com/jackc/pgx/v5/pgxpool"
 	"go.uber.org/zap"
+
+	"github.com/dupreehkuda/TaskBingo/user-data-service/internal/models"
 )
+
+// Stored is interface for storage
+type Stored interface {
+	GetUserData(login string) (*models.GetUserDataResponse, error)
+	CheckDuplicateUser(login, email string) (bool, error)
+	CreateUser(login, email, passwordHash, passwordSalt, city string) error
+	LoginUser(login string) (*models.LoginUserResponse, error)
+	GetRatedPacks() ([]string, error)
+	LikePack(login, pack string, inc int) error
+	RatePack(login, pack string, inc int) error
+	AssignNewPack(login, pack string) error
+	GetAllUsers() (*[]models.AllUsers, error)
+	AcceptFriend(login, person string) error
+	DeleteFriend(login, person string) error
+	RequestFriend(login, person string) error
+	CreateGame(game *models.Game) error
+}
 
 // Enumeration for friend status column
 const (

@@ -5,8 +5,16 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 
+	"github.com/dupreehkuda/TaskBingo/game-service/internal/models"
 	api "github.com/dupreehkuda/TaskBingo/game-service/pkg/api"
 )
+
+// TaskDataClient is an interface for task data service
+type TaskDataClient interface {
+	GetTaskPack(packID string) (*models.TaskPack, error)
+	SetTaskPack(pack *models.TaskPack) error
+	GetMultiplePacks(packIDs []string) (*[]models.TaskPack, error)
+}
 
 // taskClient provides connection to task service
 type taskClient struct {

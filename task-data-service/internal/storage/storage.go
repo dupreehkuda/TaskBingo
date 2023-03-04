@@ -6,7 +6,17 @@ import (
 	"github.com/go-redis/redis/v8"
 	"github.com/nitishm/go-rejson/v4"
 	"go.uber.org/zap"
+
+	"github.com/dupreehkuda/TaskBingo/task-data-service/internal/models"
 )
+
+// Stored is interface for storage
+type Stored interface {
+	GetTaskPack(taskId string) (*models.TaskPack, error)
+	AddTaskPack(pack *models.TaskPack) error
+	GetMultiplePacks(ids []string) (*[]models.TaskPack, error)
+	CheckPackExistence(taskId string) (bool, error)
+}
 
 // storage provides a database connection
 type storage struct {

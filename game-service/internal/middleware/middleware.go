@@ -1,6 +1,15 @@
 package middleware
 
-import "go.uber.org/zap"
+import (
+	"net/http"
+
+	"go.uber.org/zap"
+)
+
+// Middleware is an interface for middleware layer
+type Middleware interface {
+	CheckToken(next http.Handler) http.Handler
+}
 
 // middleware provides services middleware
 type middleware struct {

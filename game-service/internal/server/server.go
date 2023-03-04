@@ -13,18 +13,17 @@ import (
 
 	"github.com/dupreehkuda/TaskBingo/game-service/internal/config"
 	"github.com/dupreehkuda/TaskBingo/game-service/internal/handlers"
-	i "github.com/dupreehkuda/TaskBingo/game-service/internal/interfaces"
 	"github.com/dupreehkuda/TaskBingo/game-service/internal/logger"
 	"github.com/dupreehkuda/TaskBingo/game-service/internal/middleware"
 	"github.com/dupreehkuda/TaskBingo/game-service/internal/processors"
-	taskClient "github.com/dupreehkuda/TaskBingo/game-service/internal/taskClient"
-	userClient "github.com/dupreehkuda/TaskBingo/game-service/internal/userClient"
+	"github.com/dupreehkuda/TaskBingo/game-service/internal/taskClient"
+	"github.com/dupreehkuda/TaskBingo/game-service/internal/userClient"
 )
 
 // api provides single configuration out of all components
 type api struct {
-	handlers   i.Handlers
-	middleware i.Middleware
+	handlers   handlers.Handlers
+	middleware middleware.Middleware
 	config     *config.Config
 	logger     *zap.Logger
 }

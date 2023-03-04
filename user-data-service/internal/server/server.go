@@ -14,7 +14,6 @@ import (
 
 	"github.com/dupreehkuda/TaskBingo/user-data-service/internal/config"
 	"github.com/dupreehkuda/TaskBingo/user-data-service/internal/handlers"
-	i "github.com/dupreehkuda/TaskBingo/user-data-service/internal/interfaces"
 	"github.com/dupreehkuda/TaskBingo/user-data-service/internal/logger"
 	"github.com/dupreehkuda/TaskBingo/user-data-service/internal/processors"
 	"github.com/dupreehkuda/TaskBingo/user-data-service/internal/storage"
@@ -23,7 +22,7 @@ import (
 
 // server gathers all service components and runs it
 type server struct {
-	handlers i.Handlers
+	handlers handlers.Handler
 	config   *config.Config
 	logger   *zap.Logger
 }
