@@ -14,8 +14,7 @@ import (
 func (s storage) LoginUser(username string) (*models.LoginUserResponse, error) {
 	var data models.LoginUserResponse
 
-	const query = "SELECT id, passwordhash, passwordsalt FROM login WHERE id = $1;"
-	// TODO remake query with pgx
+	const query = "SELECT id, passwordhash, passwordsalt FROM login WHERE id = (SELECT id from users where username = $1);"
 	err := pgxscan.Get(context.Background(), s.pool, &data, query, username)
 	if err != nil {
 		s.logger.Error("Error occurred while getting login data", zap.Error(err))

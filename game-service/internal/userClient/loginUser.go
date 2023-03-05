@@ -3,7 +3,6 @@ package userClient
 import (
 	"context"
 
-	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
@@ -21,7 +20,6 @@ func (u userClient) LoginUser(username, password string) (string, error) {
 	resp, err := u.conn.LoginUser(context.Background(), &data)
 
 	statusCode, _ := status.FromError(err)
-	u.logger.Debug("incoming code", zap.Int("code", int(statusCode.Code())))
 
 	if statusCode.Code() == codes.Unauthenticated {
 		return "", errs.ErrWrongCredentials

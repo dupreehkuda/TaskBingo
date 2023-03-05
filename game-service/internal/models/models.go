@@ -27,7 +27,7 @@ type RegisterCredentials struct {
 
 // LoginCredentials provides users login credentials request
 type LoginCredentials struct {
-	UserID   string `json:"userID"`
+	Username string `json:"username"`
 	Password string `json:"password"`
 }
 

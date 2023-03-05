@@ -22,13 +22,13 @@ func (h handlers) LoginUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if logCredit.UserID == "" && logCredit.Password == "" {
+	if logCredit.Username == "" && logCredit.Password == "" {
 		h.logger.Info("Credentials empty")
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
-	token, err := h.processor.LoginUser(logCredit.UserID, logCredit.Password)
+	token, err := h.processor.LoginUser(logCredit.Username, logCredit.Password)
 
 	switch {
 	case err == errs.ErrWrongCredentials:
