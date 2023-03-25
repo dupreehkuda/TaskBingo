@@ -20,6 +20,12 @@ func (h handlers) GetRatedPacks(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if err := UUIDCheck(userID); err != nil {
+		h.logger.Error("Invalid UUID in request", zap.Error(err))
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
 	resp, err := h.processor.GetRatedPacks()
 	if err != nil {
 		h.logger.Error("Error in call to processor", zap.Error(err))

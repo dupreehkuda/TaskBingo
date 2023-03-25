@@ -2,8 +2,6 @@ package models
 
 import (
 	"time"
-
-	"github.com/google/uuid"
 )
 
 // UserIDKey is type for context keys
@@ -31,10 +29,16 @@ type LoginCredentials struct {
 	Password string `json:"password"`
 }
 
-// TaskPack provides complete task pack ingo
-type TaskPack struct {
-	Name  string   `json:"Name"`
+// Pack provides complete task pack info
+type Pack struct {
+	Title string   `json:"title"`
 	Tasks []string `json:"tasks"`
+}
+
+// TaskPack provides task pack with id
+type TaskPack struct {
+	ID   string `json:"id"`
+	Pack Pack   `json:"pack"`
 }
 
 // TaskPackRequest provides task pack request
@@ -89,20 +93,20 @@ type FriendRequest struct {
 
 // Game provides game instance
 type Game struct {
-	GameID       uuid.UUID `json:"gameId"`
-	User1Id      string    `json:"user1Id"`
-	User2Id      string    `json:"user2Id"`
-	PackId       string    `json:"packId"`
-	Status       int32     `json:"status"`
-	User1Bingo   int32     `json:"user1Bingo"`
-	User2Bingo   int32     `json:"user2Bingo"`
-	Winner       string    `json:"winner"`
-	Numbers      []int32   `json:"numbers"`
-	User1Numbers []int32   `json:"user1Numbers"`
-	User2Numbers []int32   `json:"user2Numbers"`
+	GameID       string  `json:"gameId"`
+	User1Id      string  `json:"user1Id"`
+	User2Id      string  `json:"user2Id"`
+	PackId       string  `json:"packId"`
+	Status       int32   `json:"status"`
+	User1Bingo   int32   `json:"user1Bingo"`
+	User2Bingo   int32   `json:"user2Bingo"`
+	Winner       string  `json:"winner"`
+	Numbers      []int32 `json:"numbers"`
+	User1Numbers []int32 `json:"user1Numbers"`
+	User2Numbers []int32 `json:"user2Numbers"`
 }
 
 type NewGameRequest struct {
-	OpponentID string `json:"opponentID"`
+	OpponentID string `json:"opponent"`
 	Pack       string `json:"pack"`
 }

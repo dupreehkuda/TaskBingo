@@ -12,14 +12,14 @@ import (
 // CreateGame calls user service to write new game
 func (u userClient) CreateGame(game *models.Game) error {
 	_, err := u.conn.CreateGame(context.Background(), &api.NewGameRequest{
-		GameID:       &api.UUID{Id: game.GameID.String()},
-		User1Id:      &api.UUID{Id: game.User1Id},
-		User2Id:      &api.UUID{Id: game.User2Id},
+		GameID:       game.GameID,
+		User1Id:      game.User1Id,
+		User2Id:      game.User2Id,
 		Pack:         game.PackId,
 		Status:       game.Status,
 		User1Bingo:   game.User1Bingo,
 		User2Bingo:   game.User2Bingo,
-		Winner:       &api.UUID{Id: game.Winner},
+		Winner:       game.Winner,
 		Numbers:      game.Numbers,
 		User1Numbers: game.User1Numbers,
 		User2Numbers: game.User2Numbers,

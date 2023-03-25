@@ -15,11 +15,6 @@ func (h *Handlers) GetRatedPacks(ctx context.Context, _ *api.Empty) (*api.RatedP
 		h.logger.Error("Unable to call processors", zap.Error(err))
 		return nil, err
 	}
-
-	var ans []*api.UUID
-	for _, val := range resp {
-		ans = append(ans, &api.UUID{Id: val.String()})
-	}
-
-	return &api.RatedPacksResponse{Packs: ans}, nil
+	
+	return &api.RatedPacksResponse{Packs: resp}, nil
 }

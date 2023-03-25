@@ -5,12 +5,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/google/uuid"
 	"go.uber.org/zap"
 )
 
 // CreateUser inserts new user's data in the database
-func (s storage) CreateUser(userID uuid.UUID, username, email, passwordHash, passwordSalt, city string) error {
+func (s storage) CreateUser(userID, username, email, passwordHash, passwordSalt, city string) error {
 	conn, err := s.pool.Acquire(context.Background())
 	if err != nil {
 		s.logger.Error("Error while acquiring connection", zap.Error(err))

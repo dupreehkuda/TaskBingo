@@ -30,5 +30,5 @@ func (u userClient) RegisterUser(credits *models.RegisterCredentials) (string, e
 		return "", errs.ErrCredentialsInUse
 	}
 
-	return resp.UserID.Id, nil
+	return resp.UserID, nil
 }

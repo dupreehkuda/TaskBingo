@@ -9,7 +9,7 @@ import (
 
 // Processor is interface for business-logic
 type Processor interface {
-	GetTaskPack(taskId string) (*models.TaskPack, error)
+	GetTaskPack(packID string) (*models.TaskPack, error)
 	AddTaskPack(pack *models.TaskPack) error
 	GetMultiplePacks(ids []string) (*[]models.TaskPack, error)
 }

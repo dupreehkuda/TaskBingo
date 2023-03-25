@@ -13,7 +13,7 @@ import (
 
 // GetMultiplePacks retrieves multiple task packs from task service
 func (t taskClient) GetMultiplePacks(packIDs []string) (*[]models.TaskPack, error) {
-	resp, err := t.conn.GetMultiplePacks(context.Background(), &api.GetMultiplePacksRequest{Id: packIDs})
+	resp, err := t.conn.GetMultiplePacks(context.Background(), &api.GetMultiplePacksRequest{Ids: packIDs})
 
 	statusCode, _ := status.FromError(err)
 	if statusCode.Code() == codes.NotFound {
@@ -24,8 +24,11 @@ func (t taskClient) GetMultiplePacks(packIDs []string) (*[]models.TaskPack, erro
 
 	for _, val := range resp.Packs {
 		packs = append(packs, models.TaskPack{
-			Name:  val.Id,
-			Tasks: val.Tasks,
+			ID: val.Id,
+			Pack: models.Pack{
+				Title: val.Title,
+				Tasks: val.Tasks,
+			},
 		})
 	}
 

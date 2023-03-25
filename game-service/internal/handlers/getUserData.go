@@ -20,6 +20,12 @@ func (h handlers) GetUserData(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if err := UUIDCheck(userID); err != nil {
+		h.logger.Error("Invalid UUID in request", zap.Error(err))
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
 	resp, err := h.processor.GetUserData(userID)
 	if err != nil {
 		h.logger.Error("Unable to call user microservice", zap.Error(err))

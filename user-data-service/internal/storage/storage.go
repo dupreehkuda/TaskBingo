@@ -5,7 +5,6 @@ import (
 	"os"
 	"time"
 
-	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 	pgxUUID "github.com/vgarvardt/pgx-google-uuid/v5"
@@ -16,18 +15,21 @@ import (
 
 // Stored is interface for storage
 type Stored interface {
-	GetUserData(userID uuid.UUID) (*models.GetUserDataResponse, error)
+	GetUserData(userID string) (*models.GetUserDataResponse, error)
 	CheckDuplicateUser(username, email string) (bool, error)
-	CreateUser(userID uuid.UUID, username, email, passwordHash, passwordSalt, city string) error
+	CreateUser(userID, username, email, passwordHash, passwordSalt, city string) error
 	LoginUser(username string) (*models.LoginUserResponse, error)
-	GetRatedPacks() ([]uuid.UUID, error)
-	LikePack(userID, pack uuid.UUID, inc int) error
-	RatePack(userID, pack uuid.UUID, inc int) error
-	AssignNewPack(userID, packID uuid.UUID, packName string) error
+
+	GetRatedPacks() ([]string, error)
+	LikePack(userID, pack string, inc int) error
+	RatePack(userID, pack string, inc int) error
+	AssignNewPack(userID, packID string, packName string) error
+
 	GetAllUsers() (*[]models.AllUsers, error)
-	AcceptFriend(userID, friendID uuid.UUID) error
-	DeleteFriend(userID, friendID uuid.UUID) error
-	RequestFriend(userID, friendID uuid.UUID) error
+	AcceptFriend(userID, friendID string) error
+	DeleteFriend(userID, friendID string) error
+	RequestFriend(userID, friendID string) error
+	
 	CreateGame(game *models.Game) error
 }
 

@@ -15,8 +15,11 @@ import (
 // AddOneTaskPack handles new task pack addition
 func (h *Handlers) AddOneTaskPack(ctx context.Context, req *api.NewTaskPackRequest) (*api.NewTaskPackResponse, error) {
 	data := models.TaskPack{
-		TaskID: req.Id,
-		Tasks:  req.Tasks,
+		ID: req.Id,
+		Pack: models.Pack{
+			Title: req.Title,
+			Tasks: req.Tasks,
+		},
 	}
 
 	err := h.processor.AddTaskPack(&data)
@@ -29,5 +32,5 @@ func (h *Handlers) AddOneTaskPack(ctx context.Context, req *api.NewTaskPackReque
 		return nil, err
 	}
 
-	return &api.NewTaskPackResponse{Id: data.TaskID}, nil
+	return &api.NewTaskPackResponse{Id: data.ID}, nil
 }

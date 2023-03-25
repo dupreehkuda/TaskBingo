@@ -9,7 +9,7 @@ import (
 
 // AddTaskPack adds new task pack to storage
 func (p processor) AddTaskPack(pack *models.TaskPack) error {
-	exists, err := p.storage.CheckPackExistence(pack.TaskID)
+	exists, err := p.storage.CheckPackExistence(pack.ID)
 	if err != nil {
 		p.logger.Error("Error when calling storage", zap.Error(err))
 		return err

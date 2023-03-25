@@ -11,8 +11,8 @@ import (
 // AssignNewPack calls user service to assign new pack to creator and add it to ratings list
 func (u userClient) AssignNewPack(userID, packID, packName string) error {
 	_, err := u.conn.AssignNewPack(context.Background(), &api.AssignNewPackRequest{
-		UserID:   &api.UUID{Id: userID},
-		PackID:   &api.UUID{Id: packID},
+		UserID:   userID,
+		PackID:   packID,
 		PackName: packName,
 	})
 

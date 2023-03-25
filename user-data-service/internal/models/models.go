@@ -2,8 +2,6 @@ package models
 
 import (
 	"time"
-
-	"github.com/google/uuid"
 )
 
 type FriendsInfo struct {
@@ -30,9 +28,9 @@ type GetUserDataResponse struct {
 
 // LoginUserResponse provides response for user login request
 type LoginUserResponse struct {
-	UserID       uuid.UUID `db:"id"`
-	PasswordHash string    `db:"passwordhash"`
-	PasswordSalt string    `db:"passwordsalt"`
+	UserID       string `db:"id"`
+	PasswordHash string `db:"passwordhash"`
+	PasswordSalt string `db:"passwordsalt"`
 }
 
 type AllUsers struct {
@@ -44,15 +42,15 @@ type AllUsers struct {
 
 // Game provides game instance
 type Game struct {
-	GameID       uuid.UUID `json:"gameId"`
-	User1Id      string    `json:"user1Id"`
-	User2Id      string    `json:"user2Id"`
-	PackId       string    `json:"packId"`
-	Status       int32     `json:"status"`
-	User1Bingo   int32     `json:"user1Bingo"`
-	User2Bingo   int32     `json:"user2Bingo"`
-	Winner       string    `json:"winner"`
-	Numbers      []int32   `json:"numbers"`
-	User1Numbers []int32   `json:"user1Numbers"`
-	User2Numbers []int32   `json:"user2Numbers"`
+	GameID       string  `json:"gameId"`
+	User1Id      string  `json:"user1Id"`
+	User2Id      string  `json:"user2Id"`
+	PackId       string  `json:"packId"`
+	Status       int32   `json:"status"`
+	User1Bingo   int32   `json:"user1Bingo"`
+	User2Bingo   int32   `json:"user2Bingo"`
+	Winner       string  `json:"winner"`
+	Numbers      []int32 `json:"numbers"`
+	User1Numbers []int32 `json:"user1Numbers"`
+	User2Numbers []int32 `json:"user2Numbers"`
 }

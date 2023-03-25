@@ -27,7 +27,7 @@ func (p processor) SetTaskPack(userID string, pack *models.TaskPack) error {
 		return err
 	}
 
-	err = p.userStorage.AssignNewPack(userID, packID.String(), pack.Name)
+	err = p.userStorage.AssignNewPack(userID, packID.String(), pack.Pack.Title)
 	if err != nil {
 		p.logger.Error("Error in call to user storage", zap.Error(err))
 		return err

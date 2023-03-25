@@ -24,5 +24,5 @@ func (p processor) LoginUser(username, password string) (string, error) {
 		return "", errs.ErrWrongCredentials
 	}
 
-	return resp.UserID.String(), nil
+	return resp.UserID, nil
 }

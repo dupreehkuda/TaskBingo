@@ -4,6 +4,7 @@ package api;
 
 option go_package = "./";
 
+// ------------------ Users service ------------------
 service Users {
   rpc GetUserData(GetUserDataRequest) returns (GetUserDataResponse);
   rpc RegisterUser(RegisterUserRequest) returns (RegisterUserResponse);
@@ -19,48 +20,44 @@ service Users {
   rpc AcceptFriend(FriendRequest) returns (Empty);
   rpc DeleteFriend(FriendRequest) returns (Empty);
   rpc CreateGame(NewGameRequest) returns (Empty);
-  rpc AcceptGame(UUID) returns (Empty);
-}
-
-message UUID {
-  string id = 1;
+  rpc AcceptGame(AcceptGameRequest) returns (Empty);
 }
 
 message RegisterUserResponse {
-  UUID userID = 1;
+  string userID = 1;
   string username = 2;
 }
 
 message LoginUserResponse {
-  UUID userID = 1;
+  string userID = 1;
   string username = 2;
 }
 
 message NewGameRequest {
-  UUID gameID = 1;
-  UUID user1id = 2;
-  UUID user2id = 3;
+  string gameID = 1;
+  string user1id = 2;
+  string user2id = 3;
   string pack = 4;
   int32 status = 5;
   int32 user1bingo = 6;
   int32 user2bingo = 7;
-  UUID winner = 8;
+  string winner = 8;
   repeated int32 numbers = 9;
   repeated int32 user1numbers = 10;
   repeated int32 user2numbers = 11;
 }
 
 message FriendRequest {
-  UUID userID = 1;
-  UUID friendID = 2;
+  string userID = 1;
+  string friendID = 2;
 }
 
 message GetUserDataRequest {
-  UUID userID = 1;
+  string userID = 1;
 }
 
 message GetUserDataResponse {
-  UUID userID = 1;
+  string userID = 1;
   string username = 2;
   string city = 3;
   int32 wins = 4;
@@ -72,7 +69,7 @@ message GetUserDataResponse {
 }
 
 message FriendInfo {
-  UUID userID = 1;
+  string userID = 1;
   string username = 2;
   int32 status = 3;
   int32 wins = 4;
@@ -92,22 +89,22 @@ message LoginUserRequest {
 }
 
 message LikeOrRatePackRequest {
-  UUID userID = 1;
+  string userID = 1;
   string pack = 2;
 }
 
 message RatedPacksResponse {
-  repeated UUID packs = 1;
+  repeated string packs = 1;
 }
 
 message AssignNewPackRequest {
-  UUID userID = 1;
-  UUID packID = 2;
+  string userID = 1;
+  string packID = 2;
   string packName = 3;
 }
 
 message PersonInfo {
-  UUID userID = 1;
+  string userID = 1;
   string username = 2;
   string city = 3;
   int32 bingo = 4;
@@ -117,5 +114,44 @@ message People {
   repeated PersonInfo person = 1;
 }
 
+message AcceptGameRequest {
+  string userID = 1;
+  string gameID = 2;
+}
+
 message Empty {}
 
+// ------------------ Tasks service ------------------
+service Tasks {
+  rpc GetOneTaskPack(TaskPackRequest) returns (TaskPackResponse) {}
+  rpc AddOneTaskPack(NewTaskPackRequest) returns (NewTaskPackResponse) {}
+  rpc GetMultiplePacks(GetMultiplePacksRequest) returns (GetMultiplePacksResponse) {}
+}
+
+message TaskPackRequest {
+  string id = 1;
+}
+
+message TaskPackResponse {
+  string id = 1;
+  string title = 2;
+  repeated string tasks = 3;
+}
+
+message NewTaskPackRequest {
+  string id = 1;
+  string title = 2;
+  repeated string tasks = 3;
+}
+
+message NewTaskPackResponse {
+  string id = 1;
+}
+
+message GetMultiplePacksRequest {
+  repeated string ids = 1;
+}
+
+message GetMultiplePacksResponse {
+  repeated TaskPackResponse packs = 1;
+}

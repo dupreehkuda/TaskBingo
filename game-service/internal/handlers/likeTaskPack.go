@@ -36,6 +36,12 @@ func (h handlers) LikeTaskPack(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if err = UUIDCheck(userID, req.TaskID); err != nil {
+		h.logger.Error("Invalid UUID in request", zap.Error(err))
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
 	err = h.processor.LikeTaskPack(userID, req.TaskID)
 	if err != nil {
 		h.logger.Error("Error getting data", zap.Error(err))

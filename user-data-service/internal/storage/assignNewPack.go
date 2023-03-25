@@ -4,12 +4,11 @@ import (
 	"context"
 	"time"
 
-	"github.com/google/uuid"
 	"go.uber.org/zap"
 )
 
 // AssignNewPack assigns fresh pack to creator and adds pack to ratings
-func (s storage) AssignNewPack(userID, packID uuid.UUID, packName string) error {
+func (s storage) AssignNewPack(userID, packID, packName string) error {
 	ctx := context.Background()
 	conn, err := s.pool.Acquire(ctx)
 	if err != nil {

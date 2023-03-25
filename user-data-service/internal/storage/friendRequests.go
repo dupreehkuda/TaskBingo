@@ -4,12 +4,11 @@ import (
 	"context"
 	"time"
 
-	"github.com/google/uuid"
 	"go.uber.org/zap"
 )
 
 // RequestFriend requests friendship to user
-func (s storage) RequestFriend(userID, friendID uuid.UUID) error {
+func (s storage) RequestFriend(userID, friendID string) error {
 	ctx := context.Background()
 	conn, err := s.pool.Acquire(ctx)
 	if err != nil {
@@ -33,7 +32,7 @@ func (s storage) RequestFriend(userID, friendID uuid.UUID) error {
 }
 
 // AcceptFriend accepts friendship request
-func (s storage) AcceptFriend(userID, friendID uuid.UUID) error {
+func (s storage) AcceptFriend(userID, friendID string) error {
 	ctx := context.Background()
 	conn, err := s.pool.Acquire(ctx)
 	if err != nil {
@@ -57,7 +56,7 @@ func (s storage) AcceptFriend(userID, friendID uuid.UUID) error {
 }
 
 // DeleteFriend deletes friendship or cancels request
-func (s storage) DeleteFriend(userID, friendID uuid.UUID) error {
+func (s storage) DeleteFriend(userID, friendID string) error {
 	ctx := context.Background()
 	conn, err := s.pool.Acquire(ctx)
 	if err != nil {

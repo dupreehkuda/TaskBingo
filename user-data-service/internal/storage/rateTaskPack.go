@@ -3,12 +3,11 @@ package storage
 import (
 	"context"
 
-	"github.com/google/uuid"
 	"go.uber.org/zap"
 )
 
 // RatePack rates pack by inc
-func (s storage) RatePack(userID, pack uuid.UUID, inc int) error {
+func (s storage) RatePack(userID, pack string, inc int) error {
 	ctx := context.Background()
 	conn, err := s.pool.Acquire(ctx)
 	if err != nil {

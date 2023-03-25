@@ -16,16 +16,19 @@ type UserDataClient interface {
 	GetUserData(userID string) (*models.UserAccountInfoResponse, error)
 	RegisterUser(credits *models.RegisterCredentials) (string, error)
 	LoginUser(username, password string) (string, error)
+
 	GetRatedPacks() ([]string, error)
 	LikeTaskPack(userID, pack string) error
 	DislikeTaskPack(userID, pack string) error
 	RateTaskPack(userID, pack string) error
 	UnrateTaskPack(userID, pack string) error
 	AssignNewPack(userID, packID, packName string) error
+
 	GetAllUsers() (*[]models.User, error)
 	AcceptFriend(userID, friendID string) error
 	DeleteFriend(userID, friendID string) error
 	RequestFriend(userID, friendID string) error
+
 	CreateGame(game *models.Game) error
 }
 

@@ -25,5 +25,5 @@ func (u userClient) LoginUser(username, password string) (string, error) {
 		return "", errs.ErrWrongCredentials
 	}
 
-	return resp.UserID.Id, nil
+	return resp.UserID, nil
 }

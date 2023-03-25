@@ -7,7 +7,7 @@ import (
 	"github.com/dupreehkuda/TaskBingo/game-service/internal/models"
 )
 
-// Enumeration for game status
+// Enum for game status
 const (
 	_ = iota
 	Requested
@@ -18,7 +18,7 @@ const (
 // CreateGame creates new game instance
 func (p processor) CreateGame(userID, opponentID, packID string) error {
 	var newGame = models.Game{
-		GameID:       uuid.New(),
+		GameID:       uuid.New().String(),
 		User1Id:      userID,
 		User2Id:      opponentID,
 		PackId:       packID,

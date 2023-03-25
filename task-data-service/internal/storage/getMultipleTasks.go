@@ -24,7 +24,7 @@ func (s storage) GetMultiplePacks(ids []string) (*[]models.TaskPack, error) {
 
 	for i := range ids {
 		var pack models.TaskPack
-		err = json.Unmarshal(packs[i].([]byte), &pack)
+		err = json.Unmarshal(packs[i].([]byte), &pack.Pack)
 		if err != nil {
 			s.logger.Error("Error occurred when unmarshaling data", zap.Error(err))
 			return nil, err

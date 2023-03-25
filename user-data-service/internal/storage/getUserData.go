@@ -3,14 +3,13 @@ package storage
 import (
 	"context"
 
-	"github.com/google/uuid"
 	"go.uber.org/zap"
 
 	"github.com/dupreehkuda/TaskBingo/user-data-service/internal/models"
 )
 
 // GetUserData retrieves user data from database
-func (s storage) GetUserData(userID uuid.UUID) (*models.GetUserDataResponse, error) {
+func (s storage) GetUserData(userID string) (*models.GetUserDataResponse, error) {
 	ctx := context.Background()
 	conn, err := s.pool.Acquire(ctx)
 	if err != nil {

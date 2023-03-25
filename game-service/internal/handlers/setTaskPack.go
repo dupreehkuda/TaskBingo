@@ -31,8 +31,14 @@ func (h handlers) SetTaskPack(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if req.Name == "" {
+	if req.ID == "" {
 		h.logger.Info("Request empty")
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	if err = UUIDCheck(userID, req.ID); err != nil {
+		h.logger.Error("Invalid UUID in request", zap.Error(err))
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}

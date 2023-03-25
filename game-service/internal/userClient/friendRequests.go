@@ -10,8 +10,8 @@ import (
 
 func (u userClient) RequestFriend(userID, friendID string) error {
 	_, err := u.conn.RequestFriend(context.Background(), &api.FriendRequest{
-		UserID:   &api.UUID{Id: userID},
-		FriendID: &api.UUID{Id: friendID},
+		UserID:   userID,
+		FriendID: friendID,
 	})
 
 	if err != nil {
@@ -24,8 +24,8 @@ func (u userClient) RequestFriend(userID, friendID string) error {
 
 func (u userClient) AcceptFriend(userID, friendID string) error {
 	_, err := u.conn.AcceptFriend(context.Background(), &api.FriendRequest{
-		UserID:   &api.UUID{Id: userID},
-		FriendID: &api.UUID{Id: friendID},
+		UserID:   userID,
+		FriendID: friendID,
 	})
 
 	if err != nil {
@@ -38,8 +38,8 @@ func (u userClient) AcceptFriend(userID, friendID string) error {
 
 func (u userClient) DeleteFriend(userID, friendID string) error {
 	_, err := u.conn.DeleteFriend(context.Background(), &api.FriendRequest{
-		UserID:   &api.UUID{Id: userID},
-		FriendID: &api.UUID{Id: friendID},
+		UserID:   userID,
+		FriendID: friendID,
 	})
 
 	if err != nil {

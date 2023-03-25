@@ -22,7 +22,8 @@ func (h *Handlers) GetOneTaskPack(ctx context.Context, req *api.TaskPackRequest)
 	}
 
 	return &api.TaskPackResponse{
-		Id:    resp.TaskID,
-		Tasks: resp.Tasks,
+		Id:    resp.ID,
+		Title: resp.Pack.Title,
+		Tasks: resp.Pack.Tasks,
 	}, nil
 }

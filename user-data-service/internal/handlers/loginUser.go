@@ -22,7 +22,7 @@ func (h *Handlers) LoginUser(ctx context.Context, req *api.LoginUserRequest) (*a
 	}
 
 	return &api.LoginUserResponse{
-		UserID:   &api.UUID{Id: userID},
+		UserID:   userID,
 		Username: req.Username,
 	}, nil
 }

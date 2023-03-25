@@ -31,7 +31,12 @@ func (h handlers) CreateGame(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if req.OpponentID == "" || req.Pack == "" {
-		h.logger.Info("Request empty")
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	if err = UUIDCheck(userID, req.OpponentID, req.Pack); err != nil {
+		h.logger.Error("Invalid UUID in request", zap.Error(err))
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}

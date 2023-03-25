@@ -34,7 +34,7 @@ func (p processor) RegisterUser(username, password, email, city string) (string,
 		return "", err
 	}
 
-	err = p.storage.CreateUser(userID, username, email, passwordHash, passwordSalt, cases.Title(language.English).String(city))
+	err = p.storage.CreateUser(userID.String(), username, email, passwordHash, passwordSalt, cases.Title(language.English).String(city))
 	if err != nil {
 		p.logger.Error("User creation db error", zap.Error(err))
 		return "", err

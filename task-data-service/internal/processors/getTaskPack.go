@@ -7,8 +7,8 @@ import (
 )
 
 // GetTaskPack gets one task pack by taskId
-func (p processor) GetTaskPack(taskId string) (*models.TaskPack, error) {
-	resp, err := p.storage.GetTaskPack(taskId)
+func (p processor) GetTaskPack(packID string) (*models.TaskPack, error) {
+	resp, err := p.storage.GetTaskPack(packID)
 	if err != nil {
 		p.logger.Error("Error occurred in call to storage", zap.Error(err))
 		return nil, err

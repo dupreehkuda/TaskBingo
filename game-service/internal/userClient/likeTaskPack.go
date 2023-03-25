@@ -11,7 +11,7 @@ import (
 // LikeTaskPack calls user service to like pack by user
 func (u userClient) LikeTaskPack(userID, pack string) error {
 	_, err := u.conn.LikePack(context.Background(), &api.LikeOrRatePackRequest{
-		UserID: &api.UUID{Id: userID},
+		UserID: userID,
 		Pack:   pack,
 	})
 
@@ -26,7 +26,7 @@ func (u userClient) LikeTaskPack(userID, pack string) error {
 // DislikeTaskPack calls user service to dislike pack by user
 func (u userClient) DislikeTaskPack(userID, pack string) error {
 	_, err := u.conn.DislikePack(context.Background(), &api.LikeOrRatePackRequest{
-		UserID: &api.UUID{Id: userID},
+		UserID: userID,
 		Pack:   pack,
 	})
 

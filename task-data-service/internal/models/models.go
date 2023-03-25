@@ -1,7 +1,13 @@
 package models
 
-// TaskPack provides complete task pack info
+// Pack provides complete task pack info
+type Pack struct {
+	Title string   `json:"title"`
+	Tasks []string `json:"tasks"`
+}
+
+// TaskPack provides task pack with id
 type TaskPack struct {
-	TaskID string   `json:"id"`
-	Tasks  []string `json:"tasks"`
+	ID   string `json:"id"`
+	Pack Pack   `json:"pack"`
 }

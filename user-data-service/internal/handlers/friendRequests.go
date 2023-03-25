@@ -3,26 +3,13 @@ package handlers
 import (
 	"context"
 
-	"github.com/google/uuid"
 	"go.uber.org/zap"
 
 	api "github.com/dupreehkuda/TaskBingo/user-data-service/pkg/api"
 )
 
 func (h *Handlers) RequestFriend(ctx context.Context, req *api.FriendRequest) (*api.Empty, error) {
-	userID, err := uuid.Parse(req.UserID.Id)
-	if err != nil {
-		h.logger.Error("Unable to parse uuid", zap.Error(err))
-		return nil, err
-	}
-
-	friendID, err := uuid.Parse(req.FriendID.Id)
-	if err != nil {
-		h.logger.Error("Unable to parse uuid", zap.Error(err))
-		return nil, err
-	}
-
-	err = h.processor.RequestFriend(userID, friendID)
+	err := h.processor.RequestFriend(req.UserID, req.FriendID)
 	if err != nil {
 		h.logger.Error("Error occurred in call to processor", zap.Error(err))
 		return nil, err
@@ -32,19 +19,7 @@ func (h *Handlers) RequestFriend(ctx context.Context, req *api.FriendRequest) (*
 }
 
 func (h *Handlers) AcceptFriend(ctx context.Context, req *api.FriendRequest) (*api.Empty, error) {
-	userID, err := uuid.Parse(req.UserID.Id)
-	if err != nil {
-		h.logger.Error("Unable to parse uuid", zap.Error(err))
-		return nil, err
-	}
-
-	friendID, err := uuid.Parse(req.FriendID.Id)
-	if err != nil {
-		h.logger.Error("Unable to parse uuid", zap.Error(err))
-		return nil, err
-	}
-
-	err = h.processor.AcceptFriend(userID, friendID)
+	err := h.processor.AcceptFriend(req.UserID, req.FriendID)
 	if err != nil {
 		h.logger.Error("Error occurred in call to processor", zap.Error(err))
 		return nil, err
@@ -54,19 +29,7 @@ func (h *Handlers) AcceptFriend(ctx context.Context, req *api.FriendRequest) (*a
 }
 
 func (h *Handlers) DeleteFriend(ctx context.Context, req *api.FriendRequest) (*api.Empty, error) {
-	userID, err := uuid.Parse(req.UserID.Id)
-	if err != nil {
-		h.logger.Error("Unable to parse uuid", zap.Error(err))
-		return nil, err
-	}
-
-	friendID, err := uuid.Parse(req.FriendID.Id)
-	if err != nil {
-		h.logger.Error("Unable to parse uuid", zap.Error(err))
-		return nil, err
-	}
-
-	err = h.processor.DeleteFriend(userID, friendID)
+	err := h.processor.DeleteFriend(req.UserID, req.FriendID)
 	if err != nil {
 		h.logger.Error("Error occurred in call to processor", zap.Error(err))
 		return nil, err

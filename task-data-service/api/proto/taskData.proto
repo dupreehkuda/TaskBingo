@@ -16,12 +16,14 @@ message TaskPackRequest {
 
 message TaskPackResponse {
   string id = 1;
-  repeated string tasks = 2;
+  string title = 2;
+  repeated string tasks = 3;
 }
 
 message NewTaskPackRequest {
   string id = 1;
-  repeated string tasks = 2;
+  string title = 2;
+  repeated string tasks = 3;
 }
 
 message NewTaskPackResponse {
@@ -29,7 +31,7 @@ message NewTaskPackResponse {
 }
 
 message GetMultiplePacksRequest {
-  repeated string id = 1;
+  repeated string ids = 1;
 }
 
 message GetMultiplePacksResponse {

@@ -12,7 +12,7 @@ import (
 
 // GetMultiplePacks retrieves multiple task packs from the database
 func (h *Handlers) GetMultiplePacks(ctx context.Context, req *api.GetMultiplePacksRequest) (*api.GetMultiplePacksResponse, error) {
-	resp, err := h.processor.GetMultiplePacks(req.Id)
+	resp, err := h.processor.GetMultiplePacks(req.Ids)
 
 	switch {
 	case err == errs.ErrNoSuchPack:
@@ -24,8 +24,9 @@ func (h *Handlers) GetMultiplePacks(ctx context.Context, req *api.GetMultiplePac
 	var ans []*api.TaskPackResponse
 	for _, val := range *resp {
 		ans = append(ans, &api.TaskPackResponse{
-			Id:    val.TaskID,
-			Tasks: val.Tasks,
+			Id:    val.ID,
+			Title: val.Pack.Title,
+			Tasks: val.Pack.Tasks,
 		})
 	}
 

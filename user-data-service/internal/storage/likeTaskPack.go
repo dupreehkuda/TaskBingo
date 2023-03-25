@@ -3,12 +3,11 @@ package storage
 import (
 	"context"
 
-	"github.com/google/uuid"
 	"go.uber.org/zap"
 )
 
 // LikePack likes or dislikes pack on user
-func (s storage) LikePack(userID, pack uuid.UUID, inc int) error {
+func (s storage) LikePack(userID, pack string, inc int) error {
 	ctx := context.Background()
 	conn, err := s.pool.Acquire(ctx)
 	if err != nil {

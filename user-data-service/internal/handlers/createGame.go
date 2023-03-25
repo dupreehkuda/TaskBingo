@@ -3,7 +3,6 @@ package handlers
 import (
 	"context"
 
-	"github.com/google/uuid"
 	"go.uber.org/zap"
 
 	"github.com/dupreehkuda/TaskBingo/user-data-service/internal/models"
@@ -13,14 +12,14 @@ import (
 // CreateGame handles the operation of writing new game to db
 func (h *Handlers) CreateGame(ctx context.Context, req *api.NewGameRequest) (*api.Empty, error) {
 	err := h.processor.CreateGame(&models.Game{
-		GameID:       uuid.MustParse(req.GameID.Id),
-		User1Id:      req.User1Id.Id,
-		User2Id:      req.User2Id.Id,
+		GameID:       req.GameID,
+		User1Id:      req.User1Id,
+		User2Id:      req.User2Id,
 		PackId:       req.Pack,
 		Status:       req.Status,
 		User1Bingo:   req.User1Bingo,
 		User2Bingo:   req.User2Bingo,
-		Winner:       req.Winner.Id,
+		Winner:       req.Winner,
 		Numbers:      req.Numbers,
 		User1Numbers: req.User1Numbers,
 		User2Numbers: req.User2Numbers,
@@ -35,6 +34,6 @@ func (h *Handlers) CreateGame(ctx context.Context, req *api.NewGameRequest) (*ap
 }
 
 // TODO implement AcceptGame
-func (h *Handlers) AcceptGame(ctx context.Context, req *api.UUID) (*api.Empty, error) {
+func (h *Handlers) AcceptGame(ctx context.Context, req *api.AcceptGameRequest) (*api.Empty, error) {
 	return nil, nil
 }

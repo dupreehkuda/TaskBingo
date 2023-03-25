@@ -1,7 +1,6 @@
 package processors
 
 import (
-	"github.com/google/uuid"
 	"go.uber.org/zap"
 
 	"github.com/dupreehkuda/TaskBingo/user-data-service/internal/models"
@@ -12,15 +11,18 @@ import (
 type Processor interface {
 	RegisterUser(username, password, email, city string) (string, error)
 	LoginUser(username, password string) (string, error)
-	GetUserData(userID uuid.UUID) (*models.GetUserDataResponse, error)
-	GetRatedPacks() ([]uuid.UUID, error)
-	LikePack(userID, pack uuid.UUID, inc int) error
-	RatePack(userID, pack uuid.UUID, inc int) error
-	AssignNewPack(userID, packID uuid.UUID, packName string) error
+	GetUserData(userID string) (*models.GetUserDataResponse, error)
+
+	GetRatedPacks() ([]string, error)
+	LikePack(userID, pack string, inc int) error
+	RatePack(userID, pack string, inc int) error
+	AssignNewPack(userID, packID string, packName string) error
+
 	GetAllUsers() (*[]models.AllUsers, error)
-	AcceptFriend(userID, friendID uuid.UUID) error
-	DeleteFriend(userID, friendID uuid.UUID) error
-	RequestFriend(userID, friendID uuid.UUID) error
+	AcceptFriend(userID, friendID string) error
+	DeleteFriend(userID, friendID string) error
+	RequestFriend(userID, friendID string) error
+
 	CreateGame(game *models.Game) error
 }
 

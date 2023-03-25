@@ -21,7 +21,7 @@ func (u userClient) GetAllUsers() (*[]models.User, error) {
 
 	for _, person := range resp.Person {
 		users = append(users, models.User{
-			UserID:   person.UserID.Id,
+			UserID:   person.UserID,
 			Username: person.Username,
 			City:     person.City,
 			Bingo:    int(person.Bingo),
