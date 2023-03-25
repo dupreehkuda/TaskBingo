@@ -37,7 +37,7 @@ func (h handlers) SetTaskPack(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err = UUIDCheck(userID, req.ID); err != nil {
+	if err = UUIDCheck(userID); err != nil {
 		h.logger.Error("Invalid UUID in request", zap.Error(err))
 		w.WriteHeader(http.StatusBadRequest)
 		return

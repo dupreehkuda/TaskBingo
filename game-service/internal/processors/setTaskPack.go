@@ -16,13 +16,14 @@ func (p processor) SetTaskPack(userID string, pack *models.TaskPack) error {
 		return err
 	}
 
-	// TODO save pack by packID
-	err = p.taskStorage.SetTaskPack(pack)
+	pack.ID = packID.String()
 
-	switch {
-	case err == errs.ErrPackAlreadyExists:
-		return err
-	case err != nil:
+	err = p.taskStorage.SetTaskPack(pack)
+	if err != nil {
+		if err == errs.ErrPackAlreadyExists {
+			return err
+		}
+
 		p.logger.Error("Error in call to task storage", zap.Error(err))
 		return err
 	}
