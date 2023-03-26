@@ -26,6 +26,10 @@ func (p processor) GetUserData(userID string) (*models.UserAccountInfo, error) {
 		RatedPacks: userInfo.RatedPacks,
 	}
 
+	if len(userInfo.RatedPacks) == 0 {
+		resp.RatedPacks = []string{}
+	}
+
 	if len(userInfo.LikedPacks) != 0 {
 		tasks, err := p.taskStorage.GetMultiplePacks(userInfo.LikedPacks)
 		if err != nil {
@@ -35,10 +39,6 @@ func (p processor) GetUserData(userID string) (*models.UserAccountInfo, error) {
 
 		resp.LikedPacks = *tasks
 		return resp, nil
-	}
-
-	if len(userInfo.RatedPacks) == 0 {
-		resp.RatedPacks = []string{}
 	}
 
 	return resp, nil
