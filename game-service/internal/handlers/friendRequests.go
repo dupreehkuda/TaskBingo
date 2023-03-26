@@ -30,9 +30,15 @@ func (h handlers) RequestFriend(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if userID == req.Person {
+		w.WriteHeader(http.StatusNotAcceptable)
+		return
+	}
+
 	err = h.processor.RequestFriend(userID, req.Person)
 	if err != nil {
 		h.logger.Error("Error getting data", zap.Error(err))
+		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 

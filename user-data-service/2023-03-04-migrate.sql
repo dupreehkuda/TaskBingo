@@ -31,7 +31,6 @@ CREATE TABLE IF NOT EXISTS ratings (
 CREATE TABLE IF NOT EXISTS friends (
     id uuid NOT NULL,
     friend_id uuid NOT NULL,
-    friend_username text NOT NULL,
     status integer NOT NULL,
     wins integer NOT NULL DEFAULT 0,
     loses integer NOT NULL DEFAULT 0,

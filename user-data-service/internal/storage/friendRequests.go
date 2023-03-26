@@ -19,8 +19,8 @@ func (s storage) RequestFriend(userID, friendID string) error {
 
 	tx, err := conn.Begin(ctx)
 
-	tx.Exec(ctx, "INSERT INTO friends (id, friend, status) VALUES ($1, $2, $3);", userID, friendID, Requested)
-	tx.Exec(ctx, "INSERT INTO friends (id, friend, status) VALUES ($1, $2, $3);", friendID, userID, Response)
+	tx.Exec(ctx, "INSERT INTO friends (id, friend_id, status) VALUES ($1, $2, $3);", userID, friendID, Requested)
+	tx.Exec(ctx, "INSERT INTO friends (id, friend_id, status) VALUES ($1, $2, $3);", friendID, userID, Response)
 
 	err = tx.Commit(ctx)
 	if err != nil {
