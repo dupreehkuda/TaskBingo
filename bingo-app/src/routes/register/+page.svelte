@@ -1,13 +1,13 @@
 <script lang="ts">
-    import {ButtonGroup, InputAddon, Label, Input, Button, Alert} from "flowbite-svelte";
-    import {Submit} from "./+page";
+    import { ButtonGroup, InputAddon, Label, Input, Button, Alert } from "flowbite-svelte";
+    import { _Submit } from "./+page";
 
     let show = false;
     $: status = 0
 
 
     async function submit(event: any) {
-        status = await Submit(event)
+        status = await _Submit(event)
     }
 
 </script>

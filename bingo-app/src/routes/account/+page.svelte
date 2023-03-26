@@ -1,6 +1,6 @@
 <script lang="ts">
     import { Button } from "flowbite-svelte";
-    import { Like } from "./+page"
+    import { _Like } from "./+page.server"
     import { DeleteFriend, RequestFriend, AcceptFriend } from '../friendRequests';
 
     import Account from "../accountStore";
@@ -79,7 +79,7 @@
 
                     <div class="flex flex-row gap-2">
                         <Button class="basis-4/5 fonty">Choose pack</Button>
-                        <Button class="basis-1/5" color="light" on:click={() => Like(pack, $Account?.likedPacks.some(e => e.id === pack.id))}>
+                        <Button class="basis-1/5" color="light" on:click={() => _Like(pack, $Account?.likedPacks.some(e => e.id === pack.id))}>
                             {#if $Account?.likedPacks.some(e => e.id === pack.id)}
                                 <img src="heart-solid.svg" alt="solid heart"/>
                             {:else}

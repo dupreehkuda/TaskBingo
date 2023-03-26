@@ -1,4 +1,4 @@
-import type { PageLoad } from './$types';
+import type { PageServerLoad } from './$types';
 import Account from '../accountStore';
 import { get } from 'svelte/store';
 
@@ -11,9 +11,9 @@ export const load = (async ({ fetch }) => {
   const userInfo = await res.json()
 
   Account.set(userInfo)
-}) satisfies PageLoad;
+}) satisfies PageServerLoad;
 
-export async function Like(pack: any, liked: boolean) {
+export async function _Like(pack: any, liked: boolean) {
   const newResp = {
     id: pack.id,
   } 

@@ -1,9 +1,9 @@
 <script lang="ts">
     import { Label, Input, Button } from "flowbite-svelte";
-    import { Submit } from "./+page";
+    import { _Submit } from "./+page";
 
     async function submit(event: any) {
-        const status = await Submit(event)
+        const status = await _Submit(event)
         if (status == 200) { window.location.href = "https://taskbingo.com/account"; }
     }
 </script>
