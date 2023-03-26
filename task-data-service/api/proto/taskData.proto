@@ -22,8 +22,12 @@ message TaskPackResponse {
 
 message NewTaskPackRequest {
   string id = 1;
-  string title = 2;
-  repeated string tasks = 3;
+  Pack pack = 2;
+}
+
+message Pack {
+  string title = 1;
+  repeated string tasks = 2;
 }
 
 message NewTaskPackResponse {

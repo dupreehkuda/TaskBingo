@@ -17,8 +17,8 @@ func (h *Handlers) AddOneTaskPack(ctx context.Context, req *api.NewTaskPackReque
 	data := models.TaskPack{
 		ID: req.Id,
 		Pack: models.Pack{
-			Title: req.Title,
-			Tasks: req.Tasks,
+			Title: req.Pack.Title,
+			Tasks: req.Pack.Tasks,
 		},
 	}
 
