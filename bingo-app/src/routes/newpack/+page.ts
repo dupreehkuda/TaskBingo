@@ -22,15 +22,15 @@ export async function _Submit(event: any): Promise<number> {
 
 
     const newResp = {
-        id: name,
-        tasks: [task1, task2, task3, task4, 
-            task5, task6, task7, task8, 
-            task9, task10, task11, task12, 
-            task13, task14, task15, task16]
+        id: "",
+        pack: {
+            title: name,
+            tasks: [task1, task2, task3, task4, 
+                task5, task6, task7, task8, 
+                task9, task10, task11, task12, 
+                task13, task14, task15, task16]
+        }
     }
-
-    console.log(data)
-    console.log(JSON.stringify(newResp))
 
     const res = await fetch('https://taskbingo.com/api/task/setTaskPack', {
         method: 'POST',

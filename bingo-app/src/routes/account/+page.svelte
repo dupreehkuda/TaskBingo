@@ -68,9 +68,9 @@
     <div class="scrolling-wrapper spacer">
         {#each $Account.likedPacks as pack}
             <div class="pack flex flex-col justify-between mx-1">
-                <h5 class="mb-2 text-xl">{pack.id}</h5>
+                <h5 class="mb-2 text-xl">{pack.pack.title}</h5>
                 <ul class="my-1 space-y-1.5">
-                    {#each pack.tasks as task, i}
+                    {#each pack.pack.tasks as task, i}
                         <li class="flex flex-row leftspace">
                             <span class="basis-1/5 leading-tight">{i+1}</span>
                             <span class="basis-4/5 leading-tight text-gray-300">{task}</span>

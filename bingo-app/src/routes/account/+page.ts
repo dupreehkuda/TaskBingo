@@ -37,7 +37,7 @@ export async function _Like(pack: any, liked: boolean) {
     })
 
     let account = get(Account)
-    account.likedPacks.push({id: pack.id, tasks: pack.tasks})
+    account.likedPacks.push({id: pack.id, pack: pack.pack})
     Account.set(account)
   }
 };

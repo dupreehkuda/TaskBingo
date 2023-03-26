@@ -8,11 +8,12 @@ compose-down:
 
 .PHONY: rebuild
 rebuild:
-	docker-compose down --remove-orphans
 	docker-compose build
+	docker-compose down
+	docker-compose up -d
 
 .PHONY: fast
 fast:
 	docker-compose build
-	docker-compose down --remove-orphans
+	docker-compose down
 	docker-compose up

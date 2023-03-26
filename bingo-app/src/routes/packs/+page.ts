@@ -1,6 +1,6 @@
 import Account from '../accountStore';
 import { get } from 'svelte/store';
-import type { PageServerLoad } from './$types';
+import type { PageLoad } from './$types';
 
 export const load = (async ({ fetch }) => {
   const userData = await fetch('https://taskbingo.com/api/user/getUserData', {
@@ -18,9 +18,9 @@ export const load = (async ({ fetch }) => {
   })
 
   const packs = await res.json()
-
+  console.log(packs)
   return { packs }
-}) satisfies PageServerLoad;
+}) satisfies PageLoad;
 
 export async function _Like(pack: any, liked: boolean) {
   const newResp = {
@@ -46,7 +46,7 @@ export async function _Like(pack: any, liked: boolean) {
     })
 
     let account = get(Account)
-    account.likedPacks.push({id: pack.id, tasks: pack.tasks})
+    account.likedPacks.push({id: pack.id, pack: pack.pack})
     Account.set(account)
   }
 };

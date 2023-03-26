@@ -8,7 +8,7 @@ export interface AccountData {
     lose:       number;
     bingo:      number;
     friends:    Friend[];
-    likedPacks: Pack[];
+    likedPacks: TaskPack[];
     ratedPacks: string[]
 }
 
@@ -20,8 +20,13 @@ export interface Friend {
     loses: number;
 }
 
+export interface TaskPack {
+    id: string;
+    pack: Pack;
+}
+
 export interface Pack {
-    id:  string;
+    title:  string;
     tasks: string[];
 }
 
