@@ -2,13 +2,13 @@ export async function _Submit(event: any): Promise<number> {
     event.preventDefault()
     const data = new FormData(event.target);
 
-    const login = data.get('login') as string;
+    const username = data.get('username') as string;
     const email = data.get('email') as string;
     const city = data.get('city') as string;
     const password = data.get('password') as string;
 
     const newResp = {
-        login: login,
+        username: username,
         email: email,
         city: city,
         password: password

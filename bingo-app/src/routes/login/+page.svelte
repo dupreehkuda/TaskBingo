@@ -15,7 +15,7 @@
         }
 
         const newReq = {
-            login: data.login,
+            username: data.username,
             password: data.password
         }
 
@@ -35,7 +35,7 @@
         <Label color="disabled" class='text block mb-3 dark'>Login</Label>
         <form on:submit={submit}>
             <div class="dark mb-4">
-                <Input label="login" id="login" name="login" required placeholder="Login"/>
+                <Input label="login" id="username" name="username" required placeholder="Login"/>
             </div>
 
             <ButtonGroup class="dark mb-3 w-full">

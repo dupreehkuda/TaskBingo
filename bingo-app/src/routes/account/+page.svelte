@@ -1,6 +1,6 @@
 <script lang="ts">
     import { Button } from "flowbite-svelte";
-    import { _Like } from "./+page.server"
+    import { _Like } from "./+page"
     import { DeleteFriend, RequestFriend, AcceptFriend } from '../friendRequests';
 
     import Account from "../accountStore";
@@ -12,7 +12,7 @@
 
 <main>
     <div class="leftalign spacer">
-        <h1>{$Account.login}
+        <h1>{$Account.username}
             <span class="leftalign win">{$Account.wins}</span>
             <span>:</span>
             <span class="lose">{$Account.lose}</span>
@@ -35,7 +35,7 @@
         {#each $Account.friends as friend}
             <div class="friend flex flex-col">
                 <div class="basis-1/3">
-                    <h5>{friend.login}</h5>
+                    <h5>{friend.username}</h5>
                 </div>
 
                 <div class="basis-1/3">
@@ -44,17 +44,17 @@
                 {#if friend.status == 3}
                     <div class="flex flex-row gap-1.5 basis-1/3">
                         <Button class="basis-2/3 fonty" size="xs">Play</Button>
-                        <Button class="basis-1/3 dark:!text-white-800" size="xs" color="red" on:click={() => DeleteFriend(friend.login)}>X</Button>
+                        <Button class="basis-1/3 dark:!text-white-800" size="xs" color="red" on:click={() => DeleteFriend(friend.userID)}>X</Button>
                     </div>
                 {:else if friend.status == 2}
                     <div class="flex flex-row gap-1.5 basis-1/3">
-                        <Button class="basis-2/3 fonty" size="xs" on:click={() => AcceptFriend(friend.login)}>Accept</Button>
-                        <Button class="basis-1/3 dark:!text-white-800" size="xs" color="red" on:click={() => DeleteFriend(friend.login)}>X</Button>
+                        <Button class="basis-2/3 fonty" size="xs" on:click={() => AcceptFriend(friend.userID)}>Accept</Button>
+                        <Button class="basis-1/3 dark:!text-white-800" size="xs" color="red" on:click={() => DeleteFriend(friend.userID)}>X</Button>
                     </div>
                 {:else if friend.status == 1}
                     <div class="flex flex-row gap-1.5 basis-1/3">
-                        <Button class="basis-2/3 fonty" disabled size="xs" on:click={() => AcceptFriend(friend.login)}>Sent</Button>
-                        <Button class="basis-1/3 dark:!text-white-800" size="xs" color="red" on:click={() => DeleteFriend(friend.login)}>X</Button>
+                        <Button class="basis-2/3 fonty" disabled size="xs" on:click={() => AcceptFriend(friend.userID)}>Sent</Button>
+                        <Button class="basis-1/3 dark:!text-white-800" size="xs" color="red" on:click={() => DeleteFriend(friend.userID)}>X</Button>
                     </div>
                 {/if}
             </div>

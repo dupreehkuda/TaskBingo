@@ -1,7 +1,8 @@
 import { writable } from "svelte/store"
 
 export interface AccountData {
-    login:      string;
+    userID:     string;
+    username:   string;
     city:       string;
     wins:       number;
     lose:       number;
@@ -12,7 +13,8 @@ export interface AccountData {
 }
 
 export interface Friend {
-    login: string;
+    userID: string;
+    username: string;
     status: number;
     wins: number;
     loses: number;

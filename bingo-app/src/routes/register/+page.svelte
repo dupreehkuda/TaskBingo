@@ -27,7 +27,7 @@
             <form on:submit={submit}>
                 <div class="dark mb-4">
                     <Label color="disabled" for="input-group-1" class="block mb-2">Name</Label>
-                    <Input label="Name" id="login" name="login" required placeholder="John"/>
+                    <Input label="Username" id="username" name="username" required placeholder="John"/>
                 </div>
 
                 <div class="dark mb-4">
