@@ -27,5 +27,6 @@ func (s storage) GetTaskPack(taskId string) (*models.TaskPack, error) {
 		return nil, err
 	}
 
+	tasks.ID = taskId
 	return &tasks, nil
 }
