@@ -1,4 +1,4 @@
-export async function Submit(event: any): Promise<number> {
+export async function _Submit(event: any): Promise<number> {
     event.preventDefault()
     const data = new FormData(event.target);
 
