@@ -15,12 +15,6 @@ func (h handlers) SetTaskPack(w http.ResponseWriter, r *http.Request) {
 	var ctxKey models.UserIDKey = "userID"
 	userID := r.Context().Value(ctxKey).(string)
 
-	if userID == "" {
-		h.logger.Error("Bad login")
-		w.WriteHeader(http.StatusBadRequest)
-		return
-	}
-
 	req := &models.TaskPack{}
 
 	decoder := json.NewDecoder(r.Body)
@@ -32,7 +26,7 @@ func (h handlers) SetTaskPack(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if req.Pack.Title == "" {
-		h.logger.Info("Request empty")
+		h.logger.Info("Pack title empty")
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}

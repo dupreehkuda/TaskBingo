@@ -14,12 +14,6 @@ func (h handlers) CreateGame(w http.ResponseWriter, r *http.Request) {
 	var ctxKey models.UserIDKey = "userID"
 	userID := r.Context().Value(ctxKey).(string)
 
-	if userID == "" {
-		h.logger.Error("Bad login")
-		w.WriteHeader(http.StatusBadRequest)
-		return
-	}
-
 	var req models.NewGameRequest
 
 	decoder := json.NewDecoder(r.Body)
@@ -27,11 +21,6 @@ func (h handlers) CreateGame(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		h.logger.Error("Unable to decode JSON", zap.Error(err))
 		w.WriteHeader(http.StatusInternalServerError)
-		return
-	}
-
-	if req.OpponentID == "" || req.Pack == "" {
-		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 

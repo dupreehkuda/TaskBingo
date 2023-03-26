@@ -6,6 +6,7 @@ import (
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
+	errs "github.com/dupreehkuda/TaskBingo/game-service/internal/customErrors"
 	"github.com/dupreehkuda/TaskBingo/game-service/internal/processors"
 )
 
@@ -45,9 +46,13 @@ func New(processor processors.Processor, logger *zap.Logger) *handlers {
 	}
 }
 
-// UUIDCheck checks all needed ids to be sure of incoming data
+// UUIDCheck checks all request ids to be sure they're not empty and correct uuids
 func UUIDCheck(uuids ...string) error {
 	for _, id := range uuids {
+		if id == "" {
+			return errs.ErrEmptyRequest
+		}
+
 		_, err := uuid.Parse(id)
 		if err != nil {
 			return err

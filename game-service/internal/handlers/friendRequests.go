@@ -14,12 +14,6 @@ func (h handlers) RequestFriend(w http.ResponseWriter, r *http.Request) {
 	var ctxKey models.UserIDKey = "userID"
 	userID := r.Context().Value(ctxKey).(string)
 
-	if userID == "" {
-		h.logger.Error("Bad login")
-		w.WriteHeader(http.StatusBadRequest)
-		return
-	}
-
 	var req models.FriendRequest
 
 	decoder := json.NewDecoder(r.Body)
@@ -27,12 +21,6 @@ func (h handlers) RequestFriend(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		h.logger.Error("Unable to decode JSON", zap.Error(err))
 		w.WriteHeader(http.StatusInternalServerError)
-		return
-	}
-
-	if req.Person == "" {
-		h.logger.Info("Request empty")
-		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
@@ -57,12 +45,6 @@ func (h handlers) AcceptFriend(w http.ResponseWriter, r *http.Request) {
 	var ctxKey models.UserIDKey = "userID"
 	userID := r.Context().Value(ctxKey).(string)
 
-	if userID == "" {
-		h.logger.Error("Bad login")
-		w.WriteHeader(http.StatusBadRequest)
-		return
-	}
-
 	var req models.FriendRequest
 
 	decoder := json.NewDecoder(r.Body)
@@ -73,8 +55,8 @@ func (h handlers) AcceptFriend(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if req.Person == "" {
-		h.logger.Info("Request empty")
+	if err = UUIDCheck(userID, req.Person); err != nil {
+		h.logger.Error("Invalid UUID in request", zap.Error(err))
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -94,12 +76,6 @@ func (h handlers) DeleteFriend(w http.ResponseWriter, r *http.Request) {
 	var ctxKey models.UserIDKey = "userID"
 	userID := r.Context().Value(ctxKey).(string)
 
-	if userID == "" {
-		h.logger.Error("Bad login")
-		w.WriteHeader(http.StatusBadRequest)
-		return
-	}
-
 	var req models.FriendRequest
 
 	decoder := json.NewDecoder(r.Body)
@@ -110,8 +86,8 @@ func (h handlers) DeleteFriend(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if req.Person == "" {
-		h.logger.Info("Request empty")
+	if err = UUIDCheck(userID, req.Person); err != nil {
+		h.logger.Error("Invalid UUID in request", zap.Error(err))
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}

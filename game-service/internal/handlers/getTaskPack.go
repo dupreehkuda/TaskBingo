@@ -15,12 +15,6 @@ func (h handlers) GetTaskPack(w http.ResponseWriter, r *http.Request) {
 	var ctxKey models.UserIDKey = "userID"
 	userID := r.Context().Value(ctxKey).(string)
 
-	if userID == "" {
-		h.logger.Error("Bad login")
-		w.WriteHeader(http.StatusBadRequest)
-		return
-	}
-
 	var req models.TaskPackRequest
 
 	decoder := json.NewDecoder(r.Body)
@@ -28,12 +22,6 @@ func (h handlers) GetTaskPack(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		h.logger.Error("Unable to decode JSON", zap.Error(err))
 		w.WriteHeader(http.StatusInternalServerError)
-		return
-	}
-
-	if req.TaskID == "" {
-		h.logger.Info("Request empty")
-		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
