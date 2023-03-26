@@ -47,7 +47,7 @@ func (h handlers) RegisterUser(w http.ResponseWriter, r *http.Request) {
 		Name:   "auth",
 		Value:  token,
 		Secure: false,
-		Domain: "taskbingo.com",
+		Domain: h.domain,
 		Path:   "/",
 	})
 }

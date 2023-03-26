@@ -39,7 +39,7 @@ func NewByConfig() *api {
 
 	logic := processors.New(uc, tc, log)
 
-	handle := handlers.New(logic, log)
+	handle := handlers.New(logic, cfg.CurrentDomain, log)
 
 	return &api{
 		handlers:   handle,

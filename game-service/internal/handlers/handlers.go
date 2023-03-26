@@ -35,13 +35,15 @@ type Handlers interface {
 // Handlers provides access to service
 type handlers struct {
 	processor processors.Processor
+	domain    string
 	logger    *zap.Logger
 }
 
 // New creates new instance of handlers
-func New(processor processors.Processor, logger *zap.Logger) *handlers {
+func New(processor processors.Processor, domain string, logger *zap.Logger) *handlers {
 	return &handlers{
 		processor: processor,
+		domain:    domain,
 		logger:    logger,
 	}
 }

@@ -9,8 +9,9 @@ import (
 
 // Config provides service address and paths to database
 type Config struct {
-	Address      string `env:"RUN_ADDRESS" envDefault:":8081"`
-	DatabasePath string `env:"DATABASE_URI"`
+	Address           string `env:"RUN_ADDRESS" envDefault:":8081"`
+	DatabasePath      string `env:"DATABASE_URI"`
+	MigrationFilePath string `env:"MIGRATION_FILE_PATH" envDefault:"./2023-03-04-migrate.sql"`
 }
 
 // New creates new Config

@@ -29,7 +29,7 @@ type Stored interface {
 	AcceptFriend(userID, friendID string) error
 	DeleteFriend(userID, friendID string) error
 	RequestFriend(userID, friendID string) error
-	
+
 	CreateGame(game *models.Game) error
 }
 
@@ -74,8 +74,8 @@ func New(path string, logger *zap.Logger) *storage {
 }
 
 // CreateSchema gets and executes needed schema
-func (s storage) CreateSchema() {
-	schema, err := os.ReadFile("./2023-03-04-migrate.sql")
+func (s storage) CreateSchema(path string) {
+	schema, err := os.ReadFile(path)
 	if err != nil {
 		s.logger.Error("Error occurred while getting migration schema", zap.Error(err))
 	}

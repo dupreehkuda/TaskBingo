@@ -9,6 +9,7 @@ services:
       - FULL_USER_SERVICE_ADDRESS=${FULL_USER_SERVICE_ADDRESS}
       - FULL_TASK_SERVICE_ADDRESS=${FULL_TASK_SERVICE_ADDRESS}
       - secret=${SECRET}
+      - CURRENT_DOMAIN=${CURRENT_DOMAIN}
     env_file: .env
     ports:
       - '8082:8082'
@@ -38,6 +39,7 @@ services:
     environment:
       - DATABASE_URI=${PSQL_DSN_SERVER}
       - RUN_ADDRESS=${USER_SERVICE_ADDRESS}
+      - MIGRATION_FILE_PATH=${MIGRATION_FILE_PATH}
     env_file: .env
     ports:
       - '8081:8081'
