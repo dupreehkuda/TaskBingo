@@ -30,6 +30,7 @@ func (s storage) GetMultiplePacks(ids []string) (*[]models.TaskPack, error) {
 			return nil, err
 		}
 
+		pack.ID = ids[i]
 		tasks = append(tasks, pack)
 	}
 
