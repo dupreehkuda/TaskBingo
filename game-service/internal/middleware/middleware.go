@@ -9,6 +9,8 @@ import (
 // Middleware is an interface for middleware layer
 type Middleware interface {
 	CheckToken(next http.Handler) http.Handler
+	CheckCompression(next http.Handler) http.Handler
+	WriteCompressed(next http.Handler) http.Handler
 }
 
 // middleware provides services middleware

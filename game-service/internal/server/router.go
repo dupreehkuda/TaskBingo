@@ -9,6 +9,9 @@ import (
 // router provides service main routing
 func (a api) router() http.Handler {
 	r := chi.NewRouter()
+	r.Use(a.middleware.CheckCompression)
+	r.Use(a.middleware.WriteCompressed)
+
 	r.Route("/api", func(r chi.Router) {
 		r.Route("/user", func(r chi.Router) {
 			r.Group(func(r chi.Router) {
