@@ -1,9 +1,9 @@
 import Account from './accountStore';
 import { get } from 'svelte/store';
 
-export async function RequestFriend(person: string) {
+export async function RequestFriend(personId: string, username: string) {
   const newResp = {
-    person: person,
+    person: personId,
   } 
   
   const res = await fetch('https://taskbingo.com/api/user/requestFriend', {
@@ -14,14 +14,14 @@ export async function RequestFriend(person: string) {
 
   let account = get(Account)
 
-  account.friends.push({login: person, status: 1, wins: 0, loses: 0})
+  account.friends.push({userID: personId, username: username, status: 1, wins: 0, loses: 0})
 
   Account.set(account)
 };
 
-export async function AcceptFriend(person: string) {
+export async function AcceptFriend(personId: string) {
   const newResp = {
-    person: person,
+    person: personId,
   } 
   
   const res = await fetch('https://taskbingo.com/api/user/acceptFriend', {
@@ -32,15 +32,15 @@ export async function AcceptFriend(person: string) {
 
   let account = get(Account)
 
-  const personIDX = account.friends.findIndex((friend => friend.login == person))
+  const personIDX = account.friends.findIndex((friend => friend.userID == personId))
   account.friends[personIDX].status = 3
 
   Account.set(account)
 };
 
-export async function DeleteFriend(person: string) {
+export async function DeleteFriend(personId: string) {
   const newResp = {
-    person: person,
+    person: personId,
   } 
   
   const res = await fetch('https://taskbingo.com/api/user/deleteFriend', {
@@ -50,7 +50,7 @@ export async function DeleteFriend(person: string) {
   })
 
   let account = get(Account)
-  account.friends = account.friends.filter(friend => friend.login !== person)
+  account.friends = account.friends.filter(friend => friend.userID !== personId)
 
   Account.set(account)
 };
