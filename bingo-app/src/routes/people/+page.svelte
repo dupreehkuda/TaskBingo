@@ -40,7 +40,7 @@
                         </div>
                     {:else}
                         <div class="space-x-1 flex flex-row justify-end basis-4/12">
-                            <Button size="xs" on:click={() => RequestFriend(user.userID)}>Add friend</Button>
+                            <Button size="xs" on:click={() => RequestFriend(user.userID, user.username)}>Add friend</Button>
                         </div>
                     {/if}
                     

@@ -1,5 +1,5 @@
 import Account from '../accountStore';
-import type { PageServerLoad } from './$types';
+import type { PageLoad } from './$types';
 
 
 export const load = (async ({ fetch }) => {
@@ -20,4 +20,4 @@ export const load = (async ({ fetch }) => {
   const users = await res.json()
 
   return { users }
-}) satisfies PageServerLoad;
+}) satisfies PageLoad;
