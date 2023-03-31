@@ -27,7 +27,7 @@ func (s storage) GetUserData(userID string) (*models.GetUserDataResponse, error)
 		return &resp, err
 	}
 
-	rows, err := conn.Query(ctx, "SELECT friends.friend_id, users.username, friends.status, friends.wins, friends.loses FROM friends LEFT JOIN users on friends.id = users.id WHERE users.id = $1;", userID)
+	rows, err := conn.Query(ctx, "SELECT friends.friend_id, (SELECT users.username FROM users WHERE users.id = friends.friend_id) AS username, friends.status, friends.wins, friends.loses FROM friends WHERE id = $1;", userID)
 	if err != nil {
 		s.logger.Error("Error when executing statement", zap.Error(err))
 		return nil, err
