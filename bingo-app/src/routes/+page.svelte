@@ -8,13 +8,13 @@
 
 <style>
     h1 {
-        font-family: Unbounded;
+        font-family: Prompt;
         font-size: xx-large;
     }
 
     span {
         font-family: Unbounded;
         font-size: medium;
-        color: rgb(238, 237, 197);
+        color: #11202d;
     }
 </style>

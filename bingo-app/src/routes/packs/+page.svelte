@@ -21,7 +21,7 @@
                     {#each pack.pack.tasks as task, i}
                         <li class="flex flex-row leftspace">
                             <span class="basis-1/5 leading-tight">{i+1}</span>
-                            <span class="basis-4/5 leading-tight text-gray-300">{task}</span>
+                            <span class="basis-4/5 leading-tight text-white">{task}</span>
                         </li>
                     {/each}
 
@@ -53,6 +53,10 @@
 </main>
 
 <style>
+    h5 {
+        font-weight: 400;
+    }
+
     span {
         text-align: left;
         font-weight: 300;
@@ -71,7 +75,7 @@
 
     .rectangle {
         border-radius: 10px; 
-        background-color: #0f4879;
+        background-color: #5482aa;
         /* margin-bottom: 0.5em; */
         padding: 0.6em;
         min-width: 23em; 

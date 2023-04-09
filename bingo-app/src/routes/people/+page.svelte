@@ -68,7 +68,7 @@
 
     .rectangle {
         border-radius: 10px; 
-        background-color: #0f4879;
+        background-color: #5482aa;
         margin-bottom: 0.5em;
         padding: 0.6em;
         min-width: 23em; 

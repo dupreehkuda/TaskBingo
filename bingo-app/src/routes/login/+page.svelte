@@ -65,7 +65,7 @@
         padding: 1em;
         max-width: 440px;
         margin: 0 auto;
-        background-color: #11202d;
-        color: rgb(238, 237, 197);
+        background-color: #D6E2EC;
+        color: #D6E2EC;
     }
 </style>
