@@ -15,9 +15,9 @@ import (
 	"github.com/dupreehkuda/TaskBingo/game-service/internal/handlers"
 	"github.com/dupreehkuda/TaskBingo/game-service/internal/logger"
 	"github.com/dupreehkuda/TaskBingo/game-service/internal/middleware"
-	"github.com/dupreehkuda/TaskBingo/game-service/internal/processors"
-	"github.com/dupreehkuda/TaskBingo/game-service/internal/taskClient"
-	"github.com/dupreehkuda/TaskBingo/game-service/internal/userClient"
+	"github.com/dupreehkuda/TaskBingo/game-service/internal/service"
+	"github.com/dupreehkuda/TaskBingo/game-service/internal/taskRepository"
+	"github.com/dupreehkuda/TaskBingo/game-service/internal/userRepository"
 )
 
 // api provides single configuration out of all components
@@ -33,11 +33,11 @@ func NewByConfig() *api {
 	log := logger.InitializeLogger()
 	cfg := config.New(log)
 
-	uc := userClient.New(cfg.UserServiceAddress, log)
-	tc := taskClient.New(cfg.TaskServiceAddress, log)
+	ur := userRepository.New(cfg.UserServiceAddress, log)
+	tr := taskRepository.New(cfg.TaskServiceAddress, log)
 	mv := middleware.New(log)
 
-	logic := processors.New(uc, tc, log)
+	logic := service.New(ur, tr, log)
 
 	handle := handlers.New(logic, cfg.CurrentDomain, log)
 

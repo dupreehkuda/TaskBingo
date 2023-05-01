@@ -20,7 +20,7 @@ func (h handlers) GetUserData(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	resp, err := h.processor.GetUserData(userID)
+	resp, err := h.service.GetUserData(userID)
 	if err != nil {
 		h.logger.Error("Unable to call user microservice", zap.Error(err))
 		w.WriteHeader(http.StatusInternalServerError)

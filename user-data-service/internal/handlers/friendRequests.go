@@ -9,7 +9,7 @@ import (
 )
 
 func (h *Handlers) RequestFriend(ctx context.Context, req *api.FriendRequest) (*api.Empty, error) {
-	err := h.processor.RequestFriend(req.UserID, req.FriendID)
+	err := h.service.RequestFriend(req.UserID, req.FriendID)
 	if err != nil {
 		h.logger.Error("Error occurred in call to processor", zap.Error(err))
 		return nil, err
@@ -19,7 +19,7 @@ func (h *Handlers) RequestFriend(ctx context.Context, req *api.FriendRequest) (*
 }
 
 func (h *Handlers) AcceptFriend(ctx context.Context, req *api.FriendRequest) (*api.Empty, error) {
-	err := h.processor.AcceptFriend(req.UserID, req.FriendID)
+	err := h.service.AcceptFriend(req.UserID, req.FriendID)
 	if err != nil {
 		h.logger.Error("Error occurred in call to processor", zap.Error(err))
 		return nil, err
@@ -29,7 +29,7 @@ func (h *Handlers) AcceptFriend(ctx context.Context, req *api.FriendRequest) (*a
 }
 
 func (h *Handlers) DeleteFriend(ctx context.Context, req *api.FriendRequest) (*api.Empty, error) {
-	err := h.processor.DeleteFriend(req.UserID, req.FriendID)
+	err := h.service.DeleteFriend(req.UserID, req.FriendID)
 	if err != nil {
 		h.logger.Error("Error occurred in call to processor", zap.Error(err))
 		return nil, err

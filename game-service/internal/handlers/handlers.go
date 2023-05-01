@@ -7,7 +7,7 @@ import (
 	"go.uber.org/zap"
 
 	errs "github.com/dupreehkuda/TaskBingo/game-service/internal/customErrors"
-	"github.com/dupreehkuda/TaskBingo/game-service/internal/processors"
+	"github.com/dupreehkuda/TaskBingo/game-service/internal/service"
 )
 
 // Handlers is an interface for handlers
@@ -34,17 +34,17 @@ type Handlers interface {
 
 // Handlers provides access to service
 type handlers struct {
-	processor processors.Processor
-	domain    string
-	logger    *zap.Logger
+	service service.Service
+	domain  string
+	logger  *zap.Logger
 }
 
 // New creates new instance of handlers
-func New(processor processors.Processor, domain string, logger *zap.Logger) *handlers {
+func New(service service.Service, domain string, logger *zap.Logger) *handlers {
 	return &handlers{
-		processor: processor,
-		domain:    domain,
-		logger:    logger,
+		service: service,
+		domain:  domain,
+		logger:  logger,
 	}
 }
 

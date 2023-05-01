@@ -30,7 +30,7 @@ func (h handlers) LikeTaskPack(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.processor.LikeTaskPack(userID, req.TaskID)
+	err = h.service.LikeTaskPack(userID, req.TaskID)
 	if err != nil {
 		h.logger.Error("Error getting data", zap.Error(err))
 		return
@@ -61,7 +61,7 @@ func (h handlers) DislikeTaskPack(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.processor.DislikeTaskPack(userID, req.TaskID)
+	err = h.service.DislikeTaskPack(userID, req.TaskID)
 	if err != nil {
 		h.logger.Error("Error getting data", zap.Error(err))
 		return

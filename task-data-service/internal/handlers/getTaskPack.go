@@ -12,7 +12,7 @@ import (
 
 // GetOneTaskPack handles getting one task pack operation
 func (h *Handlers) GetOneTaskPack(ctx context.Context, req *api.TaskPackRequest) (*api.TaskPackResponse, error) {
-	resp, err := h.processor.GetTaskPack(req.Id)
+	resp, err := h.service.GetTaskPack(req.Id)
 
 	switch {
 	case err == errs.ErrNoSuchPack:

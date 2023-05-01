@@ -37,7 +37,7 @@ func (h handlers) SetTaskPack(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.processor.SetTaskPack(userID, req)
+	err = h.service.SetTaskPack(userID, req)
 
 	switch {
 	case err == errs.ErrPackAlreadyExists:

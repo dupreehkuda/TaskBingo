@@ -28,7 +28,7 @@ func (h handlers) LoginUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	token, err := h.processor.LoginUser(logCredit.Username, logCredit.Password)
+	token, err := h.service.LoginUser(logCredit.Username, logCredit.Password)
 
 	switch {
 	case err == errs.ErrWrongCredentials:

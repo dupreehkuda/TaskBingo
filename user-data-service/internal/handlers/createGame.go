@@ -11,7 +11,7 @@ import (
 
 // CreateGame handles the operation of writing new game to db
 func (h *Handlers) CreateGame(ctx context.Context, req *api.NewGameRequest) (*api.Empty, error) {
-	err := h.processor.CreateGame(&models.Game{
+	err := h.service.CreateGame(&models.Game{
 		GameID:       req.GameID,
 		User1Id:      req.User1Id,
 		User2Id:      req.User2Id,

@@ -31,7 +31,7 @@ func (h handlers) GetTaskPack(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	resp, err := h.processor.GetTaskPack(req.TaskID)
+	resp, err := h.service.GetTaskPack(req.TaskID)
 
 	switch {
 	case err == errs.ErrNoSuchPack:

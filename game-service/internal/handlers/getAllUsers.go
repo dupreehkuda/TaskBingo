@@ -9,7 +9,7 @@ import (
 
 // GetAllUsers handles getting all users operation
 func (h handlers) GetAllUsers(w http.ResponseWriter, r *http.Request) {
-	resp, err := h.processor.GetAllUsers()
+	resp, err := h.service.GetAllUsers()
 	if err != nil {
 		h.logger.Error("Error in call to processor", zap.Error(err))
 		w.WriteHeader(http.StatusBadRequest)

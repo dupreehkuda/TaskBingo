@@ -9,9 +9,9 @@ import (
 )
 
 func (h *Handlers) GetAllPeople(ctx context.Context, _ *api.Empty) (*api.People, error) {
-	users, err := h.processor.GetAllUsers()
+	users, err := h.service.GetAllUsers()
 	if err != nil {
-		h.logger.Error("Unable to call processors", zap.Error(err))
+		h.logger.Error("Unable to call service", zap.Error(err))
 		return nil, err
 	}
 

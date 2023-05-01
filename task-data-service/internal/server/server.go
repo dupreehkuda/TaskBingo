@@ -15,8 +15,8 @@ import (
 	"github.com/dupreehkuda/TaskBingo/task-data-service/internal/config"
 	"github.com/dupreehkuda/TaskBingo/task-data-service/internal/handlers"
 	"github.com/dupreehkuda/TaskBingo/task-data-service/internal/logger"
-	"github.com/dupreehkuda/TaskBingo/task-data-service/internal/processors"
-	"github.com/dupreehkuda/TaskBingo/task-data-service/internal/storage"
+	"github.com/dupreehkuda/TaskBingo/task-data-service/internal/repository"
+	"github.com/dupreehkuda/TaskBingo/task-data-service/internal/service"
 	api "github.com/dupreehkuda/TaskBingo/task-data-service/pkg/api"
 )
 
@@ -32,11 +32,11 @@ func NewByConfig() *server {
 	log := logger.InitializeLogger()
 	cfg := config.New(log)
 
-	store := storage.New(cfg.DatabasePath, cfg.DatabasePass, log)
+	repo := repository.New(cfg.DatabasePath, cfg.DatabasePass, log)
 
-	proc := processors.New(store, log)
+	serviceInst := service.New(repo, log)
 
-	handle := handlers.New(proc, log)
+	handle := handlers.New(serviceInst, log)
 
 	return &server{
 		handlers: handle,

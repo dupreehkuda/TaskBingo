@@ -30,7 +30,7 @@ func (h handlers) CreateGame(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.processor.CreateGame(userID, req.OpponentID, req.Pack)
+	err = h.service.CreateGame(userID, req.OpponentID, req.Pack)
 	if err != nil {
 		h.logger.Error("Error getting data", zap.Error(err))
 		return

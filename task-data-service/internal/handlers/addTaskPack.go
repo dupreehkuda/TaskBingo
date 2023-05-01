@@ -22,7 +22,7 @@ func (h *Handlers) AddOneTaskPack(ctx context.Context, req *api.NewTaskPackReque
 		},
 	}
 
-	err := h.processor.AddTaskPack(&data)
+	err := h.service.AddTaskPack(&data)
 
 	switch {
 	case err == errs.ErrPackAlreadyExists:
