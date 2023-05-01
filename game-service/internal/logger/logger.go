@@ -7,7 +7,12 @@ import (
 var Logger *zap.Logger
 
 // InitializeLogger initializes new Logger instance
-func InitializeLogger() *zap.Logger {
-	Logger, _ = zap.NewDevelopment()
+func InitializeLogger(localhost bool) *zap.Logger {
+	if localhost {
+		Logger, _ = zap.NewDevelopment()
+	} else {
+		Logger, _ = zap.NewProduction()
+	}
+
 	return Logger
 }

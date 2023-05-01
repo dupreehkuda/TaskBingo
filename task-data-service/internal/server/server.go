@@ -29,8 +29,8 @@ type server struct {
 
 // NewByConfig returns server instance with default config
 func NewByConfig() *server {
-	log := logger.InitializeLogger()
-	cfg := config.New(log)
+	cfg := config.New()
+	log := logger.InitializeLogger(cfg.CurrentDomain == "localhost")
 
 	repo := repository.New(cfg.DatabasePath, cfg.DatabasePass, log)
 

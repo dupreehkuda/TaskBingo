@@ -4,7 +4,6 @@ import (
 	"flag"
 
 	"github.com/caarlos0/env/v6"
-	"go.uber.org/zap"
 )
 
 // Config provides service address and paths to database
@@ -16,11 +15,11 @@ type Config struct {
 }
 
 // New creates new Config
-func New(logger *zap.Logger) *Config {
+func New() *Config {
 	var config = Config{}
 	var err = env.Parse(&config)
 	if err != nil {
-		logger.Error("Error occurred when parsing config", zap.Error(err))
+		panic(err)
 	}
 
 	flag.StringVar(&config.Address, "a", config.Address, "Launch address")
