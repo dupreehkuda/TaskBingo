@@ -4,6 +4,7 @@
 
 <svelte:head>
     <title>New Game</title>
+    <meta name="theme-color" content="#D6E2EC">
 </svelte:head>
 
 <body>

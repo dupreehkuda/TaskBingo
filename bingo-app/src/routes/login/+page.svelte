@@ -32,13 +32,13 @@
 <title>Login</title>
 <body>
     <main>
-        <Label color="disabled" class='text block mb-3 dark'>Login</Label>
+        <!-- <Label color="disabled" class='text block mb-3 dark'>Login</Label> -->
         <form on:submit={submit}>
-            <div class="dark mb-4">
+            <div class="mb-4">
                 <Input label="login" id="username" name="username" required placeholder="Login"/>
             </div>
 
-            <ButtonGroup class="dark mb-3 w-full">
+            <ButtonGroup class="mb-3 w-full">
                 <InputAddon>
                     <button on:click={() => (show = !show)}>
                         {#if show}
@@ -51,7 +51,7 @@
                 <Input id="password" name="password" type={show ? 'text' : 'password'} placeholder="Password" />
             </ButtonGroup>
 
-            <div class="dark mb-4">
+            <div class="mb-4">
                 <Button href="/register" color="light">Register</Button>
                 <Button type="submit" color="light">Login</Button>
             </div>
@@ -65,7 +65,7 @@
         padding: 1em;
         max-width: 440px;
         margin: 0 auto;
-        background-color: #D6E2EC;
-        color: #D6E2EC;
+        background-color: #07417b;
+        color: #07417b;
     }
 </style>

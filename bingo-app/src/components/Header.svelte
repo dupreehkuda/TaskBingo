@@ -51,8 +51,8 @@
 
 <style>
     main {
-		color: #11202d;
-		background-color: #D6E2EC;
+		color: #f1eebc;
+		background-color: #07417b;
 	}
 
     span {

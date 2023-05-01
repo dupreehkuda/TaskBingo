@@ -81,12 +81,13 @@
         font-family: Prompt;
         font-size: medium;
         font-weight: 200;
-        color: #11202d;
+        color: #e9e8d5;
     }
 
     h3 {
       font-weight: 400;
       font-size: large;
       color: #72a8d7;
+      font-style: italic;
     }
 </style>

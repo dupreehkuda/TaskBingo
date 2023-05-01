@@ -15,12 +15,12 @@
 <body>
     <main>
         <form on:submit={submit}>
-            <div class="dark mb-4">
+            <div class="mb-4">
                 <Label color="disabled" for="input-group-1" class="block mb-2">Task Name</Label>
                 <Input label="Task Name" id="name" name="name" required/>
             </div>
 
-            <div class="flex flex-col dark mb-4">
+            <div class="flex flex-col mb-4">
                 <Label color="disabled" for="input-group-1" class="block mb-2">Tasks</Label>
                 <Input size="sm" defaultClass="spacer05" label="Task 1" id="task1" name="task1" required/>
                 <Input size="sm" defaultClass="spacer05" label="Task 2" id="task2" name="task2" required/>
@@ -40,7 +40,7 @@
                 <Input size="sm" defaultClass="spacer05" label="Task 16" id="task16" name="task16" required/>
             </div>
 
-            <Button class="mb-3" type="submit" color="dark">Create pack</Button>
+            <Button class="mb-3" type="submit" color="light">Create pack</Button>
         </form>
     </main>
 </body>

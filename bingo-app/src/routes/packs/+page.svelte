@@ -16,12 +16,12 @@
     <div class="scrolling-wrapper spacer">
         {#each packs as pack}
             <div class="rectangle flex flex-col justify-between mx-1">
-                <h5 class="mb-2 text-xl">{pack.pack.title}</h5>
+                <h5 class="mb-2 text-xl cardText">{pack.pack.title}</h5>
                 <ul class="my-1 space-y-1.5">
                     {#each pack.pack.tasks as task, i}
                         <li class="flex flex-row leftspace">
-                            <span class="basis-1/5 leading-tight">{i+1}</span>
-                            <span class="basis-4/5 leading-tight text-white">{task}</span>
+                            <span class="basis-1/5 leading-tight cardText">{i+1}</span>
+                            <span class="basis-4/5 leading-tight cardText">{task}</span>
                         </li>
                     {/each}
 
@@ -61,6 +61,10 @@
         text-align: left;
         font-weight: 300;
     }
+
+    .cardText {
+        color: #112a41
+    }
     main {
         min-width: 50%;
         text-align: center;
@@ -75,7 +79,7 @@
 
     .rectangle {
         border-radius: 10px; 
-        background-color: #5482aa;
+        background-color: #e8e8e6;
         /* margin-bottom: 0.5em; */
         padding: 0.6em;
         min-width: 23em; 

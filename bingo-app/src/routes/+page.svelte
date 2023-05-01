@@ -15,6 +15,6 @@
     span {
         font-family: Unbounded;
         font-size: medium;
-        color: #11202d;
+        color: #f1eebc;
     }
 </style>

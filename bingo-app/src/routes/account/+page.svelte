@@ -35,12 +35,12 @@
     <div class="leftspace scrolling-wrapper gap-1.5">
         {#each $Account.friends as friend}
             <div class="friend flex flex-col">
-                <div class="basis-5/12">
+                <div class="basis-5/12 cardText">
                     <h5>{friend.username}</h5>
                 </div>
 
                 <div class="basis-4/12">
-                    <span class="text-xs text-white">{friend.wins}/{friend.loses}</span>
+                    <span class="text-xs cardText">{friend.wins}/{friend.loses}</span>
                 </div>
                 <div class="flex flex-row gap-1.5 basis-3/12">
                     {#if friend.status == 3}
@@ -65,12 +65,12 @@
     <div class="scrolling-wrapper spacer">
         {#each $Account.likedPacks as pack}
             <div class="pack flex flex-col justify-between mx-1">
-                <h5 class="mb-2 text-xl">{pack.pack.title}</h5>
+                <h5 class="mb-2 text-xl cardText">{pack.pack.title}</h5>
                 <ul class="my-1 space-y-1.5">
                     {#each pack.pack.tasks as task, i}
                         <li class="flex flex-row leftspace">
-                            <span class="basis-1/5 leading-tight">{i+1}</span>
-                            <span class="basis-4/5 leading-tight text-white">{task}</span>
+                            <span class="basis-1/5 leading-tight cardText">{i+1}</span>
+                            <span class="basis-4/5 leading-tight cardText">{task}</span>
                         </li>
                     {/each}
 
@@ -129,7 +129,11 @@
         margin-bottom: 2em;
     }
 
-    .win {
+    .cardText {
+        color: #112a41
+    }
+
+    /* .win {
         font-weight: 300;
         color: #32ca08;
     }
@@ -137,7 +141,7 @@
     .lose {
         font-weight: 300;
         color: #d8170d;
-    }
+    } */
     main {
         min-width: 50%;
         text-align: center;
@@ -147,7 +151,7 @@
 
     .pack {
         border-radius: 10px; 
-        background-color: #5482aa;
+        background-color: #e8e8e6;
         margin-bottom: 0.5em;
         padding: 0.6em;
         min-width: 22em; 
@@ -155,7 +159,7 @@
 
     .friend {
         border-radius: 10px; 
-        background-color: #5482aa;
+        background-color: #e8e8e6;
         margin-bottom: 1em;
         padding: 0.5em;
         padding-top: 1em;

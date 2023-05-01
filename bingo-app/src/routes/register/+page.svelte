@@ -25,23 +25,23 @@
                 </div>
             {/if}
             <form on:submit={submit}>
-                <div class="dark mb-4">
+                <div class="mb-4">
                     <Label color="disabled" for="input-group-1" class="block mb-2">Name</Label>
                     <Input label="Username" id="username" name="username" required placeholder="John"/>
                 </div>
 
-                <div class="dark mb-4">
+                <div class="mb-4">
                     <Label color="disabled" for="input-group-1" class="block mb-2">Email</Label>
                     <Input type="email" label="Email" id="email" name="email" required placeholder="john@example.com"/>
                 </div>
 
-                <div class="dark mb-4">
+                <div class="mb-4">
                     <Label color="disabled" for="input-group-1" class="block mb-2">City</Label>
                     <Input label="City" id="city" name="city" required placeholder="New York"/>
                 </div>
 
-                <Label color="disabled" for="password" class="mb-2">Your password</Label>
-                <ButtonGroup class="dark mb-3 w-full">
+                <Label color="disabled" for="password" class="block mb-2">Your password</Label>
+                <ButtonGroup class="mb-3 w-full">
                     <InputAddon>
                         <button on:click={() => (show = !show)}>
                             {#if show}
@@ -54,7 +54,7 @@
                     <Input id="password" name="password" type={show ? 'text' : 'password'} placeholder="Password" />
                 </ButtonGroup>
 
-                <Button class="mb-3" type="submit" color="dark">Register</Button>
+                <Button class="mb-3" type="submit" color="light">Register</Button>
             </form>
         {:else if status === 200}
             <Alert color="green">
