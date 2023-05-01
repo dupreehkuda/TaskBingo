@@ -16,8 +16,8 @@
     <div class="scrolling-wrapper spacer allWidth">
             {#each users as user}
                 <div class="rectangle flex flex-row">
-                    <div class="lefty basis-1/12"><span class="text-md whiteBingoText">{user.bingo}</span></div>
-                    <div class="lefty basis-7/12"><span class="text-lg font-medium">{user.username} <span class="mt-2 mb-4 text-xs">{user.city}</span></span></div>
+                    <div class="lefty basis-1/12"><span class="text-lg personText">{user.bingo}</span></div>
+                    <div class="lefty basis-7/12"><span class="text-lg personText font-medium">{user.username} <span class="mt-2 mb-4 text-xs">{user.city}</span></span></div>
 
                     {#if $Account?.friends.some(e => e.userID === user.userID && e.status === 3)}
                         <div class="space-x-1 flex flex-row justify-end basis-4/12">
@@ -55,8 +55,8 @@
         font-weight: 300;
     }
 
-    .whiteBingoText {
-        color: aliceblue;
+    .personText {
+        color: #112a41
     }
 
     main {
@@ -68,7 +68,7 @@
 
     .rectangle {
         border-radius: 10px; 
-        background-color: #5482aa;
+        background-color: #e8e8e6;
         margin-bottom: 0.5em;
         padding: 0.6em;
         min-width: 23em; 
