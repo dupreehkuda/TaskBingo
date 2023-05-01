@@ -962,7 +962,7 @@ func (x *People) GetPerson() []*PersonInfo {
 	return nil
 }
 
-type AcceptGameRequest struct {
+type StatusGameRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -971,8 +971,8 @@ type AcceptGameRequest struct {
 	GameID string `protobuf:"bytes,2,opt,name=gameID,proto3" json:"gameID,omitempty"`
 }
 
-func (x *AcceptGameRequest) Reset() {
-	*x = AcceptGameRequest{}
+func (x *StatusGameRequest) Reset() {
+	*x = StatusGameRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_userData_proto_msgTypes[14]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -980,13 +980,13 @@ func (x *AcceptGameRequest) Reset() {
 	}
 }
 
-func (x *AcceptGameRequest) String() string {
+func (x *StatusGameRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*AcceptGameRequest) ProtoMessage() {}
+func (*StatusGameRequest) ProtoMessage() {}
 
-func (x *AcceptGameRequest) ProtoReflect() protoreflect.Message {
+func (x *StatusGameRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_userData_proto_msgTypes[14]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -998,19 +998,19 @@ func (x *AcceptGameRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use AcceptGameRequest.ProtoReflect.Descriptor instead.
-func (*AcceptGameRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use StatusGameRequest.ProtoReflect.Descriptor instead.
+func (*StatusGameRequest) Descriptor() ([]byte, []int) {
 	return file_userData_proto_rawDescGZIP(), []int{14}
 }
 
-func (x *AcceptGameRequest) GetUserID() string {
+func (x *StatusGameRequest) GetUserID() string {
 	if x != nil {
 		return x.UserID
 	}
 	return ""
 }
 
-func (x *AcceptGameRequest) GetGameID() string {
+func (x *StatusGameRequest) GetGameID() string {
 	if x != nil {
 		return x.GameID
 	}
@@ -1156,12 +1156,12 @@ var file_userData_proto_rawDesc = []byte{
 	0x05, 0x52, 0x05, 0x62, 0x69, 0x6e, 0x67, 0x6f, 0x22, 0x31, 0x0a, 0x06, 0x50, 0x65, 0x6f, 0x70,
 	0x6c, 0x65, 0x12, 0x27, 0x0a, 0x06, 0x70, 0x65, 0x72, 0x73, 0x6f, 0x6e, 0x18, 0x01, 0x20, 0x03,
 	0x28, 0x0b, 0x32, 0x0f, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x50, 0x65, 0x72, 0x73, 0x6f, 0x6e, 0x49,
-	0x6e, 0x66, 0x6f, 0x52, 0x06, 0x70, 0x65, 0x72, 0x73, 0x6f, 0x6e, 0x22, 0x43, 0x0a, 0x11, 0x41,
-	0x63, 0x63, 0x65, 0x70, 0x74, 0x47, 0x61, 0x6d, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x6e, 0x66, 0x6f, 0x52, 0x06, 0x70, 0x65, 0x72, 0x73, 0x6f, 0x6e, 0x22, 0x43, 0x0a, 0x11, 0x53,
+	0x74, 0x61, 0x74, 0x75, 0x73, 0x47, 0x61, 0x6d, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
 	0x12, 0x16, 0x0a, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x44, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
 	0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x44, 0x12, 0x16, 0x0a, 0x06, 0x67, 0x61, 0x6d, 0x65,
 	0x49, 0x44, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x67, 0x61, 0x6d, 0x65, 0x49, 0x44,
-	0x22, 0x07, 0x0a, 0x05, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x32, 0xa8, 0x06, 0x0a, 0x05, 0x55, 0x73,
+	0x22, 0x07, 0x0a, 0x05, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x32, 0xda, 0x06, 0x0a, 0x05, 0x55, 0x73,
 	0x65, 0x72, 0x73, 0x12, 0x40, 0x0a, 0x0b, 0x47, 0x65, 0x74, 0x55, 0x73, 0x65, 0x72, 0x44, 0x61,
 	0x74, 0x61, 0x12, 0x17, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x47, 0x65, 0x74, 0x55, 0x73, 0x65, 0x72,
 	0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x18, 0x2e, 0x61, 0x70,
@@ -1210,10 +1210,13 @@ var file_userData_proto_rawDesc = []byte{
 	0x65, 0x12, 0x13, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x4e, 0x65, 0x77, 0x47, 0x61, 0x6d, 0x65, 0x52,
 	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x0a, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x45, 0x6d, 0x70,
 	0x74, 0x79, 0x12, 0x30, 0x0a, 0x0a, 0x41, 0x63, 0x63, 0x65, 0x70, 0x74, 0x47, 0x61, 0x6d, 0x65,
-	0x12, 0x16, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x41, 0x63, 0x63, 0x65, 0x70, 0x74, 0x47, 0x61, 0x6d,
+	0x12, 0x16, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x47, 0x61, 0x6d,
 	0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x0a, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x45,
-	0x6d, 0x70, 0x74, 0x79, 0x42, 0x04, 0x5a, 0x02, 0x2e, 0x2f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x33,
+	0x6d, 0x70, 0x74, 0x79, 0x12, 0x30, 0x0a, 0x0a, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x47, 0x61,
+	0x6d, 0x65, 0x12, 0x16, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x47,
+	0x61, 0x6d, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x0a, 0x2e, 0x61, 0x70, 0x69,
+	0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x42, 0x04, 0x5a, 0x02, 0x2e, 0x2f, 0x62, 0x06, 0x70, 0x72,
+	0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -1244,7 +1247,7 @@ var file_userData_proto_goTypes = []interface{}{
 	(*AssignNewPackRequest)(nil),  // 11: api.AssignNewPackRequest
 	(*PersonInfo)(nil),            // 12: api.PersonInfo
 	(*People)(nil),                // 13: api.People
-	(*AcceptGameRequest)(nil),     // 14: api.AcceptGameRequest
+	(*StatusGameRequest)(nil),     // 14: api.StatusGameRequest
 	(*Empty)(nil),                 // 15: api.Empty
 }
 var file_userData_proto_depIdxs = []int32{
@@ -1264,24 +1267,26 @@ var file_userData_proto_depIdxs = []int32{
 	3,  // 13: api.Users.AcceptFriend:input_type -> api.FriendRequest
 	3,  // 14: api.Users.DeleteFriend:input_type -> api.FriendRequest
 	2,  // 15: api.Users.CreateGame:input_type -> api.NewGameRequest
-	14, // 16: api.Users.AcceptGame:input_type -> api.AcceptGameRequest
-	5,  // 17: api.Users.GetUserData:output_type -> api.GetUserDataResponse
-	0,  // 18: api.Users.RegisterUser:output_type -> api.RegisterUserResponse
-	1,  // 19: api.Users.LoginUser:output_type -> api.LoginUserResponse
-	15, // 20: api.Users.LikePack:output_type -> api.Empty
-	15, // 21: api.Users.DislikePack:output_type -> api.Empty
-	15, // 22: api.Users.RatePack:output_type -> api.Empty
-	15, // 23: api.Users.UnratePack:output_type -> api.Empty
-	10, // 24: api.Users.GetRatedPacks:output_type -> api.RatedPacksResponse
-	15, // 25: api.Users.AssignNewPack:output_type -> api.Empty
-	13, // 26: api.Users.GetAllPeople:output_type -> api.People
-	15, // 27: api.Users.RequestFriend:output_type -> api.Empty
-	15, // 28: api.Users.AcceptFriend:output_type -> api.Empty
-	15, // 29: api.Users.DeleteFriend:output_type -> api.Empty
-	15, // 30: api.Users.CreateGame:output_type -> api.Empty
-	15, // 31: api.Users.AcceptGame:output_type -> api.Empty
-	17, // [17:32] is the sub-list for method output_type
-	2,  // [2:17] is the sub-list for method input_type
+	14, // 16: api.Users.AcceptGame:input_type -> api.StatusGameRequest
+	14, // 17: api.Users.DeleteGame:input_type -> api.StatusGameRequest
+	5,  // 18: api.Users.GetUserData:output_type -> api.GetUserDataResponse
+	0,  // 19: api.Users.RegisterUser:output_type -> api.RegisterUserResponse
+	1,  // 20: api.Users.LoginUser:output_type -> api.LoginUserResponse
+	15, // 21: api.Users.LikePack:output_type -> api.Empty
+	15, // 22: api.Users.DislikePack:output_type -> api.Empty
+	15, // 23: api.Users.RatePack:output_type -> api.Empty
+	15, // 24: api.Users.UnratePack:output_type -> api.Empty
+	10, // 25: api.Users.GetRatedPacks:output_type -> api.RatedPacksResponse
+	15, // 26: api.Users.AssignNewPack:output_type -> api.Empty
+	13, // 27: api.Users.GetAllPeople:output_type -> api.People
+	15, // 28: api.Users.RequestFriend:output_type -> api.Empty
+	15, // 29: api.Users.AcceptFriend:output_type -> api.Empty
+	15, // 30: api.Users.DeleteFriend:output_type -> api.Empty
+	15, // 31: api.Users.CreateGame:output_type -> api.Empty
+	15, // 32: api.Users.AcceptGame:output_type -> api.Empty
+	15, // 33: api.Users.DeleteGame:output_type -> api.Empty
+	18, // [18:34] is the sub-list for method output_type
+	2,  // [2:18] is the sub-list for method input_type
 	2,  // [2:2] is the sub-list for extension type_name
 	2,  // [2:2] is the sub-list for extension extendee
 	0,  // [0:2] is the sub-list for field type_name
@@ -1462,7 +1467,7 @@ func file_userData_proto_init() {
 			}
 		}
 		file_userData_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AcceptGameRequest); i {
+			switch v := v.(*StatusGameRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1532,7 +1537,8 @@ type UsersClient interface {
 	AcceptFriend(ctx context.Context, in *FriendRequest, opts ...grpc.CallOption) (*Empty, error)
 	DeleteFriend(ctx context.Context, in *FriendRequest, opts ...grpc.CallOption) (*Empty, error)
 	CreateGame(ctx context.Context, in *NewGameRequest, opts ...grpc.CallOption) (*Empty, error)
-	AcceptGame(ctx context.Context, in *AcceptGameRequest, opts ...grpc.CallOption) (*Empty, error)
+	AcceptGame(ctx context.Context, in *StatusGameRequest, opts ...grpc.CallOption) (*Empty, error)
+	DeleteGame(ctx context.Context, in *StatusGameRequest, opts ...grpc.CallOption) (*Empty, error)
 }
 
 type usersClient struct {
@@ -1669,9 +1675,18 @@ func (c *usersClient) CreateGame(ctx context.Context, in *NewGameRequest, opts .
 	return out, nil
 }
 
-func (c *usersClient) AcceptGame(ctx context.Context, in *AcceptGameRequest, opts ...grpc.CallOption) (*Empty, error) {
+func (c *usersClient) AcceptGame(ctx context.Context, in *StatusGameRequest, opts ...grpc.CallOption) (*Empty, error) {
 	out := new(Empty)
 	err := c.cc.Invoke(ctx, "/api.Users/AcceptGame", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usersClient) DeleteGame(ctx context.Context, in *StatusGameRequest, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, "/api.Users/DeleteGame", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1694,7 +1709,8 @@ type UsersServer interface {
 	AcceptFriend(context.Context, *FriendRequest) (*Empty, error)
 	DeleteFriend(context.Context, *FriendRequest) (*Empty, error)
 	CreateGame(context.Context, *NewGameRequest) (*Empty, error)
-	AcceptGame(context.Context, *AcceptGameRequest) (*Empty, error)
+	AcceptGame(context.Context, *StatusGameRequest) (*Empty, error)
+	DeleteGame(context.Context, *StatusGameRequest) (*Empty, error)
 }
 
 // UnimplementedUsersServer can be embedded to have forward compatible implementations.
@@ -1743,8 +1759,11 @@ func (*UnimplementedUsersServer) DeleteFriend(context.Context, *FriendRequest) (
 func (*UnimplementedUsersServer) CreateGame(context.Context, *NewGameRequest) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateGame not implemented")
 }
-func (*UnimplementedUsersServer) AcceptGame(context.Context, *AcceptGameRequest) (*Empty, error) {
+func (*UnimplementedUsersServer) AcceptGame(context.Context, *StatusGameRequest) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AcceptGame not implemented")
+}
+func (*UnimplementedUsersServer) DeleteGame(context.Context, *StatusGameRequest) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteGame not implemented")
 }
 
 func RegisterUsersServer(s *grpc.Server, srv UsersServer) {
@@ -2004,7 +2023,7 @@ func _Users_CreateGame_Handler(srv interface{}, ctx context.Context, dec func(in
 }
 
 func _Users_AcceptGame_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AcceptGameRequest)
+	in := new(StatusGameRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -2016,7 +2035,25 @@ func _Users_AcceptGame_Handler(srv interface{}, ctx context.Context, dec func(in
 		FullMethod: "/api.Users/AcceptGame",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UsersServer).AcceptGame(ctx, req.(*AcceptGameRequest))
+		return srv.(UsersServer).AcceptGame(ctx, req.(*StatusGameRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Users_DeleteGame_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StatusGameRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsersServer).DeleteGame(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.Users/DeleteGame",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsersServer).DeleteGame(ctx, req.(*StatusGameRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -2084,6 +2121,10 @@ var _Users_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AcceptGame",
 			Handler:    _Users_AcceptGame_Handler,
+		},
+		{
+			MethodName: "DeleteGame",
+			Handler:    _Users_DeleteGame_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

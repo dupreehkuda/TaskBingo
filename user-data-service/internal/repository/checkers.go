@@ -22,7 +22,6 @@ func (r repository) CheckDuplicateUser(username, email string) (bool, error) {
 
 	conn.QueryRow(context.Background(), "SELECT username FROM users WHERE username = $1", username).Scan(&dbUsername)
 	if dbUsername == username {
-		r.logger.Debug("wtf? 1", zap.String("db", dbUsername), zap.String("req", username))
 		return true, nil
 	}
 

@@ -24,6 +24,8 @@ type Service interface {
 	RequestFriend(userID, friendID string) error
 
 	CreateGame(game *models.Game) error
+	AcceptGame(userID, gameID string) error
+	DeleteGame(userID, gameID string) error
 }
 
 // service provides service's business logic

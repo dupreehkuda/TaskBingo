@@ -30,6 +30,8 @@ type Handlers interface {
 	DeleteFriend(w http.ResponseWriter, r *http.Request)
 
 	CreateGame(w http.ResponseWriter, r *http.Request)
+	AcceptGame(w http.ResponseWriter, r *http.Request)
+	DeleteGame(w http.ResponseWriter, r *http.Request)
 }
 
 // Handlers provides access to service

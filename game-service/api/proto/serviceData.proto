@@ -20,7 +20,8 @@ service Users {
   rpc AcceptFriend(FriendRequest) returns (Empty);
   rpc DeleteFriend(FriendRequest) returns (Empty);
   rpc CreateGame(NewGameRequest) returns (Empty);
-  rpc AcceptGame(AcceptGameRequest) returns (Empty);
+  rpc AcceptGame(StatusGameRequest) returns (Empty);
+  rpc DeleteGame(StatusGameRequest) returns (Empty);
 }
 
 message RegisterUserResponse {
@@ -114,7 +115,7 @@ message People {
   repeated PersonInfo person = 1;
 }
 
-message AcceptGameRequest {
+message StatusGameRequest {
   string userID = 1;
   string gameID = 2;
 }

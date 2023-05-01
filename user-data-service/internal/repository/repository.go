@@ -31,14 +31,16 @@ type Repository interface {
 	RequestFriend(userID, friendID string) error
 
 	CreateGame(game *models.Game) error
+	AcceptGame(userID, gameID string) error
+	DeleteGame(userID, gameID string) error
 }
 
 // Enumeration for friend status column
 const (
 	_ = iota
-	Requested
-	Response
-	Friend
+	FriendRequested
+	FriendResponse
+	FriendFriend
 )
 
 // repository provide a connection with database

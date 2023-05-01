@@ -30,6 +30,8 @@ type UserRepository interface {
 	RequestFriend(userID, friendID string) error
 
 	CreateGame(game *models.Game) error
+	AcceptGame(userID, packID string) error
+	DeleteGame(userID, packID string) error
 }
 
 // userRepository provides connection to user service

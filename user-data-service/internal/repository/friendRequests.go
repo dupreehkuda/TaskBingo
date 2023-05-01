@@ -19,8 +19,8 @@ func (r repository) RequestFriend(userID, friendID string) error {
 
 	tx, err := conn.Begin(ctx)
 
-	tx.Exec(ctx, "INSERT INTO friends (id, friend_id, status) VALUES ($1, $2, $3);", userID, friendID, Requested)
-	tx.Exec(ctx, "INSERT INTO friends (id, friend_id, status) VALUES ($1, $2, $3);", friendID, userID, Response)
+	tx.Exec(ctx, "INSERT INTO friends (id, friend_id, status) VALUES ($1, $2, $3);", userID, friendID, FriendRequested)
+	tx.Exec(ctx, "INSERT INTO friends (id, friend_id, status) VALUES ($1, $2, $3);", friendID, userID, FriendResponse)
 
 	err = tx.Commit(ctx)
 	if err != nil {
@@ -43,8 +43,8 @@ func (r repository) AcceptFriend(userID, friendID string) error {
 
 	tx, err := conn.Begin(ctx)
 
-	tx.Exec(ctx, "UPDATE friends SET status = $1, since = $3 where id = $2 and friend_id = $4;", Friend, userID, time.Now(), friendID)
-	tx.Exec(ctx, "UPDATE friends SET status = $1, since = $3 where id = $2 and friend_id = $4;", Friend, friendID, time.Now(), userID)
+	tx.Exec(ctx, "UPDATE friends SET status = $1, since = $3 where id = $2 and friend_id = $4;", FriendFriend, userID, time.Now(), friendID)
+	tx.Exec(ctx, "UPDATE friends SET status = $1, since = $3 where id = $2 and friend_id = $4;", FriendFriend, friendID, time.Now(), userID)
 
 	err = tx.Commit(ctx)
 	if err != nil {

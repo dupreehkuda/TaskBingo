@@ -93,10 +93,10 @@ type FriendRequest struct {
 
 // Game provides game instance
 type Game struct {
-	GameID       string  `json:"gameId"`
-	User1Id      string  `json:"user1Id"`
-	User2Id      string  `json:"user2Id"`
-	PackId       string  `json:"packId"`
+	GameID       string  `json:"gameID"`
+	User1Id      string  `json:"user1ID"`
+	User2Id      string  `json:"user2ID"`
+	PackId       string  `json:"packID"`
 	Status       int32   `json:"status"`
 	User1Bingo   int32   `json:"user1Bingo"`
 	User2Bingo   int32   `json:"user2Bingo"`
@@ -109,4 +109,8 @@ type Game struct {
 type NewGameRequest struct {
 	OpponentID string `json:"opponent"`
 	Pack       string `json:"pack"`
+}
+
+type StatusGameRequest struct {
+	GameID string `json:"gameID"`
 }

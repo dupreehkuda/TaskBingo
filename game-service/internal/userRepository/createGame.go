@@ -32,3 +32,31 @@ func (u userRepository) CreateGame(game *models.Game) error {
 
 	return nil
 }
+
+func (u userRepository) AcceptGame(userID, gameID string) error {
+	_, err := u.conn.AcceptGame(context.Background(), &api.StatusGameRequest{
+		UserID: userID,
+		GameID: gameID,
+	})
+
+	if err != nil {
+		u.logger.Error("Error occurred in connection to user service", zap.Error(err))
+		return err
+	}
+
+	return nil
+}
+
+func (u userRepository) DeleteGame(userID, gameID string) error {
+	_, err := u.conn.DeleteGame(context.Background(), &api.StatusGameRequest{
+		UserID: userID,
+		GameID: gameID,
+	})
+
+	if err != nil {
+		u.logger.Error("Error occurred in connection to user service", zap.Error(err))
+		return err
+	}
+
+	return nil
+}

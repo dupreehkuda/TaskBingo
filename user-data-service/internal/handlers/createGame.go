@@ -33,7 +33,20 @@ func (h *Handlers) CreateGame(ctx context.Context, req *api.NewGameRequest) (*ap
 	return &api.Empty{}, nil
 }
 
-// TODO implement AcceptGame
-func (h *Handlers) AcceptGame(ctx context.Context, req *api.AcceptGameRequest) (*api.Empty, error) {
-	return nil, nil
+func (h *Handlers) AcceptGame(ctx context.Context, req *api.StatusGameRequest) (*api.Empty, error) {
+	if err := h.service.AcceptGame(req.UserID, req.GameID); err != nil {
+		h.logger.Error("Error occurred calling processor", zap.Error(err))
+		return nil, err
+	}
+
+	return &api.Empty{}, nil
+}
+
+func (h *Handlers) DeleteGame(ctx context.Context, req *api.StatusGameRequest) (*api.Empty, error) {
+	if err := h.service.DeleteGame(req.UserID, req.GameID); err != nil {
+		h.logger.Error("Error occurred calling processor", zap.Error(err))
+		return nil, err
+	}
+
+	return &api.Empty{}, nil
 }
