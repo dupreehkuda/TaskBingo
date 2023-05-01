@@ -26,6 +26,7 @@ services:
       - REDIS_ADDR=${REDIS_ADDR}
       - REDIS_PASS=${REDIS_PASS}
       - RUN_ADDRESS=${TASK_SERVICE_ADDRESS}
+      - CURRENT_DOMAIN=${CURRENT_DOMAIN}
     env_file: .env
     ports:
       - '8083:8083'
@@ -40,6 +41,7 @@ services:
       - DATABASE_URI=${PSQL_DSN_SERVER}
       - RUN_ADDRESS=${USER_SERVICE_ADDRESS}
       - MIGRATION_FILE_PATH=${MIGRATION_FILE_PATH}
+      - CURRENT_DOMAIN=${CURRENT_DOMAIN}
     env_file: .env
     ports:
       - '8081:8081'

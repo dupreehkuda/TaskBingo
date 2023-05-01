@@ -8,9 +8,10 @@ var Logger *zap.Logger
 
 // InitializeLogger initializes new Logger instance
 func InitializeLogger(localhost bool) *zap.Logger {
-	if localhost {
+	switch {
+	case localhost:
 		Logger, _ = zap.NewDevelopment()
-	} else {
+	default:
 		Logger, _ = zap.NewProduction()
 	}
 
