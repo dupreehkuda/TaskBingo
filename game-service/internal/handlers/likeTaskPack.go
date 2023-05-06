@@ -10,7 +10,7 @@ import (
 )
 
 // LikeTaskPack handles user's like operations
-func (h handlers) LikeTaskPack(w http.ResponseWriter, r *http.Request) {
+func (h *handlers) LikeTaskPack(w http.ResponseWriter, r *http.Request) {
 	var ctxKey models.UserIDKey = "userID"
 	userID := r.Context().Value(ctxKey).(string)
 
@@ -41,7 +41,7 @@ func (h handlers) LikeTaskPack(w http.ResponseWriter, r *http.Request) {
 }
 
 // DislikeTaskPack handles user's dislike operations
-func (h handlers) DislikeTaskPack(w http.ResponseWriter, r *http.Request) {
+func (h *handlers) DislikeTaskPack(w http.ResponseWriter, r *http.Request) {
 	var ctxKey models.UserIDKey = "userID"
 	userID := r.Context().Value(ctxKey).(string)
 

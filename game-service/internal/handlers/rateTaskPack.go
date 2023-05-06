@@ -10,7 +10,7 @@ import (
 )
 
 // RateTaskPack handles pack star operations
-func (h handlers) RateTaskPack(w http.ResponseWriter, r *http.Request) {
+func (h *handlers) RateTaskPack(w http.ResponseWriter, r *http.Request) {
 	var ctxKey models.UserIDKey = "userID"
 	userID := r.Context().Value(ctxKey).(string)
 
@@ -41,7 +41,7 @@ func (h handlers) RateTaskPack(w http.ResponseWriter, r *http.Request) {
 }
 
 // UnrateTaskPack handles pack unstar operations
-func (h handlers) UnrateTaskPack(w http.ResponseWriter, r *http.Request) {
+func (h *handlers) UnrateTaskPack(w http.ResponseWriter, r *http.Request) {
 	var ctxKey models.UserIDKey = "userID"
 	userID := r.Context().Value(ctxKey).(string)
 

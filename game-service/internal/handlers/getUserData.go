@@ -10,7 +10,7 @@ import (
 )
 
 // GetUserData handles getting user's data operations
-func (h handlers) GetUserData(w http.ResponseWriter, r *http.Request) {
+func (h *handlers) GetUserData(w http.ResponseWriter, r *http.Request) {
 	var ctxKey models.UserIDKey = "userID"
 	userID := r.Context().Value(ctxKey).(string)
 

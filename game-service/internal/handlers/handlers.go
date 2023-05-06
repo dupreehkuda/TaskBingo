@@ -32,19 +32,27 @@ type Handlers interface {
 	CreateGame(w http.ResponseWriter, r *http.Request)
 	AcceptGame(w http.ResponseWriter, r *http.Request)
 	DeleteGame(w http.ResponseWriter, r *http.Request)
+
+	GameWSLaunch(w http.ResponseWriter, r *http.Request)
 }
 
 // Handlers provides access to service
 type handlers struct {
 	service service.Service
+	hub     *GameHub
 	domain  string
 	logger  *zap.Logger
 }
 
 // New creates new instance of handlers
 func New(service service.Service, domain string, logger *zap.Logger) *handlers {
+	hub := &GameHub{
+		games: make(map[string]*Game),
+	}
+
 	return &handlers{
 		service: service,
+		hub:     hub,
 		domain:  domain,
 		logger:  logger,
 	}

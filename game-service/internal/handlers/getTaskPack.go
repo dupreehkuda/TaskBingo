@@ -11,7 +11,7 @@ import (
 )
 
 // GetTaskPack handles getting one task pack operations
-func (h handlers) GetTaskPack(w http.ResponseWriter, r *http.Request) {
+func (h *handlers) GetTaskPack(w http.ResponseWriter, r *http.Request) {
 	var ctxKey models.UserIDKey = "userID"
 	userID := r.Context().Value(ctxKey).(string)
 

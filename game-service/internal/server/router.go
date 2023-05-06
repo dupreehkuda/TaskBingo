@@ -50,6 +50,8 @@ func (a api) router() http.Handler {
 			r.Patch("/archive", nil)
 			r.Patch("/update", nil)
 			r.Delete("/delete", a.handlers.DeleteGame)
+
+			r.Get("/start", a.handlers.GameWSLaunch)
 		})
 	})
 

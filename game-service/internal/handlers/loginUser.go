@@ -11,7 +11,7 @@ import (
 )
 
 // LoginUser handles user login operations
-func (h handlers) LoginUser(w http.ResponseWriter, r *http.Request) {
+func (h *handlers) LoginUser(w http.ResponseWriter, r *http.Request) {
 	var logCredit models.LoginCredentials
 
 	decoder := json.NewDecoder(r.Body)

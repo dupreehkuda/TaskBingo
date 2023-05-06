@@ -10,7 +10,7 @@ import (
 )
 
 // CreateGame handles the operation of creating new game
-func (h handlers) CreateGame(w http.ResponseWriter, r *http.Request) {
+func (h *handlers) CreateGame(w http.ResponseWriter, r *http.Request) {
 	var ctxKey models.UserIDKey = "userID"
 	userID := r.Context().Value(ctxKey).(string)
 
@@ -40,7 +40,7 @@ func (h handlers) CreateGame(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Access-Control-Allow-Origin", "*")
 }
 
-func (h handlers) AcceptGame(w http.ResponseWriter, r *http.Request) {
+func (h *handlers) AcceptGame(w http.ResponseWriter, r *http.Request) {
 	var ctxKey models.UserIDKey = "userID"
 	userID := r.Context().Value(ctxKey).(string)
 
@@ -70,7 +70,7 @@ func (h handlers) AcceptGame(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Access-Control-Allow-Origin", "*")
 }
 
-func (h handlers) DeleteGame(w http.ResponseWriter, r *http.Request) {
+func (h *handlers) DeleteGame(w http.ResponseWriter, r *http.Request) {
 	var ctxKey models.UserIDKey = "userID"
 	userID := r.Context().Value(ctxKey).(string)
 

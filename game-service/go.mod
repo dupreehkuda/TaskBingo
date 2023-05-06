@@ -7,6 +7,7 @@ require (
 	github.com/go-chi/chi/v5 v5.0.7
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/google/uuid v1.3.0
+	github.com/gorilla/websocket v1.5.0
 	go.uber.org/zap v1.24.0
 	google.golang.org/grpc v1.51.0
 	google.golang.org/protobuf v1.27.1

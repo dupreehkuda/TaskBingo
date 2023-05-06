@@ -10,7 +10,7 @@ import (
 )
 
 // GetRatedPacks handles getting rated packs operation
-func (h handlers) GetRatedPacks(w http.ResponseWriter, r *http.Request) {
+func (h *handlers) GetRatedPacks(w http.ResponseWriter, r *http.Request) {
 	var ctxKey models.UserIDKey = "userID"
 	userID := r.Context().Value(ctxKey).(string)
 

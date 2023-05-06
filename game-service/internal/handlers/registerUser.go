@@ -11,7 +11,7 @@ import (
 )
 
 // RegisterUser handles user registration operations
-func (h handlers) RegisterUser(w http.ResponseWriter, r *http.Request) {
+func (h *handlers) RegisterUser(w http.ResponseWriter, r *http.Request) {
 	var regCredit models.RegisterCredentials
 
 	decoder := json.NewDecoder(r.Body)
