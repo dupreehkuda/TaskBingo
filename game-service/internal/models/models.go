@@ -114,3 +114,12 @@ type NewGameRequest struct {
 type StatusGameRequest struct {
 	GameID string `json:"gameID"`
 }
+
+type GameUpdateInfo struct {
+	Connected    int32   `json:"connected"`
+	Finished     int32   `json:"finished"`
+	User1Bingo   int32   `json:"user1Bingo"`
+	User2Bingo   int32   `json:"user2Bingo"`
+	User1Numbers []int32 `json:"user1Numbers"`
+	User2Numbers []int32 `json:"user2Numbers"`
+}

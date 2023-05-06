@@ -22,7 +22,7 @@ func (h handlers) LoginUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if logCredit.Username == "" && logCredit.Password == "" {
+	if logCredit.Username == "" || logCredit.Password == "" {
 		h.logger.Info("Credentials empty")
 		w.WriteHeader(http.StatusBadRequest)
 		return
