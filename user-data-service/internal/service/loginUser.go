@@ -1,14 +1,16 @@
 package service
 
 import (
+	"context"
+
 	"go.uber.org/zap"
 
 	errs "github.com/dupreehkuda/TaskBingo/user-data-service/internal/customErrors"
 )
 
 // LoginUser checks provided credentials and logs user
-func (s service) LoginUser(username, password string) (string, error) {
-	resp, err := s.repository.LoginUser(username)
+func (s service) LoginUser(ctx context.Context, username, password string) (string, error) {
+	resp, err := s.repository.LoginUser(ctx, username)
 	if err != nil {
 		s.logger.Error("Error occurred in call to repository", zap.Error(err))
 		return "", errs.ErrWrongCredentials

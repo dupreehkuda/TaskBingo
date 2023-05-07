@@ -8,8 +8,7 @@ import (
 )
 
 // AssignNewPack assigns fresh pack to creator and adds pack to ratings
-func (r repository) AssignNewPack(userID, packID, packName string) error {
-	ctx := context.Background()
+func (r repository) AssignNewPack(ctx context.Context, userID, packID, packName string) error {
 	conn, err := r.pool.Acquire(ctx)
 	if err != nil {
 		r.logger.Error("Error while acquiring connection", zap.Error(err))

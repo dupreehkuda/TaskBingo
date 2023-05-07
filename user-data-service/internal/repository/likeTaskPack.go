@@ -7,8 +7,7 @@ import (
 )
 
 // LikePack likes or dislikes pack on user
-func (r repository) LikePack(userID, pack string, inc int) error {
-	ctx := context.Background()
+func (r repository) LikePack(ctx context.Context, userID, pack string, inc int) error {
 	conn, err := r.pool.Acquire(ctx)
 	if err != nil {
 		r.logger.Error("Error while acquiring connection", zap.Error(err))

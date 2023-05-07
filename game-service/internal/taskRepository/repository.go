@@ -5,16 +5,8 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 
-	"github.com/dupreehkuda/TaskBingo/game-service/internal/models"
 	api "github.com/dupreehkuda/TaskBingo/game-service/pkg/api"
 )
-
-// TaskRepository is an interface for task data service
-type TaskRepository interface {
-	GetTaskPack(packID string) (*models.TaskPack, error)
-	SetTaskPack(pack *models.TaskPack) error
-	GetMultiplePacks(packIDs []string) (*[]models.TaskPack, error)
-}
 
 // taskRepository provides connection to task service
 type taskRepository struct {

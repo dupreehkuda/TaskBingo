@@ -1,53 +1,51 @@
 package handlers
 
 import (
-	"net/http"
-
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
 	errs "github.com/dupreehkuda/TaskBingo/game-service/internal/customErrors"
-	"github.com/dupreehkuda/TaskBingo/game-service/internal/service"
+	"github.com/dupreehkuda/TaskBingo/game-service/internal/models"
 )
 
-// Handlers is an interface for handlers
-type Handlers interface {
-	RegisterUser(w http.ResponseWriter, r *http.Request)
-	LoginUser(w http.ResponseWriter, r *http.Request)
-	GetUserData(w http.ResponseWriter, r *http.Request)
+// Service is an interface for business-logic
+type Service interface {
+	GetUserData(userID string) (*models.UserAccountInfo, error)
+	LoginUser(username, password string) (string, error)
+	RegisterUser(credits *models.RegisterCredentials) (string, error)
 
-	GetTaskPack(w http.ResponseWriter, r *http.Request)
-	SetTaskPack(w http.ResponseWriter, r *http.Request)
-	LikeTaskPack(w http.ResponseWriter, r *http.Request)
-	DislikeTaskPack(w http.ResponseWriter, r *http.Request)
-	RateTaskPack(w http.ResponseWriter, r *http.Request)
-	UnrateTaskPack(w http.ResponseWriter, r *http.Request)
-	GetRatedPacks(w http.ResponseWriter, r *http.Request)
+	GetTaskPack(packID string) (*models.TaskPack, error)
+	SetTaskPack(userID string, pack *models.TaskPack) error
+	LikeTaskPack(userID, pack string) error
+	DislikeTaskPack(userID, pack string) error
+	RateTaskPack(userID, pack string) error
+	UnrateTaskPack(userID, pack string) error
+	GetRatedPacks() (*[]models.TaskPack, error)
 
-	GetAllUsers(w http.ResponseWriter, r *http.Request)
-	RequestFriend(w http.ResponseWriter, r *http.Request)
-	AcceptFriend(w http.ResponseWriter, r *http.Request)
-	DeleteFriend(w http.ResponseWriter, r *http.Request)
+	GetAllUsers() (*[]models.User, error)
+	AcceptFriend(userID, friendID string) error
+	DeleteFriend(userID, friendID string) error
+	RequestFriend(userID, friendID string) error
 
-	CreateGame(w http.ResponseWriter, r *http.Request)
-	AcceptGame(w http.ResponseWriter, r *http.Request)
-	DeleteGame(w http.ResponseWriter, r *http.Request)
-
-	GameWSLaunch(w http.ResponseWriter, r *http.Request)
+	CreateGame(userID, opponentID, packID string) error
+	AcceptGame(userID, gameID string) error
+	DeleteGame(userID, gameID string) error
+	GetRoom(gameID string) (*models.Room, error)
+	UpdateGame(room *models.Room, action *models.GameAction) (*models.GameUpdate, error)
 }
 
 // Handlers provides access to service
 type handlers struct {
-	service service.Service
-	hub     *GameHub
+	service Service
+	hub     *models.GameHub
 	domain  string
 	logger  *zap.Logger
 }
 
 // New creates new instance of handlers
-func New(service service.Service, domain string, logger *zap.Logger) *handlers {
-	hub := &GameHub{
-		games: make(map[string]*Game),
+func New(service Service, domain string, logger *zap.Logger) *handlers {
+	hub := &models.GameHub{
+		Rooms: make(map[string]*models.Room),
 	}
 
 	return &handlers{

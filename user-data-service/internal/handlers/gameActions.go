@@ -9,9 +9,8 @@ import (
 	api "github.com/dupreehkuda/TaskBingo/user-data-service/pkg/api"
 )
 
-// CreateGame handles the operation of writing new game to db
-func (h *Handlers) CreateGame(ctx context.Context, req *api.GameRequest) (*api.Empty, error) {
-	err := h.service.CreateGame(ctx, &models.Game{
+func (h *Handlers) AchieveGame(ctx context.Context, req *api.GameRequest) (*api.Empty, error) {
+	err := h.service.AchieveGame(ctx, &models.Game{
 		GameID:       req.GameID,
 		User1Id:      req.User1Id,
 		User2Id:      req.User2Id,
@@ -33,20 +32,24 @@ func (h *Handlers) CreateGame(ctx context.Context, req *api.GameRequest) (*api.E
 	return &api.Empty{}, nil
 }
 
-func (h *Handlers) AcceptGame(ctx context.Context, req *api.StatusGameRequest) (*api.Empty, error) {
-	if err := h.service.AcceptGame(ctx, req.UserID, req.GameID); err != nil {
+func (h *Handlers) GetGame(ctx context.Context, req *api.GetGameRequest) (*api.GameRequest, error) {
+	game, err := h.service.GetGame(ctx, req.GameID)
+	if err != nil {
 		h.logger.Error("Error occurred calling service", zap.Error(err))
 		return nil, err
 	}
 
-	return &api.Empty{}, nil
-}
-
-func (h *Handlers) DeleteGame(ctx context.Context, req *api.StatusGameRequest) (*api.Empty, error) {
-	if err := h.service.DeleteGame(ctx, req.UserID, req.GameID); err != nil {
-		h.logger.Error("Error occurred calling service", zap.Error(err))
-		return nil, err
-	}
-
-	return &api.Empty{}, nil
+	return &api.GameRequest{
+		GameID:       game.GameID,
+		User1Id:      game.User1Id,
+		User2Id:      game.User2Id,
+		Pack:         game.PackId,
+		Status:       game.Status,
+		User1Bingo:   game.User1Bingo,
+		User2Bingo:   game.User2Bingo,
+		Winner:       game.Winner,
+		Numbers:      game.Numbers,
+		User1Numbers: game.User1Numbers,
+		User2Numbers: game.User2Numbers,
+	}, nil
 }

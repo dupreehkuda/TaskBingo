@@ -11,7 +11,7 @@ import (
 
 // CreateGame calls user service to write new game
 func (u userRepository) CreateGame(game *models.Game) error {
-	_, err := u.conn.CreateGame(context.Background(), &api.NewGameRequest{
+	_, err := u.conn.CreateGame(context.Background(), &api.GameRequest{
 		GameID:       game.GameID,
 		User1Id:      game.User1Id,
 		User2Id:      game.User2Id,

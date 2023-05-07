@@ -4,43 +4,49 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/dupreehkuda/TaskBingo/game-service/internal/models"
-	"github.com/dupreehkuda/TaskBingo/game-service/internal/taskRepository"
-	"github.com/dupreehkuda/TaskBingo/game-service/internal/userRepository"
 )
 
-// Service is an interface for business-logic
-type Service interface {
-	GetUserData(userID string) (*models.UserAccountInfo, error)
-	LoginUser(username, password string) (string, error)
+// UserRepository is an interface for user data service
+type UserRepository interface {
+	GetUserData(userID string) (*models.UserAccountInfoResponse, error)
 	RegisterUser(credits *models.RegisterCredentials) (string, error)
+	LoginUser(username, password string) (string, error)
 
-	GetTaskPack(packID string) (*models.TaskPack, error)
-	SetTaskPack(userID string, pack *models.TaskPack) error
+	GetRatedPacks() ([]string, error)
 	LikeTaskPack(userID, pack string) error
 	DislikeTaskPack(userID, pack string) error
 	RateTaskPack(userID, pack string) error
 	UnrateTaskPack(userID, pack string) error
-	GetRatedPacks() (*[]models.TaskPack, error)
+	AssignNewPack(userID, packID, packName string) error
 
 	GetAllUsers() (*[]models.User, error)
 	AcceptFriend(userID, friendID string) error
 	DeleteFriend(userID, friendID string) error
 	RequestFriend(userID, friendID string) error
 
-	CreateGame(userID, opponentID, packID string) error
-	AcceptGame(userID, gameID string) error
-	DeleteGame(userID, gameID string) error
+	CreateGame(game *models.Game) error
+	AcceptGame(userID, packID string) error
+	DeleteGame(userID, packID string) error
+	GetGame(gameID string) (*models.Game, error)
+	AchieveGame(game *models.Game) error
+}
+
+// TaskRepository is an interface for task data service
+type TaskRepository interface {
+	GetTaskPack(packID string) (*models.TaskPack, error)
+	SetTaskPack(pack *models.TaskPack) error
+	GetMultiplePacks(packIDs []string) (*[]models.TaskPack, error)
 }
 
 // service provides service's business-logic
 type service struct {
-	userRepository userRepository.UserRepository
-	taskRepository taskRepository.TaskRepository
+	userRepository UserRepository
+	taskRepository TaskRepository
 	logger         *zap.Logger
 }
 
 // New creates new instance of processor
-func New(userRepository userRepository.UserRepository, taskRepository taskRepository.TaskRepository, logger *zap.Logger) *service {
+func New(userRepository UserRepository, taskRepository TaskRepository, logger *zap.Logger) *service {
 	return &service{
 		userRepository: userRepository,
 		taskRepository: taskRepository,

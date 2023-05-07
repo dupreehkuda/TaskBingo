@@ -8,8 +8,7 @@ import (
 )
 
 // RequestFriend requests friendship to user
-func (r repository) RequestFriend(userID, friendID string) error {
-	ctx := context.Background()
+func (r repository) RequestFriend(ctx context.Context, userID, friendID string) error {
 	conn, err := r.pool.Acquire(ctx)
 	if err != nil {
 		r.logger.Error("Error while acquiring connection", zap.Error(err))
@@ -32,8 +31,7 @@ func (r repository) RequestFriend(userID, friendID string) error {
 }
 
 // AcceptFriend accepts friendship request
-func (r repository) AcceptFriend(userID, friendID string) error {
-	ctx := context.Background()
+func (r repository) AcceptFriend(ctx context.Context, userID, friendID string) error {
 	conn, err := r.pool.Acquire(ctx)
 	if err != nil {
 		r.logger.Error("Error while acquiring connection", zap.Error(err))
@@ -56,8 +54,7 @@ func (r repository) AcceptFriend(userID, friendID string) error {
 }
 
 // DeleteFriend deletes friendship or cancels request
-func (r repository) DeleteFriend(userID, friendID string) error {
-	ctx := context.Background()
+func (r repository) DeleteFriend(ctx context.Context, userID, friendID string) error {
 	conn, err := r.pool.Acquire(ctx)
 	if err != nil {
 		r.logger.Error("Error while acquiring connection", zap.Error(err))

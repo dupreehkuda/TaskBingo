@@ -1,7 +1,10 @@
 package models
 
 import (
+	"sync"
 	"time"
+
+	"github.com/gorilla/websocket"
 )
 
 type (
@@ -123,14 +126,26 @@ type (
 	}
 
 	GameUpdate struct {
-		Started bool         `json:"started"`
-		Player1 PlayerUpdate `json:"player1"`
-		Player2 PlayerUpdate `json:"player2"`
+		Status  int     `json:"status"`
+		UserID  string  `json:"userID"`
+		Numbers []int32 `json:"userNumbers"`
 	}
 
-	PlayerUpdate struct {
-		UserID   string  `json:"userID"`
-		Numbers  []int32 `json:"userNumbers"`
-		Finished bool    `json:"finished"`
+	Player struct {
+		Id   string `json:"id"`
+		Conn *websocket.Conn
+	}
+
+	Room struct {
+		Id      string `json:"id"`
+		Status  int    `json:"status"`
+		Game    *Game
+		Player1 *Player `json:"player1"`
+		Player2 *Player `json:"player2"`
+	}
+
+	GameHub struct {
+		Mu    sync.Mutex
+		Rooms map[string]*Room
 	}
 )

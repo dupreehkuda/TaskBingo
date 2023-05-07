@@ -18,9 +18,11 @@ service Users {
   rpc RequestFriend(FriendRequest) returns (Empty);
   rpc AcceptFriend(FriendRequest) returns (Empty);
   rpc DeleteFriend(FriendRequest) returns (Empty);
-  rpc CreateGame(NewGameRequest) returns (Empty);
+  rpc CreateGame(GameRequest) returns (Empty);
   rpc AcceptGame(StatusGameRequest) returns (Empty);
   rpc DeleteGame(StatusGameRequest) returns (Empty);
+  rpc AchieveGame(GameRequest) returns (Empty);
+  rpc GetGame(GetGameRequest) returns (GameRequest);
 }
 
 message RegisterUserResponse {
@@ -33,7 +35,7 @@ message LoginUserResponse {
   string username = 2;
 }
 
-message NewGameRequest {
+message GameRequest {
   string gameID = 1;
   string user1id = 2;
   string user2id = 3;
@@ -117,6 +119,10 @@ message People {
 message StatusGameRequest {
   string userID = 1;
   string gameID = 2;
+}
+
+message GetGameRequest {
+  string gameID = 1;
 }
 
 message Empty {}

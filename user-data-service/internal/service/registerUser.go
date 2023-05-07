@@ -1,6 +1,8 @@
 package service
 
 import (
+	"context"
+
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 	"golang.org/x/text/cases"
@@ -10,8 +12,8 @@ import (
 )
 
 // RegisterUser checks user duplicate and registers new user
-func (s service) RegisterUser(username, password, email, city string) (string, error) {
-	exists, err := s.repository.CheckDuplicateUser(username, email)
+func (s service) RegisterUser(ctx context.Context, username, password, email, city string) (string, error) {
+	exists, err := s.repository.CheckDuplicateUser(ctx, username, email)
 	if err != nil {
 		s.logger.Error("User check db error", zap.Error(err))
 		return "", err
@@ -34,7 +36,7 @@ func (s service) RegisterUser(username, password, email, city string) (string, e
 		return "", err
 	}
 
-	err = s.repository.CreateUser(userID.String(), username, email, passwordHash, passwordSalt, cases.Title(language.English).String(city))
+	err = s.repository.CreateUser(ctx, userID.String(), username, email, passwordHash, passwordSalt, cases.Title(language.English).String(city))
 	if err != nil {
 		s.logger.Error("User creation db error", zap.Error(err))
 		return "", err

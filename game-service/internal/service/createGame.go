@@ -21,8 +21,8 @@ func (s service) CreateGame(userID, opponentID, packID string) error {
 		User2Bingo:   0,
 		Winner:       "",
 		Numbers:      newShuffledNumberSet(),
-		User1Numbers: nil,
-		User2Numbers: nil,
+		User1Numbers: newDefaultNumberSet(),
+		User2Numbers: newDefaultNumberSet(),
 	}
 
 	if err := s.userRepository.CreateGame(&newGame); err != nil {
@@ -58,4 +58,9 @@ func newShuffledNumberSet() []int32 {
 	numbers := []int32{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16}
 	rand.Shuffle(len(numbers), func(i, j int) { numbers[i], numbers[j] = numbers[j], numbers[i] })
 	return numbers
+}
+
+// newShuffledNumberSet returns a slice of 16 zeroes (default user state)
+func newDefaultNumberSet() []int32 {
+	return make([]int32, 16, 16)
 }

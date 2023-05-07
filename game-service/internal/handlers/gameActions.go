@@ -1,8 +1,8 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
-	"sync"
 
 	"github.com/gorilla/websocket"
 	"go.uber.org/zap"
@@ -10,58 +10,50 @@ import (
 	"github.com/dupreehkuda/TaskBingo/game-service/internal/models"
 )
 
-type (
-	Player struct {
-		Id   string `json:"id"`
-		Conn *websocket.Conn
-	}
-
-	Game struct {
-		Id      string  `json:"id"`
-		Player1 *Player `json:"player1"`
-		Player2 *Player `json:"player2"`
-	}
-
-	GameHub struct {
-		mu    sync.Mutex
-		games map[string]*Game
-	}
-)
-
 var upgrader = websocket.Upgrader{
 	ReadBufferSize:  1024,
 	WriteBufferSize: 1024,
 }
 
-func (h *handlers) getOrCreateGame(id string) *Game {
-	h.hub.mu.Lock()
-	defer h.hub.mu.Unlock()
+func (h *handlers) getOrCreateRoom(gameID string) (*models.Room, error) {
+	h.hub.Mu.Lock()
+	defer h.hub.Mu.Unlock()
 
-	if game, ok := h.hub.games[id]; ok {
-		return game
+	if game, ok := h.hub.Rooms[gameID]; ok {
+		return game, nil
 	}
 
-	game := &Game{Id: id}
-	h.hub.games[id] = game
+	game, err := h.service.GetRoom(gameID)
+	if err != nil {
+		h.logger.Error("Error occurred fetching game", zap.Error(err))
+		return nil, err
+	}
 
-	return game
+	h.hub.Rooms[gameID] = game
+
+	return game, nil
 }
 
 func (h *handlers) removeRoom(id string) {
-	h.hub.mu.Lock()
-	defer h.hub.mu.Unlock()
+	h.hub.Mu.Lock()
+	defer h.hub.Mu.Unlock()
 
-	if _, ok := h.hub.games[id]; !ok {
+	if _, ok := h.hub.Rooms[id]; !ok {
 		return
 	}
 
-	delete(h.hub.games, id)
+	delete(h.hub.Rooms, id)
 }
 
-func (h *handlers) notifyOpponent(game *Game, sender *Player, update models.GameUpdate) error {
-	opponent := game.Player1
+func (h *handlers) notifyOpponent(room *models.Room, sender *models.Player, update *models.GameUpdate) error {
+	opponent := room.Player1
 	if sender == opponent {
-		opponent = game.Player2
+		opponent = room.Player2
+	}
+
+	if opponent == nil {
+		h.logger.Debug("there is no opponent")
+		return nil
 	}
 
 	err := opponent.Conn.WriteJSON(update)
@@ -73,16 +65,16 @@ func (h *handlers) notifyOpponent(game *Game, sender *Player, update models.Game
 	return nil
 }
 
-func (h *handlers) notifyAll(game *Game, update models.GameUpdate) error {
-	if game.Player1 != nil {
-		if err := game.Player1.Conn.WriteJSON(update); err != nil {
+func (h *handlers) notifyAll(room *models.Room, update *models.GameUpdate) error {
+	if room.Player1 != nil {
+		if err := room.Player1.Conn.WriteJSON(update); err != nil {
 			h.logger.Error("Error notifying player", zap.Error(err))
 			return err
 		}
 	}
 
-	if game.Player2 != nil {
-		if err := game.Player2.Conn.WriteJSON(update); err != nil {
+	if room.Player2 != nil {
+		if err := room.Player2.Conn.WriteJSON(update); err != nil {
 			h.logger.Error("Error notifying player", zap.Error(err))
 			return err
 		}
@@ -94,6 +86,8 @@ func (h *handlers) notifyAll(game *Game, update models.GameUpdate) error {
 func (h *handlers) GameWSLaunch(w http.ResponseWriter, r *http.Request) {
 	userID := r.URL.Query().Get("user")
 	gameID := r.URL.Query().Get("game")
+
+	h.logger.Debug("ids", zap.String("userID", userID), zap.String("gameID", gameID))
 
 	if err := UUIDCheck(userID, gameID); err != nil {
 		h.logger.Error("Invalid UUID in request", zap.Error(err))
@@ -110,31 +104,42 @@ func (h *handlers) GameWSLaunch(w http.ResponseWriter, r *http.Request) {
 	}
 	defer conn.Close()
 
-	player := &Player{
+	player := &models.Player{
 		Id:   userID,
 		Conn: conn,
 	}
 
-	game := h.getOrCreateGame(gameID)
+	room, err := h.getOrCreateRoom(gameID)
+	if err != nil {
+		h.logger.Error("Error getting game", zap.Error(err))
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
 
 	switch {
-	case game.Player1 == nil:
-		game.Player1 = player
+	case room.Player1 == nil:
+		room.Player1 = player
 
-	case game.Player2 == nil:
-		game.Player1 = player
-		if err = h.notifyAll(game, models.GameUpdate{}); err != nil {
+	case room.Player2 == nil:
+		room.Player2 = player
+
+		// todo send normal update
+		if err = h.notifyAll(room, &models.GameUpdate{
+			Status:  666,
+			UserID:  "hi",
+			Numbers: []int32{0},
+		}); err != nil {
 			h.logger.Error("Error on notifying player", zap.Error(err))
 		}
 
 	default:
-		h.logger.Error("Error third connection", zap.Any("gameInfo", game), zap.String("thirdUser", player.Id))
+		h.logger.Error("Error third connection", zap.Any("gameInfo", room), zap.String("thirdUser", player.Id))
 		return
 	}
 
 	defer func() {
-		if game.Player1 == nil && game.Player2 == nil {
-			h.removeRoom(game.Id)
+		if room.Player1 == nil && room.Player2 == nil {
+			h.removeRoom(room.Id)
 		}
 	}()
 
@@ -142,14 +147,44 @@ func (h *handlers) GameWSLaunch(w http.ResponseWriter, r *http.Request) {
 	for {
 		err = conn.ReadJSON(&action)
 		if err != nil {
-			h.logger.Error("Error reading message", zap.Error(err))
+			if err == websocket.ErrCloseSent {
+				break
+			}
+
+			h.logger.Debug("Error reading message", zap.Error(err))
 			break
 		}
 
-		// todo call game logic, return GameUpdate
+		h.logger.Debug("new action", zap.Any("val", action))
+		if err = UUIDCheck(userID); err != nil || len(action.Numbers) != 16 {
+			h.logger.Error("Invalid UUID or missing numbers", zap.Error(err))
+			continue
+		}
 
-		if err = h.notifyOpponent(game, player, models.GameUpdate{}); err != nil {
+		fmt.Println("before calling func", &room)
+		update, err := h.service.UpdateGame(room, &action)
+		if err != nil {
+			h.logger.Error("Error getting update", zap.Error(err))
+		}
+
+		h.logger.Debug("status", zap.Any("game", room))
+		fmt.Println("after calling func", &room)
+		if update == nil {
+			continue
+		}
+
+		// todo improve check. 6 shows game ending flag
+		if update.Status == 6 {
+			if err = h.notifyAll(room, update); err != nil {
+				h.logger.Error("Error on notifying player", zap.Error(err))
+			}
+			return
+		}
+
+		if err = h.notifyOpponent(room, player, update); err != nil {
 			h.logger.Error("Error on notifying player", zap.Error(err))
 		}
 	}
+
+	h.logger.Debug("Connection closed", zap.String("userID", userID))
 }

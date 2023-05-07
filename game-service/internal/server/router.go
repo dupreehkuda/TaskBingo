@@ -43,15 +43,19 @@ func (a api) router() http.Handler {
 		})
 
 		r.Route("/game", func(r chi.Router) {
-			r.Use(a.middleware.CheckToken)
+			r.Group(func(r chi.Router) {
+				r.Get("/start", a.handlers.GameWSLaunch)
+			})
 
-			r.Post("/create", a.handlers.CreateGame)
-			r.Patch("/accept", a.handlers.AcceptGame)
-			r.Patch("/archive", nil)
-			r.Patch("/update", nil)
-			r.Delete("/delete", a.handlers.DeleteGame)
+			r.Group(func(r chi.Router) {
+				r.Use(a.middleware.CheckToken)
 
-			r.Get("/start", a.handlers.GameWSLaunch)
+				r.Post("/create", a.handlers.CreateGame)
+				r.Patch("/accept", a.handlers.AcceptGame)
+				r.Patch("/archive", nil)
+				r.Patch("/update", nil)
+				r.Delete("/delete", a.handlers.DeleteGame)
+			})
 		})
 	})
 

@@ -7,8 +7,7 @@ import (
 )
 
 // GetRatedPacks retrieves some rated packs from the db
-func (r repository) GetRatedPacks() ([]string, error) {
-	ctx := context.Background()
+func (r repository) GetRatedPacks(ctx context.Context) ([]string, error) {
 	conn, err := r.pool.Acquire(ctx)
 	if err != nil {
 		r.logger.Error("Error while acquiring connection", zap.Error(err))

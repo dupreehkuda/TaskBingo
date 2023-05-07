@@ -10,7 +10,7 @@ import (
 
 // GetUserData handles the operation of getting some important user data for the account
 func (h *Handlers) GetUserData(ctx context.Context, req *api.GetUserDataRequest) (*api.GetUserDataResponse, error) {
-	resp, err := h.service.GetUserData(req.UserID)
+	resp, err := h.service.GetUserData(ctx, req.UserID)
 	if err != nil {
 		h.logger.Error("Unable to call service", zap.Error(err))
 		return nil, err

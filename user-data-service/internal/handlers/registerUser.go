@@ -12,7 +12,7 @@ import (
 
 // RegisterUser handles the operation of user's registration
 func (h *Handlers) RegisterUser(ctx context.Context, req *api.RegisterUserRequest) (*api.RegisterUserResponse, error) {
-	userID, err := h.service.RegisterUser(req.Username, req.Password, req.Email, req.City)
+	userID, err := h.service.RegisterUser(ctx, req.Username, req.Password, req.Email, req.City)
 
 	switch {
 	case err == errs.ErrCredentialsInUse:

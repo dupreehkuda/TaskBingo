@@ -7,8 +7,7 @@ import (
 )
 
 // RatePack rates pack by inc
-func (r repository) RatePack(userID, pack string, inc int) error {
-	ctx := context.Background()
+func (r repository) RatePack(ctx context.Context, userID, pack string, inc int) error {
 	conn, err := r.pool.Acquire(ctx)
 	if err != nil {
 		r.logger.Error("Error while acquiring connection", zap.Error(err))

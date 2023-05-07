@@ -9,8 +9,7 @@ import (
 )
 
 // GetAllUsers retrieves all users from database
-func (r repository) GetAllUsers() (*[]models.AllUsers, error) {
-	ctx := context.Background()
+func (r repository) GetAllUsers(ctx context.Context) (*[]models.AllUsers, error) {
 	conn, err := r.pool.Acquire(ctx)
 	if err != nil {
 		r.logger.Error("Error while acquiring connection", zap.Error(err))

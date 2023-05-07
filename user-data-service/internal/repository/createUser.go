@@ -9,15 +9,14 @@ import (
 )
 
 // CreateUser inserts new user's data in the database
-func (r repository) CreateUser(userID, username, email, passwordHash, passwordSalt, city string) error {
-	conn, err := r.pool.Acquire(context.Background())
+func (r repository) CreateUser(ctx context.Context, userID, username, email, passwordHash, passwordSalt, city string) error {
+	conn, err := r.pool.Acquire(ctx)
 	if err != nil {
 		r.logger.Error("Error while acquiring connection", zap.Error(err))
 		return err
 	}
 	defer conn.Release()
 
-	ctx := context.Background()
 	tx, err := conn.Begin(ctx)
 	if err != nil {
 		r.logger.Error("Error occurred creating tx", zap.Error(err))

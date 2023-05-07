@@ -9,8 +9,7 @@ import (
 )
 
 // GetUserData retrieves user data from database
-func (r repository) GetUserData(userID string) (*models.GetUserDataResponse, error) {
-	ctx := context.Background()
+func (r repository) GetUserData(ctx context.Context, userID string) (*models.GetUserDataResponse, error) {
 	conn, err := r.pool.Acquire(ctx)
 	if err != nil {
 		r.logger.Error("Error while acquiring connection", zap.Error(err))

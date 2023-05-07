@@ -49,7 +49,9 @@ CREATE TABLE IF NOT EXISTS games (
     numbers integer[] default '{}',
     user1_numbers integer[] default '{}',
     user2_numbers integer[] default '{}',
-    created timestamptz
+    created timestamptz,
+    accepted timestamptz,
+    finished timestamptz
 );
 
 ALTER TABLE "login" ADD FOREIGN KEY ("id") REFERENCES "users" ("id");

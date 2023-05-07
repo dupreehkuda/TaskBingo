@@ -10,7 +10,7 @@ import (
 
 // GetRatedPacks handles the operation of getting some packs in desc rating order
 func (h *Handlers) GetRatedPacks(ctx context.Context, _ *api.Empty) (*api.RatedPacksResponse, error) {
-	resp, err := h.service.GetRatedPacks()
+	resp, err := h.service.GetRatedPacks(ctx)
 	if err != nil {
 		h.logger.Error("Unable to call service", zap.Error(err))
 		return nil, err

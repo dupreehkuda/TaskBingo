@@ -20,9 +20,35 @@ import (
 	"github.com/dupreehkuda/TaskBingo/game-service/internal/userRepository"
 )
 
+// Handlers is an interface for handlers
+type Handlers interface {
+	RegisterUser(w http.ResponseWriter, r *http.Request)
+	LoginUser(w http.ResponseWriter, r *http.Request)
+	GetUserData(w http.ResponseWriter, r *http.Request)
+
+	GetTaskPack(w http.ResponseWriter, r *http.Request)
+	SetTaskPack(w http.ResponseWriter, r *http.Request)
+	LikeTaskPack(w http.ResponseWriter, r *http.Request)
+	DislikeTaskPack(w http.ResponseWriter, r *http.Request)
+	RateTaskPack(w http.ResponseWriter, r *http.Request)
+	UnrateTaskPack(w http.ResponseWriter, r *http.Request)
+	GetRatedPacks(w http.ResponseWriter, r *http.Request)
+
+	GetAllUsers(w http.ResponseWriter, r *http.Request)
+	RequestFriend(w http.ResponseWriter, r *http.Request)
+	AcceptFriend(w http.ResponseWriter, r *http.Request)
+	DeleteFriend(w http.ResponseWriter, r *http.Request)
+
+	CreateGame(w http.ResponseWriter, r *http.Request)
+	AcceptGame(w http.ResponseWriter, r *http.Request)
+	DeleteGame(w http.ResponseWriter, r *http.Request)
+
+	GameWSLaunch(w http.ResponseWriter, r *http.Request)
+}
+
 // api provides single configuration out of all components
 type api struct {
-	handlers   handlers.Handlers
+	handlers   Handlers
 	middleware middleware.Middleware
 	config     *config.Config
 	logger     *zap.Logger
