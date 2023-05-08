@@ -16,10 +16,5 @@ func (u userRepository) GetRatedPacks() ([]string, error) {
 		return nil, err
 	}
 
-	var ans []string
-	for _, val := range resp.Packs {
-		ans = append(ans, val)
-	}
-
-	return ans, nil
+	return mapFromRatedPacks(resp), nil
 }

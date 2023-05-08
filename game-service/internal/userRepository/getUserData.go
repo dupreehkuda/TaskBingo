@@ -15,27 +15,5 @@ func (u userRepository) GetUserData(userID string) (*models.UserAccountInfoRespo
 		return nil, err
 	}
 
-	res := models.UserAccountInfoResponse{
-		UserID:     resp.UserID,
-		Username:   resp.Username,
-		City:       resp.City,
-		Wins:       int(resp.Wins),
-		Lose:       int(resp.Loses),
-		Bingo:      int(resp.Bingo),
-		Friends:    []models.FriendsInfo{},
-		LikedPacks: resp.LikedPacks,
-		RatedPacks: resp.RatedPacks,
-	}
-
-	for _, val := range resp.Friends {
-		res.Friends = append(res.Friends, models.FriendsInfo{
-			UserID:   val.UserID,
-			Username: val.Username,
-			Status:   int(val.Status),
-			Wins:     int(val.Wins),
-			Loses:    int(val.Loses),
-		})
-	}
-
-	return &res, nil
+	return mapFromUserDataResponse(resp), nil
 }

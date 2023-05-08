@@ -17,16 +17,5 @@ func (u userRepository) GetAllUsers() (*[]models.User, error) {
 		return nil, err
 	}
 
-	var users []models.User
-
-	for _, person := range resp.Person {
-		users = append(users, models.User{
-			UserID:   person.UserID,
-			Username: person.Username,
-			City:     person.City,
-			Bingo:    int(person.Bingo),
-		})
-	}
-
-	return &users, nil
+	return mapFromPeople(resp), nil
 }
