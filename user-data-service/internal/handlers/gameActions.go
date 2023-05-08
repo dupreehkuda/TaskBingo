@@ -5,25 +5,12 @@ import (
 
 	"go.uber.org/zap"
 
-	"github.com/dupreehkuda/TaskBingo/user-data-service/internal/models"
 	api "github.com/dupreehkuda/TaskBingo/user-data-service/pkg/api"
 )
 
 // AchieveGame handles the operation of writing finished game to repository
 func (h *Handlers) AchieveGame(ctx context.Context, req *api.GameRequest) (*api.Empty, error) {
-	err := h.service.AchieveGame(ctx, &models.Game{
-		GameID:       req.GameID,
-		User1Id:      req.User1Id,
-		User2Id:      req.User2Id,
-		PackId:       req.Pack,
-		Status:       req.Status,
-		User1Bingo:   req.User1Bingo,
-		User2Bingo:   req.User2Bingo,
-		Winner:       req.Winner,
-		Numbers:      req.Numbers,
-		User1Numbers: req.User1Numbers,
-		User2Numbers: req.User2Numbers,
-	})
+	err := h.service.AchieveGame(ctx, mapFromGameRequest(req))
 
 	if err != nil {
 		h.logger.Error("Error occurred calling service", zap.Error(err))
@@ -41,17 +28,5 @@ func (h *Handlers) GetGame(ctx context.Context, req *api.GetGameRequest) (*api.G
 		return nil, err
 	}
 
-	return &api.GameRequest{
-		GameID:       game.GameID,
-		User1Id:      game.User1Id,
-		User2Id:      game.User2Id,
-		Pack:         game.PackId,
-		Status:       game.Status,
-		User1Bingo:   game.User1Bingo,
-		User2Bingo:   game.User2Bingo,
-		Winner:       game.Winner,
-		Numbers:      game.Numbers,
-		User1Numbers: game.User1Numbers,
-		User2Numbers: game.User2Numbers,
-	}, nil
+	return mapToGameRequest(game), nil
 }

@@ -16,16 +16,5 @@ func (h *Handlers) GetAllPeople(ctx context.Context, _ *api.Empty) (*api.People,
 		return nil, err
 	}
 
-	var resp []*api.PersonInfo
-
-	for _, person := range *users {
-		resp = append(resp, &api.PersonInfo{
-			UserID:   person.UserID,
-			Username: person.Username,
-			City:     person.City,
-			Bingo:    int32(person.Bingo),
-		})
-	}
-
-	return &api.People{Person: resp}, nil
+	return mapToPeople(users), nil
 }

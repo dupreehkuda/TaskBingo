@@ -21,5 +21,5 @@ func (h *Handlers) RegisterUser(ctx context.Context, req *api.RegisterUserReques
 		return &api.RegisterUserResponse{}, err
 	}
 
-	return &api.RegisterUserResponse{UserID: userID, Username: req.Username}, nil
+	return mapToRegisterUserResponse(userID, req.Username), nil
 }
