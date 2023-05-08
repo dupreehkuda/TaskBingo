@@ -18,6 +18,7 @@ func (s service) CreateGame(ctx context.Context, game *models.Game) error {
 	return nil
 }
 
+// AcceptGame changes game status when user accepts it
 func (s service) AcceptGame(ctx context.Context, userID, gameID string) error {
 	if err := s.repository.AcceptGame(ctx, userID, gameID); err != nil {
 		s.logger.Error("Error occurred in call to repository", zap.Error(err))
@@ -27,6 +28,7 @@ func (s service) AcceptGame(ctx context.Context, userID, gameID string) error {
 	return nil
 }
 
+// DeleteGame deletes the game that user deleted/declined
 func (s service) DeleteGame(ctx context.Context, userID, gameID string) error {
 	if err := s.repository.DeleteGame(ctx, userID, gameID); err != nil {
 		s.logger.Error("Error occurred in call to repository", zap.Error(err))

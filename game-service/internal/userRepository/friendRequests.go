@@ -8,6 +8,7 @@ import (
 	api "github.com/dupreehkuda/TaskBingo/game-service/pkg/api"
 )
 
+// RequestFriend calls user service to request friendship
 func (u userRepository) RequestFriend(userID, friendID string) error {
 	_, err := u.conn.RequestFriend(context.Background(), &api.FriendRequest{
 		UserID:   userID,
@@ -22,6 +23,7 @@ func (u userRepository) RequestFriend(userID, friendID string) error {
 	return nil
 }
 
+// AcceptFriend calls user service to accept friendship
 func (u userRepository) AcceptFriend(userID, friendID string) error {
 	_, err := u.conn.AcceptFriend(context.Background(), &api.FriendRequest{
 		UserID:   userID,
@@ -36,6 +38,7 @@ func (u userRepository) AcceptFriend(userID, friendID string) error {
 	return nil
 }
 
+// DeleteFriend calls user service to delete/cancel friendship
 func (u userRepository) DeleteFriend(userID, friendID string) error {
 	_, err := u.conn.DeleteFriend(context.Background(), &api.FriendRequest{
 		UserID:   userID,

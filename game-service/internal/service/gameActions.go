@@ -1,23 +1,12 @@
 package service
 
 import (
-	"fmt"
-
 	"go.uber.org/zap"
 
 	"github.com/dupreehkuda/TaskBingo/game-service/internal/models"
 )
 
-const (
-	_ = iota
-	Created
-	Waiting
-	Start
-	InProcess
-	OneFinished
-	End
-)
-
+// GetRoom retrieves game from repository and returns new models.Room
 func (s service) GetRoom(gameID string) (*models.Room, error) {
 	gameInfo, err := s.userRepository.GetGame(gameID)
 	if err != nil {
@@ -28,39 +17,34 @@ func (s service) GetRoom(gameID string) (*models.Room, error) {
 	game := &models.Room{
 		Id:     gameID,
 		Game:   gameInfo,
-		Status: Created,
+		Status: models.GameCreated,
 	}
 
 	return game, nil
 }
 
+// UpdateGame forms an update on every game event
 func (s service) UpdateGame(room *models.Room, action *models.GameAction) (*models.GameUpdate, error) {
-	fmt.Println("before changing inside func", &room)
 	update := &models.GameUpdate{}
 
 	if room.Player1 == nil && room.Player2 == nil {
-		s.logger.Debug("hren kakayato")
 		return nil, nil
 	}
 
-	if room.Status != InProcess {
-		if room.Status == Created && room.Player1 != nil || room.Player2 != nil {
-			s.logger.Debug("status changed to waiting")
-			room.Status = Waiting
-			fmt.Println("after changing inside func", &room)
+	if room.Status != models.GameInProcess {
+		if room.Status == models.GameCreated && (room.Player1 != nil || room.Player2 != nil) {
+			room.Status = models.GameWaiting
 			return nil, nil
 		}
 
-		if room.Status == Waiting && room.Player1 != nil && room.Player2 != nil {
-			s.logger.Debug("status changed to start")
-			room.Status = Start
+		if room.Status == models.GameWaiting && room.Player1 != nil && room.Player2 != nil {
+			room.Status = models.GameStart
 			update.Status = room.Status
 			return update, nil
 		}
 
-		if room.Status == Start {
-			s.logger.Debug("status changed to inprocess")
-			room.Status = InProcess
+		if room.Status == models.GameStart {
+			room.Status = models.GameInProcess
 		}
 	}
 
@@ -68,7 +52,10 @@ func (s service) UpdateGame(room *models.Room, action *models.GameAction) (*mode
 
 	switch action.UserID {
 	case room.Game.User1Id:
-		update.UserID = room.Game.User2Id
+		room.Game.User1Numbers = action.Numbers
+
+		update.UserID = room.Game.User1Id
+		update.Numbers = room.Game.User1Numbers
 
 		if newBingo > room.Game.User1Bingo {
 			room.Game.User1Bingo, room.Game.User1Numbers = newBingo, action.Numbers
@@ -76,24 +63,28 @@ func (s service) UpdateGame(room *models.Room, action *models.GameAction) (*mode
 		}
 
 	case room.Game.User2Id:
-		update.UserID = room.Game.User1Id
+		room.Game.User2Numbers = action.Numbers
+
+		update.UserID = room.Game.User2Id
+		update.Numbers = room.Game.User2Numbers
 
 		if newBingo > room.Game.User2Bingo {
 			room.Game.User2Bingo, room.Game.User2Numbers = newBingo, action.Numbers
-			update.Numbers = room.Game.User1Numbers
+			update.Numbers = room.Game.User2Numbers
 		}
 	}
 
-	room.Status = formStatus(action.Finished, room.Status)
-	update.Status = room.Status
+	update.Status = formStatus(room, action.Finished)
 
-	if update.Status == End {
+	if update.Status == models.GameEnd {
+		setWinner(room)
 		return s.achieveGame(room, update)
 	}
 
 	return update, nil
 }
 
+// achieveGame writes ended game to repository
 func (s service) achieveGame(room *models.Room, update *models.GameUpdate) (*models.GameUpdate, error) {
 	if err := s.userRepository.AchieveGame(room.Game); err != nil {
 		s.logger.Error("Error in call to user service")
@@ -103,18 +94,31 @@ func (s service) achieveGame(room *models.Room, update *models.GameUpdate) (*mod
 	return update, nil
 }
 
-func formStatus(finished bool, roomStatus int) int {
-	if finished && roomStatus == InProcess {
-		return OneFinished
+// formStatus updates room status if anybody finished the game
+func formStatus(room *models.Room, finished bool) int {
+	if finished && room.Status == models.GameInProcess {
+		room.Status = models.GameOneFinished
 	}
 
-	if finished && roomStatus == OneFinished {
-		return End
+	if finished && room.Status == models.GameOneFinished {
+		room.Status = models.GameEnd
 	}
 
-	return roomStatus
+	return room.Status
 }
 
+// setWinner picks the winner
+func setWinner(room *models.Room) {
+	if room.Game.User1Bingo > room.Game.User2Bingo {
+		room.Game.Winner = room.Game.User1Id
+	}
+
+	if room.Game.User2Bingo > room.Game.User1Bingo {
+		room.Game.Winner = room.Game.User2Id
+	}
+}
+
+// countBingo counts bingo amount in provided number set
 func countBingo(numbers []int32) int32 {
 	var bingos int32
 

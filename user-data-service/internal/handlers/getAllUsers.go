@@ -8,6 +8,7 @@ import (
 	api "github.com/dupreehkuda/TaskBingo/user-data-service/pkg/api"
 )
 
+// GetAllPeople handles the operation of getting all people on service for the leaderboard
 func (h *Handlers) GetAllPeople(ctx context.Context, _ *api.Empty) (*api.People, error) {
 	users, err := h.service.GetAllUsers(ctx)
 	if err != nil {

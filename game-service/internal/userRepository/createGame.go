@@ -33,6 +33,7 @@ func (u userRepository) CreateGame(game *models.Game) error {
 	return nil
 }
 
+// AcceptGame calls user service to accept a game
 func (u userRepository) AcceptGame(userID, gameID string) error {
 	_, err := u.conn.AcceptGame(context.Background(), &api.StatusGameRequest{
 		UserID: userID,
@@ -47,6 +48,7 @@ func (u userRepository) AcceptGame(userID, gameID string) error {
 	return nil
 }
 
+// DeleteGame calls user service to delete a game
 func (u userRepository) DeleteGame(userID, gameID string) error {
 	_, err := u.conn.DeleteGame(context.Background(), &api.StatusGameRequest{
 		UserID: userID,

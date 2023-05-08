@@ -7,6 +7,16 @@ import (
 	"github.com/gorilla/websocket"
 )
 
+const (
+	_ = iota
+	GameCreated
+	GameWaiting
+	GameStart
+	GameInProcess
+	GameOneFinished
+	GameEnd
+)
+
 type (
 	// UserIDKey is type for context keys
 	UserIDKey string
@@ -50,6 +60,7 @@ type (
 		TaskID string `json:"id"`
 	}
 
+	// FriendsInfo provides data about user's friend
 	FriendsInfo struct {
 		UserID       string    `json:"userID"`
 		Username     string    `json:"username"`
@@ -72,6 +83,9 @@ type (
 		RatedPacks []string      `json:"ratedPacks"`
 	}
 
+	// UserAccountInfoResponse provides basic account info without pack data
+	//
+	// After transforms to UserAccountInfo
 	UserAccountInfoResponse struct {
 		UserID     string        `json:"userID"`
 		Username   string        `json:"username"`
@@ -84,6 +98,7 @@ type (
 		RatedPacks []string      `json:"ratedPacks"`
 	}
 
+	// User provides brief user info
 	User struct {
 		UserID   string `json:"userID"`
 		Username string `json:"username"`
@@ -91,6 +106,7 @@ type (
 		Bingo    int    `json:"bingo"`
 	}
 
+	// FriendRequest contains userID needed for friendship requests
 	FriendRequest struct {
 		Person string `json:"person"`
 	}
@@ -110,32 +126,38 @@ type (
 		User2Numbers []int32 `json:"user2Numbers"`
 	}
 
+	// NewGameRequest provides info for new game
 	NewGameRequest struct {
 		OpponentID string `json:"opponent"`
 		Pack       string `json:"pack"`
 	}
 
+	// StatusGameRequest provides gameID for accepting/deleting a game
 	StatusGameRequest struct {
 		GameID string `json:"gameID"`
 	}
 
+	// GameAction provides info of incoming action
 	GameAction struct {
 		UserID   string  `json:"userID"`
 		Finished bool    `json:"finished"`
 		Numbers  []int32 `json:"numbers"`
 	}
 
+	// GameUpdate provides response for incoming action
 	GameUpdate struct {
 		Status  int     `json:"status"`
 		UserID  string  `json:"userID"`
 		Numbers []int32 `json:"userNumbers"`
 	}
 
+	// Player provides info about connected user
 	Player struct {
 		Id   string `json:"id"`
 		Conn *websocket.Conn
 	}
 
+	// Room provides info about Game and both Player
 	Room struct {
 		Id      string `json:"id"`
 		Status  int    `json:"status"`
@@ -144,6 +166,7 @@ type (
 		Player2 *Player `json:"player2"`
 	}
 
+	// GameHub stores all active Rooms
 	GameHub struct {
 		Mu    sync.Mutex
 		Rooms map[string]*Room

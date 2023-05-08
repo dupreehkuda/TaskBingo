@@ -40,6 +40,7 @@ func (h *handlers) CreateGame(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Access-Control-Allow-Origin", "*")
 }
 
+// AcceptGame handles the operation of accepting a game
 func (h *handlers) AcceptGame(w http.ResponseWriter, r *http.Request) {
 	var ctxKey models.UserIDKey = "userID"
 	userID := r.Context().Value(ctxKey).(string)
@@ -70,6 +71,7 @@ func (h *handlers) AcceptGame(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Access-Control-Allow-Origin", "*")
 }
 
+// DeleteGame handles the operation of deleting a game
 func (h *handlers) DeleteGame(w http.ResponseWriter, r *http.Request) {
 	var ctxKey models.UserIDKey = "userID"
 	userID := r.Context().Value(ctxKey).(string)

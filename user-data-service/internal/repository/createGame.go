@@ -100,6 +100,7 @@ func (r repository) DeleteGame(ctx context.Context, userID, gameID string) error
 	return nil
 }
 
+// GetGame retrieves current game from db
 func (r repository) GetGame(ctx context.Context, gameID string) (*models.Game, error) {
 	conn, err := r.pool.Acquire(ctx)
 	if err != nil {
@@ -124,6 +125,7 @@ func (r repository) GetGame(ctx context.Context, gameID string) (*models.Game, e
 	return resp, nil
 }
 
+// AchieveGame writes finished game data to db
 func (r repository) AchieveGame(ctx context.Context, game *models.Game) error {
 	conn, err := r.pool.Acquire(ctx)
 	if err != nil {
@@ -134,28 +136,44 @@ func (r repository) AchieveGame(ctx context.Context, game *models.Game) error {
 
 	tx, err := conn.Begin(ctx)
 
-	_, err = tx.Exec(ctx, `UPDATE games SET status = $1, user1_bingo = user1_bingo + $2, user2_bingo = user2_bingo + $3,
+	if game.Winner != "" {
+		_, err = tx.Exec(ctx, `UPDATE games SET status = $1, user1_bingo = user1_bingo + $2, user2_bingo = user2_bingo + $3,
 	                 winner = $4, user1_numbers = $5, user2_numbers = $6, finished = $7 WHERE id = $8;`,
-		GameEnded, game.User1Bingo, game.User2Bingo, game.Winner, game.User1Numbers, game.User2Numbers, time.Now(), game.GameID)
+			GameEnded, game.User1Bingo, game.User2Bingo, game.Winner, game.User1Numbers, game.User2Numbers, time.Now(), game.GameID)
 
-	_, err = tx.Exec(ctx, `UPDATE users SET bingo = bingo + $1 WHERE id = $2; UPDATE users SET bingo = bingo + $3 WHERE id = $4;`, game.User1Bingo, game.User1Id, game.User2Bingo, game.User2Id)
+		if err != nil {
+			r.logger.Error("Error while executing statement", zap.Error(err))
+			return err
+		}
+	} else {
+		_, err = tx.Exec(ctx, `UPDATE games SET status = $1, user1_bingo = user1_bingo + $2, user2_bingo = user2_bingo + $3,
+	                 user1_numbers = $4, user2_numbers = $5, finished = $6 WHERE id = $7;`,
+			GameEnded, game.User1Bingo, game.User2Bingo, game.User1Numbers, game.User2Numbers, time.Now(), game.GameID)
+
+		if err != nil {
+			r.logger.Error("Error while executing statement", zap.Error(err))
+			return err
+		}
+	}
+
+	_, err = tx.Exec(ctx, `UPDATE users SET bingo = bingo + $1 WHERE id = $2;`, game.User1Bingo, game.User1Id)
+	if err != nil {
+		r.logger.Error("Error while executing statement", zap.Error(err))
+		return err
+	}
+
+	_, err = tx.Exec(ctx, `UPDATE users SET bingo = bingo + $1 WHERE id = $2;`, game.User2Bingo, game.User2Id)
 	if err != nil {
 		r.logger.Error("Error while executing statement", zap.Error(err))
 		return err
 	}
 
 	if game.User1Id == game.Winner {
-		_, err = tx.Exec(ctx, `UPDATE users SET wins = wins + 1 WHERE id = $1; UPDATE users SET lose = lose + 1 WHERE id = $2;`, game.User1Id, game.User2Id)
-		if err != nil {
-			r.logger.Error("Error while executing statement", zap.Error(err))
-			return err
-		}
+		_, err = tx.Exec(ctx, `UPDATE users SET wins = wins + 1 WHERE id = $1;`, game.User1Id)
+		_, err = tx.Exec(ctx, `UPDATE users SET lose = lose + 1 WHERE id = $1;`, game.User2Id)
 	} else {
-		_, err = tx.Exec(ctx, `UPDATE users SET wins = wins + 1 WHERE id = $1; UPDATE users SET lose = lose + 1 WHERE id = $2;`, game.User2Id, game.User1Id)
-		if err != nil {
-			r.logger.Error("Error while executing statement", zap.Error(err))
-			return err
-		}
+		_, err = tx.Exec(ctx, `UPDATE users SET wins = wins + 1 WHERE id = $1;`, game.User2Id)
+		_, err = tx.Exec(ctx, `UPDATE users SET lose = lose + 1 WHERE id = $1;`, game.User1Id)
 	}
 
 	if err != nil {

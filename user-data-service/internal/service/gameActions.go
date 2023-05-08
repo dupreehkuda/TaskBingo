@@ -8,7 +8,7 @@ import (
 	"github.com/dupreehkuda/TaskBingo/user-data-service/internal/models"
 )
 
-// GetGame creates new game instance in service
+// GetGame gets current game from repository
 func (s service) GetGame(ctx context.Context, gameID string) (*models.Game, error) {
 	game, err := s.repository.GetGame(ctx, gameID)
 	if err != nil {
@@ -19,7 +19,7 @@ func (s service) GetGame(ctx context.Context, gameID string) (*models.Game, erro
 	return game, nil
 }
 
-// AchieveGame creates new game instance in service
+// AchieveGame writes game data when its finished
 func (s service) AchieveGame(ctx context.Context, game *models.Game) error {
 	if err := s.repository.AchieveGame(ctx, game); err != nil {
 		s.logger.Error("Error occurred in call to repository", zap.Error(err))

@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/gorilla/websocket"
@@ -10,11 +9,12 @@ import (
 	"github.com/dupreehkuda/TaskBingo/game-service/internal/models"
 )
 
-var upgrader = websocket.Upgrader{
+var wsUpgrade = websocket.Upgrader{
 	ReadBufferSize:  1024,
 	WriteBufferSize: 1024,
 }
 
+// getOrCreateRoom retrieves game from the hub or repository
 func (h *handlers) getOrCreateRoom(gameID string) (*models.Room, error) {
 	h.hub.Mu.Lock()
 	defer h.hub.Mu.Unlock()
@@ -34,17 +34,19 @@ func (h *handlers) getOrCreateRoom(gameID string) (*models.Room, error) {
 	return game, nil
 }
 
-func (h *handlers) removeRoom(id string) {
+// removeRoom removes room from the hub
+func (h *handlers) removeRoom(gameID string) {
 	h.hub.Mu.Lock()
 	defer h.hub.Mu.Unlock()
 
-	if _, ok := h.hub.Rooms[id]; !ok {
+	if _, ok := h.hub.Rooms[gameID]; !ok {
 		return
 	}
 
-	delete(h.hub.Rooms, id)
+	delete(h.hub.Rooms, gameID)
 }
 
+// notifyOpponent notifies opponent with event
 func (h *handlers) notifyOpponent(room *models.Room, sender *models.Player, update *models.GameUpdate) error {
 	opponent := room.Player1
 	if sender == opponent {
@@ -65,6 +67,7 @@ func (h *handlers) notifyOpponent(room *models.Room, sender *models.Player, upda
 	return nil
 }
 
+// notifyAll notifies all players in a room with event
 func (h *handlers) notifyAll(room *models.Room, update *models.GameUpdate) error {
 	if room.Player1 != nil {
 		if err := room.Player1.Conn.WriteJSON(update); err != nil {
@@ -83,11 +86,11 @@ func (h *handlers) notifyAll(room *models.Room, update *models.GameUpdate) error
 	return nil
 }
 
+// GameWSLaunch upgrades ws connection to handle active game requests
 func (h *handlers) GameWSLaunch(w http.ResponseWriter, r *http.Request) {
-	userID := r.URL.Query().Get("user")
+	var ctxKey models.UserIDKey = "userID"
+	userID := r.Context().Value(ctxKey).(string)
 	gameID := r.URL.Query().Get("game")
-
-	h.logger.Debug("ids", zap.String("userID", userID), zap.String("gameID", gameID))
 
 	if err := UUIDCheck(userID, gameID); err != nil {
 		h.logger.Error("Invalid UUID in request", zap.Error(err))
@@ -95,9 +98,7 @@ func (h *handlers) GameWSLaunch(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// todo check if we have that game and user
-
-	conn, err := upgrader.Upgrade(w, r, nil)
+	conn, err := wsUpgrade.Upgrade(w, r, nil)
 	if err != nil {
 		h.logger.Error("Error upgrading connection", zap.Error(err))
 		return
@@ -123,15 +124,6 @@ func (h *handlers) GameWSLaunch(w http.ResponseWriter, r *http.Request) {
 	case room.Player2 == nil:
 		room.Player2 = player
 
-		// todo send normal update
-		if err = h.notifyAll(room, &models.GameUpdate{
-			Status:  666,
-			UserID:  "hi",
-			Numbers: []int32{0},
-		}); err != nil {
-			h.logger.Error("Error on notifying player", zap.Error(err))
-		}
-
 	default:
 		h.logger.Error("Error third connection", zap.Any("gameInfo", room), zap.String("thirdUser", player.Id))
 		return
@@ -155,34 +147,37 @@ func (h *handlers) GameWSLaunch(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 
-		h.logger.Debug("new action", zap.Any("val", action))
 		if err = UUIDCheck(userID); err != nil || len(action.Numbers) != 16 {
 			h.logger.Error("Invalid UUID or missing numbers", zap.Error(err))
 			continue
 		}
 
-		fmt.Println("before calling func", &room)
 		update, err := h.service.UpdateGame(room, &action)
 		if err != nil {
 			h.logger.Error("Error getting update", zap.Error(err))
 		}
 
-		h.logger.Debug("status", zap.Any("game", room))
-		fmt.Println("after calling func", &room)
 		if update == nil {
 			continue
 		}
 
-		// todo improve check. 6 shows game ending flag
-		if update.Status == 6 {
+		switch update.Status {
+		case models.GameStart:
+			if err = h.notifyAll(room, update); err != nil {
+				h.logger.Error("Error on notifying player", zap.Error(err))
+			}
+			continue
+
+		case models.GameEnd:
 			if err = h.notifyAll(room, update); err != nil {
 				h.logger.Error("Error on notifying player", zap.Error(err))
 			}
 			return
-		}
 
-		if err = h.notifyOpponent(room, player, update); err != nil {
-			h.logger.Error("Error on notifying player", zap.Error(err))
+		default:
+			if err = h.notifyOpponent(room, player, update); err != nil {
+				h.logger.Error("Error on notifying player", zap.Error(err))
+			}
 		}
 	}
 

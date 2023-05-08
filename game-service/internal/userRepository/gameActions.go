@@ -9,6 +9,7 @@ import (
 	api "github.com/dupreehkuda/TaskBingo/game-service/pkg/api"
 )
 
+// GetGame calls user service to get current game
 func (u userRepository) GetGame(gameID string) (*models.Game, error) {
 	game, err := u.conn.GetGame(context.Background(), &api.GetGameRequest{GameID: gameID})
 	if err != nil {
@@ -30,6 +31,8 @@ func (u userRepository) GetGame(gameID string) (*models.Game, error) {
 		User2Numbers: game.User2Numbers,
 	}, nil
 }
+
+// AchieveGame calls user service to finish the game
 func (u userRepository) AchieveGame(game *models.Game) error {
 	_, err := u.conn.AchieveGame(context.Background(), &api.GameRequest{
 		GameID:       game.GameID,
