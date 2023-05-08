@@ -20,9 +20,14 @@ import (
 	api "github.com/dupreehkuda/TaskBingo/task-data-service/pkg/api"
 )
 
+// Handler is interface for handlers
+type Handler interface {
+	api.TasksServer
+}
+
 // server provides single configuration out of all components
 type server struct {
-	handlers handlers.Handler
+	handlers Handler
 	config   *config.Config
 	logger   *zap.Logger
 }

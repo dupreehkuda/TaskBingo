@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"context"
 	"net/http"
 
 	"github.com/gorilla/websocket"
@@ -15,7 +16,7 @@ var wsUpgrade = websocket.Upgrader{
 }
 
 // getOrCreateRoom retrieves game from the hub or repository
-func (h *handlers) getOrCreateRoom(gameID string) (*models.Room, error) {
+func (h *handlers) getOrCreateRoom(ctx context.Context, gameID string) (*models.Room, error) {
 	h.hub.Mu.Lock()
 	defer h.hub.Mu.Unlock()
 
@@ -23,7 +24,7 @@ func (h *handlers) getOrCreateRoom(gameID string) (*models.Room, error) {
 		return game, nil
 	}
 
-	game, err := h.service.GetRoom(gameID)
+	game, err := h.service.GetRoom(ctx, gameID)
 	if err != nil {
 		h.logger.Error("Error occurred fetching game", zap.Error(err))
 		return nil, err
@@ -110,7 +111,7 @@ func (h *handlers) GameWSLaunch(w http.ResponseWriter, r *http.Request) {
 		Conn: conn,
 	}
 
-	room, err := h.getOrCreateRoom(gameID)
+	room, err := h.getOrCreateRoom(r.Context(), gameID)
 	if err != nil {
 		h.logger.Error("Error getting game", zap.Error(err))
 		w.WriteHeader(http.StatusInternalServerError)
@@ -152,7 +153,7 @@ func (h *handlers) GameWSLaunch(w http.ResponseWriter, r *http.Request) {
 			continue
 		}
 
-		update, err := h.service.UpdateGame(room, &action)
+		update, err := h.service.UpdateGame(r.Context(), room, &action)
 		if err != nil {
 			h.logger.Error("Error getting update", zap.Error(err))
 		}

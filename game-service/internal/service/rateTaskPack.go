@@ -1,10 +1,14 @@
 package service
 
-import "go.uber.org/zap"
+import (
+	"context"
+
+	"go.uber.org/zap"
+)
 
 // RateTaskPack adds to pack rating
-func (s service) RateTaskPack(userID, pack string) error {
-	err := s.userRepository.RateTaskPack(userID, pack)
+func (s service) RateTaskPack(ctx context.Context, userID, pack string) error {
+	err := s.userRepository.RateTaskPack(ctx, userID, pack)
 	if err != nil {
 		s.logger.Error("Error occurred calling user repository", zap.Error(err))
 		return err
@@ -14,8 +18,8 @@ func (s service) RateTaskPack(userID, pack string) error {
 }
 
 // UnrateTaskPack removes from pack rating
-func (s service) UnrateTaskPack(userID, pack string) error {
-	err := s.userRepository.UnrateTaskPack(userID, pack)
+func (s service) UnrateTaskPack(ctx context.Context, userID, pack string) error {
+	err := s.userRepository.UnrateTaskPack(ctx, userID, pack)
 	if err != nil {
 		s.logger.Error("Error occurred calling user repository", zap.Error(err))
 		return err

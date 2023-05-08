@@ -20,7 +20,7 @@ func (h *handlers) GetRatedPacks(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	resp, err := h.service.GetRatedPacks()
+	resp, err := h.service.GetRatedPacks(r.Context())
 	if err != nil {
 		h.logger.Error("Error in call to processor", zap.Error(err))
 		w.WriteHeader(http.StatusBadRequest)

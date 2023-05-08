@@ -12,8 +12,8 @@ import (
 )
 
 // GetMultiplePacks retrieves multiple task packs from task service
-func (t taskRepository) GetMultiplePacks(packIDs []string) (*[]models.TaskPack, error) {
-	resp, err := t.conn.GetMultiplePacks(context.Background(), &api.GetMultiplePacksRequest{Ids: packIDs})
+func (t taskRepository) GetMultiplePacks(ctx context.Context, packIDs []string) (*[]models.TaskPack, error) {
+	resp, err := t.conn.GetMultiplePacks(ctx, &api.GetMultiplePacksRequest{Ids: packIDs})
 
 	statusCode, _ := status.FromError(err)
 	if statusCode.Code() == codes.NotFound {

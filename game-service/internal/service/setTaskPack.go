@@ -1,6 +1,8 @@
 package service
 
 import (
+	"context"
+
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
@@ -9,7 +11,7 @@ import (
 )
 
 // SetTaskPack sets new task pack and assigns it to creator
-func (s service) SetTaskPack(userID string, pack *models.TaskPack) error {
+func (s service) SetTaskPack(ctx context.Context, userID string, pack *models.TaskPack) error {
 	packID, err := uuid.NewUUID()
 	if err != nil {
 		s.logger.Error("Unable to generate UUID", zap.Error(err))
@@ -18,7 +20,7 @@ func (s service) SetTaskPack(userID string, pack *models.TaskPack) error {
 
 	pack.ID = packID.String()
 
-	err = s.taskRepository.SetTaskPack(pack)
+	err = s.taskRepository.SetTaskPack(ctx, pack)
 	if err != nil {
 		if err == errs.ErrPackAlreadyExists {
 			return err
@@ -28,7 +30,7 @@ func (s service) SetTaskPack(userID string, pack *models.TaskPack) error {
 		return err
 	}
 
-	err = s.userRepository.AssignNewPack(userID, packID.String(), pack.Pack.Title)
+	err = s.userRepository.AssignNewPack(ctx, userID, packID.String(), pack.Pack.Title)
 	if err != nil {
 		s.logger.Error("Error in call to user repository", zap.Error(err))
 		return err

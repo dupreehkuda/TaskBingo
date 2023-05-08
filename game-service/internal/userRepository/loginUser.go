@@ -10,8 +10,8 @@ import (
 )
 
 // LoginUser sends login request to user service
-func (u userRepository) LoginUser(username, password string) (string, error) {
-	resp, err := u.conn.LoginUser(context.Background(), mapToLogin(username, password))
+func (u userRepository) LoginUser(ctx context.Context, username, password string) (string, error) {
+	resp, err := u.conn.LoginUser(ctx, mapToLogin(username, password))
 
 	statusCode, _ := status.FromError(err)
 

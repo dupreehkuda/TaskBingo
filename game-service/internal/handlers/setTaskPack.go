@@ -10,7 +10,7 @@ import (
 	"github.com/dupreehkuda/TaskBingo/game-service/internal/models"
 )
 
-// SetTaskPack handles addition of setting new task packs
+// SetTaskPack handles addition of new task packs
 func (h *handlers) SetTaskPack(w http.ResponseWriter, r *http.Request) {
 	var ctxKey models.UserIDKey = "userID"
 	userID := r.Context().Value(ctxKey).(string)
@@ -37,7 +37,7 @@ func (h *handlers) SetTaskPack(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.service.SetTaskPack(userID, req)
+	err = h.service.SetTaskPack(r.Context(), userID, req)
 
 	switch {
 	case err == errs.ErrPackAlreadyExists:

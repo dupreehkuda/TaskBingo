@@ -12,8 +12,8 @@ import (
 )
 
 // GetTaskPack retrieves a task pack from task service
-func (t taskRepository) GetTaskPack(packID string) (*models.TaskPack, error) {
-	resp, err := t.conn.GetOneTaskPack(context.Background(), &api.TaskPackRequest{Id: packID})
+func (t taskRepository) GetTaskPack(ctx context.Context, packID string) (*models.TaskPack, error) {
+	resp, err := t.conn.GetOneTaskPack(ctx, &api.TaskPackRequest{Id: packID})
 
 	statusCode, _ := status.FromError(err)
 	if statusCode.Code() == codes.NotFound {

@@ -10,8 +10,8 @@ import (
 )
 
 // GetAllUsers calls user service for all users
-func (u userRepository) GetAllUsers() (*[]models.User, error) {
-	resp, err := u.conn.GetAllPeople(context.Background(), &api.Empty{})
+func (u userRepository) GetAllUsers(ctx context.Context) (*[]models.User, error) {
+	resp, err := u.conn.GetAllPeople(ctx, &api.Empty{})
 	if err != nil {
 		u.logger.Error("Error when getting user data", zap.Error(err))
 		return nil, err

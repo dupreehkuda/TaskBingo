@@ -15,7 +15,7 @@ import (
 )
 
 // SetTaskPack sets a new task pack in task service
-func (t taskRepository) SetTaskPack(pack *models.TaskPack) error {
+func (t taskRepository) SetTaskPack(ctx context.Context, pack *models.TaskPack) error {
 	tasks, err := json.Marshal(pack)
 
 	msg := &api.NewTaskPackRequest{}
@@ -25,7 +25,7 @@ func (t taskRepository) SetTaskPack(pack *models.TaskPack) error {
 		return err
 	}
 
-	_, err = t.conn.AddOneTaskPack(context.Background(), msg)
+	_, err = t.conn.AddOneTaskPack(ctx, msg)
 
 	statusCode, _ := status.FromError(err)
 	if statusCode.Code() == codes.NotFound {

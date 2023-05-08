@@ -35,7 +35,7 @@ func (h *handlers) RequestFriend(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.service.RequestFriend(userID, req.Person)
+	err = h.service.RequestFriend(r.Context(), userID, req.Person)
 	if err != nil {
 		h.logger.Error("Error getting data", zap.Error(err))
 		w.WriteHeader(http.StatusInternalServerError)
@@ -67,7 +67,7 @@ func (h *handlers) AcceptFriend(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.service.AcceptFriend(userID, req.Person)
+	err = h.service.AcceptFriend(r.Context(), userID, req.Person)
 	if err != nil {
 		h.logger.Error("Error getting data", zap.Error(err))
 		return
@@ -98,7 +98,7 @@ func (h *handlers) DeleteFriend(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.service.DeleteFriend(userID, req.Person)
+	err = h.service.DeleteFriend(r.Context(), userID, req.Person)
 	if err != nil {
 		h.logger.Error("Error getting data", zap.Error(err))
 		return

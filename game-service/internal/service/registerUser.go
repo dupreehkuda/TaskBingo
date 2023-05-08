@@ -1,6 +1,8 @@
 package service
 
 import (
+	"context"
+
 	"go.uber.org/zap"
 
 	"github.com/dupreehkuda/TaskBingo/game-service/internal/models"
@@ -8,8 +10,8 @@ import (
 )
 
 // RegisterUser calls user service to register new user and returns JWT-token
-func (s service) RegisterUser(credits *models.RegisterCredentials) (string, error) {
-	userID, err := s.userRepository.RegisterUser(credits)
+func (s service) RegisterUser(ctx context.Context, credits *models.RegisterCredentials) (string, error) {
+	userID, err := s.userRepository.RegisterUser(ctx, credits)
 	if err != nil {
 		return "", err
 	}

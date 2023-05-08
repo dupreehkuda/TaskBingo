@@ -1,14 +1,16 @@
 package service
 
 import (
+	"context"
+
 	"go.uber.org/zap"
 
 	"github.com/dupreehkuda/TaskBingo/game-service/internal/models"
 )
 
 // GetUserData gets user's most important info
-func (s service) GetUserData(userID string) (*models.UserAccountInfo, error) {
-	userInfo, err := s.userRepository.GetUserData(userID)
+func (s service) GetUserData(ctx context.Context, userID string) (*models.UserAccountInfo, error) {
+	userInfo, err := s.userRepository.GetUserData(ctx, userID)
 	if err != nil {
 		s.logger.Error("Error occurred in call to user service", zap.Error(err))
 		return nil, err
@@ -31,7 +33,7 @@ func (s service) GetUserData(userID string) (*models.UserAccountInfo, error) {
 	}
 
 	if len(userInfo.LikedPacks) != 0 {
-		tasks, err := s.taskRepository.GetMultiplePacks(userInfo.LikedPacks)
+		tasks, err := s.taskRepository.GetMultiplePacks(ctx, userInfo.LikedPacks)
 		if err != nil {
 			s.logger.Error("Error occurred in call to task service", zap.Error(err))
 			return nil, err

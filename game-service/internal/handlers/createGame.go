@@ -30,7 +30,7 @@ func (h *handlers) CreateGame(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.service.CreateGame(userID, req.OpponentID, req.Pack)
+	err = h.service.CreateGame(r.Context(), userID, req.OpponentID, req.Pack)
 	if err != nil {
 		h.logger.Error("Error creating game", zap.Error(err))
 		return
@@ -61,7 +61,7 @@ func (h *handlers) AcceptGame(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.service.AcceptGame(userID, req.GameID)
+	err = h.service.AcceptGame(r.Context(), userID, req.GameID)
 	if err != nil {
 		h.logger.Error("Error accepting game", zap.Error(err))
 		return
@@ -92,7 +92,7 @@ func (h *handlers) DeleteGame(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.service.DeleteGame(userID, req.GameID)
+	err = h.service.DeleteGame(r.Context(), userID, req.GameID)
 	if err != nil {
 		h.logger.Error("Error deleting game", zap.Error(err))
 		return

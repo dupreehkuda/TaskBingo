@@ -12,8 +12,8 @@ import (
 )
 
 // RegisterUser sends register request to user service
-func (u userRepository) RegisterUser(credits *models.RegisterCredentials) (string, error) {
-	resp, err := u.conn.RegisterUser(context.Background(), mapToRegister(credits))
+func (u userRepository) RegisterUser(ctx context.Context, credits *models.RegisterCredentials) (string, error) {
+	resp, err := u.conn.RegisterUser(ctx, mapToRegister(credits))
 
 	statusCode, _ := status.FromError(err)
 	u.logger.Debug("incoming code", zap.Int("code", int(statusCode.Code())))

@@ -1,14 +1,16 @@
 package service
 
 import (
+	"context"
+
 	"go.uber.org/zap"
 
 	"github.com/dupreehkuda/TaskBingo/game-service/internal/models"
 )
 
 // GetRoom retrieves game from repository and returns new models.Room
-func (s service) GetRoom(gameID string) (*models.Room, error) {
-	gameInfo, err := s.userRepository.GetGame(gameID)
+func (s service) GetRoom(ctx context.Context, gameID string) (*models.Room, error) {
+	gameInfo, err := s.userRepository.GetGame(ctx, gameID)
 	if err != nil {
 		s.logger.Error("Error getting game", zap.Error(err))
 		return nil, err
@@ -24,7 +26,7 @@ func (s service) GetRoom(gameID string) (*models.Room, error) {
 }
 
 // UpdateGame forms an update on every game event
-func (s service) UpdateGame(room *models.Room, action *models.GameAction) (*models.GameUpdate, error) {
+func (s service) UpdateGame(ctx context.Context, room *models.Room, action *models.GameAction) (*models.GameUpdate, error) {
 	update := &models.GameUpdate{}
 
 	if room.Player1 == nil && room.Player2 == nil {
@@ -78,15 +80,15 @@ func (s service) UpdateGame(room *models.Room, action *models.GameAction) (*mode
 
 	if update.Status == models.GameEnd {
 		setWinner(room)
-		return s.achieveGame(room, update)
+		return s.achieveGame(ctx, room, update)
 	}
 
 	return update, nil
 }
 
 // achieveGame writes ended game to repository
-func (s service) achieveGame(room *models.Room, update *models.GameUpdate) (*models.GameUpdate, error) {
-	if err := s.userRepository.AchieveGame(room.Game); err != nil {
+func (s service) achieveGame(ctx context.Context, room *models.Room, update *models.GameUpdate) (*models.GameUpdate, error) {
+	if err := s.userRepository.AchieveGame(ctx, room.Game); err != nil {
 		s.logger.Error("Error in call to user service")
 		return nil, err
 	}

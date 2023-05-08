@@ -3,23 +3,24 @@ package handlers
 import (
 	"go.uber.org/zap"
 
-	"github.com/dupreehkuda/TaskBingo/task-data-service/internal/service"
-	api "github.com/dupreehkuda/TaskBingo/task-data-service/pkg/api"
+	"github.com/dupreehkuda/TaskBingo/task-data-service/internal/models"
 )
 
-// Handler is interface for handlers
-type Handler interface {
-	api.TasksServer
+// Service is interface for business-logic
+type Service interface {
+	GetTaskPack(packID string) (*models.TaskPack, error)
+	AddTaskPack(pack *models.TaskPack) error
+	GetMultiplePacks(ids []string) (*[]models.TaskPack, error)
 }
 
 // Handlers provides access to service
 type Handlers struct {
-	service service.Service
+	service Service
 	logger  *zap.Logger
 }
 
 // New creates new instance of handlers
-func New(service service.Service, logger *zap.Logger) *Handlers {
+func New(service Service, logger *zap.Logger) *Handlers {
 	return &Handlers{
 		service: service,
 		logger:  logger,

@@ -6,17 +6,7 @@ import (
 	"github.com/go-redis/redis/v8"
 	"github.com/nitishm/go-rejson/v4"
 	"go.uber.org/zap"
-
-	"github.com/dupreehkuda/TaskBingo/task-data-service/internal/models"
 )
-
-// Repository is interface for repository
-type Repository interface {
-	GetTaskPack(taskId string) (*models.TaskPack, error)
-	AddTaskPack(pack *models.TaskPack) error
-	GetMultiplePacks(ids []string) (*[]models.TaskPack, error)
-	CheckPackExistence(taskId string) (bool, error)
-}
 
 // repository provides a database connection
 type repository struct {

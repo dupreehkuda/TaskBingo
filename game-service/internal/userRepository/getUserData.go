@@ -8,8 +8,8 @@ import (
 )
 
 // GetUserData retrieves user data from user service
-func (u userRepository) GetUserData(userID string) (*models.UserAccountInfoResponse, error) {
-	resp, err := u.conn.GetUserData(context.Background(), &api.GetUserDataRequest{UserID: userID})
+func (u userRepository) GetUserData(ctx context.Context, userID string) (*models.UserAccountInfoResponse, error) {
+	resp, err := u.conn.GetUserData(ctx, &api.GetUserDataRequest{UserID: userID})
 	if err != nil {
 		u.logger.Error("Error when getting user data")
 		return nil, err

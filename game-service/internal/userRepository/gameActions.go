@@ -10,8 +10,8 @@ import (
 )
 
 // GetGame calls user service to get current game
-func (u userRepository) GetGame(gameID string) (*models.Game, error) {
-	game, err := u.conn.GetGame(context.Background(), &api.GetGameRequest{GameID: gameID})
+func (u userRepository) GetGame(ctx context.Context, gameID string) (*models.Game, error) {
+	game, err := u.conn.GetGame(ctx, &api.GetGameRequest{GameID: gameID})
 	if err != nil {
 		u.logger.Error("Error in call to repository service", zap.Error(err))
 		return nil, err
@@ -21,8 +21,8 @@ func (u userRepository) GetGame(gameID string) (*models.Game, error) {
 }
 
 // AchieveGame calls user service to finish the game
-func (u userRepository) AchieveGame(game *models.Game) error {
-	_, err := u.conn.AchieveGame(context.Background(), mapToGameRequest(game))
+func (u userRepository) AchieveGame(ctx context.Context, game *models.Game) error {
+	_, err := u.conn.AchieveGame(ctx, mapToGameRequest(game))
 
 	if err != nil {
 		u.logger.Error("Error in call to repository service", zap.Error(err))
