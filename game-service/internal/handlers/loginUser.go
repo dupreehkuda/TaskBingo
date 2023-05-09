@@ -1,9 +1,10 @@
 package handlers
 
 import (
-	"encoding/json"
+	"io"
 	"net/http"
 
+	"github.com/mailru/easyjson"
 	"go.uber.org/zap"
 
 	errs "github.com/dupreehkuda/TaskBingo/game-service/internal/customErrors"
@@ -12,23 +13,28 @@ import (
 
 // LoginUser handles user login operations
 func (h *handlers) LoginUser(w http.ResponseWriter, r *http.Request) {
-	var logCredit models.LoginCredentials
+	var req models.LoginCredentials
 
-	decoder := json.NewDecoder(r.Body)
-	err := decoder.Decode(&logCredit)
+	body, err := io.ReadAll(r.Body)
 	if err != nil {
+		h.logger.Error("Unable to read body", zap.Error(err))
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	if err = easyjson.Unmarshal(body, &req); err != nil {
 		h.logger.Error("Unable to decode JSON", zap.Error(err))
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
-	if logCredit.Username == "" || logCredit.Password == "" {
+	if req.Username == "" || req.Password == "" {
 		h.logger.Info("Credentials empty")
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
-	token, err := h.service.LoginUser(r.Context(), logCredit.Username, logCredit.Password)
+	token, err := h.service.LoginUser(r.Context(), req.Username, req.Password)
 
 	switch {
 	case err == errs.ErrWrongCredentials:

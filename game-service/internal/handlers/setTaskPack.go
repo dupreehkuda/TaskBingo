@@ -1,9 +1,10 @@
 package handlers
 
 import (
-	"encoding/json"
+	"io"
 	"net/http"
 
+	"github.com/mailru/easyjson"
 	"go.uber.org/zap"
 
 	errs "github.com/dupreehkuda/TaskBingo/game-service/internal/customErrors"
@@ -15,11 +16,16 @@ func (h *handlers) SetTaskPack(w http.ResponseWriter, r *http.Request) {
 	var ctxKey models.UserIDKey = "userID"
 	userID := r.Context().Value(ctxKey).(string)
 
-	req := &models.TaskPack{}
+	var req models.TaskPack
 
-	decoder := json.NewDecoder(r.Body)
-	err := decoder.Decode(&req)
+	body, err := io.ReadAll(r.Body)
 	if err != nil {
+		h.logger.Error("Unable to read body", zap.Error(err))
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	if err = easyjson.Unmarshal(body, &req); err != nil {
 		h.logger.Error("Unable to decode JSON", zap.Error(err))
 		w.WriteHeader(http.StatusInternalServerError)
 		return
@@ -37,7 +43,7 @@ func (h *handlers) SetTaskPack(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.service.SetTaskPack(r.Context(), userID, req)
+	err = h.service.SetTaskPack(r.Context(), userID, &req)
 
 	switch {
 	case err == errs.ErrPackAlreadyExists:

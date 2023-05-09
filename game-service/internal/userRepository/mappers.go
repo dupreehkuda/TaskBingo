@@ -59,8 +59,8 @@ func mapToFriendRequest(userID, friendID string) *api.FriendRequest {
 	}
 }
 
-func mapFromPeople(people *api.People) *[]models.User {
-	var users []models.User
+func mapFromPeople(people *api.People) *models.Users {
+	var users models.Users
 
 	for _, person := range people.Person {
 		users = append(users, models.User{

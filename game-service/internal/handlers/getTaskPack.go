@@ -1,9 +1,10 @@
 package handlers
 
 import (
-	"encoding/json"
+	"io"
 	"net/http"
 
+	"github.com/mailru/easyjson"
 	"go.uber.org/zap"
 
 	errs "github.com/dupreehkuda/TaskBingo/game-service/internal/customErrors"
@@ -17,9 +18,14 @@ func (h *handlers) GetTaskPack(w http.ResponseWriter, r *http.Request) {
 
 	var req models.TaskPackRequest
 
-	decoder := json.NewDecoder(r.Body)
-	err := decoder.Decode(&req)
+	body, err := io.ReadAll(r.Body)
 	if err != nil {
+		h.logger.Error("Unable to read body", zap.Error(err))
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	if err = easyjson.Unmarshal(body, &req); err != nil {
 		h.logger.Error("Unable to decode JSON", zap.Error(err))
 		w.WriteHeader(http.StatusInternalServerError)
 		return
@@ -43,7 +49,7 @@ func (h *handlers) GetTaskPack(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	resultJSON, err := json.Marshal(resp)
+	resultJSON, err := easyjson.Marshal(resp)
 	if err != nil {
 		h.logger.Error("Error marshaling data", zap.Error(err))
 		return

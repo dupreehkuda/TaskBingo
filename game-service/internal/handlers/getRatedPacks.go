@@ -1,9 +1,9 @@
 package handlers
 
 import (
-	"encoding/json"
 	"net/http"
 
+	"github.com/mailru/easyjson"
 	"go.uber.org/zap"
 
 	"github.com/dupreehkuda/TaskBingo/game-service/internal/models"
@@ -27,7 +27,7 @@ func (h *handlers) GetRatedPacks(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	resultJSON, err := json.Marshal(resp)
+	resultJSON, err := easyjson.Marshal(resp)
 	if err != nil {
 		h.logger.Error("Error marshaling data", zap.Error(err))
 		return

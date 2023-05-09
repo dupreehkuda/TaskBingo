@@ -1,9 +1,9 @@
 package handlers
 
 import (
-	"encoding/json"
 	"net/http"
 
+	"github.com/mailru/easyjson"
 	"go.uber.org/zap"
 )
 
@@ -16,7 +16,7 @@ func (h *handlers) GetAllUsers(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	resultJSON, err := json.Marshal(resp)
+	resultJSON, err := easyjson.Marshal(resp)
 	if err != nil {
 		h.logger.Error("Error marshaling data", zap.Error(err))
 		return

@@ -22,9 +22,9 @@ type Service interface {
 	DislikeTaskPack(ctx context.Context, userID, pack string) error
 	RateTaskPack(ctx context.Context, userID, pack string) error
 	UnrateTaskPack(ctx context.Context, userID, pack string) error
-	GetRatedPacks(ctx context.Context) (*[]models.TaskPack, error)
+	GetRatedPacks(ctx context.Context) (*models.Packs, error)
 
-	GetAllUsers(ctx context.Context) (*[]models.User, error)
+	GetAllUsers(ctx context.Context) (*models.Users, error)
 	AcceptFriend(ctx context.Context, userID, friendID string) error
 	DeleteFriend(ctx context.Context, userID, friendID string) error
 	RequestFriend(ctx context.Context, userID, friendID string) error

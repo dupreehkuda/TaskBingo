@@ -12,7 +12,7 @@ import (
 )
 
 // GetMultiplePacks retrieves multiple task packs from task service
-func (t taskRepository) GetMultiplePacks(ctx context.Context, packIDs []string) (*[]models.TaskPack, error) {
+func (t taskRepository) GetMultiplePacks(ctx context.Context, packIDs []string) (*models.Packs, error) {
 	resp, err := t.conn.GetMultiplePacks(ctx, &api.GetMultiplePacksRequest{Ids: packIDs})
 
 	statusCode, _ := status.FromError(err)
@@ -20,7 +20,7 @@ func (t taskRepository) GetMultiplePacks(ctx context.Context, packIDs []string) 
 		return nil, errs.ErrNoSuchPack
 	}
 
-	var packs []models.TaskPack
+	var packs models.Packs
 
 	for _, val := range resp.Packs {
 		packs = append(packs, models.TaskPack{

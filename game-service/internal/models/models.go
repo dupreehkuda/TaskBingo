@@ -1,3 +1,4 @@
+//go:generate easyjson -no_std_marshalers models.go
 package models
 
 import (
@@ -17,9 +18,13 @@ const (
 	GameEnd
 )
 
+// UserIDKey is type for context keys
+type UserIDKey string
+
+//easyjson:json
 type (
-	// UserIDKey is type for context keys
-	UserIDKey string
+	Users []User
+	Packs []TaskPack
 
 	// Response provides user data response
 	Response struct {

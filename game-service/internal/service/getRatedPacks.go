@@ -9,7 +9,7 @@ import (
 )
 
 // GetRatedPacks gets some most rated packs
-func (s service) GetRatedPacks(ctx context.Context) (*[]models.TaskPack, error) {
+func (s service) GetRatedPacks(ctx context.Context) (*models.Packs, error) {
 	rated, err := s.userRepository.GetRatedPacks(ctx)
 	if err != nil {
 		s.logger.Error("Error occurred in call to user repository", zap.Error(err))
@@ -17,7 +17,7 @@ func (s service) GetRatedPacks(ctx context.Context) (*[]models.TaskPack, error) 
 	}
 
 	if len(rated) == 0 {
-		return &[]models.TaskPack{}, nil
+		return &models.Packs{}, nil
 	}
 
 	packs, err := s.taskRepository.GetMultiplePacks(ctx, rated)

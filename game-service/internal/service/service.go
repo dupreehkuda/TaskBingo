@@ -21,7 +21,7 @@ type UserRepository interface {
 	UnrateTaskPack(ctx context.Context, userID, pack string) error
 	AssignNewPack(ctx context.Context, userID, packID, packName string) error
 
-	GetAllUsers(ctx context.Context) (*[]models.User, error)
+	GetAllUsers(ctx context.Context) (*models.Users, error)
 	AcceptFriend(ctx context.Context, userID, friendID string) error
 	DeleteFriend(ctx context.Context, userID, friendID string) error
 	RequestFriend(ctx context.Context, userID, friendID string) error
@@ -37,7 +37,7 @@ type UserRepository interface {
 type TaskRepository interface {
 	GetTaskPack(ctx context.Context, packID string) (*models.TaskPack, error)
 	SetTaskPack(ctx context.Context, pack *models.TaskPack) error
-	GetMultiplePacks(ctx context.Context, packIDs []string) (*[]models.TaskPack, error)
+	GetMultiplePacks(ctx context.Context, packIDs []string) (*models.Packs, error)
 }
 
 // service provides service's business-logic
