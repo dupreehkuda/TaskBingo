@@ -4,20 +4,26 @@ package api;
 
 option go_package = "./";
 
-service Users {
-  rpc GetUserData(GetUserDataRequest) returns (GetUserDataResponse);
+service BingoData {
   rpc RegisterUser(RegisterUserRequest) returns (RegisterUserResponse);
   rpc LoginUser(LoginUserRequest) returns (LoginUserResponse);
+
+  rpc GetUserData(GetUserDataRequest) returns (GetUserDataResponse);
+  rpc SetNewTaskPack(NewTaskPackRequest) returns (Empty);
+
   rpc LikePack(LikeOrRatePackRequest) returns (Empty);
   rpc DislikePack(LikeOrRatePackRequest) returns (Empty);
   rpc RatePack(LikeOrRatePackRequest) returns (Empty);
   rpc UnratePack(LikeOrRatePackRequest) returns (Empty);
-  rpc GetRatedPacks(Empty) returns (RatedPacksResponse);
-  rpc AssignNewPack(AssignNewPackRequest) returns (Empty);
+  rpc GetOneTaskPack(TaskPackRequest) returns (TaskPackResponse) {}
+
+  rpc GetRatedPacks(Empty) returns (GetMultiplePacksResponse);
   rpc GetAllPeople(Empty) returns (People);
+
   rpc RequestFriend(FriendRequest) returns (Empty);
   rpc AcceptFriend(FriendRequest) returns (Empty);
   rpc DeleteFriend(FriendRequest) returns (Empty);
+
   rpc CreateGame(GameRequest) returns (Empty);
   rpc AcceptGame(StatusGameRequest) returns (Empty);
   rpc DeleteGame(StatusGameRequest) returns (Empty);
@@ -95,15 +101,6 @@ message LikeOrRatePackRequest {
   string pack = 2;
 }
 
-message RatedPacksResponse {
-  repeated string packs = 1;
-}
-
-message AssignNewPackRequest {
-  string userID = 1;
-  string packID = 2;
-  string packName = 3;
-}
 
 message PersonInfo {
   string userID = 1;
@@ -123,6 +120,30 @@ message StatusGameRequest {
 
 message GetGameRequest {
   string gameID = 1;
+}
+
+message TaskPackRequest {
+  string id = 1;
+}
+
+message TaskPackResponse {
+  string id = 1;
+  Pack pack = 2;
+}
+
+message NewTaskPackRequest {
+  string userID = 1;
+  string packID = 2;
+  Pack pack = 3;
+}
+
+message Pack {
+  string title = 1;
+  repeated string tasks = 2;
+}
+
+message GetMultiplePacksResponse {
+  repeated TaskPackResponse packs = 1;
 }
 
 message Empty {}

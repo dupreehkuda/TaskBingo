@@ -8,7 +8,7 @@ import (
 
 // RequestFriend calls user repository to request friendship
 func (s service) RequestFriend(ctx context.Context, userID, friendID string) error {
-	err := s.userRepository.RequestFriend(ctx, userID, friendID)
+	err := s.repository.RequestFriend(ctx, userID, friendID)
 	if err != nil {
 		s.logger.Error("Error occurred in call to user service", zap.Error(err))
 		return err
@@ -19,7 +19,7 @@ func (s service) RequestFriend(ctx context.Context, userID, friendID string) err
 
 // AcceptFriend calls user repository to accept friendship
 func (s service) AcceptFriend(ctx context.Context, userID, friendID string) error {
-	err := s.userRepository.AcceptFriend(ctx, userID, friendID)
+	err := s.repository.AcceptFriend(ctx, userID, friendID)
 	if err != nil {
 		s.logger.Error("Error occurred in call to user service", zap.Error(err))
 		return err
@@ -30,7 +30,7 @@ func (s service) AcceptFriend(ctx context.Context, userID, friendID string) erro
 
 // DeleteFriend calls user repository to delete/cancel friendship
 func (s service) DeleteFriend(ctx context.Context, userID, friendID string) error {
-	err := s.userRepository.DeleteFriend(ctx, userID, friendID)
+	err := s.repository.DeleteFriend(ctx, userID, friendID)
 	if err != nil {
 		s.logger.Error("Error occurred in call to user service", zap.Error(err))
 		return err

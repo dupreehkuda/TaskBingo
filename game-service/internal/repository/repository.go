@@ -1,4 +1,4 @@
-package userRepository
+package repository
 
 import (
 	"time"
@@ -10,14 +10,14 @@ import (
 	api "github.com/dupreehkuda/TaskBingo/game-service/pkg/api"
 )
 
-// userRepository provides connection to user service
-type userRepository struct {
+// repository provides connection to user service
+type repository struct {
 	conn   api.UsersClient
 	logger *zap.Logger
 }
 
-// New returns an instance of userRepository
-func New(address string, logger *zap.Logger) *userRepository {
+// New returns an instance of repository
+func New(address string, logger *zap.Logger) *repository {
 	// Sleep before every container is awake
 	time.Sleep(2 * time.Second)
 
@@ -29,7 +29,7 @@ func New(address string, logger *zap.Logger) *userRepository {
 
 	client := api.NewUsersClient(conn)
 
-	return &userRepository{
+	return &repository{
 		conn:   client,
 		logger: logger,
 	}

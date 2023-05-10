@@ -10,7 +10,7 @@ import (
 
 // LoginUser calls user service to log in user and returns JWT-token
 func (s service) LoginUser(ctx context.Context, username, password string) (string, error) {
-	userID, err := s.userRepository.LoginUser(ctx, username, password)
+	userID, err := s.repository.LoginUser(ctx, username, password)
 	if err != nil {
 		return "", err
 	}

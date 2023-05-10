@@ -1,4 +1,4 @@
-package userRepository
+package repository
 
 import (
 	"context"
@@ -12,11 +12,11 @@ import (
 )
 
 // RegisterUser sends register request to user service
-func (u userRepository) RegisterUser(ctx context.Context, credits *models.RegisterCredentials) (string, error) {
-	resp, err := u.conn.RegisterUser(ctx, mapToRegister(credits))
+func (r repository) RegisterUser(ctx context.Context, credits *models.RegisterCredentials) (string, error) {
+	resp, err := r.conn.RegisterUser(ctx, mapToRegister(credits))
 
 	statusCode, _ := status.FromError(err)
-	u.logger.Debug("incoming code", zap.Int("code", int(statusCode.Code())))
+	r.logger.Debug("incoming code", zap.Int("code", int(statusCode.Code())))
 
 	if statusCode.Code() == codes.AlreadyExists {
 		return "", errs.ErrCredentialsInUse

@@ -10,7 +10,7 @@ import (
 
 // GetRoom retrieves game from repository and returns new models.Room
 func (s service) GetRoom(ctx context.Context, gameID string) (*models.Room, error) {
-	gameInfo, err := s.userRepository.GetGame(ctx, gameID)
+	gameInfo, err := s.repository.GetGame(ctx, gameID)
 	if err != nil {
 		s.logger.Error("Error getting game", zap.Error(err))
 		return nil, err
@@ -88,7 +88,7 @@ func (s service) UpdateGame(ctx context.Context, room *models.Room, action *mode
 
 // achieveGame writes ended game to repository
 func (s service) achieveGame(ctx context.Context, room *models.Room, update *models.GameUpdate) (*models.GameUpdate, error) {
-	if err := s.userRepository.AchieveGame(ctx, room.Game); err != nil {
+	if err := s.repository.AchieveGame(ctx, room.Game); err != nil {
 		s.logger.Error("Error in call to user service")
 		return nil, err
 	}

@@ -4,21 +4,26 @@ package api;
 
 option go_package = "./";
 
-// ------------------ Users service ------------------
-service Users {
-  rpc GetUserData(GetUserDataRequest) returns (GetUserDataResponse);
+service BingoData {
   rpc RegisterUser(RegisterUserRequest) returns (RegisterUserResponse);
   rpc LoginUser(LoginUserRequest) returns (LoginUserResponse);
+
+  rpc GetUserData(GetUserDataRequest) returns (GetUserDataResponse);
+  rpc SetNewTaskPack(NewTaskPackRequest) returns (Empty);
+
   rpc LikePack(LikeOrRatePackRequest) returns (Empty);
   rpc DislikePack(LikeOrRatePackRequest) returns (Empty);
   rpc RatePack(LikeOrRatePackRequest) returns (Empty);
   rpc UnratePack(LikeOrRatePackRequest) returns (Empty);
-  rpc GetRatedPacks(Empty) returns (RatedPacksResponse);
-  rpc AssignNewPack(AssignNewPackRequest) returns (Empty);
+  rpc GetOneTaskPack(TaskPackRequest) returns (TaskPackResponse) {}
+
+  rpc GetRatedPacks(Empty) returns (GetMultiplePacksResponse);
   rpc GetAllPeople(Empty) returns (People);
+
   rpc RequestFriend(FriendRequest) returns (Empty);
   rpc AcceptFriend(FriendRequest) returns (Empty);
   rpc DeleteFriend(FriendRequest) returns (Empty);
+
   rpc CreateGame(GameRequest) returns (Empty);
   rpc AcceptGame(StatusGameRequest) returns (Empty);
   rpc DeleteGame(StatusGameRequest) returns (Empty);
@@ -96,15 +101,6 @@ message LikeOrRatePackRequest {
   string pack = 2;
 }
 
-message RatedPacksResponse {
-  repeated string packs = 1;
-}
-
-message AssignNewPackRequest {
-  string userID = 1;
-  string packID = 2;
-  string packName = 3;
-}
 
 message PersonInfo {
   string userID = 1;
@@ -126,28 +122,19 @@ message GetGameRequest {
   string gameID = 1;
 }
 
-message Empty {}
-
-// ------------------ Tasks service ------------------
-service Tasks {
-  rpc GetOneTaskPack(TaskPackRequest) returns (TaskPackResponse) {}
-  rpc AddOneTaskPack(NewTaskPackRequest) returns (NewTaskPackResponse) {}
-  rpc GetMultiplePacks(GetMultiplePacksRequest) returns (GetMultiplePacksResponse) {}
-}
-
 message TaskPackRequest {
   string id = 1;
 }
 
 message TaskPackResponse {
   string id = 1;
-  string title = 2;
-  repeated string tasks = 3;
+  Pack pack = 2;
 }
 
 message NewTaskPackRequest {
-  string id = 1;
-  Pack pack = 2;
+  string userID = 1;
+  string packID = 2;
+  Pack pack = 3;
 }
 
 message Pack {
@@ -155,14 +142,8 @@ message Pack {
   repeated string tasks = 2;
 }
 
-message NewTaskPackResponse {
-  string id = 1;
-}
-
-message GetMultiplePacksRequest {
-  repeated string ids = 1;
-}
-
 message GetMultiplePacksResponse {
   repeated TaskPackResponse packs = 1;
 }
+
+message Empty {}

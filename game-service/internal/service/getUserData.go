@@ -8,9 +8,11 @@ import (
 	"github.com/dupreehkuda/TaskBingo/game-service/internal/models"
 )
 
+// todo should only go to repository
+
 // GetUserData gets user's most important info
 func (s service) GetUserData(ctx context.Context, userID string) (*models.UserAccountInfo, error) {
-	userInfo, err := s.userRepository.GetUserData(ctx, userID)
+	userInfo, err := s.repository.GetUserData(ctx, userID)
 	if err != nil {
 		s.logger.Error("Error occurred in call to user service", zap.Error(err))
 		return nil, err

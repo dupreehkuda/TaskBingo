@@ -28,6 +28,18 @@ CREATE TABLE IF NOT EXISTS ratings (
     created timestamptz NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS packs (
+    id uuid PRIMARY KEY NOT NULL UNIQUE,
+    title text NOT NULL,
+    tasks text[] NOT NULL,
+    rating integer NOT NULL DEFAULT 0,
+    liked integer NOT NULL DEFAULT 1,
+    played integer NOT NULL DEFAULT 0,
+    creator uuid NOT NULL,
+    created timestamptz NOT NULL,
+    last_played timestamptz
+);
+
 CREATE TABLE IF NOT EXISTS friends (
     id uuid NOT NULL,
     friend_id uuid NOT NULL,
@@ -57,3 +69,4 @@ CREATE TABLE IF NOT EXISTS games (
 ALTER TABLE "login" ADD FOREIGN KEY ("id") REFERENCES "users" ("id");
 ALTER TABLE "ratings" ADD FOREIGN KEY ("creator") REFERENCES "users" ("id");
 ALTER TABLE "friends" ADD FOREIGN KEY ("id") REFERENCES "users" ("id");
+ALTER TABLE "packs" ADD FOREIGN KEY ("creator") REFERENCES "users" ("id");

@@ -8,7 +8,7 @@ import (
 
 // LikeTaskPack likes pack by user
 func (s service) LikeTaskPack(ctx context.Context, userID, pack string) error {
-	err := s.userRepository.LikeTaskPack(ctx, userID, pack)
+	err := s.repository.LikeTaskPack(ctx, userID, pack)
 	if err != nil {
 		s.logger.Error("Error occurred calling user repository", zap.Error(err))
 		return err
@@ -19,7 +19,7 @@ func (s service) LikeTaskPack(ctx context.Context, userID, pack string) error {
 
 // DislikeTaskPack dislikes pack by user
 func (s service) DislikeTaskPack(ctx context.Context, userID, pack string) error {
-	err := s.userRepository.DislikeTaskPack(ctx, userID, pack)
+	err := s.repository.DislikeTaskPack(ctx, userID, pack)
 	if err != nil {
 		s.logger.Error("Error occurred calling user repository", zap.Error(err))
 		return err

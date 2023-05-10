@@ -1,4 +1,4 @@
-package userRepository
+package repository
 
 import (
 	"github.com/dupreehkuda/TaskBingo/game-service/internal/models"
@@ -74,7 +74,7 @@ func mapFromPeople(people *api.People) *models.Users {
 	return &users
 }
 
-func mapFromRatedPacks(packs *api.RatedPacksResponse) []string {
+func mapFromRatedPacks(packs *api.RatedPacksResponse) *models.Packs {
 	var res []string
 	for _, val := range packs.Packs {
 		res = append(res, val)

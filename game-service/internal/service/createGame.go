@@ -26,7 +26,7 @@ func (s service) CreateGame(ctx context.Context, userID, opponentID, packID stri
 		User2Numbers: newDefaultNumberSet(),
 	}
 
-	if err := s.userRepository.CreateGame(ctx, &newGame); err != nil {
+	if err := s.repository.CreateGame(ctx, &newGame); err != nil {
 		s.logger.Error("Error occurred in call to user service", zap.Error(err))
 		return err
 	}
@@ -36,7 +36,7 @@ func (s service) CreateGame(ctx context.Context, userID, opponentID, packID stri
 
 // AcceptGame changes status when user accepts the game
 func (s service) AcceptGame(ctx context.Context, userID, gameID string) error {
-	if err := s.userRepository.AcceptGame(ctx, userID, gameID); err != nil {
+	if err := s.repository.AcceptGame(ctx, userID, gameID); err != nil {
 		s.logger.Error("Error occurred in call to user service", zap.Error(err))
 		return err
 	}
@@ -46,7 +46,7 @@ func (s service) AcceptGame(ctx context.Context, userID, gameID string) error {
 
 // DeleteGame deletes the game if created incorrectly or declined by user
 func (s service) DeleteGame(ctx context.Context, userID, gameID string) error {
-	if err := s.userRepository.DeleteGame(ctx, userID, gameID); err != nil {
+	if err := s.repository.DeleteGame(ctx, userID, gameID); err != nil {
 		s.logger.Error("Error occurred in call to user service", zap.Error(err))
 		return err
 	}

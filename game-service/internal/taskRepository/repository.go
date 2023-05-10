@@ -14,7 +14,7 @@ type taskRepository struct {
 	logger *zap.Logger
 }
 
-// New returns an instance of userRepository
+// New returns an instance of repository
 func New(address string, logger *zap.Logger) *taskRepository {
 	creds := insecure.NewCredentials()
 	conn, err := grpc.Dial(address, grpc.WithTransportCredentials(creds))

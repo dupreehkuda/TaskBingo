@@ -11,7 +11,7 @@ import (
 
 // RegisterUser calls user service to register new user and returns JWT-token
 func (s service) RegisterUser(ctx context.Context, credits *models.RegisterCredentials) (string, error) {
-	userID, err := s.userRepository.RegisterUser(ctx, credits)
+	userID, err := s.repository.RegisterUser(ctx, credits)
 	if err != nil {
 		return "", err
 	}

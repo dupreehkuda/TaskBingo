@@ -6,9 +6,10 @@ import (
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
-	errs "github.com/dupreehkuda/TaskBingo/game-service/internal/customErrors"
 	"github.com/dupreehkuda/TaskBingo/game-service/internal/models"
 )
+
+// todo should only go to repository
 
 // SetTaskPack sets new task pack and assigns it to creator
 func (s service) SetTaskPack(ctx context.Context, userID string, pack *models.TaskPack) error {
@@ -19,22 +20,6 @@ func (s service) SetTaskPack(ctx context.Context, userID string, pack *models.Ta
 	}
 
 	pack.ID = packID.String()
-
-	err = s.taskRepository.SetTaskPack(ctx, pack)
-	if err != nil {
-		if err == errs.ErrPackAlreadyExists {
-			return err
-		}
-
-		s.logger.Error("Error in call to task repository", zap.Error(err))
-		return err
-	}
-
-	err = s.userRepository.AssignNewPack(ctx, userID, packID.String(), pack.Pack.Title)
-	if err != nil {
-		s.logger.Error("Error in call to user repository", zap.Error(err))
-		return err
-	}
-
-	return nil
+	
+	return s.repository.SetNewTaskPack(ctx, userID, pack)
 }
