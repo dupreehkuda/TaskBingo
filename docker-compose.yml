@@ -19,21 +19,6 @@ services:
     depends_on:
       - user-service
 
-  task-service:
-    build: ./task-data-service
-    container_name: task-service
-    environment:
-      - REDIS_ADDR=${REDIS_ADDR}
-      - REDIS_PASS=${REDIS_PASS}
-      - RUN_ADDRESS=${TASK_SERVICE_ADDRESS}
-      - CURRENT_DOMAIN=${CURRENT_DOMAIN}
-    env_file: .env
-    ports:
-      - '8083:8083'
-    restart: always
-    volumes:
-      - .:/task_service
-
   user-service:
     build: ./user-data-service
     container_name: user-service
