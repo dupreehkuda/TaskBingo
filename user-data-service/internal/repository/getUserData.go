@@ -76,6 +76,8 @@ func (r repository) GetUserData(ctx context.Context, userID string) (*models.Get
 		return nil
 	})
 
+	// todo get games
+
 	if err = eg.Wait(); err != nil {
 		r.logger.Error("Error when executing statement in eg", zap.Error(err))
 		return nil, err

@@ -134,12 +134,14 @@ func (r repository) AchieveGame(ctx context.Context, game *models.Game) error {
 	}
 	defer conn.Release()
 
+	timeUpd := time.Now()
+
 	tx, err := conn.Begin(ctx)
 
 	if game.Winner != "" {
 		_, err = tx.Exec(ctx, `UPDATE games SET status = $1, user1_bingo = user1_bingo + $2, user2_bingo = user2_bingo + $3,
 	                 winner = $4, user1_numbers = $5, user2_numbers = $6, finished = $7 WHERE id = $8;`,
-			GameEnded, game.User1Bingo, game.User2Bingo, game.Winner, game.User1Numbers, game.User2Numbers, time.Now(), game.GameID)
+			GameEnded, game.User1Bingo, game.User2Bingo, game.Winner, game.User1Numbers, game.User2Numbers, timeUpd, game.GameID)
 
 		if err != nil {
 			r.logger.Error("Error while executing statement", zap.Error(err))
@@ -148,7 +150,7 @@ func (r repository) AchieveGame(ctx context.Context, game *models.Game) error {
 	} else {
 		_, err = tx.Exec(ctx, `UPDATE games SET status = $1, user1_bingo = user1_bingo + $2, user2_bingo = user2_bingo + $3,
 	                 user1_numbers = $4, user2_numbers = $5, finished = $6 WHERE id = $7;`,
-			GameEnded, game.User1Bingo, game.User2Bingo, game.User1Numbers, game.User2Numbers, time.Now(), game.GameID)
+			GameEnded, game.User1Bingo, game.User2Bingo, game.User1Numbers, game.User2Numbers, timeUpd, game.GameID)
 
 		if err != nil {
 			r.logger.Error("Error while executing statement", zap.Error(err))
@@ -163,6 +165,12 @@ func (r repository) AchieveGame(ctx context.Context, game *models.Game) error {
 	}
 
 	_, err = tx.Exec(ctx, `UPDATE users SET bingo = bingo + $1 WHERE id = $2;`, game.User2Bingo, game.User2Id)
+	if err != nil {
+		r.logger.Error("Error while executing statement", zap.Error(err))
+		return err
+	}
+
+	_, err = tx.Exec(ctx, `UPDATE packs SET played = played + 1, last_played = $2 WHERE id = $1;`, game.PackId, timeUpd)
 	if err != nil {
 		r.logger.Error("Error while executing statement", zap.Error(err))
 		return err
