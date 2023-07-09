@@ -17,7 +17,6 @@ import (
 	"github.com/dupreehkuda/TaskBingo/game-service/internal/middleware"
 	"github.com/dupreehkuda/TaskBingo/game-service/internal/repository"
 	"github.com/dupreehkuda/TaskBingo/game-service/internal/service"
-	"github.com/dupreehkuda/TaskBingo/game-service/internal/taskRepository"
 )
 
 // Handlers is an interface for handlers
@@ -60,10 +59,9 @@ func NewByConfig() *api {
 	log := logger.InitializeLogger(cfg.CurrentDomain == "localhost")
 
 	ur := repository.New(cfg.UserServiceAddress, log)
-	tr := taskRepository.New(cfg.TaskServiceAddress, log)
 	mv := middleware.New(log)
 
-	logic := service.New(ur, tr, log)
+	logic := service.New(ur, log)
 
 	handle := handlers.New(logic, cfg.CurrentDomain, log)
 

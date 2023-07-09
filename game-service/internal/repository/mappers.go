@@ -5,14 +5,6 @@ import (
 	api "github.com/dupreehkuda/TaskBingo/game-service/pkg/api"
 )
 
-func mapToAssignNewPackRequest(userID, packID, packName string) *api.AssignNewPackRequest {
-	return &api.AssignNewPackRequest{
-		UserID:   userID,
-		PackID:   packID,
-		PackName: packName,
-	}
-}
-
 func mapToGameRequest(game *models.Game) *api.GameRequest {
 	return &api.GameRequest{
 		GameID:       game.GameID,
@@ -74,17 +66,34 @@ func mapFromPeople(people *api.People) *models.Users {
 	return &users
 }
 
-func mapFromRatedPacks(packs *api.RatedPacksResponse) *models.Packs {
-	var res []string
+func mapFromRatedPacks(packs *api.GetMultiplePacksResponse) *models.Packs {
+	var res models.Packs
+
 	for _, val := range packs.Packs {
-		res = append(res, val)
+		res = append(res, models.TaskPack{
+			ID: val.Id,
+			Pack: models.Pack{
+				Title: val.Pack.Title,
+				Tasks: val.Pack.Tasks,
+			},
+		})
 	}
 
-	return res
+	return &res
 }
 
-func mapFromUserDataResponse(data *api.GetUserDataResponse) *models.UserAccountInfoResponse {
-	res := models.UserAccountInfoResponse{
+func mapFromTaskPack(pack *api.TaskPackResponse) *models.TaskPack {
+	return &models.TaskPack{
+		ID: pack.Id,
+		Pack: models.Pack{
+			Title: pack.Pack.Title,
+			Tasks: pack.Pack.Tasks,
+		},
+	}
+}
+
+func mapFromUserDataResponse(data *api.GetUserDataResponse) *models.UserAccountInfo {
+	res := models.UserAccountInfo{
 		UserID:     data.UserID,
 		Username:   data.Username,
 		City:       data.City,
@@ -92,21 +101,39 @@ func mapFromUserDataResponse(data *api.GetUserDataResponse) *models.UserAccountI
 		Lose:       int(data.Loses),
 		Bingo:      int(data.Bingo),
 		Friends:    []models.FriendsInfo{},
-		LikedPacks: data.LikedPacks,
+		LikedPacks: []models.TaskPack{},
 		RatedPacks: data.RatedPacks,
 	}
 
 	for _, val := range data.Friends {
-		res.Friends = append(res.Friends, models.FriendsInfo{
-			UserID:   val.UserID,
-			Username: val.Username,
-			Status:   int(val.Status),
-			Wins:     int(val.Wins),
-			Loses:    int(val.Loses),
-		})
+		res.Friends = append(res.Friends, mapToFriend(val))
+	}
+
+	for _, val := range data.LikedPacks {
+		res.LikedPacks = append(res.LikedPacks, mapToPack(val))
 	}
 
 	return &res
+}
+
+func mapToFriend(friend *api.FriendInfo) models.FriendsInfo {
+	return models.FriendsInfo{
+		UserID:   friend.UserID,
+		Username: friend.Username,
+		Status:   int(friend.Status),
+		Wins:     int(friend.Wins),
+		Loses:    int(friend.Loses),
+	}
+}
+
+func mapToPack(pack *api.TaskPackResponse) models.TaskPack {
+	return models.TaskPack{
+		ID: pack.Id,
+		Pack: models.Pack{
+			Title: pack.Pack.Title,
+			Tasks: pack.Pack.Tasks,
+		},
+	}
 }
 
 func mapToLikeOrRate(userID, pack string) *api.LikeOrRatePackRequest {
@@ -129,5 +156,16 @@ func mapToRegister(credits *models.RegisterCredentials) *api.RegisterUserRequest
 		Email:    credits.Email,
 		City:     credits.City,
 		Password: credits.Password,
+	}
+}
+
+func mapToNewTaskPack(userID string, pack *models.TaskPack) *api.NewTaskPackRequest {
+	return &api.NewTaskPackRequest{
+		UserID: userID,
+		PackID: pack.ID,
+		Pack: &api.Pack{
+			Title: pack.Pack.Title,
+			Tasks: pack.Pack.Tasks,
+		},
 	}
 }

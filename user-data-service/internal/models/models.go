@@ -22,7 +22,7 @@ type GetUserDataResponse struct {
 	Lose       int           `json:"lose"`
 	Bingo      int           `json:"bingo"`
 	Friends    []FriendsInfo `json:"friends"`
-	LikedPacks []string      `json:"likedPacks"`
+	LikedPacks []TaskPack    `json:"likedPacks"`
 	RatedPacks []string      `json:"ratedPacks"`
 }
 

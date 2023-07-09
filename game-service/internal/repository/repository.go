@@ -12,7 +12,7 @@ import (
 
 // repository provides connection to user service
 type repository struct {
-	conn   api.UsersClient
+	conn   api.BingoDataClient
 	logger *zap.Logger
 }
 
@@ -27,7 +27,7 @@ func New(address string, logger *zap.Logger) *repository {
 		logger.Error("Error when connecting to user-service (not connected)")
 	}
 
-	client := api.NewUsersClient(conn)
+	client := api.NewBingoDataClient(conn)
 
 	return &repository{
 		conn:   client,

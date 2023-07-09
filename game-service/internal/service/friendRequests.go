@@ -2,39 +2,19 @@ package service
 
 import (
 	"context"
-
-	"go.uber.org/zap"
 )
 
 // RequestFriend calls user repository to request friendship
 func (s service) RequestFriend(ctx context.Context, userID, friendID string) error {
-	err := s.repository.RequestFriend(ctx, userID, friendID)
-	if err != nil {
-		s.logger.Error("Error occurred in call to user service", zap.Error(err))
-		return err
-	}
-
-	return nil
+	return s.repository.RequestFriend(ctx, userID, friendID)
 }
 
 // AcceptFriend calls user repository to accept friendship
 func (s service) AcceptFriend(ctx context.Context, userID, friendID string) error {
-	err := s.repository.AcceptFriend(ctx, userID, friendID)
-	if err != nil {
-		s.logger.Error("Error occurred in call to user service", zap.Error(err))
-		return err
-	}
-
-	return nil
+	return s.repository.AcceptFriend(ctx, userID, friendID)
 }
 
 // DeleteFriend calls user repository to delete/cancel friendship
 func (s service) DeleteFriend(ctx context.Context, userID, friendID string) error {
-	err := s.repository.DeleteFriend(ctx, userID, friendID)
-	if err != nil {
-		s.logger.Error("Error occurred in call to user service", zap.Error(err))
-		return err
-	}
-
-	return nil
+	return s.repository.DeleteFriend(ctx, userID, friendID)
 }

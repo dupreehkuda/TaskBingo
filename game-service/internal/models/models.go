@@ -88,21 +88,6 @@ type (
 		RatedPacks []string      `json:"ratedPacks"`
 	}
 
-	// UserAccountInfoResponse provides basic account info without pack data
-	//
-	// After transforms to UserAccountInfo
-	UserAccountInfoResponse struct {
-		UserID     string        `json:"userID"`
-		Username   string        `json:"username"`
-		City       string        `json:"city"`
-		Wins       int           `json:"wins"`
-		Lose       int           `json:"lose"`
-		Bingo      int           `json:"bingo"`
-		Friends    []FriendsInfo `json:"friends"`
-		LikedPacks []string      `json:"likedPacks"`
-		RatedPacks []string      `json:"ratedPacks"`
-	}
-
 	// User provides brief user info
 	User struct {
 		UserID   string `json:"userID"`

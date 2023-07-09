@@ -60,22 +60,30 @@ func mapToUserDataResponse(data *models.GetUserDataResponse) *api.GetUserDataRes
 		Wins:       int32(data.Wins),
 		Loses:      int32(data.Lose),
 		Bingo:      int32(data.Bingo),
-		Friends:    nil,
-		LikedPacks: data.LikedPacks,
+		Friends:    []*api.FriendInfo{},
+		LikedPacks: []*api.TaskPackResponse{},
 		RatedPacks: data.RatedPacks,
 	}
 
 	for _, val := range data.Friends {
-		resp.Friends = append(resp.Friends, &api.FriendInfo{
-			UserID:   val.UserID,
-			Username: val.Username,
-			Status:   int32(val.Status),
-			Wins:     int32(val.Wins),
-			Loses:    int32(val.Loses),
-		})
+		resp.Friends = append(resp.Friends, mapToFriend(&val))
+	}
+
+	for _, val := range data.LikedPacks {
+		resp.LikedPacks = append(resp.LikedPacks, mapToPack(&val))
 	}
 
 	return resp
+}
+
+func mapToFriend(friend *models.FriendsInfo) *api.FriendInfo {
+	return &api.FriendInfo{
+		UserID:   friend.UserID,
+		Username: friend.Username,
+		Status:   int32(friend.Status),
+		Wins:     int32(friend.Wins),
+		Loses:    int32(friend.Loses),
+	}
 }
 
 func mapToLoginUserResponse(userID, username string) *api.LoginUserResponse {

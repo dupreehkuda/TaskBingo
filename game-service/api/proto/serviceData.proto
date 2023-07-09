@@ -2,22 +2,23 @@ syntax = "proto3";
 
 package api;
 
-option go_package = "./";
+option go_package = "github.com/dupreehkuda/TaskBingo/game-service";
 
 service BingoData {
   rpc RegisterUser(RegisterUserRequest) returns (RegisterUserResponse);
   rpc LoginUser(LoginUserRequest) returns (LoginUserResponse);
 
   rpc GetUserData(GetUserDataRequest) returns (GetUserDataResponse);
-  rpc SetNewTaskPack(NewTaskPackRequest) returns (Empty);
 
   rpc LikePack(LikeOrRatePackRequest) returns (Empty);
   rpc DislikePack(LikeOrRatePackRequest) returns (Empty);
   rpc RatePack(LikeOrRatePackRequest) returns (Empty);
   rpc UnratePack(LikeOrRatePackRequest) returns (Empty);
-  rpc GetOneTaskPack(TaskPackRequest) returns (TaskPackResponse) {}
 
+  rpc SetNewTaskPack(NewTaskPackRequest) returns (Empty);
+  rpc GetOneTaskPack(TaskPackRequest) returns (TaskPackResponse);
   rpc GetRatedPacks(Empty) returns (GetMultiplePacksResponse);
+
   rpc GetAllPeople(Empty) returns (People);
 
   rpc RequestFriend(FriendRequest) returns (Empty);
@@ -72,7 +73,7 @@ message GetUserDataResponse {
   int32 loses = 5;
   int32 bingo = 6;
   repeated FriendInfo friends = 7;
-  repeated string likedPacks = 8;
+  repeated TaskPackResponse likedPacks = 8;
   repeated string ratedPacks = 9;
 }
 
@@ -100,7 +101,6 @@ message LikeOrRatePackRequest {
   string userID = 1;
   string pack = 2;
 }
-
 
 message PersonInfo {
   string userID = 1;

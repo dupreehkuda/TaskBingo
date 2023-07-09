@@ -36,22 +36,12 @@ func (s service) CreateGame(ctx context.Context, userID, opponentID, packID stri
 
 // AcceptGame changes status when user accepts the game
 func (s service) AcceptGame(ctx context.Context, userID, gameID string) error {
-	if err := s.repository.AcceptGame(ctx, userID, gameID); err != nil {
-		s.logger.Error("Error occurred in call to user service", zap.Error(err))
-		return err
-	}
-
-	return nil
+	return s.repository.AcceptGame(ctx, userID, gameID)
 }
 
 // DeleteGame deletes the game if created incorrectly or declined by user
 func (s service) DeleteGame(ctx context.Context, userID, gameID string) error {
-	if err := s.repository.DeleteGame(ctx, userID, gameID); err != nil {
-		s.logger.Error("Error occurred in call to user service", zap.Error(err))
-		return err
-	}
-
-	return nil
+	return s.repository.DeleteGame(ctx, userID, gameID)
 }
 
 // newShuffledNumberSet returns a slice of shuffled numbers 1-16

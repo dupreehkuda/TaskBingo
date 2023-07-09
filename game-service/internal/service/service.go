@@ -10,7 +10,7 @@ import (
 
 // Repository is an interface for user data service
 type Repository interface {
-	GetUserData(ctx context.Context, userID string) (*models.UserAccountInfoResponse, error)
+	GetUserData(ctx context.Context, userID string) (*models.UserAccountInfo, error)
 	RegisterUser(ctx context.Context, credits *models.RegisterCredentials) (string, error)
 	LoginUser(ctx context.Context, username, password string) (string, error)
 
