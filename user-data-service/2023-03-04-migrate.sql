@@ -18,16 +18,6 @@ CREATE TABLE IF NOT EXISTS login (
     passwordsalt text NOT NULL UNIQUE
 );
 
-CREATE TABLE IF NOT EXISTS ratings (
-    id uuid PRIMARY KEY NOT NULL UNIQUE,
-    pack text NOT NULL,
-    rating integer NOT NULL DEFAULT 0,
-    liked integer NOT NULL DEFAULT 1,
-    played integer NOT NULL DEFAULT 0,
-    creator uuid NOT NULL,
-    created timestamptz NOT NULL
-);
-
 CREATE TABLE IF NOT EXISTS packs (
     id uuid PRIMARY KEY NOT NULL UNIQUE,
     title text NOT NULL,

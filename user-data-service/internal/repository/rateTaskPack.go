@@ -17,7 +17,7 @@ func (r repository) RatePack(ctx context.Context, userID, pack string, inc int) 
 
 	tx, err := conn.Begin(ctx)
 
-	tx.Exec(ctx, "UPDATE ratings SET rating = rating + $1 WHERE id = $2;", inc, pack)
+	tx.Exec(ctx, "UPDATE packs SET rating = rating + $1 WHERE id = $2;", inc, pack)
 
 	if inc == 1 {
 		tx.Exec(ctx, "UPDATE users SET ratedpacks = ARRAY_APPEND(ratedpacks, $1) WHERE id = $2;", pack, userID)

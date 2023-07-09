@@ -17,7 +17,7 @@ func (r repository) LikePack(ctx context.Context, userID, pack string, inc int) 
 
 	tx, err := conn.Begin(ctx)
 
-	tx.Exec(ctx, "UPDATE ratings SET liked = liked + $1 WHERE id = $2;", inc, pack)
+	tx.Exec(ctx, "UPDATE packs SET liked = liked + $1 WHERE id = $2;", inc, pack)
 
 	if inc == 1 {
 		// add pack id to the liked array

@@ -25,9 +25,6 @@ func (r repository) AddTaskPack(ctx context.Context, userID string, pack *models
 	_, err = tx.Exec(ctx, "INSERT INTO packs (id, title, tasks, creator, created) VALUES ($1, $2, $3, $4, $5);",
 		pack.ID, pack.Pack.Title, pack.Pack.Tasks, userID, createdAt)
 
-	_, err = tx.Exec(ctx, "INSERT INTO ratings (id, pack, creator, created) VALUES ($1, $2, $3, $4);",
-		pack.ID, pack.Pack.Title, userID, createdAt)
-
 	_, err = tx.Exec(ctx, "UPDATE users SET likedPacks = ARRAY_APPEND(likedPacks, $1) WHERE id = $2;",
 		pack.ID, userID)
 
