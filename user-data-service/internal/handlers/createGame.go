@@ -10,9 +10,7 @@ import (
 
 // CreateGame handles the operation of writing new game to db
 func (h *Handlers) CreateGame(ctx context.Context, req *api.GameRequest) (*api.Empty, error) {
-	err := h.service.CreateGame(ctx, mapFromGameRequest(req))
-
-	if err != nil {
+	if err := h.service.CreateGame(ctx, mapFromGameRequest(req)); err != nil {
 		h.logger.Error("Error occurred calling service", zap.Error(err))
 		return nil, err
 	}

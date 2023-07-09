@@ -91,3 +91,29 @@ func mapToRegisterUserResponse(userID, username string) *api.RegisterUserRespons
 		Username: username,
 	}
 }
+
+func mapToMultiplePacks(packs *[]models.TaskPack) []*api.TaskPackResponse {
+	var result []*api.TaskPackResponse
+
+	for _, pack := range *packs {
+		result = append(result, &api.TaskPackResponse{
+			Id: pack.ID,
+			Pack: &api.Pack{
+				Title: pack.Pack.Title,
+				Tasks: pack.Pack.Tasks,
+			},
+		})
+	}
+
+	return result
+}
+
+func mapToPack(pack *models.TaskPack) *api.TaskPackResponse {
+	return &api.TaskPackResponse{
+		Id: pack.ID,
+		Pack: &api.Pack{
+			Title: pack.Pack.Title,
+			Tasks: pack.Pack.Tasks,
+		},
+	}
+}

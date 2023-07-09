@@ -50,7 +50,7 @@ func NewByConfig() *server {
 func (a server) Run() {
 	s := grpc.NewServer()
 	serv := a.handlers
-	api.RegisterUsersServer(s, serv)
+	api.RegisterBingoDataServer(s, serv)
 
 	l, err := net.Listen("tcp", a.config.Address)
 	if err != nil {

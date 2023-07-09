@@ -11,7 +11,7 @@ import (
 
 // Handler is interface for handlers
 type Handler interface {
-	api.UsersServer
+	api.BingoDataServer
 }
 
 // Service is interface for business-logic
@@ -20,10 +20,12 @@ type Service interface {
 	LoginUser(ctx context.Context, username, password string) (string, error)
 	GetUserData(ctx context.Context, userID string) (*models.GetUserDataResponse, error)
 
-	GetRatedPacks(ctx context.Context) ([]string, error)
+	GetRatedPacks(ctx context.Context) (*[]models.TaskPack, error)
+	AddTaskPack(ctx context.Context, userID string, pack *models.TaskPack) error
+	GetTaskPack(ctx context.Context, packId string) (*models.TaskPack, error)
+
 	LikePack(ctx context.Context, userID, pack string, inc int) error
 	RatePack(ctx context.Context, userID, pack string, inc int) error
-	AssignNewPack(ctx context.Context, userID, packID string, packName string) error
 
 	GetAllUsers(ctx context.Context) (*[]models.AllUsers, error)
 	AcceptFriend(ctx context.Context, userID, friendID string) error

@@ -54,3 +54,15 @@ type Game struct {
 	User1Numbers []int32 `json:"user1Numbers"`
 	User2Numbers []int32 `json:"user2Numbers"`
 }
+
+// Pack provides complete task pack info
+type Pack struct {
+	Title string   `json:"title"`
+	Tasks []string `json:"tasks"`
+}
+
+// TaskPack provides task pack with id
+type TaskPack struct {
+	ID   string `json:"id"`
+	Pack Pack   `json:"pack"`
+}

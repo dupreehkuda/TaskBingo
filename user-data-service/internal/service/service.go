@@ -15,10 +15,12 @@ type Repository interface {
 	CreateUser(ctx context.Context, userID, username, email, passwordHash, passwordSalt, city string) error
 	LoginUser(ctx context.Context, username string) (*models.LoginUserResponse, error)
 
-	GetRatedPacks(ctx context.Context) ([]string, error)
+	GetRatedPacks(ctx context.Context) (*[]models.TaskPack, error)
+	AddTaskPack(ctx context.Context, userID string, pack *models.TaskPack) error
+	GetTaskPack(ctx context.Context, packId string) (*models.TaskPack, error)
+
 	LikePack(ctx context.Context, userID, pack string, inc int) error
 	RatePack(ctx context.Context, userID, pack string, inc int) error
-	AssignNewPack(ctx context.Context, userID, packID string, packName string) error
 
 	GetAllUsers(ctx context.Context) (*[]models.AllUsers, error)
 	AcceptFriend(ctx context.Context, userID, friendID string) error
