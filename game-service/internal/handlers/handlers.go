@@ -29,7 +29,7 @@ type Service interface {
 	DeleteFriend(ctx context.Context, userID, friendID string) error
 	RequestFriend(ctx context.Context, userID, friendID string) error
 
-	CreateGame(ctx context.Context, userID, opponentID, packID string) error
+	CreateGame(ctx context.Context, userID, opponentID, packID string) (*models.GameShort, error)
 	AcceptGame(ctx context.Context, userID, gameID string) error
 	DeleteGame(ctx context.Context, userID, gameID string) error
 	GetRoom(ctx context.Context, gameID string) (*models.Room, error)

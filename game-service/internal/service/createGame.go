@@ -11,9 +11,11 @@ import (
 )
 
 // CreateGame creates new game instance
-func (s service) CreateGame(ctx context.Context, userID, opponentID, packID string) error {
+func (s service) CreateGame(ctx context.Context, userID, opponentID, packID string) (*models.GameShort, error) {
+	gameID := uuid.New().String()
+
 	var newGame = models.Game{
-		GameID:       uuid.New().String(),
+		GameID:       gameID,
 		User1Id:      userID,
 		User2Id:      opponentID,
 		PackId:       packID,
@@ -28,10 +30,19 @@ func (s service) CreateGame(ctx context.Context, userID, opponentID, packID stri
 
 	if err := s.repository.CreateGame(ctx, &newGame); err != nil {
 		s.logger.Error("Error occurred in call to user service", zap.Error(err))
-		return err
+		return nil, err
 	}
 
-	return nil
+	return &models.GameShort{
+		GameID:     gameID,
+		User1Id:    userID,
+		User2Id:    opponentID,
+		PackId:     packID,
+		Status:     0,
+		User1Bingo: 0,
+		User2Bingo: 0,
+		Winner:     "",
+	}, nil
 }
 
 // AcceptGame changes status when user accepts the game

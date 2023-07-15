@@ -36,14 +36,28 @@ func (h *handlers) CreateGame(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.service.CreateGame(r.Context(), userID, req.OpponentID, req.Pack)
+	resp, err := h.service.CreateGame(r.Context(), userID, req.OpponentID, req.Pack)
 	if err != nil {
 		h.logger.Error("Error creating game", zap.Error(err))
 		return
 	}
 
+	resultJSON, err := easyjson.Marshal(resp)
+	if err != nil {
+		h.logger.Error("Error marshaling data", zap.Error(err))
+		return
+	}
+
 	w.Header().Add("Access-Control-Allow-Credentials", "true")
 	w.Header().Add("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Content-Type", "application/json")
+
+	_, err = w.Write(resultJSON)
+	if err != nil {
+		h.logger.Error("Unable to write response", zap.Error(err))
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
 }
 
 // AcceptGame handles the operation of accepting a game
