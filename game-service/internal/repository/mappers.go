@@ -103,6 +103,7 @@ func mapFromUserDataResponse(data *api.GetUserDataResponse) *models.UserAccountI
 		Friends:    []models.FriendsInfo{},
 		LikedPacks: []models.TaskPack{},
 		RatedPacks: append([]string{}, data.RatedPacks...),
+		Games:      []models.GameShort{},
 	}
 
 	for _, val := range data.Friends {
@@ -113,7 +114,24 @@ func mapFromUserDataResponse(data *api.GetUserDataResponse) *models.UserAccountI
 		res.LikedPacks = append(res.LikedPacks, mapToPack(val))
 	}
 
+	for _, val := range data.Games {
+		res.Games = append(res.Games, mapToGame(val))
+	}
+
 	return &res
+}
+
+func mapToGame(game *api.GameShort) models.GameShort {
+	return models.GameShort{
+		GameID:     game.GameID,
+		User1Id:    game.User1Id,
+		User2Id:    game.User2Id,
+		PackId:     game.Pack,
+		Status:     game.Status,
+		User1Bingo: game.User1Bingo,
+		User2Bingo: game.User2Bingo,
+		Winner:     game.Winner,
+	}
 }
 
 func mapToFriend(friend *api.FriendInfo) models.FriendsInfo {

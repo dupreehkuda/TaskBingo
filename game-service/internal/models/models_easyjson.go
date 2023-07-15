@@ -171,6 +171,29 @@ func easyjsonD2b7633eDecodeGithubComDupreehkudaTaskBingoGameServiceInternalModel
 				}
 				in.Delim(']')
 			}
+		case "games":
+			if in.IsNull() {
+				in.Skip()
+				out.Games = nil
+			} else {
+				in.Delim('[')
+				if out.Games == nil {
+					if !in.IsDelim(']') {
+						out.Games = make([]GameShort, 0, 0)
+					} else {
+						out.Games = []GameShort{}
+					}
+				} else {
+					out.Games = (out.Games)[:0]
+				}
+				for !in.IsDelim(']') {
+					var v7 GameShort
+					(v7).UnmarshalEasyJSON(in)
+					out.Games = append(out.Games, v7)
+					in.WantComma()
+				}
+				in.Delim(']')
+			}
 		default:
 			in.SkipRecursive()
 		}
@@ -222,11 +245,11 @@ func easyjsonD2b7633eEncodeGithubComDupreehkudaTaskBingoGameServiceInternalModel
 			out.RawString("null")
 		} else {
 			out.RawByte('[')
-			for v7, v8 := range in.Friends {
-				if v7 > 0 {
+			for v8, v9 := range in.Friends {
+				if v8 > 0 {
 					out.RawByte(',')
 				}
-				(v8).MarshalEasyJSON(out)
+				(v9).MarshalEasyJSON(out)
 			}
 			out.RawByte(']')
 		}
@@ -238,11 +261,11 @@ func easyjsonD2b7633eEncodeGithubComDupreehkudaTaskBingoGameServiceInternalModel
 			out.RawString("null")
 		} else {
 			out.RawByte('[')
-			for v9, v10 := range in.LikedPacks {
-				if v9 > 0 {
+			for v10, v11 := range in.LikedPacks {
+				if v10 > 0 {
 					out.RawByte(',')
 				}
-				(v10).MarshalEasyJSON(out)
+				(v11).MarshalEasyJSON(out)
 			}
 			out.RawByte(']')
 		}
@@ -254,11 +277,27 @@ func easyjsonD2b7633eEncodeGithubComDupreehkudaTaskBingoGameServiceInternalModel
 			out.RawString("null")
 		} else {
 			out.RawByte('[')
-			for v11, v12 := range in.RatedPacks {
-				if v11 > 0 {
+			for v12, v13 := range in.RatedPacks {
+				if v12 > 0 {
 					out.RawByte(',')
 				}
-				out.String(string(v12))
+				out.String(string(v13))
+			}
+			out.RawByte(']')
+		}
+	}
+	{
+		const prefix string = ",\"games\":"
+		out.RawString(prefix)
+		if in.Games == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
+			out.RawString("null")
+		} else {
+			out.RawByte('[')
+			for v14, v15 := range in.Games {
+				if v14 > 0 {
+					out.RawByte(',')
+				}
+				(v15).MarshalEasyJSON(out)
 			}
 			out.RawByte(']')
 		}
@@ -896,9 +935,9 @@ func easyjsonD2b7633eDecodeGithubComDupreehkudaTaskBingoGameServiceInternalModel
 			*out = (*out)[:0]
 		}
 		for !in.IsDelim(']') {
-			var v13 TaskPack
-			(v13).UnmarshalEasyJSON(in)
-			*out = append(*out, v13)
+			var v16 TaskPack
+			(v16).UnmarshalEasyJSON(in)
+			*out = append(*out, v16)
 			in.WantComma()
 		}
 		in.Delim(']')
@@ -912,11 +951,11 @@ func easyjsonD2b7633eEncodeGithubComDupreehkudaTaskBingoGameServiceInternalModel
 		out.RawString("null")
 	} else {
 		out.RawByte('[')
-		for v14, v15 := range in {
-			if v14 > 0 {
+		for v17, v18 := range in {
+			if v17 > 0 {
 				out.RawByte(',')
 			}
-			(v15).MarshalEasyJSON(out)
+			(v18).MarshalEasyJSON(out)
 		}
 		out.RawByte(']')
 	}
@@ -968,9 +1007,9 @@ func easyjsonD2b7633eDecodeGithubComDupreehkudaTaskBingoGameServiceInternalModel
 					out.Tasks = (out.Tasks)[:0]
 				}
 				for !in.IsDelim(']') {
-					var v16 string
-					v16 = string(in.String())
-					out.Tasks = append(out.Tasks, v16)
+					var v19 string
+					v19 = string(in.String())
+					out.Tasks = append(out.Tasks, v19)
 					in.WantComma()
 				}
 				in.Delim(']')
@@ -1001,11 +1040,11 @@ func easyjsonD2b7633eEncodeGithubComDupreehkudaTaskBingoGameServiceInternalModel
 			out.RawString("null")
 		} else {
 			out.RawByte('[')
-			for v17, v18 := range in.Tasks {
-				if v17 > 0 {
+			for v20, v21 := range in.Tasks {
+				if v20 > 0 {
 					out.RawByte(',')
 				}
-				out.String(string(v18))
+				out.String(string(v21))
 			}
 			out.RawByte(']')
 		}
@@ -1179,9 +1218,9 @@ func easyjsonD2b7633eDecodeGithubComDupreehkudaTaskBingoGameServiceInternalModel
 					out.Numbers = (out.Numbers)[:0]
 				}
 				for !in.IsDelim(']') {
-					var v19 int32
-					v19 = int32(in.Int32())
-					out.Numbers = append(out.Numbers, v19)
+					var v22 int32
+					v22 = int32(in.Int32())
+					out.Numbers = append(out.Numbers, v22)
 					in.WantComma()
 				}
 				in.Delim(']')
@@ -1217,11 +1256,11 @@ func easyjsonD2b7633eEncodeGithubComDupreehkudaTaskBingoGameServiceInternalModel
 			out.RawString("null")
 		} else {
 			out.RawByte('[')
-			for v20, v21 := range in.Numbers {
-				if v20 > 0 {
+			for v23, v24 := range in.Numbers {
+				if v23 > 0 {
 					out.RawByte(',')
 				}
-				out.Int32(int32(v21))
+				out.Int32(int32(v24))
 			}
 			out.RawByte(']')
 		}
@@ -1238,7 +1277,108 @@ func (v GameUpdate) MarshalEasyJSON(w *jwriter.Writer) {
 func (v *GameUpdate) UnmarshalEasyJSON(l *jlexer.Lexer) {
 	easyjsonD2b7633eDecodeGithubComDupreehkudaTaskBingoGameServiceInternalModels14(l, v)
 }
-func easyjsonD2b7633eDecodeGithubComDupreehkudaTaskBingoGameServiceInternalModels15(in *jlexer.Lexer, out *GameHub) {
+func easyjsonD2b7633eDecodeGithubComDupreehkudaTaskBingoGameServiceInternalModels15(in *jlexer.Lexer, out *GameShort) {
+	isTopLevel := in.IsStart()
+	if in.IsNull() {
+		if isTopLevel {
+			in.Consumed()
+		}
+		in.Skip()
+		return
+	}
+	in.Delim('{')
+	for !in.IsDelim('}') {
+		key := in.UnsafeFieldName(false)
+		in.WantColon()
+		if in.IsNull() {
+			in.Skip()
+			in.WantComma()
+			continue
+		}
+		switch key {
+		case "gameId":
+			out.GameID = string(in.String())
+		case "user1Id":
+			out.User1Id = string(in.String())
+		case "user2Id":
+			out.User2Id = string(in.String())
+		case "packId":
+			out.PackId = string(in.String())
+		case "status":
+			out.Status = int32(in.Int32())
+		case "user1Bingo":
+			out.User1Bingo = int32(in.Int32())
+		case "user2Bingo":
+			out.User2Bingo = int32(in.Int32())
+		case "winner":
+			out.Winner = string(in.String())
+		default:
+			in.SkipRecursive()
+		}
+		in.WantComma()
+	}
+	in.Delim('}')
+	if isTopLevel {
+		in.Consumed()
+	}
+}
+func easyjsonD2b7633eEncodeGithubComDupreehkudaTaskBingoGameServiceInternalModels15(out *jwriter.Writer, in GameShort) {
+	out.RawByte('{')
+	first := true
+	_ = first
+	{
+		const prefix string = ",\"gameId\":"
+		out.RawString(prefix[1:])
+		out.String(string(in.GameID))
+	}
+	{
+		const prefix string = ",\"user1Id\":"
+		out.RawString(prefix)
+		out.String(string(in.User1Id))
+	}
+	{
+		const prefix string = ",\"user2Id\":"
+		out.RawString(prefix)
+		out.String(string(in.User2Id))
+	}
+	{
+		const prefix string = ",\"packId\":"
+		out.RawString(prefix)
+		out.String(string(in.PackId))
+	}
+	{
+		const prefix string = ",\"status\":"
+		out.RawString(prefix)
+		out.Int32(int32(in.Status))
+	}
+	{
+		const prefix string = ",\"user1Bingo\":"
+		out.RawString(prefix)
+		out.Int32(int32(in.User1Bingo))
+	}
+	{
+		const prefix string = ",\"user2Bingo\":"
+		out.RawString(prefix)
+		out.Int32(int32(in.User2Bingo))
+	}
+	{
+		const prefix string = ",\"winner\":"
+		out.RawString(prefix)
+		out.String(string(in.Winner))
+	}
+	out.RawByte('}')
+}
+
+// MarshalEasyJSON supports easyjson.Marshaler interface
+func (v GameShort) MarshalEasyJSON(w *jwriter.Writer) {
+	easyjsonD2b7633eEncodeGithubComDupreehkudaTaskBingoGameServiceInternalModels15(w, v)
+}
+
+// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
+func (v *GameShort) UnmarshalEasyJSON(l *jlexer.Lexer) {
+	easyjsonD2b7633eDecodeGithubComDupreehkudaTaskBingoGameServiceInternalModels15(l, v)
+}
+func easyjsonD2b7633eDecodeGithubComDupreehkudaTaskBingoGameServiceInternalModels16(in *jlexer.Lexer, out *GameHub) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -1268,17 +1408,17 @@ func easyjsonD2b7633eDecodeGithubComDupreehkudaTaskBingoGameServiceInternalModel
 				for !in.IsDelim('}') {
 					key := string(in.String())
 					in.WantColon()
-					var v22 *Room
+					var v25 *Room
 					if in.IsNull() {
 						in.Skip()
-						v22 = nil
+						v25 = nil
 					} else {
-						if v22 == nil {
-							v22 = new(Room)
+						if v25 == nil {
+							v25 = new(Room)
 						}
-						(*v22).UnmarshalEasyJSON(in)
+						(*v25).UnmarshalEasyJSON(in)
 					}
-					(out.Rooms)[key] = v22
+					(out.Rooms)[key] = v25
 					in.WantComma()
 				}
 				in.Delim('}')
@@ -1293,7 +1433,7 @@ func easyjsonD2b7633eDecodeGithubComDupreehkudaTaskBingoGameServiceInternalModel
 		in.Consumed()
 	}
 }
-func easyjsonD2b7633eEncodeGithubComDupreehkudaTaskBingoGameServiceInternalModels15(out *jwriter.Writer, in GameHub) {
+func easyjsonD2b7633eEncodeGithubComDupreehkudaTaskBingoGameServiceInternalModels16(out *jwriter.Writer, in GameHub) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -1309,19 +1449,19 @@ func easyjsonD2b7633eEncodeGithubComDupreehkudaTaskBingoGameServiceInternalModel
 			out.RawString(`null`)
 		} else {
 			out.RawByte('{')
-			v23First := true
-			for v23Name, v23Value := range in.Rooms {
-				if v23First {
-					v23First = false
+			v26First := true
+			for v26Name, v26Value := range in.Rooms {
+				if v26First {
+					v26First = false
 				} else {
 					out.RawByte(',')
 				}
-				out.String(string(v23Name))
+				out.String(string(v26Name))
 				out.RawByte(':')
-				if v23Value == nil {
+				if v26Value == nil {
 					out.RawString("null")
 				} else {
-					(*v23Value).MarshalEasyJSON(out)
+					(*v26Value).MarshalEasyJSON(out)
 				}
 			}
 			out.RawByte('}')
@@ -1332,12 +1472,12 @@ func easyjsonD2b7633eEncodeGithubComDupreehkudaTaskBingoGameServiceInternalModel
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
 func (v GameHub) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonD2b7633eEncodeGithubComDupreehkudaTaskBingoGameServiceInternalModels15(w, v)
+	easyjsonD2b7633eEncodeGithubComDupreehkudaTaskBingoGameServiceInternalModels16(w, v)
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
 func (v *GameHub) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonD2b7633eDecodeGithubComDupreehkudaTaskBingoGameServiceInternalModels15(l, v)
+	easyjsonD2b7633eDecodeGithubComDupreehkudaTaskBingoGameServiceInternalModels16(l, v)
 }
 func easyjsonD2b7633eDecodeSync(in *jlexer.Lexer, out *sync.Mutex) {
 	isTopLevel := in.IsStart()
@@ -1374,7 +1514,7 @@ func easyjsonD2b7633eEncodeSync(out *jwriter.Writer, in sync.Mutex) {
 	_ = first
 	out.RawByte('}')
 }
-func easyjsonD2b7633eDecodeGithubComDupreehkudaTaskBingoGameServiceInternalModels16(in *jlexer.Lexer, out *GameAction) {
+func easyjsonD2b7633eDecodeGithubComDupreehkudaTaskBingoGameServiceInternalModels17(in *jlexer.Lexer, out *GameAction) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -1413,9 +1553,9 @@ func easyjsonD2b7633eDecodeGithubComDupreehkudaTaskBingoGameServiceInternalModel
 					out.Numbers = (out.Numbers)[:0]
 				}
 				for !in.IsDelim(']') {
-					var v24 int32
-					v24 = int32(in.Int32())
-					out.Numbers = append(out.Numbers, v24)
+					var v27 int32
+					v27 = int32(in.Int32())
+					out.Numbers = append(out.Numbers, v27)
 					in.WantComma()
 				}
 				in.Delim(']')
@@ -1430,7 +1570,7 @@ func easyjsonD2b7633eDecodeGithubComDupreehkudaTaskBingoGameServiceInternalModel
 		in.Consumed()
 	}
 }
-func easyjsonD2b7633eEncodeGithubComDupreehkudaTaskBingoGameServiceInternalModels16(out *jwriter.Writer, in GameAction) {
+func easyjsonD2b7633eEncodeGithubComDupreehkudaTaskBingoGameServiceInternalModels17(out *jwriter.Writer, in GameAction) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -1451,11 +1591,11 @@ func easyjsonD2b7633eEncodeGithubComDupreehkudaTaskBingoGameServiceInternalModel
 			out.RawString("null")
 		} else {
 			out.RawByte('[')
-			for v25, v26 := range in.Numbers {
-				if v25 > 0 {
+			for v28, v29 := range in.Numbers {
+				if v28 > 0 {
 					out.RawByte(',')
 				}
-				out.Int32(int32(v26))
+				out.Int32(int32(v29))
 			}
 			out.RawByte(']')
 		}
@@ -1465,14 +1605,14 @@ func easyjsonD2b7633eEncodeGithubComDupreehkudaTaskBingoGameServiceInternalModel
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
 func (v GameAction) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonD2b7633eEncodeGithubComDupreehkudaTaskBingoGameServiceInternalModels16(w, v)
+	easyjsonD2b7633eEncodeGithubComDupreehkudaTaskBingoGameServiceInternalModels17(w, v)
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
 func (v *GameAction) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonD2b7633eDecodeGithubComDupreehkudaTaskBingoGameServiceInternalModels16(l, v)
+	easyjsonD2b7633eDecodeGithubComDupreehkudaTaskBingoGameServiceInternalModels17(l, v)
 }
-func easyjsonD2b7633eDecodeGithubComDupreehkudaTaskBingoGameServiceInternalModels17(in *jlexer.Lexer, out *Game) {
+func easyjsonD2b7633eDecodeGithubComDupreehkudaTaskBingoGameServiceInternalModels18(in *jlexer.Lexer, out *Game) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -1523,9 +1663,9 @@ func easyjsonD2b7633eDecodeGithubComDupreehkudaTaskBingoGameServiceInternalModel
 					out.Numbers = (out.Numbers)[:0]
 				}
 				for !in.IsDelim(']') {
-					var v27 int32
-					v27 = int32(in.Int32())
-					out.Numbers = append(out.Numbers, v27)
+					var v30 int32
+					v30 = int32(in.Int32())
+					out.Numbers = append(out.Numbers, v30)
 					in.WantComma()
 				}
 				in.Delim(']')
@@ -1546,9 +1686,9 @@ func easyjsonD2b7633eDecodeGithubComDupreehkudaTaskBingoGameServiceInternalModel
 					out.User1Numbers = (out.User1Numbers)[:0]
 				}
 				for !in.IsDelim(']') {
-					var v28 int32
-					v28 = int32(in.Int32())
-					out.User1Numbers = append(out.User1Numbers, v28)
+					var v31 int32
+					v31 = int32(in.Int32())
+					out.User1Numbers = append(out.User1Numbers, v31)
 					in.WantComma()
 				}
 				in.Delim(']')
@@ -1569,9 +1709,9 @@ func easyjsonD2b7633eDecodeGithubComDupreehkudaTaskBingoGameServiceInternalModel
 					out.User2Numbers = (out.User2Numbers)[:0]
 				}
 				for !in.IsDelim(']') {
-					var v29 int32
-					v29 = int32(in.Int32())
-					out.User2Numbers = append(out.User2Numbers, v29)
+					var v32 int32
+					v32 = int32(in.Int32())
+					out.User2Numbers = append(out.User2Numbers, v32)
 					in.WantComma()
 				}
 				in.Delim(']')
@@ -1586,7 +1726,7 @@ func easyjsonD2b7633eDecodeGithubComDupreehkudaTaskBingoGameServiceInternalModel
 		in.Consumed()
 	}
 }
-func easyjsonD2b7633eEncodeGithubComDupreehkudaTaskBingoGameServiceInternalModels17(out *jwriter.Writer, in Game) {
+func easyjsonD2b7633eEncodeGithubComDupreehkudaTaskBingoGameServiceInternalModels18(out *jwriter.Writer, in Game) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -1637,11 +1777,11 @@ func easyjsonD2b7633eEncodeGithubComDupreehkudaTaskBingoGameServiceInternalModel
 			out.RawString("null")
 		} else {
 			out.RawByte('[')
-			for v30, v31 := range in.Numbers {
-				if v30 > 0 {
+			for v33, v34 := range in.Numbers {
+				if v33 > 0 {
 					out.RawByte(',')
 				}
-				out.Int32(int32(v31))
+				out.Int32(int32(v34))
 			}
 			out.RawByte(']')
 		}
@@ -1653,11 +1793,11 @@ func easyjsonD2b7633eEncodeGithubComDupreehkudaTaskBingoGameServiceInternalModel
 			out.RawString("null")
 		} else {
 			out.RawByte('[')
-			for v32, v33 := range in.User1Numbers {
-				if v32 > 0 {
+			for v35, v36 := range in.User1Numbers {
+				if v35 > 0 {
 					out.RawByte(',')
 				}
-				out.Int32(int32(v33))
+				out.Int32(int32(v36))
 			}
 			out.RawByte(']')
 		}
@@ -1669,11 +1809,11 @@ func easyjsonD2b7633eEncodeGithubComDupreehkudaTaskBingoGameServiceInternalModel
 			out.RawString("null")
 		} else {
 			out.RawByte('[')
-			for v34, v35 := range in.User2Numbers {
-				if v34 > 0 {
+			for v37, v38 := range in.User2Numbers {
+				if v37 > 0 {
 					out.RawByte(',')
 				}
-				out.Int32(int32(v35))
+				out.Int32(int32(v38))
 			}
 			out.RawByte(']')
 		}
@@ -1683,14 +1823,14 @@ func easyjsonD2b7633eEncodeGithubComDupreehkudaTaskBingoGameServiceInternalModel
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
 func (v Game) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonD2b7633eEncodeGithubComDupreehkudaTaskBingoGameServiceInternalModels17(w, v)
+	easyjsonD2b7633eEncodeGithubComDupreehkudaTaskBingoGameServiceInternalModels18(w, v)
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
 func (v *Game) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonD2b7633eDecodeGithubComDupreehkudaTaskBingoGameServiceInternalModels17(l, v)
+	easyjsonD2b7633eDecodeGithubComDupreehkudaTaskBingoGameServiceInternalModels18(l, v)
 }
-func easyjsonD2b7633eDecodeGithubComDupreehkudaTaskBingoGameServiceInternalModels18(in *jlexer.Lexer, out *FriendsInfo) {
+func easyjsonD2b7633eDecodeGithubComDupreehkudaTaskBingoGameServiceInternalModels19(in *jlexer.Lexer, out *FriendsInfo) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -1733,7 +1873,7 @@ func easyjsonD2b7633eDecodeGithubComDupreehkudaTaskBingoGameServiceInternalModel
 		in.Consumed()
 	}
 }
-func easyjsonD2b7633eEncodeGithubComDupreehkudaTaskBingoGameServiceInternalModels18(out *jwriter.Writer, in FriendsInfo) {
+func easyjsonD2b7633eEncodeGithubComDupreehkudaTaskBingoGameServiceInternalModels19(out *jwriter.Writer, in FriendsInfo) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -1772,14 +1912,14 @@ func easyjsonD2b7633eEncodeGithubComDupreehkudaTaskBingoGameServiceInternalModel
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
 func (v FriendsInfo) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonD2b7633eEncodeGithubComDupreehkudaTaskBingoGameServiceInternalModels18(w, v)
+	easyjsonD2b7633eEncodeGithubComDupreehkudaTaskBingoGameServiceInternalModels19(w, v)
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
 func (v *FriendsInfo) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonD2b7633eDecodeGithubComDupreehkudaTaskBingoGameServiceInternalModels18(l, v)
+	easyjsonD2b7633eDecodeGithubComDupreehkudaTaskBingoGameServiceInternalModels19(l, v)
 }
-func easyjsonD2b7633eDecodeGithubComDupreehkudaTaskBingoGameServiceInternalModels19(in *jlexer.Lexer, out *FriendRequest) {
+func easyjsonD2b7633eDecodeGithubComDupreehkudaTaskBingoGameServiceInternalModels20(in *jlexer.Lexer, out *FriendRequest) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -1810,7 +1950,7 @@ func easyjsonD2b7633eDecodeGithubComDupreehkudaTaskBingoGameServiceInternalModel
 		in.Consumed()
 	}
 }
-func easyjsonD2b7633eEncodeGithubComDupreehkudaTaskBingoGameServiceInternalModels19(out *jwriter.Writer, in FriendRequest) {
+func easyjsonD2b7633eEncodeGithubComDupreehkudaTaskBingoGameServiceInternalModels20(out *jwriter.Writer, in FriendRequest) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -1824,10 +1964,10 @@ func easyjsonD2b7633eEncodeGithubComDupreehkudaTaskBingoGameServiceInternalModel
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
 func (v FriendRequest) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonD2b7633eEncodeGithubComDupreehkudaTaskBingoGameServiceInternalModels19(w, v)
+	easyjsonD2b7633eEncodeGithubComDupreehkudaTaskBingoGameServiceInternalModels20(w, v)
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
 func (v *FriendRequest) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonD2b7633eDecodeGithubComDupreehkudaTaskBingoGameServiceInternalModels19(l, v)
+	easyjsonD2b7633eDecodeGithubComDupreehkudaTaskBingoGameServiceInternalModels20(l, v)
 }

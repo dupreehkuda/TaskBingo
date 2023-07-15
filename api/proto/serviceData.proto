@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package api;
 
-option go_package = "github.com/dupreehkuda/TaskBingo/game-service";
+option go_package = "github.com/dupreehkuda/TaskBingo";
 
 service BingoData {
   rpc RegisterUser(RegisterUserRequest) returns (RegisterUserResponse);
@@ -75,6 +75,18 @@ message GetUserDataResponse {
   repeated FriendInfo friends = 7;
   repeated TaskPackResponse likedPacks = 8;
   repeated string ratedPacks = 9;
+  repeated GameShort games = 10;
+}
+
+message GameShort {
+  string gameID = 1;
+  string user1id = 2;
+  string user2id = 3;
+  string pack = 4;
+  int32 status = 5;
+  int32 user1bingo = 6;
+  int32 user2bingo = 7;
+  string winner = 8;
 }
 
 message FriendInfo {

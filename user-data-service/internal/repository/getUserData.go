@@ -11,36 +11,37 @@ import (
 
 // GetUserData retrieves user data from database
 func (r repository) GetUserData(ctx context.Context, userID string) (*models.GetUserDataResponse, error) {
-	conn1, err := r.pool.Acquire(ctx)
+	conn, err := r.pool.Acquire(ctx)
 	if err != nil {
 		r.logger.Error("Error while acquiring connection", zap.Error(err))
 		return &models.GetUserDataResponse{}, err
 	}
-	defer conn1.Release()
-
-	conn2, err := r.pool.Acquire(ctx)
-	if err != nil {
-		r.logger.Error("Error while acquiring connection", zap.Error(err))
-		return &models.GetUserDataResponse{}, err
-	}
-	defer conn2.Release()
 
 	var (
 		resp       models.GetUserDataResponse
 		likedPacks []string
 	)
 
-	row := conn1.QueryRow(ctx, "SELECT id, username, city, wins, lose, bingo, likedPacks, ratedPacks FROM users WHERE id = $1", userID)
+	row := conn.QueryRow(ctx, "SELECT id, username, city, wins, lose, bingo, likedPacks, ratedPacks FROM users WHERE id = $1", userID)
 	err = row.Scan(&resp.UserID, &resp.Username, &resp.City, &resp.Wins, &resp.Lose, &resp.Bingo, &likedPacks, &resp.RatedPacks)
 	if err != nil {
 		r.logger.Error("Error when executing statement", zap.Error(err))
-		return &resp, err
+		return nil, err
 	}
+
+	conn.Release()
 
 	eg, ctx := errgroup.WithContext(ctx)
 
 	eg.Go(func() error {
-		rows, err := conn1.Query(ctx, "SELECT friends.friend_id, (SELECT users.username FROM users WHERE users.id = friends.friend_id) AS username, friends.status, friends.wins, friends.loses FROM friends WHERE id = $1;", userID)
+		newConn, err := r.pool.Acquire(ctx)
+		if err != nil {
+			r.logger.Error("Error while acquiring connection", zap.Error(err))
+			return err
+		}
+		defer newConn.Release()
+
+		rows, err := newConn.Query(ctx, "SELECT friends.friend_id, (SELECT users.username FROM users WHERE users.id = friends.friend_id) AS username, friends.status, friends.wins, friends.loses FROM friends WHERE id = $1;", userID)
 		if err != nil {
 			r.logger.Error("Error when executing statement", zap.Error(err))
 			return err
@@ -62,7 +63,14 @@ func (r repository) GetUserData(ctx context.Context, userID string) (*models.Get
 	})
 
 	eg.Go(func() error {
-		rows, err := conn2.Query(ctx, "SELECT id, title, tasks FROM packs WHERE id = ANY($1::uuid[])", likedPacks)
+		newConn, err := r.pool.Acquire(ctx)
+		if err != nil {
+			r.logger.Error("Error while acquiring connection", zap.Error(err))
+			return err
+		}
+		defer newConn.Release()
+
+		rows, err := newConn.Query(ctx, "SELECT id, title, tasks FROM packs WHERE id = ANY($1::uuid[])", likedPacks)
 		if err != nil {
 			r.logger.Error("Error when executing statement", zap.Error(err))
 			return err
@@ -83,7 +91,34 @@ func (r repository) GetUserData(ctx context.Context, userID string) (*models.Get
 		return nil
 	})
 
-	// todo get games
+	eg.Go(func() error {
+		newConn, err := r.pool.Acquire(ctx)
+		if err != nil {
+			r.logger.Error("Error while acquiring connection", zap.Error(err))
+			return err
+		}
+		defer newConn.Release()
+
+		rows, err := newConn.Query(ctx, "SELECT id, user1_id, user2_id, pack_id, status, user1_bingo, user2_bingo FROM games WHERE user1_id = $1 OR user2_id = $1 LIMIT 10;", userID)
+		if err != nil {
+			r.logger.Error("Error when executing statement", zap.Error(err))
+			return err
+		}
+
+		for rows.Next() {
+			var ng models.GameShort
+
+			err = rows.Scan(&ng.GameID, &ng.User1Id, &ng.User2Id, &ng.PackId, &ng.Status, &ng.User1Bingo, &ng.User2Bingo)
+			if err != nil {
+				r.logger.Error("Error when scanning data", zap.Error(err))
+				return err
+			}
+
+			resp.GamesShort = append(resp.GamesShort, ng)
+		}
+
+		return nil
+	})
 
 	if err = eg.Wait(); err != nil {
 		r.logger.Error("Error when executing statement in eg", zap.Error(err))

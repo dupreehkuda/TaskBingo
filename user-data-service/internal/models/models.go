@@ -24,6 +24,7 @@ type GetUserDataResponse struct {
 	Friends    []FriendsInfo `json:"friends"`
 	LikedPacks []TaskPack    `json:"likedPacks"`
 	RatedPacks []string      `json:"ratedPacks"`
+	GamesShort []GameShort   `json:"gamesShort"`
 }
 
 // LoginUserResponse provides response for user login request
@@ -53,6 +54,18 @@ type Game struct {
 	Numbers      []int32 `json:"numbers"`
 	User1Numbers []int32 `json:"user1Numbers"`
 	User2Numbers []int32 `json:"user2Numbers"`
+}
+
+// GameShort provides brief game info
+type GameShort struct {
+	GameID     string `json:"gameId"`
+	User1Id    string `json:"user1Id"`
+	User2Id    string `json:"user2Id"`
+	PackId     string `json:"packId"`
+	Status     int32  `json:"status"`
+	User1Bingo int32  `json:"user1Bingo"`
+	User2Bingo int32  `json:"user2Bingo"`
+	Winner     string `json:"winner"`
 }
 
 // Pack provides complete task pack info
