@@ -18,7 +18,7 @@ export const load = (async ({ fetch }) => {
   })
 
   const packs = await res.json()
-  console.log(packs)
+
   return { packs }
 }) satisfies PageLoad;
 
@@ -45,9 +45,11 @@ export async function _Like(pack: any, liked: boolean) {
       body: JSON.stringify(newResp)
     })
 
-    let account = get(Account)
-    account.likedPacks.push({id: pack.id, pack: pack.pack})
-    Account.set(account)
+    if (res.ok) {
+      let account = get(Account)
+      account.likedPacks.push({id: pack.id, pack: pack.pack})
+      Account.set(account)
+    }
   }
 };
 

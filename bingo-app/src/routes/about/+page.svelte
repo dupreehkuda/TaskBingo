@@ -1,5 +1,30 @@
-<script>
+<script lang="ts">
     import { Timeline, TimelineItem } from 'flowbite-svelte';
+    
+    const pack = {
+        id: '7138c27c-22ff-11ee-aad0-0242ac1a0003',
+        pack: {
+          title: 'First Ever Pack',
+          tasks: [
+            '30s guitar solo',
+            '30 lines of code',
+            'Learn new dish',
+            'Room clean up',
+            'Topic in music theory',
+            'Read 5 chapters of fiction',
+            '200 push ups',
+            'Make complicated origami',
+            'Make a crossword',
+            'Practice math exam',
+            'Write an essay',
+            '30min sport',
+            'Topic in finances/economy',
+            'Make some art',
+            'Solve linguistic task',
+            'Learn by heart 30 geo objects'
+          ]
+        }
+    }
 </script>
 
 <svelte:head>

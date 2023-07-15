@@ -9,7 +9,19 @@ export interface AccountData {
     bingo:      number;
     friends:    Friend[];
     likedPacks: TaskPack[];
-    ratedPacks: string[]
+    ratedPacks: string[];
+    games: Game[];
+}
+
+export interface Game {
+    gameId: string;
+    user1Id: string;
+    user2Id: string;
+    packId: string;
+    status: number;
+    user1Bingo: number;
+    user2Bingo: number;
+    winner: string;
 }
 
 export interface Friend {

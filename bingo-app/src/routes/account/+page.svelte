@@ -1,9 +1,29 @@
 <script lang="ts">
-    import { Button } from "flowbite-svelte";
-    import { _Like } from "./+page"
-    import { DeleteFriend, RequestFriend, AcceptFriend } from '../friendRequests';
-
+    import { Button, Select } from "flowbite-svelte";
+    import { _LikePack, _DeleteGame } from "./+page"
+    import { DeleteFriend, AcceptFriend } from '../friendRequests';
     import Account from "../accountStore";
+    import GameModal from '../../components/GameModal/GameModal.svelte';
+
+	let showModal = false;
+    let selectedPackID: string;
+    let selectedFriendID: string;
+
+    function getOpponentUsername(userId: string) {
+        for (const friend of $Account.friends) {
+            if (friend.userID === userId) {
+                return friend.username
+            }
+        }
+    }
+
+    function getPackTitle(packId: string) {
+        for (const pack of $Account.likedPacks) {
+            if (pack.id === packId) {
+                return pack.pack.title
+            }
+        }
+    }
 </script>
 
 <svelte:head>
@@ -13,22 +33,10 @@
 <main>
     <div class="leftalign spacer">
         <h1>{$Account.username}
-            <!-- <span class="leftalign win">{$Account.wins}</span>
-            <span>:</span>
-            <span class="lose">{$Account.lose}</span> -->
             <span class="leftalign">{$Account.bingo}</span>
         </h1>
         
         <h4>{$Account.city}</h4>
-
-        <!-- <div class="leftalign">
-            {#if $Account.wins === 0 && $Account.lose === 0}
-                <span class="leftalign">Here will be your winrate when you play at least one game</span>
-            {:else}
-                <span class="leftalign">Winrate: {$Account.wins === 0 && $Account.lose === 0 ? "null" : ($Account.wins / ($Account.wins + $Account.lose)) * 100 + "%"}</span>
-                <span>Total bingo: {$Account.bingo === 0 ? "null" : $Account.bingo}</span>
-            {/if}
-        </div> -->
     </div>
 
     <div class="leftspaceheading"><h3 class="mb-2">Friends</h3></div>
@@ -44,7 +52,7 @@
                 </div>
                 <div class="flex flex-row gap-1.5 basis-3/12">
                     {#if friend.status == 3}
-                        <Button class="basis-2/3 fonty" size="xs">Play</Button>
+                        <Button class="basis-2/3 fonty" size="xs" on:click={() => (showModal = true, selectedFriendID = friend.userID)}>Play</Button>
                         <Button class="basis-1/3 dark:!text-white-800" size="xs" color="red" on:click={() => DeleteFriend(friend.userID)}>X</Button>
                     {:else if friend.status == 2}
                         <Button class="basis-2/3 fonty" size="xs" on:click={() => AcceptFriend(friend.userID)}>Accept</Button>
@@ -75,8 +83,8 @@
                     {/each}
 
                     <div class="flex flex-row gap-2">
-                        <Button class="basis-4/5 fonty">Choose pack</Button>
-                        <Button class="basis-1/5" color="light" on:click={() => _Like(pack, $Account?.likedPacks.some(e => e.id === pack.id))}>
+                        <Button class="basis-4/5 fonty" on:click={() => (showModal = true, selectedPackID = pack.id)}>Choose pack</Button>
+                        <Button class="basis-1/5" color="light" on:click={() => _LikePack(pack, $Account?.likedPacks.some(e => e.id === pack.id))}>
                             {#if $Account?.likedPacks.some(e => e.id === pack.id)}
                                 <img src="heart-solid.svg" alt="solid heart"/>
                             {:else}
@@ -88,6 +96,30 @@
             </div>
         {/each}
     </div>
+    <div class="leftspaceheading"><h3 class="mb-2">Games</h3></div>
+    <div class="flex leftalign spacer05">
+        <Button class="fonty" on:click={() => (showModal = true)}>Create new game</Button>
+    </div>
+    <div class="scrolling-wrapper spacer">
+        {#each $Account.games as game}
+            <div class="game flex flex-col justify-between mx-1">
+                {#if $Account.userID === game.user1Id}
+                    <h5 class="mb-2 text-xl cardText">{getOpponentUsername(game.user2Id)}</h5>
+                {:else}
+                    <h5 class="mb-2 text-xl cardText">{getOpponentUsername(game.user1Id)}</h5>
+                {/if}
+                <span class="text-xs cardText">{getPackTitle(game.packId)}</span>
+                <ul class="my-1 space-y-1.5">
+                    <div class="flex flex-row gap-2">
+                        <Button class="basis-4/5 fonty">Start</Button>
+                        <Button class="basis-1/5 dark:!text-white-800" size="xs" color="red" on:click={() => _DeleteGame(game.gameId)}>X</Button>
+                    </div>
+                </ul>
+            </div>
+        {/each}
+    </div>
+
+    <GameModal bind:showModal {selectedFriendID} {selectedPackID}/>
 </main>
 
 <style>
@@ -133,15 +165,6 @@
         color: #112a41
     }
 
-    /* .win {
-        font-weight: 300;
-        color: #32ca08;
-    }
-
-    .lose {
-        font-weight: 300;
-        color: #d8170d;
-    } */
     main {
         min-width: 50%;
         text-align: center;
@@ -155,6 +178,14 @@
         margin-bottom: 0.5em;
         padding: 0.6em;
         min-width: 22em; 
+    }
+
+    .game {
+        border-radius: 10px; 
+        background-color: #e8e8e6;
+        margin-bottom: 0.5em;
+        padding: 0.6em;
+        min-width: 12em; 
     }
 
     .friend {

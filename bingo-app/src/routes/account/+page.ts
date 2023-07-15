@@ -13,8 +13,8 @@ export const load = (async ({ fetch }) => {
   Account.set(userInfo)
 }) satisfies PageLoad;
 
-export async function _Like(pack: any, liked: boolean) {
-  const newResp = {
+export async function _LikePack(pack: any, liked: boolean) {
+  const newReq = {
     id: pack.id,
   } 
 
@@ -22,22 +22,41 @@ export async function _Like(pack: any, liked: boolean) {
     const res = await fetch('https://taskbingo.com/api/user/dislikePack', {
       method: 'POST',
       headers: {'Origin': 'taskbingo.com'},
-      body: JSON.stringify(newResp)
+      body: JSON.stringify(newReq)
     })
 
-    let account = get(Account)
-    account.likedPacks = account.likedPacks.filter(e => e.id !== pack.id)
-    Account.set(account)
-
+    if (res.ok) {
+      let account = get(Account)
+      account.likedPacks = account.likedPacks.filter(e => e.id !== pack.id)
+      Account.set(account)
+    }
   } else {
     const res = await fetch('https://taskbingo.com/api/user/likePack', {
       method: 'POST',
       headers: {'Origin': 'taskbingo.com'},
-      body: JSON.stringify(newResp)
+      body: JSON.stringify(newReq)
     })
 
-    let account = get(Account)
-    account.likedPacks.push({id: pack.id, pack: pack.pack})
-    Account.set(account)
+    if (res.ok) {
+      let account = get(Account)
+      account.likedPacks.push({id: pack.id, pack: pack.pack})
+      Account.set(account)
+    }
   }
 };
+
+export async function _DeleteGame(gameID: string) {
+  const newReq = { gameID: gameID } 
+
+  const res = await fetch('https://taskbingo.com/api/game/delete', {
+      method: 'DELETE',
+      headers: {'Origin': 'taskbingo.com'},
+      body: JSON.stringify(newReq)
+    })
+
+    if (res.ok) {
+      let account = get(Account)
+      account.games = account.games.filter(e => e.gameId !== gameID)
+      Account.set(account)
+    }
+}

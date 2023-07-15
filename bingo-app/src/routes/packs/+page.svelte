@@ -3,6 +3,11 @@
     import { Button } from "flowbite-svelte";
 	import { _Like, _Rate } from "./+page";
     import Account from "../accountStore";
+    import GameModal from '../../components/GameModal/GameModal.svelte';
+
+	let showModal = false;
+    let selectedPackID: string;
+    let selectedFriendID: string;
 
     export let data: PageData;
     const { packs } = data
@@ -27,8 +32,12 @@
 
                     <div class="flex flex-col">
                         <li class="flex space-x-2">
-                            <Button class="basis-3/5 fonty">Play</Button>
-    
+                            {#if $Account?.likedPacks.some(e => e.id === pack.id)}
+                                <Button class="basis-3/5 fonty" on:click={() => (showModal = true, selectedPackID = pack.id)}>Play</Button>
+                            {:else}
+                                <Button class="basis-3/5 fonty" disabled>Like to Play</Button>
+                            {/if}
+                            
                             <Button class="basis-1/5" color="light" on:click={() => _Rate(pack, $Account?.ratedPacks.some(e => e === pack.id))}>
                                 {#if $Account?.ratedPacks.some(e => e === pack.id)}
                                     <img src="star-solid.svg" alt="solid star"/>
@@ -50,6 +59,8 @@
             </div>
         {/each}
     </div>
+
+    <GameModal bind:showModal {selectedFriendID} {selectedPackID}/>
 </main>
 
 <style>

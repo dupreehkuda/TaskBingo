@@ -3,6 +3,11 @@
     import { Button } from "flowbite-svelte";
     import Account from "../accountStore";
 	import { DeleteFriend, RequestFriend, AcceptFriend } from '../friendRequests';
+    import GameModal from '../../components/GameModal/GameModal.svelte';
+
+    let showModal = false;
+    let selectedPackID: string;
+    let selectedFriendID: string;
 
     export let data: PageData;
     const { users } = data
@@ -21,7 +26,7 @@
 
                     {#if $Account?.friends.some(e => e.userID === user.userID && e.status === 3)}
                         <div class="space-x-1 flex flex-row justify-end basis-4/12">
-                            <Button size="xs">Play</Button>
+                            <Button size="xs" on:click={() => (showModal = true, selectedFriendID = user.userID)}>Play</Button>
                             <Button size="xs" color="red" class="dark:!text-white-800" on:click={() => DeleteFriend(user.userID)}>X</Button>
                         </div>
                     {:else if $Account?.friends.some(e => e.userID === user.userID && e.status === 1)}
@@ -47,6 +52,9 @@
                 </div>
             {/each}
     </div>
+
+
+    <GameModal bind:showModal {selectedFriendID} {selectedPackID}/>
 </main>
 
 <style>
