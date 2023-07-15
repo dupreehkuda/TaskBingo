@@ -57,6 +57,5 @@ CREATE TABLE IF NOT EXISTS games (
 );
 
 ALTER TABLE "login" ADD FOREIGN KEY ("id") REFERENCES "users" ("id");
-ALTER TABLE "ratings" ADD FOREIGN KEY ("creator") REFERENCES "users" ("id");
 ALTER TABLE "friends" ADD FOREIGN KEY ("id") REFERENCES "users" ("id");
 ALTER TABLE "packs" ADD FOREIGN KEY ("creator") REFERENCES "users" ("id");
