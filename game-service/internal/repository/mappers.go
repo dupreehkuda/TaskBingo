@@ -102,7 +102,7 @@ func mapFromUserDataResponse(data *api.GetUserDataResponse) *models.UserAccountI
 		Bingo:      int(data.Bingo),
 		Friends:    []models.FriendsInfo{},
 		LikedPacks: []models.TaskPack{},
-		RatedPacks: data.RatedPacks,
+		RatedPacks: append([]string{}, data.RatedPacks...),
 	}
 
 	for _, val := range data.Friends {
