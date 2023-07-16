@@ -89,8 +89,7 @@ func (h *handlers) notifyAll(room *models.Room, update *models.GameUpdate) error
 
 // GameWSLaunch upgrades ws connection to handle active game requests
 func (h *handlers) GameWSLaunch(w http.ResponseWriter, r *http.Request) {
-	var ctxKey models.UserIDKey = "userID"
-	userID := r.Context().Value(ctxKey).(string)
+	userID := r.URL.Query().Get("user")
 	gameID := r.URL.Query().Get("game")
 
 	if err := UUIDCheck(userID, gameID); err != nil {
