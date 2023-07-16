@@ -10,11 +10,6 @@ import (
 	"github.com/dupreehkuda/TaskBingo/game-service/internal/models"
 )
 
-var wsUpgrade = websocket.Upgrader{
-	ReadBufferSize:  1024,
-	WriteBufferSize: 1024,
-}
-
 // getOrCreateRoom retrieves game from the hub or repository
 func (h *handlers) getOrCreateRoom(ctx context.Context, gameID string) (*models.Room, error) {
 	h.hub.Mu.Lock()
@@ -96,6 +91,11 @@ func (h *handlers) GameWSLaunch(w http.ResponseWriter, r *http.Request) {
 		h.logger.Error("Invalid UUID in request", zap.Error(err))
 		w.WriteHeader(http.StatusBadRequest)
 		return
+	}
+
+	var wsUpgrade = websocket.Upgrader{
+		ReadBufferSize:  1024,
+		WriteBufferSize: 1024,
 	}
 
 	conn, err := wsUpgrade.Upgrade(w, r, nil)

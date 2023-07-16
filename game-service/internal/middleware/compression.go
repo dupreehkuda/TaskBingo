@@ -1,8 +1,11 @@
 package middleware
 
 import (
+	"bufio"
 	"compress/gzip"
+	"fmt"
 	"io"
+	"net"
 	"net/http"
 	"strings"
 
@@ -22,6 +25,14 @@ func (g *gzipWriter) WriteString(s string) (int, error) {
 func (g *gzipWriter) Write(data []byte) (int, error) {
 	g.Header().Del("content-Length")
 	return g.writer.Write(data)
+}
+
+func (g *gzipWriter) Hijack() (net.Conn, *bufio.ReadWriter, error) {
+	hijacker, ok := g.ResponseWriter.(http.Hijacker)
+	if !ok {
+		return nil, nil, fmt.Errorf("response writer does not support hijacking")
+	}
+	return hijacker.Hijack()
 }
 
 // CheckCompression checks for request compression and adds a gzip reader
