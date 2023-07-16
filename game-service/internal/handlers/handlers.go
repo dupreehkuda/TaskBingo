@@ -30,6 +30,7 @@ type Service interface {
 	RequestFriend(ctx context.Context, userID, friendID string) error
 
 	CreateGame(ctx context.Context, userID, opponentID, packID string) (*models.GameShort, error)
+	GetGame(ctx context.Context, gameID string) (*models.Game, error)
 	AcceptGame(ctx context.Context, userID, gameID string) error
 	DeleteGame(ctx context.Context, userID, gameID string) error
 	GetRoom(ctx context.Context, gameID string) (*models.Room, error)

@@ -8,6 +8,11 @@ import (
 	"github.com/dupreehkuda/TaskBingo/game-service/internal/models"
 )
 
+// GetGame retrieves game from repository
+func (s service) GetGame(ctx context.Context, gameID string) (*models.Game, error) {
+	return s.repository.GetGame(ctx, gameID)
+}
+
 // GetRoom retrieves game from repository and returns new models.Room
 func (s service) GetRoom(ctx context.Context, gameID string) (*models.Room, error) {
 	gameInfo, err := s.repository.GetGame(ctx, gameID)

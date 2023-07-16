@@ -45,6 +45,7 @@ func (a api) router() http.Handler {
 		r.Route("/game", func(r chi.Router) {
 			r.Use(a.middleware.CheckToken)
 
+			r.Post("/get", a.handlers.GetGame)
 			r.Post("/create", a.handlers.CreateGame)
 			r.Patch("/accept", a.handlers.AcceptGame)
 			r.Patch("/archive", nil)
