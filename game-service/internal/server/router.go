@@ -44,6 +44,7 @@ func (a api) router() http.Handler {
 
 		r.Route("/game", func(r chi.Router) {
 			r.Group(func(r chi.Router) {
+				r.Use(a.middleware.AllowUpgradeHeaders)
 				r.Get("/start", a.handlers.GameWSLaunch)
 			})
 
