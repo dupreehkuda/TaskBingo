@@ -11,10 +11,10 @@ func (a api) router() http.Handler {
 	r := chi.NewRouter()
 
 	r.Route("/api", func(r chi.Router) {
-		r.Use(a.middleware.CheckCompression)
-		r.Use(a.middleware.WriteCompressed)
-
 		r.Route("/user", func(r chi.Router) {
+			r.Use(a.middleware.CheckCompression)
+			r.Use(a.middleware.WriteCompressed)
+
 			r.Group(func(r chi.Router) {
 				r.Post("/register", a.handlers.RegisterUser)
 				r.Post("/login", a.handlers.LoginUser)
