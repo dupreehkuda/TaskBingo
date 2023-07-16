@@ -7,6 +7,8 @@
 	export let selectedPackID: string;
     export let selectedFriendID: string;
 
+	let showExistsError: boolean;
+
 	let dialog: HTMLDialogElement; 
 
 	function close() {
@@ -15,7 +17,23 @@
 		dialog.close()
 	}
 
+	function checkIfExists(): boolean {
+		for (let i = 0; i < $Account.games.length; i++) {
+			if (($Account.games[i].user1Id === selectedFriendID || $Account.games[i].user2Id === selectedFriendID) && $Account.games[i].status !== 3) {
+				showExistsError = true
+				return true;
+			}
+  		}
+  
+  		return false;
+	}
+
 	function createGame() {
+		if (checkIfExists()) {
+			showExistsError = true
+			return
+		}
+
 		CreateGame(selectedFriendID, selectedPackID)
 		selectedPackID = ""
 		selectedFriendID = ""
@@ -40,14 +58,18 @@
 				<Select required class="mt-2" items={$Account.friends
 				.filter(friend => friend.status === 3)
 				.map((friend) => ({value: friend.userID, name: friend.username}))
-				} bind:value={selectedFriendID} />
+				} bind:value={selectedFriendID} on:change={checkIfExists} />
 
 				<Select required class="mt-2" items={$Account.likedPacks.map((pack) => ({
 					value: pack.id,
 					name: pack.pack.title,
 				}))} bind:value={selectedPackID} />
 
-				<Button type="submit" class="fonty mt-3">Create</Button>
+				{#if showExistsError}
+					<Button class="fonty mt-3" disabled>Active game exist</Button>
+				{:else}
+					<Button type="submit" class="fonty mt-3">Create</Button>
+				{/if}
 			  </form>
 		</div>
 	</div>
