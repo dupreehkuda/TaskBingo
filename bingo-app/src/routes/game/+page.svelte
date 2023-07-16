@@ -1,9 +1,17 @@
 <script lang="ts">
-    
+    import {_GameHandler} from "./+page"
+    import { onMount } from 'svelte';
+
+    let closer: () => void;
+
+    onMount(() => {closer = _GameHandler()});
+    window.addEventListener('beforeunload', function() {
+        closer();
+    })
 </script>
 
 <svelte:head>
-    <title>New Game</title>
+    <title>Game</title>
     <meta name="theme-color" content="#D6E2EC">
 </svelte:head>
 

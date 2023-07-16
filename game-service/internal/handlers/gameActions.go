@@ -3,6 +3,7 @@ package handlers
 import (
 	"context"
 	"net/http"
+	"time"
 
 	"github.com/gorilla/websocket"
 	"go.uber.org/zap"
@@ -104,6 +105,16 @@ func (h *handlers) GameWSLaunch(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	defer conn.Close()
+
+	if err = conn.SetReadDeadline(time.Now().Add(25 * time.Minute)); err != nil {
+		h.logger.Error("SetReadDeadline error", zap.Error(err))
+		return
+	}
+
+	if err = conn.SetWriteDeadline(time.Now().Add(25 * time.Minute)); err != nil {
+		h.logger.Error("SetWriteDeadline error", zap.Error(err))
+		return
+	}
 
 	player := &models.Player{
 		Id:   userID,

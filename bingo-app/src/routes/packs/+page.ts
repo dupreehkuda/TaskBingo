@@ -23,7 +23,7 @@ export const load = (async ({ fetch }) => {
 }) satisfies PageLoad;
 
 export async function _Like(pack: any, liked: boolean) {
-  const newResp = {
+  const newReq = {
     id: pack.id,
   } 
 
@@ -31,7 +31,7 @@ export async function _Like(pack: any, liked: boolean) {
     const res = await fetch('https://taskbingo.com/api/user/dislikePack', {
       method: 'POST',
       headers: {'Origin': 'taskbingo.com'},
-      body: JSON.stringify(newResp)
+      body: JSON.stringify(newReq)
     })
 
     let account = get(Account)
@@ -42,7 +42,7 @@ export async function _Like(pack: any, liked: boolean) {
     const res = await fetch('https://taskbingo.com/api/user/likePack', {
       method: 'POST',
       headers: {'Origin': 'taskbingo.com'},
-      body: JSON.stringify(newResp)
+      body: JSON.stringify(newReq)
     })
 
     if (res.ok) {
@@ -54,7 +54,7 @@ export async function _Like(pack: any, liked: boolean) {
 };
 
 export async function _Rate(pack: any, rated: boolean) {
-  const newResp = {
+  const newReq = {
     id: pack.id,
   } 
 
@@ -62,7 +62,7 @@ export async function _Rate(pack: any, rated: boolean) {
     const res = await fetch('https://taskbingo.com/api/user/unratePack', {
       method: 'POST',
       headers: {'Origin': 'taskbingo.com'},
-      body: JSON.stringify(newResp)
+      body: JSON.stringify(newReq)
     })
 
     let account = get(Account)
@@ -73,7 +73,7 @@ export async function _Rate(pack: any, rated: boolean) {
     const res = await fetch('https://taskbingo.com/api/user/ratePack', {
       method: 'POST',
       headers: {'Origin': 'taskbingo.com'},
-      body: JSON.stringify(newResp)
+      body: JSON.stringify(newReq)
     })
 
     let account = get(Account)

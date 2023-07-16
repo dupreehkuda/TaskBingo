@@ -1,5 +1,6 @@
 import type { PageLoad } from './$types';
 import Account from '../accountStore';
+import CurrentGame from '../currentGame';
 import { get } from 'svelte/store';
 
 export const load = (async ({ fetch }) => {
@@ -58,5 +59,29 @@ export async function _DeleteGame(gameID: string) {
       let account = get(Account)
       account.games = account.games.filter(e => e.gameId !== gameID)
       Account.set(account)
+    }
+}
+
+export async function _GetGame(gameID: string) {
+    let currentGame = get(CurrentGame)
+    if (currentGame !== null) {
+      if (currentGame?.gameID === gameID) {
+        return
+      }
+    }
+
+    const newReq = {
+      gameID: gameID,
+    } 
+
+    const res = await fetch('https://taskbingo.com/api/game/get', {
+        method: 'POST',
+        headers: {'Origin': 'taskbingo.com'},
+        body: JSON.stringify(newReq)
+    })
+
+    if (res.ok) {
+      const gameInfo = await res.json()
+      CurrentGame.set(gameInfo)
     }
 }

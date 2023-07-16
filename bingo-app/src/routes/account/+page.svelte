@@ -1,8 +1,10 @@
 <script lang="ts">
-    import { Button, Select } from "flowbite-svelte";
-    import { _LikePack, _DeleteGame } from "./+page"
+    import { Button } from "flowbite-svelte";
+    import { _LikePack, _DeleteGame, _GetGame } from "./+page"
     import { DeleteFriend, AcceptFriend } from '../friendRequests';
     import Account from "../accountStore";
+    import CurrentGame from "../currentGame";
+    import { get } from 'svelte/store';
     import GameModal from '../../components/GameModal/GameModal.svelte';
 
 	let showModal = false;
@@ -111,7 +113,10 @@
                 <span class="text-xs cardText">{getPackTitle(game.packId)}</span>
                 <ul class="my-1 space-y-1.5">
                     <div class="flex flex-row gap-2">
-                        <Button class="basis-4/5 fonty">Start</Button>
+                        <Button href="/game" class="basis-4/5 fonty" 
+                        on:mouseenter={() => (_GetGame(game.gameId))}>
+                            Start
+                        </Button>
                         <Button class="basis-1/5 dark:!text-white-800" size="xs" color="red" on:click={() => _DeleteGame(game.gameId)}>X</Button>
                     </div>
                 </ul>
