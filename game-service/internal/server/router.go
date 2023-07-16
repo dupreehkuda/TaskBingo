@@ -9,10 +9,11 @@ import (
 // router provides service main routing
 func (a api) router() http.Handler {
 	r := chi.NewRouter()
-	r.Use(a.middleware.CheckCompression)
-	r.Use(a.middleware.WriteCompressed)
 
 	r.Route("/api", func(r chi.Router) {
+		r.Use(a.middleware.CheckCompression)
+		r.Use(a.middleware.WriteCompressed)
+
 		r.Route("/user", func(r chi.Router) {
 			r.Group(func(r chi.Router) {
 				r.Post("/register", a.handlers.RegisterUser)
@@ -36,6 +37,8 @@ func (a api) router() http.Handler {
 
 		r.Route("/task", func(r chi.Router) {
 			r.Use(a.middleware.CheckToken)
+			r.Use(a.middleware.CheckCompression)
+			r.Use(a.middleware.WriteCompressed)
 
 			r.Post("/getTaskPack", a.handlers.GetTaskPack)
 			r.Post("/setTaskPack", a.handlers.SetTaskPack)
@@ -50,6 +53,8 @@ func (a api) router() http.Handler {
 
 			r.Group(func(r chi.Router) {
 				r.Use(a.middleware.CheckToken)
+				r.Use(a.middleware.CheckCompression)
+				r.Use(a.middleware.WriteCompressed)
 
 				r.Post("/get", a.handlers.GetGame)
 				r.Post("/create", a.handlers.CreateGame)
