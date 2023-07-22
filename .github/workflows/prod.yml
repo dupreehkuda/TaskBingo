@@ -1,0 +1,35 @@
+name: Prod backend build
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        id: docker_buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to GitHub Container Registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Build and push user-data-service image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./user-data-service
+          push: true
+          tags: ghcr.io/${{ github.repository_owner }}/user-data-service:${{ github.sha }}
+
+      - name: Build and push game-service image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./game-service
+          push: true
+          tags: ghcr.io/${{ github.repository_owner }}/game-service:${{ github.sha }}
