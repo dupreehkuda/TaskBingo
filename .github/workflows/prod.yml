@@ -1,4 +1,4 @@
-name: Prod backend build
+name: backend build & push to registry
 
 on:
   push:
@@ -25,11 +25,15 @@ jobs:
         with:
           context: ./user-data-service
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/user-data-service:0.0.1
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/user-data-service:${{ github.sha }}
+            ghcr.io/${{ github.repository_owner }}/user-data-service:latest
 
       - name: Build and push game-service image
         uses: docker/build-push-action@v2
         with:
           context: ./game-service
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/game-service:0.0.1
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/game-service:${{ github.sha }}
+            ghcr.io/${{ github.repository_owner }}/game-service:latest

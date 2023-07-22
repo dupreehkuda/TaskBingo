@@ -1,0 +1,34 @@
+version: '3.4'
+
+services:
+  game-service:
+    image: ghcr.io/dupreehkuda/game-service:latest
+    platform: linux/x86_64
+    environment:
+      - GAME_SERVICE_ADDRESS=${GAME_SERVICE_ADDRESS}
+      - FULL_USER_SERVICE_ADDRESS=${FULL_USER_SERVICE_ADDRESS}
+      - secret=${SECRET}
+      - CURRENT_DOMAIN=${CURRENT_DOMAIN}
+    env_file: .env
+    ports:
+      - '8082:8082'
+    restart: always
+    volumes:
+      - .:/game_service
+    depends_on:
+      - user-service
+
+  user-service:
+    image: ghcr.io/dupreehkuda/user-data-service:latest
+    platform: linux/x86_64
+    environment:
+      - DATABASE_URI=${PSQL_DSN_SERVER}
+      - RUN_ADDRESS=${USER_SERVICE_ADDRESS}
+      - MIGRATION_FILE_PATH=${MIGRATION_FILE_PATH}
+      - CURRENT_DOMAIN=${CURRENT_DOMAIN}
+    env_file: .env
+    ports:
+      - '8081:8081'
+    restart: always
+    volumes:
+      - .:/user_service
