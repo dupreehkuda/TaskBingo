@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   game-service:
-    image: ghcr.io/dupreehkuda/game-service:latest
+    image: ghcr.io/dupreehkuda/game-service-prod:latest
     platform: linux/x86_64
     environment:
       - GAME_SERVICE_ADDRESS=${GAME_SERVICE_ADDRESS}
@@ -19,7 +19,7 @@ services:
       - user-service
 
   user-service:
-    image: ghcr.io/dupreehkuda/user-data-service:latest
+    image: ghcr.io/dupreehkuda/user-data-service-prod:latest
     platform: linux/x86_64
     environment:
       - DATABASE_URI=${PSQL_DSN_SERVER}
