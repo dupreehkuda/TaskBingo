@@ -1,6 +1,6 @@
 ![Task Bingo](./desk/logo.svg)
 
-> ***Warning!*** This project was made for educational purposes. I would not use this architecture in production.
+> ***Warning!*** This project was made for educational purposes.
 
 > ***Warning#2!*** Version 1.0 is not released yet.
 
