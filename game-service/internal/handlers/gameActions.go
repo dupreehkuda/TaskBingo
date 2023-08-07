@@ -5,11 +5,17 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/gorilla/websocket"
+	ws "github.com/gorilla/websocket"
+	"github.com/mailru/easyjson"
 	"go.uber.org/zap"
 
 	"github.com/dupreehkuda/TaskBingo/game-service/internal/models"
 )
+
+var wsUpgrade = ws.Upgrader{
+	ReadBufferSize:  1024,
+	WriteBufferSize: 1024,
+}
 
 // getOrCreateRoom retrieves game from the hub or repository
 func (h *handlers) getOrCreateRoom(ctx context.Context, gameID string) (*models.Room, error) {
@@ -41,6 +47,27 @@ func (h *handlers) removeRoom(gameID string) {
 	}
 
 	delete(h.hub.Rooms, gameID)
+}
+
+func (h *handlers) leaveRoom(gameID, userID string) {
+	h.hub.Mu.Lock()
+	defer h.hub.Mu.Unlock()
+
+	if h.hub.Rooms[gameID] != nil {
+		if h.hub.Rooms[gameID].Player1 != nil {
+			if h.hub.Rooms[gameID].Player1.Id == userID {
+				h.hub.Rooms[gameID].Player1 = nil
+			}
+		}
+
+		if h.hub.Rooms[gameID].Player2 != nil {
+			if h.hub.Rooms[gameID].Player2.Id == userID {
+				h.hub.Rooms[gameID].Player2 = nil
+			}
+		}
+	}
+
+	return
 }
 
 // notifyOpponent notifies opponent with event
@@ -94,27 +121,12 @@ func (h *handlers) GameWSLaunch(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var wsUpgrade = websocket.Upgrader{
-		ReadBufferSize:  1024,
-		WriteBufferSize: 1024,
-	}
-
 	conn, err := wsUpgrade.Upgrade(w, r, nil)
 	if err != nil {
 		h.logger.Error("Error upgrading connection", zap.Error(err))
 		return
 	}
 	defer conn.Close()
-
-	if err = conn.SetReadDeadline(time.Now().Add(25 * time.Minute)); err != nil {
-		h.logger.Error("SetReadDeadline error", zap.Error(err))
-		return
-	}
-
-	if err = conn.SetWriteDeadline(time.Now().Add(25 * time.Minute)); err != nil {
-		h.logger.Error("SetWriteDeadline error", zap.Error(err))
-		return
-	}
 
 	player := &models.Player{
 		Id:   userID,
@@ -129,36 +141,56 @@ func (h *handlers) GameWSLaunch(w http.ResponseWriter, r *http.Request) {
 	}
 
 	switch {
-	case room.Player1 == nil:
+	case room.Player1 == nil || room.Player1.Id == player.Id:
 		room.Player1 = player
-
-	case room.Player2 == nil:
+	case room.Player2 == nil || room.Player2.Id == player.Id:
 		room.Player2 = player
-
 	default:
 		h.logger.Error("Error third connection", zap.Any("gameInfo", room), zap.String("thirdUser", player.Id))
 		return
 	}
 
 	defer func() {
+		h.leaveRoom(gameID, userID)
+
 		if room.Player1 == nil && room.Player2 == nil {
 			h.removeRoom(room.Id)
 		}
 	}()
 
-	var action models.GameAction
-	for {
-		err = conn.ReadJSON(&action)
+	go func() {
+		err := h.Pinger(conn, r.Context())
 		if err != nil {
-			if err == websocket.ErrCloseSent {
+			h.logger.Error("pinger error", zap.Error(err))
+			return
+		}
+	}()
+
+	if err := conn.SetReadDeadline(time.Now().Add(models.PongWait)); err != nil {
+		h.logger.Error("Unable to set read deadline", zap.Error(err))
+		return
+	}
+
+	conn.SetPongHandler(player.PongHandler)
+
+	for {
+		var action models.GameAction
+		_, msg, err := conn.ReadMessage()
+		if err != nil {
+			if ws.IsCloseError(err, ws.CloseNoStatusReceived, ws.CloseNormalClosure) {
 				break
 			}
 
-			h.logger.Debug("Error reading message", zap.Error(err))
-			break
+			h.logger.Error("Unable to read message", zap.Error(err))
+			continue
 		}
 
-		if err = UUIDCheck(userID); err != nil || len(action.Numbers) != 16 {
+		if err = easyjson.Unmarshal(msg, &action); err != nil {
+			h.logger.Error("Unable to decode JSON", zap.Error(err))
+			continue
+		}
+
+		if err = UUIDCheck(action.UserID); err != nil || len(action.Numbers) != 16 {
 			h.logger.Error("Invalid UUID or missing numbers", zap.Error(err))
 			continue
 		}
@@ -193,4 +225,28 @@ func (h *handlers) GameWSLaunch(w http.ResponseWriter, r *http.Request) {
 	}
 
 	h.logger.Debug("Connection closed", zap.String("userID", userID))
+}
+
+func (h *handlers) Pinger(conn *ws.Conn, ctx context.Context) error {
+	ticker := time.NewTicker(models.PingInterval)
+	defer ticker.Stop()
+
+	for {
+		select {
+		case <-ctx.Done():
+			h.logger.Debug("ctx done")
+			return nil
+
+		case <-ticker.C:
+			if err := conn.WriteMessage(ws.PingMessage, []byte{}); err != nil {
+				h.logger.Error("unable to ping client", zap.Error(err))
+				return err
+			}
+		}
+	}
+}
+
+// pongHandler is used to handle PongMessages for the Client
+func (h *handlers) pongHandler(conn *ws.Conn) error {
+	return conn.SetReadDeadline(time.Now().Add(models.PongWait))
 }

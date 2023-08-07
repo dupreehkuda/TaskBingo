@@ -18,6 +18,14 @@ const (
 	GameEnd
 )
 
+const (
+	// PongWait is how long we will await a pong response from client
+	PongWait = 5 * time.Second
+
+	// PingInterval has to be less than pongWait, We cant multiply by 0.9 to get 90% of time
+	PingInterval = (PongWait * 9) / 10
+)
+
 // UserIDKey is type for context keys
 type UserIDKey string
 
@@ -175,3 +183,8 @@ type (
 		Rooms map[string]*Room
 	}
 )
+
+// very stupid implementation, should refactor with client struct
+func (p *Player) PongHandler(appdata string) error {
+	return p.Conn.SetReadDeadline(time.Now().Add(PongWait))
+}
