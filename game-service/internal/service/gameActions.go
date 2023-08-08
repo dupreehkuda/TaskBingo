@@ -66,7 +66,7 @@ func (s service) UpdateGame(ctx context.Context, room *models.Room, action *mode
 
 		if newBingo > room.Game.User1Bingo {
 			room.Game.User1Bingo, room.Game.User1Numbers = newBingo, action.Numbers
-			update.Numbers = room.Game.User1Numbers
+			update.Numbers, update.Bingo = room.Game.User1Numbers, room.Game.User1Bingo
 		}
 
 	case room.Game.User2Id:
@@ -77,7 +77,7 @@ func (s service) UpdateGame(ctx context.Context, room *models.Room, action *mode
 
 		if newBingo > room.Game.User2Bingo {
 			room.Game.User2Bingo, room.Game.User2Numbers = newBingo, action.Numbers
-			update.Numbers = room.Game.User2Numbers
+			update.Numbers, update.Bingo = room.Game.User2Numbers, room.Game.User2Bingo
 		}
 	}
 

@@ -159,6 +159,7 @@ type (
 	GameUpdate struct {
 		Status  int     `json:"status"`
 		UserID  string  `json:"userID"`
+		Bingo   int32   `json:"bingo"`
 		Numbers []int32 `json:"userNumbers"`
 	}
 

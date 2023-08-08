@@ -1202,6 +1202,8 @@ func easyjsonD2b7633eDecodeGithubComDupreehkudaTaskBingoGameServiceInternalModel
 			out.Status = int(in.Int())
 		case "userID":
 			out.UserID = string(in.String())
+		case "bingo":
+			out.Bingo = int32(in.Int32())
 		case "userNumbers":
 			if in.IsNull() {
 				in.Skip()
@@ -1248,6 +1250,11 @@ func easyjsonD2b7633eEncodeGithubComDupreehkudaTaskBingoGameServiceInternalModel
 		const prefix string = ",\"userID\":"
 		out.RawString(prefix)
 		out.String(string(in.UserID))
+	}
+	{
+		const prefix string = ",\"bingo\":"
+		out.RawString(prefix)
+		out.Int32(int32(in.Bingo))
 	}
 	{
 		const prefix string = ",\"userNumbers\":"
