@@ -28,8 +28,9 @@ func (r repository) CreateGame(ctx context.Context, game *models.Game) error {
 
 	tx, err := conn.Begin(ctx)
 
+	// TODO should be GameRequested but for now accepting mechanism is delayed
 	_, err = tx.Exec(ctx, `INSERT INTO games (id, user1_id, user2_id, pack_id, status, numbers, user1_numbers, user2_numbers, created) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
-		game.GameID, game.User1Id, game.User2Id, game.PackId, GameRequested, game.Numbers, game.User1Numbers, game.User2Numbers, time.Now())
+		game.GameID, game.User1Id, game.User2Id, game.PackId, GameStarted, game.Numbers, game.User1Numbers, game.User2Numbers, time.Now())
 
 	_, err = tx.Exec(ctx, `UPDATE users SET games = ARRAY_APPEND(games, $1) WHERE id = $2`, game.GameID, game.User1Id)
 	_, err = tx.Exec(ctx, `UPDATE users SET games = ARRAY_APPEND(games, $1) WHERE id = $2`, game.GameID, game.User2Id)
