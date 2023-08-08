@@ -15,7 +15,7 @@
     let game = get(CurrentGame)
 
     let unsubscribe: Unsubscriber;
-    let usersBingo: Number;
+    let usersBingo: number;
     let opponentsBingo: number;
 
     onMount(() => {
@@ -29,9 +29,7 @@
         unsubscribe = CurrentGame.subscribe(value => {
             usersBingo = value.user1ID === account.userID ? value.user1Bingo : value.user2Bingo
             opponentsBingo = value.user1ID === account.userID ? value.user2Bingo : value.user1Bingo
-            console.log(game)
-            console.log(usersBingo, opponentsBingo)
-      });
+        });
     });
     
     onDestroy(() => {

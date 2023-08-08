@@ -15,12 +15,10 @@ export function _GameHandler(): { socket: WebSocket, closer: () => void } {
     let account = get(Account)
     let game = get(CurrentGame)
     // document.cookie = 'X-Authorization=' + authToken + '; path=/';
-    console.log(game)
     const connection = '?game=' + game.gameID + '&user=' + account.userID
     const socket = new WebSocket('wss://taskbingo.com/api/game/start' + connection);
 
     socket.onopen = () => {   
-        console.log('WebSocket connection established');
         sendInitial(socket)
     };
 
@@ -30,7 +28,6 @@ export function _GameHandler(): { socket: WebSocket, closer: () => void } {
     };
 
     socket.onclose = () => {
-        console.log('WebSocket connection closed');
     };
 
     let closer: () => void = function closer() {
@@ -81,6 +78,7 @@ function processUpdate(update: gameUpdate) {
     game.status = update.status
 
     if (update.numbers === null || update.userID === "") {
+        CurrentGame.set(game)
         return
     }
     
