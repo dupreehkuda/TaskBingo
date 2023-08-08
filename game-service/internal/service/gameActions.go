@@ -66,7 +66,7 @@ func (s service) UpdateGame(ctx context.Context, room *models.Room, action *mode
 
 		if newBingo > room.Game.User1Bingo {
 			room.Game.User1Bingo, room.Game.User1Numbers = newBingo, action.Numbers
-			update.Numbers, update.Bingo = room.Game.User1Numbers, room.Game.User1Bingo
+			update.Numbers = room.Game.User1Numbers
 		}
 
 	case room.Game.User2Id:
@@ -74,14 +74,15 @@ func (s service) UpdateGame(ctx context.Context, room *models.Room, action *mode
 
 		update.UserID = room.Game.User2Id
 		update.Numbers = room.Game.User2Numbers
+		update.Bingo = newBingo
 
 		if newBingo > room.Game.User2Bingo {
 			room.Game.User2Bingo, room.Game.User2Numbers = newBingo, action.Numbers
-			update.Numbers, update.Bingo = room.Game.User2Numbers, room.Game.User2Bingo
+			update.Numbers = room.Game.User2Numbers
 		}
 	}
 
-	update.Status = formStatus(room, action.Finished)
+	update.Status, update.Bingo = formStatus(room, action.Finished), newBingo
 
 	if update.Status == models.GameEnd {
 		setWinner(room)
