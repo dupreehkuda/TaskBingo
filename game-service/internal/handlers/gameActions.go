@@ -177,7 +177,7 @@ func (h *handlers) GameWSLaunch(w http.ResponseWriter, r *http.Request) {
 		var action models.GameAction
 		_, msg, err := conn.ReadMessage()
 		if err != nil {
-			if ws.IsCloseError(err, ws.CloseNoStatusReceived, ws.CloseNormalClosure) {
+			if ws.IsCloseError(err, ws.CloseNoStatusReceived, ws.CloseNormalClosure, ws.CloseAbnormalClosure) {
 				break
 			}
 
