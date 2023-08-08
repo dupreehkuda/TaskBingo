@@ -55,6 +55,10 @@ func (s service) UpdateGame(ctx context.Context, room *models.Room, action *mode
 		}
 	}
 
+	if room.Status != models.GameInProcess && len(action.Numbers) == 0 {
+		return nil, nil
+	}
+
 	newBingo := countBingo(action.Numbers)
 
 	switch action.UserID {
