@@ -27,15 +27,15 @@ func (h *Handlers) SetNewTaskPack(ctx context.Context, req *api.NewTaskPackReque
 	return &api.Empty{}, nil
 }
 
-// GetOneTaskPack handles the operation of getting a pack
-func (h *Handlers) GetOneTaskPack(ctx context.Context, req *api.TaskPackRequest) (*api.TaskPackResponse, error) {
-	pack, err := h.service.GetTaskPack(ctx, req.Id)
+// GetTaskPacks handles the operation of getting a pack
+func (h *Handlers) GetTaskPacks(ctx context.Context, req *api.TaskPacksRequest) (*api.TaskPacksResponse, error) {
+	packs, err := h.service.GetTaskPacks(ctx, req.Ids...)
 	if err != nil {
 		h.logger.Error("Unable to call service", zap.Error(err))
 		return nil, err
 	}
 
-	return mapToPack(pack), nil
+	return mapToMultiplePacks(packs), nil
 }
 
 // GetRatedPacks handles the operation of getting some packs in desc rating order
@@ -46,7 +46,7 @@ func (h *Handlers) GetRatedPacks(ctx context.Context, _ *api.Empty) (*api.GetMul
 		return nil, err
 	}
 
-	return &api.GetMultiplePacksResponse{Packs: mapToMultiplePacks(resp)}, nil
+	return &api.GetMultiplePacksResponse{Packs: mapToPacks(resp)}, nil
 }
 
 // LikePack handles the operation of user liking the pack

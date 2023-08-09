@@ -61,7 +61,7 @@ func mapToUserDataResponse(data *models.GetUserDataResponse) *api.GetUserDataRes
 		Loses:      int32(data.Lose),
 		Bingo:      int32(data.Bingo),
 		Friends:    []*api.FriendInfo{},
-		LikedPacks: []*api.TaskPackResponse{},
+		LikedPacks: []*api.TaskPack{},
 		RatedPacks: data.RatedPacks,
 		Games:      []*api.GameShort{},
 	}
@@ -118,11 +118,37 @@ func mapToRegisterUserResponse(userID, username string) *api.RegisterUserRespons
 	}
 }
 
-func mapToMultiplePacks(packs *[]models.TaskPack) []*api.TaskPackResponse {
-	var result []*api.TaskPackResponse
+func mapToMultiplePacks(packs *[]models.TaskPack) *api.TaskPacksResponse {
+	var result []*api.TaskPack
 
 	for _, pack := range *packs {
-		result = append(result, &api.TaskPackResponse{
+		result = append(result, &api.TaskPack{
+			Id: pack.ID,
+			Pack: &api.Pack{
+				Title: pack.Pack.Title,
+				Tasks: pack.Pack.Tasks,
+			},
+		})
+	}
+
+	return &api.TaskPacksResponse{Packs: result}
+}
+
+func mapToPack(pack *models.TaskPack) *api.TaskPack {
+	return &api.TaskPack{
+		Id: pack.ID,
+		Pack: &api.Pack{
+			Title: pack.Pack.Title,
+			Tasks: pack.Pack.Tasks,
+		},
+	}
+}
+
+func mapToPacks(packs *[]models.TaskPack) []*api.TaskPack {
+	var result []*api.TaskPack
+
+	for _, pack := range *packs {
+		result = append(result, &api.TaskPack{
 			Id: pack.ID,
 			Pack: &api.Pack{
 				Title: pack.Pack.Title,
@@ -132,14 +158,4 @@ func mapToMultiplePacks(packs *[]models.TaskPack) []*api.TaskPackResponse {
 	}
 
 	return result
-}
-
-func mapToPack(pack *models.TaskPack) *api.TaskPackResponse {
-	return &api.TaskPackResponse{
-		Id: pack.ID,
-		Pack: &api.Pack{
-			Title: pack.Pack.Title,
-			Tasks: pack.Pack.Tasks,
-		},
-	}
 }
