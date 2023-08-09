@@ -215,6 +215,15 @@ func (h *handlers) GameWSLaunch(w http.ResponseWriter, r *http.Request) {
 			if err = h.notifyAll(room, update); err != nil {
 				h.logger.Error("Error on notifying player", zap.Error(err))
 			}
+
+			if err = room.Player1.Conn.Close(); err != nil {
+				h.logger.Error("Error closing conn 1", zap.Error(err))
+			}
+
+			if err = room.Player2.Conn.Close(); err != nil {
+				h.logger.Error("Error closing conn 2", zap.Error(err))
+			}
+
 			return
 
 		default:
