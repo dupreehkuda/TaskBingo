@@ -111,7 +111,7 @@
         <Button class="fonty" on:click={() => (showModal = true)}>Create new game</Button>
     </div>
     <div class="scrolling-wrapper spacer">
-        {#each $Account.games as game}
+        {#each $Account.games.filter(game => game.status !== 3) as game}
             <div class="game flex flex-col justify-between mx-1">
                 {#if $Account.userID === game.user1Id}
                     <h5 class="mb-2 text-xl cardText">{getOpponentUsername(game.user2Id)}</h5>
@@ -181,7 +181,7 @@
     main {
         min-width: 50%;
         text-align: center;
-        max-width: max-content;
+        max-width:min-content;
         margin: 0 auto;
     }
 

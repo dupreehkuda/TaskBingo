@@ -6,7 +6,7 @@
     import Grid from '../../components/Grid/Grid.svelte';
 	import Account from "../accountStore";
 	import Keypad from "../../components/Keypad/Keypad.svelte";
-    import { Progressbar } from "flowbite-svelte";
+    import { Button } from "flowbite-svelte";
 	import TasksCard from "../../components/TasksCard/TasksCard.svelte";
 
     let gameHandler: { socket: WebSocket, closer: () => void };
@@ -14,12 +14,17 @@
     let closer: () => void;
     let account = get(Account)
     let game = get(CurrentGame)
+    let finished: boolean = false
 
     let unsubscribe: Unsubscriber;
     let usersBingo: number;
     let opponentsBingo: number;
 
     onMount(() => {
+        if (game === undefined || game === null) {
+            window.location.assign('/account');
+        }
+
         if (!gameHandler) {
             gameHandler = _GameHandler();
         }
@@ -51,6 +56,12 @@
             _SendUpdate(socket, submittedValue, false)
         }
     }
+
+    function handleGameFinish() {
+        finished = !finished
+
+        _SendUpdate(socket, 0, finished)
+    }
 </script>
 
 <svelte:head>
@@ -58,9 +69,9 @@
 </svelte:head>
 
 <main>
-    <!-- {#if $CurrentGame.status < 3}
+    {#if $CurrentGame.status < 3}
         <h3 class="fonty">Waiting for the opponent</h3>
-    {:else} -->
+    {:else}
         <body class="grid grid-cols-3 gap-4">
             <div class="col-span-2 p-5"><Grid numbers={game.numbers}/></div>
             
@@ -86,19 +97,32 @@
                         </div>
                         <div class="lefty basis-1/12"></div>
                     </div>
+                    <div>
+                        <Button class="w-full" on:click={() => handleGameFinish()}>
+                            {#if !finished}
+                                Finish
+                            {:else}
+                                Return to game
+                            {/if}    
+                        </Button> 
+                    </div>
                 </div>
-                
-                <Keypad on:submit={handleNewNumberSubmit}/>
+
+                <div class:disabled-div="{finished}"><Keypad on:submit={handleNewNumberSubmit}/></div>
 
                 <TasksCard packID={game.packID}/>
             </div>
         </body>
-    <!-- {/if}     -->
+    {/if}    
 </main>
 
 <style>
+    .disabled-div {
+        pointer-events: none;
+    
+    }
     .top-spacer {
-        margin-top: 7%; /* adjust the value as needed */
+        margin-top: 7%; 
     }
     span {
         text-align: left;
@@ -111,7 +135,7 @@
 
     main {
         text-align: center;
-        max-width: 60%;
+        max-width: 75%;
         margin: 0 auto;
     }
 

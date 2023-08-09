@@ -1,3 +1,5 @@
+import { goto } from "$app/navigation";
+
 export async function _Submit(event: any): Promise<number> {
     event.preventDefault()
     const data = new FormData(event.target);
@@ -23,5 +25,14 @@ export async function _Submit(event: any): Promise<number> {
         body: JSON.stringify(newResp)
     })
 
+
+    if (res.status === 200) {
+        redirectOnFinish()
+    }
+    
     return res.status
 }
+
+function redirectOnFinish() {
+    goto('/account');
+  }

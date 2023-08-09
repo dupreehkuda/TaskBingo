@@ -1,3 +1,4 @@
+import { goto } from '$app/navigation';
 import Account from '../accountStore';
 import CurrentGame from '../currentGame';
 import { get } from 'svelte/store';
@@ -28,6 +29,7 @@ export function _GameHandler(): { socket: WebSocket, closer: () => void } {
     };
 
     socket.onclose = () => {
+      redirectOnFinish()
     };
 
     let closer: () => void = function closer() {
@@ -80,6 +82,11 @@ export function _SendUpdate(socket: WebSocket, newNum: number, close: boolean) {
 function processUpdate(update: gameUpdate) {
     let game = get(CurrentGame)
 
+    if (update.status === 6) {
+      redirectOnFinish()
+      return
+    }
+
     game.status = update.status
 
     if (update.numbers === null || update.userID === "") {
@@ -98,6 +105,10 @@ function processUpdate(update: gameUpdate) {
     CurrentGame.set(game)
 
     return
+}
+
+function redirectOnFinish() {
+  goto('/account');
 }
 
 function placeNumber(num: number) {
