@@ -99,7 +99,7 @@ func (r repository) GetUserData(ctx context.Context, userID string) (*models.Get
 		}
 		defer newConn.Release()
 
-		rows, err := newConn.Query(ctx, "SELECT id, user1_id, user2_id, pack_id, status, user1_bingo, user2_bingo FROM games WHERE user1_id = $1 OR user2_id = $1 LIMIT 10;", userID)
+		rows, err := newConn.Query(ctx, "SELECT id, user1_id, user2_id, pack_id, status, user1_bingo, user2_bingo FROM games WHERE (user1_id = $1 OR user2_id = $1) AND status != 3 LIMIT 15;", userID)
 		if err != nil {
 			r.logger.Error("Error when executing statement", zap.Error(err))
 			return err
