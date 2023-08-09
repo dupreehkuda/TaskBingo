@@ -4,7 +4,7 @@
 	  import { onDestroy, onMount } from "svelte";
 	  import type { Unsubscriber } from "svelte/store";
 
-    let usersNumbers: Number[] = $CurrentGame.user1ID === $Account.userID ? $CurrentGame.user1Numbers : $CurrentGame.user2Numbers;;
+    let usersNumbers: Number[] = $CurrentGame.user1ID === $Account.userID ? $CurrentGame.user1Numbers : $CurrentGame.user2Numbers;
     export let numbers: Number[] = [];
 
     let unsubscribe: Unsubscriber;

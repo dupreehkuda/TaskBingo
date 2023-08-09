@@ -7,6 +7,7 @@
 	import Account from "../accountStore";
 	import Keypad from "../../components/Keypad/Keypad.svelte";
     import { Progressbar } from "flowbite-svelte";
+	import TasksCard from "../../components/TasksCard/TasksCard.svelte";
 
     let gameHandler: { socket: WebSocket, closer: () => void };
     let socket: WebSocket
@@ -57,9 +58,9 @@
 </svelte:head>
 
 <main>
-    {#if $CurrentGame.status < 3}
-        <h3>Waiting for the opponent</h3>
-    {:else}
+    <!-- {#if $CurrentGame.status < 3}
+        <h3 class="fonty">Waiting for the opponent</h3>
+    {:else} -->
         <body class="grid grid-cols-3 gap-4">
             <div class="col-span-2 p-5"><Grid numbers={game.numbers}/></div>
             
@@ -86,12 +87,13 @@
                         <div class="lefty basis-1/12"></div>
                     </div>
                 </div>
-
                 
                 <Keypad on:submit={handleNewNumberSubmit}/>
+
+                <TasksCard packID={game.packID}/>
             </div>
         </body>
-    {/if}    
+    <!-- {/if}     -->
 </main>
 
 <style>

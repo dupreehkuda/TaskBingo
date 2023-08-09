@@ -1,5 +1,5 @@
 import type { PageLoad } from './$types';
-import Account from '../accountStore';
+import Account, { type AccountData } from '../accountStore';
 import CurrentGame from '../currentGame';
 import { get } from 'svelte/store';
 
@@ -9,7 +9,23 @@ export const load = (async ({ fetch }) => {
     headers: {'Origin': 'taskbingo.com'},
   })
 
-  const userInfo = await res.json()
+  const userInfo: AccountData = await res.json()
+
+  const newReq = {
+    ids: userInfo.games
+        .map(obj => obj.packId)
+        .filter(packId => !userInfo.likedPacks.some(obj => obj.id === packId)),
+  } 
+
+  if (newReq.ids.length !== 0) {
+    const neededPacks = await fetch('https://taskbingo.com/api/task/getTaskPacks', {
+      method: 'POST',
+      headers: {'Origin': 'taskbingo.com'},
+      body: JSON.stringify(newReq)
+    })
+  
+    userInfo.packs = await neededPacks.json()
+  }
 
   Account.set(userInfo)
 }) satisfies PageLoad;

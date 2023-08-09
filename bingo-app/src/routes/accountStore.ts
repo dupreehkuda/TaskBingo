@@ -10,6 +10,7 @@ export interface AccountData {
     friends:    Friend[];
     likedPacks: TaskPack[];
     ratedPacks: string[];
+    packs: TaskPack[];
     games: Game[];
 }
 

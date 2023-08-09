@@ -19,12 +19,20 @@
         }
     }
 
-    function getPackTitle(packId: string) {
-        for (const pack of $Account.likedPacks) {
-            if (pack.id === packId) {
-                return pack.pack.title
-            }
+    function getPackTitle(packID: string) {
+        let idx = $Account.likedPacks.findIndex(pack => pack.id === packID)
+
+        if (idx !== -1) {
+            return $Account.likedPacks[idx].pack.title
         }
+
+        idx = $Account.packs.findIndex(pack => pack.id === packID)
+
+        if (idx !== -1) {
+            return $Account.packs[idx].pack.title
+        }
+
+        return ""
     }
 </script>
 

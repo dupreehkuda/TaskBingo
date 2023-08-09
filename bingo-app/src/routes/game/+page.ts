@@ -54,16 +54,21 @@ function sendInitial(socket: WebSocket) {
 }
 
 export function _SendUpdate(socket: WebSocket, newNum: number, close: boolean) {
+    placeNumber(newNum)
+
     let account = get(Account)
     let game = get(CurrentGame)
 
-    placeNumber(newNum)
+    if (account.userID === game.user1ID) game.user1Bingo = countBingo(game.user1Numbers);
+    else game.user2Bingo = countBingo(game.user2Numbers);
 
     let update = {
         userID: account.userID,
         finished: close ? true : false,
         numbers: (account.userID === game.user1ID) ? game.user1Numbers : game.user2Numbers,
     }
+
+    CurrentGame.set(game)
 
     if (socket && socket.readyState === WebSocket.OPEN) {
         socket.send(JSON.stringify(update));
@@ -116,3 +121,49 @@ function placeNumber(num: number) {
     return
 }
 
+// TODO think of doing this on backend for both players. temporary thing
+function countBingo(numbers: number[]): number {
+    let bingos = 0;
+  
+    for (let i = 0; i < 4; i++) {
+      if (
+        numbers[i] !== 0 &&
+        numbers[i + 4] !== 0 &&
+        numbers[i + 8] !== 0 &&
+        numbers[i + 12] !== 0
+      ) {
+        bingos += 1;
+      }
+    }
+  
+    for (let i = 0; i < numbers.length; i += 4) {
+      if (
+        numbers[i] !== 0 &&
+        numbers[i + 1] !== 0 &&
+        numbers[i + 2] !== 0 &&
+        numbers[i + 3] !== 0
+      ) {
+        bingos += 1;
+      }
+    }
+  
+    if (
+      numbers[0] !== 0 &&
+      numbers[5] !== 0 &&
+      numbers[10] !== 0 &&
+      numbers[15] !== 0
+    ) {
+      bingos += 1;
+    }
+  
+    if (
+      numbers[3] !== 0 &&
+      numbers[6] !== 0 &&
+      numbers[9] !== 0 &&
+      numbers[12] !== 0
+    ) {
+      bingos += 1;
+    }
+  
+    return bingos;
+  }

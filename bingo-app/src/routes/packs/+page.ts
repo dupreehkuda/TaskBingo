@@ -12,7 +12,7 @@ export const load = (async ({ fetch }) => {
 
   Account.set(userInfo)
 
-  const res = await fetch('https://taskbingo.com/api/task/getPacks', {
+  const res = await fetch('https://taskbingo.com/api/task/getRatedPacks', {
     method: 'GET',
     headers: {'Origin': 'taskbingo.com'},
   })
