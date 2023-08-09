@@ -38,7 +38,7 @@ func (s service) UpdateGame(ctx context.Context, room *models.Room, action *mode
 		return nil, nil
 	}
 
-	if room.Status != models.GameInProcess {
+	if room.Status != models.GameInProcess || room.Status != models.GameOneFinished || room.Status != models.GameEnd {
 		if room.Status == models.GameCreated && (room.Player1 != nil || room.Player2 != nil) {
 			room.Status = models.GameWaiting
 			return nil, nil
@@ -59,7 +59,7 @@ func (s service) UpdateGame(ctx context.Context, room *models.Room, action *mode
 
 	switch action.UserID {
 	case room.Game.User1Id:
-		room.Game.User1Numbers = action.Numbers
+		room.Game.User1Numbers, room.Player1.Finished = action.Numbers, action.Finished
 
 		update.UserID = room.Game.User1Id
 		update.Numbers = room.Game.User1Numbers
@@ -70,7 +70,7 @@ func (s service) UpdateGame(ctx context.Context, room *models.Room, action *mode
 		}
 
 	case room.Game.User2Id:
-		room.Game.User2Numbers = action.Numbers
+		room.Game.User2Numbers, room.Player2.Finished = action.Numbers, action.Finished
 
 		update.UserID = room.Game.User2Id
 		update.Numbers = room.Game.User2Numbers
@@ -82,7 +82,7 @@ func (s service) UpdateGame(ctx context.Context, room *models.Room, action *mode
 		}
 	}
 
-	update.Status, update.Bingo = formStatus(room, action.Finished), newBingo
+	update.Status, update.Bingo = formStatus(room), newBingo
 
 	if update.Status == models.GameEnd {
 		setWinner(room)
@@ -103,14 +103,27 @@ func (s service) achieveGame(ctx context.Context, room *models.Room, update *mod
 }
 
 // formStatus updates room status if anybody finished the game
-func formStatus(room *models.Room, finished bool) int {
-	if finished && room.Status == models.GameInProcess {
-		room.Status = models.GameOneFinished
-		return room.Status
+func formStatus(room *models.Room) int {
+	// if both players finished the game
+	if room.Player1 != nil && room.Player2 != nil {
+		if room.Player1.Finished && room.Player2.Finished {
+			room.Status = models.GameEnd
+			return room.Status
+		}
 	}
 
-	if finished && room.Status == models.GameOneFinished {
-		room.Status = models.GameEnd
+	// if only one finished the game
+	if room.Player1 != nil && room.Player2 != nil {
+		if (room.Player1.Finished || room.Player2.Finished) && room.Status == models.GameInProcess {
+			room.Status = models.GameOneFinished
+			return room.Status
+		}
+	}
+
+	// if one is not in the game
+	if room.Player1 == nil || room.Player2 == nil {
+		room.Status = models.GameWaiting
+		return room.Status
 	}
 
 	return room.Status

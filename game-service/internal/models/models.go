@@ -170,8 +170,9 @@ type (
 
 	// Player provides info about connected user
 	Player struct {
-		Id   string `json:"id"`
-		Conn *websocket.Conn
+		Id       string `json:"id"`
+		Finished bool   `json:"finished"`
+		Conn     *websocket.Conn
 	}
 
 	// Room provides info about Game and both Player
