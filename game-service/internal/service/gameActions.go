@@ -106,6 +106,7 @@ func (s service) achieveGame(ctx context.Context, room *models.Room, update *mod
 func formStatus(room *models.Room, finished bool) int {
 	if finished && room.Status == models.GameInProcess {
 		room.Status = models.GameOneFinished
+		return room.Status
 	}
 
 	if finished && room.Status == models.GameOneFinished {
