@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"errors"
 	"io"
 	"net/http"
 
@@ -11,12 +12,9 @@ import (
 	"github.com/dupreehkuda/TaskBingo/game-service/internal/models"
 )
 
-// GetTaskPack handles getting one task pack operations
-func (h *handlers) GetTaskPack(w http.ResponseWriter, r *http.Request) {
-	var ctxKey models.UserIDKey = "userID"
-	userID := r.Context().Value(ctxKey).(string)
-
-	var req models.TaskPackRequest
+// GetTaskPacks handles getting several task packs operations
+func (h *handlers) GetTaskPacks(w http.ResponseWriter, r *http.Request) {
+	var req models.TaskPacksRequest
 
 	body, err := io.ReadAll(r.Body)
 	if err != nil {
@@ -31,16 +29,16 @@ func (h *handlers) GetTaskPack(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err = UUIDCheck(userID, req.TaskID); err != nil {
+	if err = UUIDCheck(req.PackIDs...); err != nil {
 		h.logger.Error("Invalid UUID in request", zap.Error(err))
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
-	resp, err := h.service.GetTaskPack(r.Context(), req.TaskID)
+	resp, err := h.service.GetTaskPacks(r.Context(), req.PackIDs...)
 
 	switch {
-	case err == errs.ErrNoSuchPack:
+	case errors.Is(err, errs.ErrNoSuchPack):
 		w.WriteHeader(http.StatusNoContent)
 		return
 	case err != nil:
