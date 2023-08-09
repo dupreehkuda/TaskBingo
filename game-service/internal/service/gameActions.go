@@ -120,6 +120,14 @@ func formStatus(room *models.Room) int {
 		}
 	}
 
+	// if only one returned to the game
+	if room.Player1 != nil && room.Player2 != nil {
+		if !room.Player1.Finished && !room.Player2.Finished && room.Status == models.GameOneFinished {
+			room.Status = models.GameInProcess
+			return room.Status
+		}
+	}
+
 	// if one is not in the game
 	if room.Player1 == nil || room.Player2 == nil {
 		room.Status = models.GameWaiting

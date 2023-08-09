@@ -180,9 +180,13 @@ func (r repository) AchieveGame(ctx context.Context, game *models.Game) error {
 	if game.User1Id == game.Winner {
 		_, err = tx.Exec(ctx, `UPDATE users SET wins = wins + 1 WHERE id = $1;`, game.User1Id)
 		_, err = tx.Exec(ctx, `UPDATE users SET lose = lose + 1 WHERE id = $1;`, game.User2Id)
-	} else {
+		_, err = tx.Exec(ctx, `UPDATE friends SET wins = wins + 1 WHERE id = $1;`, game.User1Id)
+		_, err = tx.Exec(ctx, `UPDATE friends SET loses = loses + 1 WHERE id = $1;`, game.User2Id)
+	} else if game.User2Id == game.Winner {
 		_, err = tx.Exec(ctx, `UPDATE users SET wins = wins + 1 WHERE id = $1;`, game.User2Id)
 		_, err = tx.Exec(ctx, `UPDATE users SET lose = lose + 1 WHERE id = $1;`, game.User1Id)
+		_, err = tx.Exec(ctx, `UPDATE friends SET wins = wins + 1 WHERE id = $1;`, game.User2Id)
+		_, err = tx.Exec(ctx, `UPDATE friends SET loses = loses + 1 WHERE id = $1;`, game.User1Id)
 	}
 
 	if err != nil {
