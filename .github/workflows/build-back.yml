@@ -10,7 +10,7 @@ on:
       - user-data-service/**
 
 jobs:
-  build-and-push:
+  build-and-push-back:
     runs-on: ubuntu-latest
 
     steps:

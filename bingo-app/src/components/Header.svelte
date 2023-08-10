@@ -1,15 +1,16 @@
 <script lang="ts">
     import { Navbar, NavBrand, NavLi, NavUl, NavHamburger } from 'flowbite-svelte'
     import { onMount } from "svelte";
+    import { goto } from '$app/navigation';
 
     onMount(() => {
         isAuthorized()
     })
 
     function parseJwt(token: string) {
-        var base64Url = token.split('.')[1];
-        var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+        let base64Url = token.split('.')[1];
+        let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        let jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
             return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
         }).join(''));
 
@@ -17,8 +18,9 @@
     }
 
     $: show = false
+
     function isAuthorized() {
-        var cookiestring=RegExp("auth=[^;]+").exec(document.cookie)
+        let cookiestring=RegExp("auth=[^;]+").exec(document.cookie)
         const data = parseJwt(decodeURIComponent(!!cookiestring ? cookiestring.toString().replace(/^[^=]+./,"") : ""))
         show = data.user != ''
     }

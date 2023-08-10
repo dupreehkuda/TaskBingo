@@ -9,7 +9,7 @@ on:
       - user-data-service/**
 
 jobs:
-  build-and-push:
+  build-and-push-back:
     runs-on: ubuntu-latest
 
     steps:
@@ -42,7 +42,7 @@ jobs:
             ghcr.io/${{ github.repository_owner }}/game-service-prod:latest
 
   deploy-timeweb:
-    needs: build-and-push
+    needs: build-and-push-back
     runs-on: ubuntu-latest
 
     steps:

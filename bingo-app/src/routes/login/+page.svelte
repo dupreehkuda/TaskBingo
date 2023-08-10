@@ -1,8 +1,12 @@
 <script lang='ts'>
-    import { ButtonGroup, InputAddon, Label, Input, Button } from 'flowbite-svelte'
+    import { ButtonGroup, InputAddon, Input, Button } from 'flowbite-svelte'
+    import { goto } from '$app/navigation';
 
     let show = false;
-    // let logined = false;
+
+    const API_URL = import.meta.env.VITE_API_URL;
+    const WEB_URL = import.meta.env.VITE_WEB_URL;
+    export const ssr = false
 
     async function submit(e: any) {
         e.preventDefault()
@@ -19,13 +23,14 @@
             password: data.password
         }
 
-        const res = await fetch('https://taskbingo.com/api/user/login', {
+        const res = await fetch(`${API_URL}/api/user/login`, {
             method: 'POST',
-            headers: {'Origin': 'taskbingo.com'},
-            body: JSON.stringify(newReq)
+            headers: {'Origin': WEB_URL},
+            body: JSON.stringify(newReq),
+            credentials: 'include',
         })
         
-        if (res.ok) { window.location.href = "https://taskbingo.com/account"; }
+        if (res.ok) { goto('/account'); }
     }
 </script>
 

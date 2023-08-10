@@ -15,6 +15,14 @@ import (
 var wsUpgrade = ws.Upgrader{
 	ReadBufferSize:  1024,
 	WriteBufferSize: 1024,
+	CheckOrigin: func(r *http.Request) bool {
+		if r.Header.Get("Origin") == "http://localhost:3000" ||
+			r.Header.Get("Origin") == "https://taskbingo.com" {
+			return true
+		}
+
+		return false
+	},
 }
 
 // getOrCreateRoom retrieves game from the hub or repository

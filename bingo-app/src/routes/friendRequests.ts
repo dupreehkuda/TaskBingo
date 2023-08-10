@@ -1,15 +1,19 @@
 import Account from './accountStore';
 import { get } from 'svelte/store';
 
+const API_URL = import.meta.env.VITE_API_URL;
+const WEB_URL = import.meta.env.VITE_WEB_URL;
+
 export async function RequestFriend(personId: string, username: string) {
   const newResp = {
     person: personId,
   } 
   
-  const res = await fetch('https://taskbingo.com/api/user/requestFriend', {
+  const res = await fetch(`${API_URL}/api/user/requestFriend`, {
     method: 'POST',
-    headers: {'Origin': 'taskbingo.com'},
-    body: JSON.stringify(newResp)
+    headers: {'Origin': WEB_URL},
+    body: JSON.stringify(newResp),
+    credentials: 'include',
   })
 
   let account = get(Account)
@@ -24,10 +28,11 @@ export async function AcceptFriend(personId: string) {
     person: personId,
   } 
   
-  const res = await fetch('https://taskbingo.com/api/user/acceptFriend', {
+  const res = await fetch(`${API_URL}/api/user/acceptFriend`, {
     method: 'POST',
-    headers: {'Origin': 'taskbingo.com'},
-    body: JSON.stringify(newResp)
+    headers: {'Origin': WEB_URL},
+    body: JSON.stringify(newResp),
+    credentials: 'include',
   })
 
   let account = get(Account)
@@ -43,10 +48,11 @@ export async function DeleteFriend(personId: string) {
     person: personId,
   } 
   
-  const res = await fetch('https://taskbingo.com/api/user/deleteFriend', {
+  const res = await fetch(`${API_URL}/api/user/deleteFriend`, {
     method: 'POST',
-    headers: {'Origin': 'taskbingo.com'},
-    body: JSON.stringify(newResp)
+    headers: {'Origin': WEB_URL},
+    body: JSON.stringify(newResp),
+    credentials: 'include',
   })
 
   let account = get(Account)

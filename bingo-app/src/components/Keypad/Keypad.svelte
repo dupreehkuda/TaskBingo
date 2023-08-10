@@ -23,7 +23,6 @@
         dispatch('submit', Number(enteredCode));
         enteredCode = ''
     }
-  
   </script>
   
   <main>

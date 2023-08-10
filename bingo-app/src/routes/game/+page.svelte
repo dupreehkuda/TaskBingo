@@ -1,13 +1,13 @@
 <script lang="ts">
-    import {_GameHandler, _SendUpdate} from "./+page"
+    import {_GameHandler, _SendUpdate, _RedirectOnAccount} from "./+page"
     import { onDestroy, onMount } from 'svelte';
     import CurrentGame from '../currentGame';
     import {get, type Unsubscriber} from "svelte/store";
     import Grid from '../../components/Grid/Grid.svelte';
-	import Account from "../accountStore";
-	import Keypad from "../../components/Keypad/Keypad.svelte";
+	  import Account from "../accountStore";
+	  import Keypad from "../../components/Keypad/Keypad.svelte";
     import { Button } from "flowbite-svelte";
-	import TasksCard from "../../components/TasksCard/TasksCard.svelte";
+	  import TasksCard from "../../components/TasksCard/TasksCard.svelte";
 
     let gameHandler: { socket: WebSocket, closer: () => void };
     let socket: WebSocket
@@ -22,7 +22,7 @@
 
     onMount(() => {
         if (game === undefined || game === null) {
-            window.location.assign('/account');
+            RedirectOnAccount();
         }
 
         if (!gameHandler) {

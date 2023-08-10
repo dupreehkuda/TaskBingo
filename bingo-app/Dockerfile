@@ -1,19 +1,19 @@
-FROM node:18 AS builder
+FROM node:18.13 AS builder
 
 WORKDIR /app
 
-COPY bingo-app/package.json bingo-app/yarn.lock ./
+COPY package.json package-lock.json ./
 
-RUN yarn install --frozen-lockfile
+RUN npm ci
 
-COPY ./bingo-app .
+COPY . .
 
-RUN yarn build
+RUN npm run build
 
-FROM node:18-alpine
+FROM node:18.13-alpine
 
 WORKDIR /app
 
 COPY --from=builder /app .
 
-CMD ["yarn", "preview", "--host"]
+CMD ["npm", "run", "preview", "--host"]

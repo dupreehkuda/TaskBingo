@@ -3,6 +3,8 @@ import Account from '../accountStore';
 import CurrentGame from '../currentGame';
 import { get } from 'svelte/store';
 
+const WS_URL = import.meta.env.VITE_WS_URL;
+
 export interface gameUpdate {
     status: number;
     userID: string;
@@ -17,7 +19,7 @@ export function _GameHandler(): { socket: WebSocket, closer: () => void } {
     let game = get(CurrentGame)
     // document.cookie = 'X-Authorization=' + authToken + '; path=/';
     const connection = '?game=' + game.gameID + '&user=' + account.userID
-    const socket = new WebSocket('wss://taskbingo.com/api/game/start' + connection);
+    const socket = new WebSocket(`${WS_URL}/api/game/start` + connection);
 
     socket.onopen = () => {   
         sendInitial(socket)
@@ -29,7 +31,7 @@ export function _GameHandler(): { socket: WebSocket, closer: () => void } {
     };
 
     socket.onclose = () => {
-      redirectOnFinish()
+        _RedirectOnAccount()
     };
 
     let closer: () => void = function closer() {
@@ -83,8 +85,8 @@ function processUpdate(update: gameUpdate) {
     let game = get(CurrentGame)
 
     if (update.status === 6) {
-      redirectOnFinish()
-      return
+        _RedirectOnAccount()
+        return
     }
 
     game.status = update.status
@@ -107,7 +109,7 @@ function processUpdate(update: gameUpdate) {
     return
 }
 
-function redirectOnFinish() {
+export function _RedirectOnAccount() {
   goto('/account');
 }
 

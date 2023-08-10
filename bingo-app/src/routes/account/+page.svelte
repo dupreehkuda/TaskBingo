@@ -61,13 +61,13 @@
                     <span class="text-xs cardText">{friend.wins}/{friend.loses}</span>
                 </div>
                 <div class="flex flex-row gap-1.5 basis-3/12">
-                    {#if friend.status == 3}
+                    {#if friend.status === 3}
                         <Button class="basis-2/3 fonty" size="xs" on:click={() => (showModal = true, selectedFriendID = friend.userID)}>Play</Button>
                         <Button class="basis-1/3 dark:!text-white-800" size="xs" color="red" on:click={() => DeleteFriend(friend.userID)}>X</Button>
-                    {:else if friend.status == 2}
+                    {:else if friend.status === 2}
                         <Button class="basis-2/3 fonty" size="xs" on:click={() => AcceptFriend(friend.userID)}>Accept</Button>
                         <Button class="basis-1/3 dark:!text-white-800" size="xs" color="red" on:click={() => DeleteFriend(friend.userID)}>X</Button>
-                    {:else if friend.status == 1}
+                    {:else if friend.status === 1}
                         <Button class="basis-2/3 fonty" disabled size="xs" on:click={() => AcceptFriend(friend.userID)}>Sent</Button>
                         <Button class="basis-1/3 dark:!text-white-800" size="xs" color="red" on:click={() => DeleteFriend(friend.userID)}>X</Button>
                     {/if}

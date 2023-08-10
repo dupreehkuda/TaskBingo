@@ -1,0 +1,47 @@
+name: production deploy
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - bingo-app/**
+
+jobs:
+  build-and-push-web:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        id: docker_buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to GitHub Container Registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Build and push web image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./bingo-app
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/bingo-web-prod:${{ github.sha }}
+            ghcr.io/${{ github.repository_owner }}/bingo-web-prod:latest
+
+  deploy-timeweb:
+    needs: build-and-push-web
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy on timeweb
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ vars.TIMEWEB_IP }}
+          username: ${{ vars.TIMEWEB_USERNAME }}
+          password: ${{ secrets.TIMEWEB_PASSWORD }}
+          script: |
+            cd TaskBingo
+            make web-deploy

@@ -33,8 +33,5 @@ deploy:
 .PHONY: web-deploy
 web-deploy:
 	./move_env.sh
-	docker build -f ./bingo-app/Dockerfile -t bingo-app .
-	docker run --init --rm -p 3000:3000 bingo-app
-
-.PHONY: web-dev
-web-dev:
+	docker pull ghcr.io/dupreehkuda/bingo-web-prod:latest
+	docker run -d --init --rm -p 3000:3000 ghcr.io/dupreehkuda/bingo-web-prod:latest

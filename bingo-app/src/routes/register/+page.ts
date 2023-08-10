@@ -1,5 +1,9 @@
 import { goto } from "$app/navigation";
 
+const API_URL = import.meta.env.VITE_API_URL;
+const WEB_URL = import.meta.env.VITE_WEB_URL;
+export const ssr = false
+
 export async function _Submit(event: any): Promise<number> {
     event.preventDefault()
     const data = new FormData(event.target);
@@ -19,13 +23,13 @@ export async function _Submit(event: any): Promise<number> {
     console.log(data)
     console.log(JSON.stringify(newResp))
 
-    const res = await fetch('https://taskbingo.com/api/user/register', {
+    const res = await fetch(`${API_URL}/api/user/register`, {
         method: 'POST',
-        headers: {'Origin': 'taskbingo.com'},
-        body: JSON.stringify(newResp)
+        headers: {'Origin': WEB_URL},
+        body: JSON.stringify(newResp),
+        credentials: 'include',
     })
-
-
+    
     if (res.status === 200) {
         redirectOnFinish()
     }

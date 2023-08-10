@@ -2,32 +2,41 @@ import type { PageLoad } from './$types';
 import Account, { type AccountData } from '../accountStore';
 import CurrentGame from '../currentGame';
 import { get } from 'svelte/store';
+import { browser } from '$app/environment';
+
+const API_URL = import.meta.env.VITE_API_URL;
+const WEB_URL = import.meta.env.VITE_WEB_URL;
+export const ssr = false
 
 export const load = (async ({ fetch }) => {
-  const res = await fetch('https://taskbingo.com/api/user/getUserData', {
-    method: 'GET',
-    headers: {'Origin': 'taskbingo.com'},
-  })
+  if ( browser ) {
+    const res = await fetch(`${API_URL}/api/user/getUserData`, {
+      method: 'GET',
+      headers: {'Origin': WEB_URL},
+      credentials: 'include',
+    })
 
-  const userInfo: AccountData = await res.json()
+    const userInfo: AccountData = await res.json()
 
-  const newReq = {
-    ids: userInfo.games
+    const newReq = {
+      ids: userInfo.games
         .map(obj => obj.packId)
         .filter(packId => !userInfo.likedPacks.some(obj => obj.id === packId)),
-  } 
+    }
 
-  if (newReq.ids.length !== 0) {
-    const neededPacks = await fetch('https://taskbingo.com/api/task/getTaskPacks', {
-      method: 'POST',
-      headers: {'Origin': 'taskbingo.com'},
-      body: JSON.stringify(newReq)
-    })
-  
-    userInfo.packs = await neededPacks.json()
+    if (newReq.ids.length !== 0) {
+      const neededPacks = await fetch(`${API_URL}/api/task/getTaskPacks`, {
+        method: 'POST',
+        headers: {'Origin': WEB_URL},
+        body: JSON.stringify(newReq),
+        credentials: 'include',
+      })
+
+      userInfo.packs = await neededPacks.json()
+    }
+
+    Account.set(userInfo)
   }
-
-  Account.set(userInfo)
 }) satisfies PageLoad;
 
 export async function _LikePack(pack: any, liked: boolean) {
@@ -36,10 +45,11 @@ export async function _LikePack(pack: any, liked: boolean) {
   } 
 
   if (liked) {
-    const res = await fetch('https://taskbingo.com/api/user/dislikePack', {
+    const res = await fetch(`${API_URL}/api/user/dislikePack`, {
       method: 'POST',
-      headers: {'Origin': 'taskbingo.com'},
-      body: JSON.stringify(newReq)
+      headers: {'Origin': WEB_URL},
+      body: JSON.stringify(newReq),
+      credentials: 'include',
     })
 
     if (res.ok) {
@@ -48,10 +58,11 @@ export async function _LikePack(pack: any, liked: boolean) {
       Account.set(account)
     }
   } else {
-    const res = await fetch('https://taskbingo.com/api/user/likePack', {
+    const res = await fetch(`${API_URL}/api/user/likePack`, {
       method: 'POST',
-      headers: {'Origin': 'taskbingo.com'},
-      body: JSON.stringify(newReq)
+      headers: {'Origin': WEB_URL},
+      body: JSON.stringify(newReq),
+      credentials: 'include',
     })
 
     if (res.ok) {
@@ -65,10 +76,11 @@ export async function _LikePack(pack: any, liked: boolean) {
 export async function _DeleteGame(gameID: string) {
   const newReq = { gameID: gameID } 
 
-  const res = await fetch('https://taskbingo.com/api/game/delete', {
+  const res = await fetch(`${API_URL}/api/game/delete`, {
       method: 'DELETE',
-      headers: {'Origin': 'taskbingo.com'},
-      body: JSON.stringify(newReq)
+      headers: {'Origin': WEB_URL},
+      body: JSON.stringify(newReq),
+    credentials: 'include',
     })
 
     if (res.ok) {
@@ -90,10 +102,11 @@ export async function _GetGame(gameID: string) {
       gameID: gameID,
     } 
 
-    const res = await fetch('https://taskbingo.com/api/game/get', {
+    const res = await fetch(`${API_URL}/api/game/get`, {
         method: 'POST',
-        headers: {'Origin': 'taskbingo.com'},
-        body: JSON.stringify(newReq)
+        headers: {'Origin': WEB_URL},
+        body: JSON.stringify(newReq),
+      credentials: 'include',
     })
 
     if (res.ok) {

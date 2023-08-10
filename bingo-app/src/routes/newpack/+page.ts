@@ -1,3 +1,7 @@
+const API_URL = import.meta.env.VITE_API_URL;
+const WEB_URL = import.meta.env.VITE_WEB_URL;
+export const ssr = false
+
 export async function _Submit(event: any): Promise<number> {
     event.preventDefault()
     const data = new FormData(event.target);
@@ -32,10 +36,11 @@ export async function _Submit(event: any): Promise<number> {
         }
     }
 
-    const res = await fetch('https://taskbingo.com/api/task/setTaskPack', {
+    const res = await fetch(`${API_URL}/api/task/setTaskPack`, {
         method: 'POST',
-        headers: {'Origin': 'taskbingo.com'},
-        body: JSON.stringify(newResp)
+        headers: {'Origin': WEB_URL},
+        body: JSON.stringify(newResp),
+        credentials: 'include',
     })
 
     return res.status

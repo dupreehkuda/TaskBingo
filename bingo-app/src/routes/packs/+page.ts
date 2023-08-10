@@ -1,6 +1,7 @@
 import Account from '../accountStore';
 import { get } from 'svelte/store';
-import type { PageServerData } from './$types';
+import type { PageLoad } from '../../../.svelte-kit/types/src/routes/game/$types';
+export const ssr = false
 
 const API_URL = import.meta.env.VITE_API_URL;
 const WEB_URL = import.meta.env.VITE_WEB_URL;
@@ -25,7 +26,7 @@ export const load = (async ({ fetch }) => {
   const packs = await res.json()
 
   return { packs }
-}) satisfies PageServerData;
+}) satisfies PageLoad;
 
 export async function _Like(pack: any, liked: boolean) {
   const newReq = {
