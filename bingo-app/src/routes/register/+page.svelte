@@ -3,11 +3,11 @@
     import { _Submit } from "./+page";
 
     let show = false;
-    $: status = 0
+    $: respStatus = 0
 
 
     async function submit(event: any) {
-        status = await _Submit(event)
+        respStatus = await _Submit(event)
     }
 
 </script>
@@ -16,8 +16,8 @@
 
 <body>
     <main>
-        {#if status >= 0 && status <= 1}
-            {#if status === 409}
+        {#if respStatus >= 0 && respStatus <= 1}
+            {#if respStatus === 409}
                 <div class="mb-4">
                     <Alert color="yellow">
                         <span class="font-medium">Username or email already in use.</span>
@@ -56,7 +56,7 @@
 
                 <Button class="mb-3" type="submit" color="light">Register</Button>
             </form>
-        {:else if status === 200}
+        {:else if respStatus === 200}
             <Alert color="green">
                 <span class=" font-medium">Successfull registration! Go to <a href="/account">Account</a></span>
             </Alert>

@@ -3,10 +3,13 @@ import Account, { type AccountData } from '../accountStore';
 import CurrentGame from '../currentGame';
 import { get } from 'svelte/store';
 
+const API_URL = import.meta.env.VITE_API_URL;
+const WEB_URL = import.meta.env.VITE_WEB_URL;
+
 export const load = (async ({ fetch }) => {
-  const res = await fetch('https://taskbingo.com/api/user/getUserData', {
+  const res = await fetch(`${API_URL}/api/user/getUserData`, {
     method: 'GET',
-    headers: {'Origin': 'taskbingo.com'},
+    headers: {'Origin': WEB_URL, 'Access-Control-Allow-Origin': '*'},
   })
 
   const userInfo: AccountData = await res.json()
@@ -18,9 +21,9 @@ export const load = (async ({ fetch }) => {
   } 
 
   if (newReq.ids.length !== 0) {
-    const neededPacks = await fetch('https://taskbingo.com/api/task/getTaskPacks', {
+    const neededPacks = await fetch('${API_URL}/api/task/getTaskPacks', {
       method: 'POST',
-      headers: {'Origin': 'taskbingo.com'},
+      headers: {'Origin': WEB_URL, 'Access-Control-Allow-Origin': '*'},
       body: JSON.stringify(newReq)
     })
   
@@ -36,9 +39,9 @@ export async function _LikePack(pack: any, liked: boolean) {
   } 
 
   if (liked) {
-    const res = await fetch('https://taskbingo.com/api/user/dislikePack', {
+    const res = await fetch('${API_URL}/api/user/dislikePack', {
       method: 'POST',
-      headers: {'Origin': 'taskbingo.com'},
+      headers: {'Origin': WEB_URL},
       body: JSON.stringify(newReq)
     })
 
@@ -48,9 +51,9 @@ export async function _LikePack(pack: any, liked: boolean) {
       Account.set(account)
     }
   } else {
-    const res = await fetch('https://taskbingo.com/api/user/likePack', {
+    const res = await fetch('${API_URL}/api/user/likePack', {
       method: 'POST',
-      headers: {'Origin': 'taskbingo.com'},
+      headers: {'Origin': WEB_URL},
       body: JSON.stringify(newReq)
     })
 
@@ -65,9 +68,9 @@ export async function _LikePack(pack: any, liked: boolean) {
 export async function _DeleteGame(gameID: string) {
   const newReq = { gameID: gameID } 
 
-  const res = await fetch('https://taskbingo.com/api/game/delete', {
+  const res = await fetch('${API_URL}/api/game/delete', {
       method: 'DELETE',
-      headers: {'Origin': 'taskbingo.com'},
+      headers: {'Origin': WEB_URL},
       body: JSON.stringify(newReq)
     })
 
@@ -90,9 +93,9 @@ export async function _GetGame(gameID: string) {
       gameID: gameID,
     } 
 
-    const res = await fetch('https://taskbingo.com/api/game/get', {
+    const res = await fetch('${API_URL}/api/game/get', {
         method: 'POST',
-        headers: {'Origin': 'taskbingo.com'},
+        headers: {'Origin': WEB_URL},
         body: JSON.stringify(newReq)
     })
 

@@ -12,6 +12,7 @@ type Middleware interface {
 	AllowUpgradeHeaders(next http.Handler) http.Handler
 	CheckCompression(next http.Handler) http.Handler
 	WriteCompressed(next http.Handler) http.Handler
+	RequestLogger(next http.Handler) http.Handler
 }
 
 // middleware provides services middleware
