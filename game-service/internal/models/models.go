@@ -73,11 +73,6 @@ type (
 		TaskID string `json:"id"`
 	}
 
-	// TaskPacksRequest provides task pack request
-	TaskPacksRequest struct {
-		PackIDs []string `json:"ids"`
-	}
-
 	// FriendsInfo provides data about user's friend
 	FriendsInfo struct {
 		UserID       string    `json:"userID"`

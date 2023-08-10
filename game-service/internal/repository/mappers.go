@@ -82,20 +82,14 @@ func mapFromRatedPacks(packs *api.GetMultiplePacksResponse) *models.Packs {
 	return &res
 }
 
-func mapFromTaskPack(packs *api.TaskPacksResponse) *models.Packs {
-	var res models.Packs
-
-	for _, val := range packs.Packs {
-		res = append(res, models.TaskPack{
-			ID: val.Id,
-			Pack: models.Pack{
-				Title: val.Pack.Title,
-				Tasks: val.Pack.Tasks,
-			},
-		})
+func mapFromTaskPack(pack *api.TaskPackResponse) *models.TaskPack {
+	return &models.TaskPack{
+		ID: pack.Id,
+		Pack: models.Pack{
+			Title: pack.Pack.Title,
+			Tasks: pack.Pack.Tasks,
+		},
 	}
-
-	return &res
 }
 
 func mapFromUserDataResponse(data *api.GetUserDataResponse) *models.UserAccountInfo {
@@ -150,7 +144,7 @@ func mapToFriend(friend *api.FriendInfo) models.FriendsInfo {
 	}
 }
 
-func mapToPack(pack *api.TaskPack) models.TaskPack {
+func mapToPack(pack *api.TaskPackResponse) models.TaskPack {
 	return models.TaskPack{
 		ID: pack.Id,
 		Pack: models.Pack{

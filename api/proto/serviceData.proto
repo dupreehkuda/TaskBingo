@@ -16,7 +16,7 @@ service BingoData {
   rpc UnratePack(LikeOrRatePackRequest) returns (Empty);
 
   rpc SetNewTaskPack(NewTaskPackRequest) returns (Empty);
-  rpc GetTaskPacks(TaskPacksRequest) returns (TaskPacksResponse);
+  rpc GetOneTaskPack(TaskPackRequest) returns (TaskPackResponse);
   rpc GetRatedPacks(Empty) returns (GetMultiplePacksResponse);
 
   rpc GetAllPeople(Empty) returns (People);
@@ -73,7 +73,7 @@ message GetUserDataResponse {
   int32 loses = 5;
   int32 bingo = 6;
   repeated FriendInfo friends = 7;
-  repeated TaskPack likedPacks = 8;
+  repeated TaskPackResponse likedPacks = 8;
   repeated string ratedPacks = 9;
   repeated GameShort games = 10;
 }
@@ -134,12 +134,13 @@ message GetGameRequest {
   string gameID = 1;
 }
 
-message TaskPacksRequest {
-  repeated string ids = 1;
+message TaskPackRequest {
+  string id = 1;
 }
 
-message TaskPacksResponse {
-  repeated TaskPack packs = 1;
+message TaskPackResponse {
+  string id = 1;
+  Pack pack = 2;
 }
 
 message NewTaskPackRequest {
@@ -148,18 +149,13 @@ message NewTaskPackRequest {
   Pack pack = 3;
 }
 
-message TaskPack {
-  string id = 1;
-  Pack pack = 2;
-}
-
 message Pack {
   string title = 1;
   repeated string tasks = 2;
 }
 
 message GetMultiplePacksResponse {
-  repeated TaskPack packs = 1;
+  repeated TaskPackResponse packs = 1;
 }
 
 message Empty {}

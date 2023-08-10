@@ -25,7 +25,7 @@ type Handlers interface {
 	LoginUser(w http.ResponseWriter, r *http.Request)
 	GetUserData(w http.ResponseWriter, r *http.Request)
 
-	GetTaskPacks(w http.ResponseWriter, r *http.Request)
+	GetTaskPack(w http.ResponseWriter, r *http.Request)
 	SetTaskPack(w http.ResponseWriter, r *http.Request)
 	LikeTaskPack(w http.ResponseWriter, r *http.Request)
 	DislikeTaskPack(w http.ResponseWriter, r *http.Request)

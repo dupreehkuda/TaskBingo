@@ -22,7 +22,7 @@ type Service interface {
 
 	GetRatedPacks(ctx context.Context) (*[]models.TaskPack, error)
 	AddTaskPack(ctx context.Context, userID string, pack *models.TaskPack) error
-	GetTaskPacks(ctx context.Context, packIDs ...string) (*[]models.TaskPack, error)
+	GetTaskPack(ctx context.Context, packId string) (*models.TaskPack, error)
 
 	LikePack(ctx context.Context, userID, pack string, inc int) error
 	RatePack(ctx context.Context, userID, pack string, inc int) error
