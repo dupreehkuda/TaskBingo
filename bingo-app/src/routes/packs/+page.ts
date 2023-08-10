@@ -1,26 +1,31 @@
 import Account from '../accountStore';
 import { get } from 'svelte/store';
-import type { PageLoad } from './$types';
+import type { PageServerData } from './$types';
+
+const API_URL = import.meta.env.VITE_API_URL;
+const WEB_URL = import.meta.env.VITE_WEB_URL;
 
 export const load = (async ({ fetch }) => {
-  const userData = await fetch('https://taskbingo.com/api/user/getUserData', {
+  const userData = await fetch(`${API_URL}/api/user/getUserData`, {
     method: 'GET',
-    headers: {'Origin': 'taskbingo.com'},
+    headers: {'Origin': WEB_URL},
+    credentials: 'include',
   })
 
   const userInfo = await userData.json()
 
   Account.set(userInfo)
 
-  const res = await fetch('https://taskbingo.com/api/task/getRatedPacks', {
+  const res = await fetch(`${API_URL}/api/task/getRatedPacks`, {
     method: 'GET',
-    headers: {'Origin': 'taskbingo.com'},
+    headers: {'Origin': WEB_URL},
+    credentials: 'include',
   })
 
   const packs = await res.json()
 
   return { packs }
-}) satisfies PageLoad;
+}) satisfies PageServerData;
 
 export async function _Like(pack: any, liked: boolean) {
   const newReq = {
@@ -28,10 +33,11 @@ export async function _Like(pack: any, liked: boolean) {
   } 
 
   if (liked) {
-    const res = await fetch('https://taskbingo.com/api/user/dislikePack', {
+    const res = await fetch(`${API_URL}/api/user/dislikePack`, {
       method: 'POST',
-      headers: {'Origin': 'taskbingo.com'},
-      body: JSON.stringify(newReq)
+      headers: {'Origin': WEB_URL},
+      body: JSON.stringify(newReq),
+      credentials: 'include',
     })
 
     let account = get(Account)
@@ -39,10 +45,11 @@ export async function _Like(pack: any, liked: boolean) {
     Account.set(account)
 
   } else {
-    const res = await fetch('https://taskbingo.com/api/user/likePack', {
+    const res = await fetch(`${API_URL}/api/user/likePack`, {
       method: 'POST',
-      headers: {'Origin': 'taskbingo.com'},
-      body: JSON.stringify(newReq)
+      headers: {'Origin': WEB_URL},
+      body: JSON.stringify(newReq),
+      credentials: 'include',
     })
 
     if (res.ok) {
@@ -59,10 +66,11 @@ export async function _Rate(pack: any, rated: boolean) {
   } 
 
   if (rated) {
-    const res = await fetch('https://taskbingo.com/api/user/unratePack', {
+    const res = await fetch(`${API_URL}/api/user/unratePack`, {
       method: 'POST',
-      headers: {'Origin': 'taskbingo.com'},
-      body: JSON.stringify(newReq)
+      headers: {'Origin': WEB_URL},
+      body: JSON.stringify(newReq),
+      credentials: 'include',
     })
 
     let account = get(Account)
@@ -70,10 +78,11 @@ export async function _Rate(pack: any, rated: boolean) {
     Account.set(account)
 
   } else {
-    const res = await fetch('https://taskbingo.com/api/user/ratePack', {
+    const res = await fetch(`${API_URL}/api/user/ratePack`, {
       method: 'POST',
-      headers: {'Origin': 'taskbingo.com'},
-      body: JSON.stringify(newReq)
+      headers: {'Origin': WEB_URL},
+      body: JSON.stringify(newReq),
+      credentials: 'include',
     })
 
     let account = get(Account)
