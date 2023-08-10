@@ -16,6 +16,9 @@ export async function _Submit(event: any): Promise<number> {
         password: password
     }
 
+    console.log(data)
+    console.log(JSON.stringify(newResp))
+
     const res = await fetch('https://taskbingo.com/api/user/register', {
         method: 'POST',
         headers: {'Origin': 'taskbingo.com'},
@@ -32,4 +35,4 @@ export async function _Submit(event: any): Promise<number> {
 
 function redirectOnFinish() {
     goto('/account');
-}
+  }
