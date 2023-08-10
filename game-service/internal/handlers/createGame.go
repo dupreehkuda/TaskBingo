@@ -49,7 +49,6 @@ func (h *handlers) CreateGame(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Add("Access-Control-Allow-Credentials", "true")
-	w.Header().Add("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 
 	_, err = w.Write(resultJSON)
@@ -93,7 +92,6 @@ func (h *handlers) AcceptGame(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Add("Access-Control-Allow-Credentials", "true")
-	w.Header().Add("Access-Control-Allow-Origin", "*")
 }
 
 // DeleteGame handles the operation of deleting a game
@@ -129,7 +127,6 @@ func (h *handlers) DeleteGame(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Add("Access-Control-Allow-Credentials", "true")
-	w.Header().Add("Access-Control-Allow-Origin", "*")
 }
 
 // GetGame handles the operation of retrieving a game
@@ -171,7 +168,6 @@ func (h *handlers) GetGame(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Add("Access-Control-Allow-Credentials", "true")
-	w.Header().Add("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 
 	_, err = w.Write(resultJSON)

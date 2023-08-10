@@ -23,7 +23,6 @@ func (h *handlers) GetAllUsers(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Add("Access-Control-Allow-Credentials", "true")
-	w.Header().Add("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 
 	_, err = w.Write(resultJSON)

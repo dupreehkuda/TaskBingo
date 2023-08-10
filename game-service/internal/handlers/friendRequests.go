@@ -49,7 +49,6 @@ func (h *handlers) RequestFriend(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Add("Access-Control-Allow-Credentials", "true")
-	w.Header().Add("Access-Control-Allow-Origin", "*")
 }
 
 // AcceptFriend handles the operation of accepting friendship
@@ -85,7 +84,6 @@ func (h *handlers) AcceptFriend(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Add("Access-Control-Allow-Credentials", "true")
-	w.Header().Add("Access-Control-Allow-Origin", "*")
 }
 
 // DeleteFriend handles the operation of deleting friendship or canceling request
@@ -121,5 +119,4 @@ func (h *handlers) DeleteFriend(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Add("Access-Control-Allow-Credentials", "true")
-	w.Header().Add("Access-Control-Allow-Origin", "*")
 }

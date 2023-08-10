@@ -43,7 +43,6 @@ func (h *handlers) RateTaskPack(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Add("Access-Control-Allow-Credentials", "true")
-	w.Header().Add("Access-Control-Allow-Origin", "*")
 }
 
 // UnrateTaskPack handles pack unstar operations
@@ -79,5 +78,4 @@ func (h *handlers) UnrateTaskPack(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Add("Access-Control-Allow-Credentials", "true")
-	w.Header().Add("Access-Control-Allow-Origin", "https://taskbingo.com")
 }

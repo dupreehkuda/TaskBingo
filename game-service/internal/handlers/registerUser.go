@@ -47,7 +47,6 @@ func (h *handlers) RegisterUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Add("Access-Control-Allow-Credentials", "true")
-	w.Header().Add("Access-Control-Allow-Origin", "*")
 
 	http.SetCookie(w, &http.Cookie{
 		Name:   "auth",
