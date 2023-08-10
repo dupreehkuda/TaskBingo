@@ -11,9 +11,9 @@ func (s service) AddTaskPack(ctx context.Context, userID string, pack *models.Ta
 	return s.repository.AddTaskPack(ctx, userID, pack)
 }
 
-// GetTaskPack gets requested pack
-func (s service) GetTaskPack(ctx context.Context, packId string) (*models.TaskPack, error) {
-	return s.repository.GetTaskPack(ctx, packId)
+// GetTaskPacks gets requested pack
+func (s service) GetTaskPacks(ctx context.Context, packIDs ...string) (*[]models.TaskPack, error) {
+	return s.repository.GetTaskPacks(ctx, packIDs...)
 }
 
 // GetRatedPacks gets some of most rated packs

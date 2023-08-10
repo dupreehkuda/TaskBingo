@@ -16,7 +16,7 @@ type Service interface {
 	LoginUser(ctx context.Context, username, password string) (string, error)
 	RegisterUser(ctx context.Context, credits *models.RegisterCredentials) (string, error)
 
-	GetTaskPack(ctx context.Context, packID string) (*models.TaskPack, error)
+	GetTaskPacks(ctx context.Context, packIDs ...string) (*models.Packs, error)
 	SetTaskPack(ctx context.Context, userID string, pack *models.TaskPack) error
 	LikeTaskPack(ctx context.Context, userID, pack string) error
 	DislikeTaskPack(ctx context.Context, userID, pack string) error
