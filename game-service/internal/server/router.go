@@ -54,9 +54,9 @@ func (a api) router() http.Handler {
 			r.Use(a.middleware.CheckCompression)
 			r.Use(a.middleware.WriteCompressed)
 
-			r.Post("/getTaskPack", a.handlers.GetTaskPack)
+			r.Post("/getTaskPacks", a.handlers.GetTaskPacks)
 			r.Post("/setTaskPack", a.handlers.SetTaskPack)
-			r.Get("/getPacks", a.handlers.GetRatedPacks)
+			r.Get("/getRatedPacks", a.handlers.GetRatedPacks)
 		})
 
 		r.Route("/game", func(r chi.Router) {

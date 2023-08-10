@@ -18,14 +18,14 @@ func (r repository) SetNewTaskPack(ctx context.Context, userID string, pack *mod
 	return nil
 }
 
-func (r repository) GetTaskPack(ctx context.Context, packID string) (*models.TaskPack, error) {
-	pack, err := r.conn.GetOneTaskPack(ctx, &api.TaskPackRequest{Id: packID})
+func (r repository) GetTaskPacks(ctx context.Context, packIDs ...string) (*models.Packs, error) {
+	packs, err := r.conn.GetTaskPacks(ctx, &api.TaskPacksRequest{Ids: packIDs})
 	if err != nil {
 		r.logger.Error("Error when getting user data", zap.Error(err))
 		return nil, err
 	}
 
-	return mapFromTaskPack(pack), nil
+	return mapFromTaskPack(packs), nil
 }
 
 // GetRatedPacks retrieves most rated packs from user service
