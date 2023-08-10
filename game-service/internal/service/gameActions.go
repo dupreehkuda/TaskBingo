@@ -64,7 +64,7 @@ func (s service) UpdateGame(ctx context.Context, room *models.Room, action *mode
 		update.UserID = room.Game.User1Id
 		update.Numbers = room.Game.User1Numbers
 
-		if newBingo > room.Game.User1Bingo {
+		if newBingo != room.Game.User1Bingo {
 			room.Game.User1Bingo, room.Game.User1Numbers = newBingo, action.Numbers
 			update.Numbers = room.Game.User1Numbers
 		}
@@ -76,7 +76,7 @@ func (s service) UpdateGame(ctx context.Context, room *models.Room, action *mode
 		update.Numbers = room.Game.User2Numbers
 		update.Bingo = newBingo
 
-		if newBingo > room.Game.User2Bingo {
+		if newBingo != room.Game.User2Bingo {
 			room.Game.User2Bingo, room.Game.User2Numbers = newBingo, action.Numbers
 			update.Numbers = room.Game.User2Numbers
 		}
