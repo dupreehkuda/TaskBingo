@@ -6,8 +6,8 @@ on:
       - release/**
       - stage/**
     paths:
-      - 'game-service'
-      - 'user-data-service'
+      - '/game-service'
+      - '/user-data-service'
 
 jobs:
   build-and-push:
