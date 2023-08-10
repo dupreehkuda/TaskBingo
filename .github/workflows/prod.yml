@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - master
+    paths:
+      - 'game-service'
+      - 'user-data-service'
 
 jobs:
   build-and-push:

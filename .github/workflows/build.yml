@@ -1,10 +1,13 @@
-name: build & push
+name: build & push backend
 
 on:
   push:
     branches:
       - release/**
       - stage/**
+    paths:
+      - 'game-service'
+      - 'user-data-service'
 
 jobs:
   build-and-push:

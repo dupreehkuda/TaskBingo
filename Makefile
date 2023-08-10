@@ -29,3 +29,12 @@ deploy:
 	docker-compose -f docker-compose.prod.yml pull
 	docker-compose -f docker-compose.prod.yml down
 	docker-compose -f docker-compose.prod.yml up -d
+
+.PHONY: web-deploy
+web-deploy:
+	./move_env.sh
+	docker build -f ./bingo-app/Dockerfile -t bingo-app .
+	docker run --init --rm -p 3000:3000 bingo-app
+
+.PHONY: web-dev
+web-dev:
