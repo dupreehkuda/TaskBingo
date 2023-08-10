@@ -1,8 +1,6 @@
 import Account from '../accountStore';
+import { API_URL, WEB_URL } from '../temporary';
 import type { PageLoad } from './$types';
-
-const API_URL = import.meta.env.VITE_API_URL;
-const WEB_URL = import.meta.env.VITE_WEB_URL;
 export const ssr = false
 
 export const load = (async ({ fetch }) => {

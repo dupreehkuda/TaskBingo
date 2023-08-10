@@ -1,8 +1,6 @@
 import Account from './accountStore';
 import { get } from 'svelte/store';
-
-const API_URL = import.meta.env.VITE_API_URL;
-const WEB_URL = import.meta.env.VITE_WEB_URL;
+import { API_URL, WEB_URL } from './temporary';
 
 export async function RequestFriend(personId: string, username: string) {
   const newResp = {

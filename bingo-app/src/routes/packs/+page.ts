@@ -1,10 +1,8 @@
 import Account from '../accountStore';
 import { get } from 'svelte/store';
 import type { PageLoad } from '../../../.svelte-kit/types/src/routes/game/$types';
+import { API_URL, WEB_URL } from '../temporary';
 export const ssr = false
-
-const API_URL = import.meta.env.VITE_API_URL;
-const WEB_URL = import.meta.env.VITE_WEB_URL;
 
 export const load = (async ({ fetch }) => {
   const userData = await fetch(`${API_URL}/api/user/getUserData`, {

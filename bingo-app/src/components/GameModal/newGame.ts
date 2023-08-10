@@ -1,8 +1,6 @@
 import Account, { type Game } from '../../routes/accountStore';
 import { get } from 'svelte/store';
-
-const API_URL = import.meta.env.VITE_API_URL;
-const WEB_URL = import.meta.env.VITE_WEB_URL;
+import { API_URL, WEB_URL } from '../../routes/temporary';
 
 export async function CreateGame(opponent: string, pack: string) {
     const newReq = {

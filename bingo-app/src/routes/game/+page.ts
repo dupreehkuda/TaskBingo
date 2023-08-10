@@ -3,7 +3,7 @@ import Account from '../accountStore';
 import CurrentGame from '../currentGame';
 import { get } from 'svelte/store';
 
-const WS_URL = import.meta.env.VITE_WS_URL;
+const WS_URL = (import.meta.env.VITE_WS_URL) ? import.meta.env.VITE_WS_URL : 'wss://taskbingo.com';
 
 export interface gameUpdate {
     status: number;

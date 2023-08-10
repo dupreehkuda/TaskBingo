@@ -1,7 +1,6 @@
 import { goto } from "$app/navigation";
+import { API_URL, WEB_URL } from '../temporary';
 
-const API_URL = import.meta.env.VITE_API_URL;
-const WEB_URL = import.meta.env.VITE_WEB_URL;
 export const ssr = false
 
 export async function _Submit(event: any): Promise<number> {

@@ -3,9 +3,8 @@ import Account, { type AccountData } from '../accountStore';
 import CurrentGame from '../currentGame';
 import { get } from 'svelte/store';
 import { browser } from '$app/environment';
+import { API_URL, WEB_URL } from '../temporary';
 
-const API_URL = import.meta.env.VITE_API_URL;
-const WEB_URL = import.meta.env.VITE_WEB_URL;
 export const ssr = false
 
 export const load = (async ({ fetch }) => {

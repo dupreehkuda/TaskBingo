@@ -1,11 +1,10 @@
 <script lang='ts'>
     import { ButtonGroup, InputAddon, Input, Button } from 'flowbite-svelte'
     import { goto } from '$app/navigation';
+    import { API_URL, WEB_URL } from '../temporary';
 
     let show = false;
 
-    const API_URL = import.meta.env.VITE_API_URL;
-    const WEB_URL = import.meta.env.VITE_WEB_URL;
     export const ssr = false
 
     async function submit(e: any) {

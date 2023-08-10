@@ -1,5 +1,4 @@
-const API_URL = import.meta.env.VITE_API_URL;
-const WEB_URL = import.meta.env.VITE_WEB_URL;
+import { API_URL, WEB_URL } from '../temporary';
 export const ssr = false
 
 export async function _Submit(event: any): Promise<number> {
