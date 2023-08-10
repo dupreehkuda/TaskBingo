@@ -15,6 +15,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Set environment variable
+        run: |
+          echo "VITE_API_URL=${{ vars.VITE_API_URL }}" >> .env
+          echo "VITE_WS_URL=${{ vars.VITE_WS_URL }}" >> .env
+          echo "VITE_WEB_URL=${{ vars.VITE_WEB_URL }}" >> .env
+
       - name: Set up Docker Buildx
         id: docker_buildx
         uses: docker/setup-buildx-action@v1
