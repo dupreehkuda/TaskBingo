@@ -34,4 +34,5 @@ deploy:
 web-deploy:
 	./move_env.sh
 	docker pull ghcr.io/dupreehkuda/bingo-web-prod:latest
-	docker run -d --init --rm -p 3000:3000 ghcr.io/dupreehkuda/bingo-web-prod:latest
+	docker kill bingo-web
+	docker run -d --restart=always --init --rm -p 3000:3000 --name bingo-web ghcr.io/dupreehkuda/bingo-web-prod:latest

@@ -12,6 +12,7 @@ export const load = (async ({ fetch }) => {
   if ( browser ) {
     console.log(API_URL)
     console.log(WEB_URL)
+    
     const res = await fetch(`${API_URL}/api/user/getUserData`, {
       method: 'GET',
       headers: {'Origin': WEB_URL},
