@@ -20,7 +20,7 @@ type Repository interface {
 	RateTaskPack(ctx context.Context, userID, pack string) error
 	UnrateTaskPack(ctx context.Context, userID, pack string) error
 	SetNewTaskPack(ctx context.Context, userID string, pack *models.TaskPack) error
-	GetTaskPacks(ctx context.Context, packIDs ...string) (*models.Packs, error)
+	GetTaskPack(ctx context.Context, packID string) (*models.TaskPack, error)
 
 	GetAllUsers(ctx context.Context) (*models.Users, error)
 	AcceptFriend(ctx context.Context, userID, friendID string) error

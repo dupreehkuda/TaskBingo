@@ -22,9 +22,9 @@ func (s service) SetTaskPack(ctx context.Context, userID string, pack *models.Ta
 	return s.repository.SetNewTaskPack(ctx, userID, pack)
 }
 
-// GetTaskPacks gets task packs by provided IDs
-func (s service) GetTaskPacks(ctx context.Context, packIDs ...string) (*models.Packs, error) {
-	return s.repository.GetTaskPacks(ctx, packIDs...)
+// GetTaskPack gets task pack by provided packID
+func (s service) GetTaskPack(ctx context.Context, packID string) (*models.TaskPack, error) {
+	return s.repository.GetTaskPack(ctx, packID)
 }
 
 // GetRatedPacks gets some most rated packs
