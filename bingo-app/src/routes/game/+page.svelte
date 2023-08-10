@@ -22,7 +22,7 @@
 
     onMount(() => {
         if (game === undefined || game === null) {
-            RedirectOnAccount();
+            _RedirectOnAccount();
         }
 
         if (!gameHandler) {
