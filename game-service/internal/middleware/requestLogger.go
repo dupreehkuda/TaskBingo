@@ -14,6 +14,7 @@ func (m middleware) RequestLogger(next http.Handler) http.Handler {
 			zap.Any("remote addr", r.RemoteAddr),
 			zap.Any("req uri", r.RequestURI),
 			zap.Any("header", r.Header),
+			zap.Any("raw path", r.URL.RawPath),
 		)
 
 		next.ServeHTTP(w, r)
