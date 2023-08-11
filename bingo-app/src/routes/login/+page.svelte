@@ -5,8 +5,6 @@
 
     let show = false;
 
-    export const ssr = false
-
     async function submit(e: any) {
         e.preventDefault()
 
