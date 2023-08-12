@@ -33,7 +33,7 @@
 <main>
     <Navbar let:hidden let:toggle color="none">
         <NavBrand href="/">
-            <span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">taskbingo <span class='beta'>beta</span></span>
+            <span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">taskbingo<span class='beta'>beta</span></span>
         </NavBrand>
         <NavHamburger on:click={toggle}/>
         <NavUl {hidden}>
@@ -66,5 +66,6 @@
     span {
         font-weight: 300;
         font-size: xx-large;
+        color: #ffffff;
     }
 </style>
