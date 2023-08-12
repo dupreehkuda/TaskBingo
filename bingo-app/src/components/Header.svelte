@@ -27,13 +27,13 @@
 </script>
 
 <svelte:head>
-    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface:wght@200;300;400;500&family=Josefin+Sans:wght@200;300;400;500&family=Montserrat:wght@200;300;400;500&family=Oswald:wght@200;300;400;500&family=Prompt:wght@200;300;400;500&family=Righteous:wght@200;300;400;500&family=Unbounded:wght@200;300;400;500&family=Yellowtail:wght@200;300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface:wght@200;300;400;500&family=Josefin+Sans:wght@200;300;400;500&family=Montserrat:wght@200;300;400;500&family=Oswald:wght@200;300;400;500&family=Prompt:wght@200;300;400;500&family=Righteous:wght@200;300;400;500&family=Unbounded:wght@200;300;400;500&family=Yellowtail:wght@200;300;400;500&display=swap&family=Meow+Script" rel="stylesheet">
 </svelte:head>
 
 <main>
     <Navbar let:hidden let:toggle color="none">
         <NavBrand href="/">
-            <span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">taskbingo</span>
+            <span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">taskbingo <span class='beta'>beta</span></span>
         </NavBrand>
         <NavHamburger on:click={toggle}/>
         <NavUl {hidden}>
@@ -53,9 +53,15 @@
 
 <style>
     main {
-		color: #f1eebc;
-		background-color: #07417b;
-	}
+        color: #f1eebc;
+        background-color: #07417b;
+	  }
+
+    .beta {
+        color: #7dffc6;
+        /*font-family: Meow Script;*/
+        font-size: x-large;
+    }
 
     span {
         font-weight: 300;

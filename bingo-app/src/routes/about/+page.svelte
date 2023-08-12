@@ -71,7 +71,7 @@
     }
 
     .beta {
-      color: #40ee90;
+      color: #7dffc6;
     }
 
     .text {
@@ -82,6 +82,7 @@
         font-family: Prompt;
         color: #11202d;
     }
+
     h1 {
         font-family: Prompt;
         font-size: x-large;
