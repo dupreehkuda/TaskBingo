@@ -1,10 +1,15 @@
 <script lang="ts">
     import { Label, Input, Button } from "flowbite-svelte";
     import { _Submit } from "./+page";
+    import { goto } from '$app/navigation';
+
+    function redirectOnAccount() {
+        goto('/account');
+    }
 
     async function submit(event: any) {
         const status = await _Submit(event)
-        if (status == 200) { window.location.href = "https://taskbingo.com/account"; }
+        if (status == 200) { redirectOnAccount }
     }
 </script>
 

@@ -79,7 +79,7 @@ export async function _DeleteGame(gameID: string) {
       method: 'DELETE',
       headers: {'Origin': WEB_URL},
       body: JSON.stringify(newReq),
-    credentials: 'include',
+      credentials: 'include',
     })
 
     if (res.ok) {
@@ -105,7 +105,7 @@ export async function _GetGame(gameID: string) {
         method: 'POST',
         headers: {'Origin': WEB_URL},
         body: JSON.stringify(newReq),
-      credentials: 'include',
+        credentials: 'include',
     })
 
     if (res.ok) {

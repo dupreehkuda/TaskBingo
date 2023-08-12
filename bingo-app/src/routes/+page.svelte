@@ -1,4 +1,7 @@
-<title>Task Bingo</title>
+<svelte:head>
+    <title>taskbingo</title>
+</svelte:head>
+
 <div>
     <body> 
         <h1>Welcome to Task Bingo!</h1>

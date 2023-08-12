@@ -124,9 +124,17 @@ function placeNumber(num: number) {
     }
 
     if (account.userID === game.user1ID) {
-        game.user1Numbers[index] = num
+        if (game.user1Numbers[index] === num) {
+            game.user1Numbers[index] = 0
+        } else {
+            game.user1Numbers[index] = num
+        }
     } else {
-        game.user2Numbers[index] = num
+        if (game.user2Numbers[index] === num) {
+            game.user2Numbers[index] = 0
+        } else {
+            game.user2Numbers[index] = num
+        }
     }
 
     CurrentGame.set(game)

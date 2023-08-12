@@ -22,7 +22,7 @@ services:
     build: ./user-data-service
     container_name: user-service
     environment:
-      - DATABASE_URI=${PSQL_DSN_SERVER}
+      - DATABASE_URI=postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}
       - RUN_ADDRESS=${USER_SERVICE_ADDRESS}
       - MIGRATION_FILE_PATH=${MIGRATION_FILE_PATH}
       - CURRENT_DOMAIN=${CURRENT_DOMAIN}
@@ -32,3 +32,19 @@ services:
     restart: always
     volumes:
       - .:/user_service
+    depends_on:
+      user-data:
+        condition: service_started
+
+  user-data:
+    image: postgres:latest
+    container_name: user-data
+    restart: on-failure
+    env_file: .env
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+      - DATABASE_HOST=${DB_HOST}
+    ports:
+      - '5432:5432'

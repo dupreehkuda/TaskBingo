@@ -12,7 +12,10 @@
 
 </script>
 
-<title>Register</title>
+
+<svelte:head>
+    <title>Register</title>
+</svelte:head>
 
 <body>
     <main>

@@ -1,30 +1,5 @@
 <script lang="ts">
     import { Timeline, TimelineItem } from 'flowbite-svelte';
-    
-    const pack = {
-        id: '7138c27c-22ff-11ee-aad0-0242ac1a0003',
-        pack: {
-          title: 'First Ever Pack',
-          tasks: [
-            '30s guitar solo',
-            '30 lines of code',
-            'Learn new dish',
-            'Room clean up',
-            'Topic in music theory',
-            'Read 5 chapters of fiction',
-            '200 push ups',
-            'Make complicated origami',
-            'Make a crossword',
-            'Practice math exam',
-            'Write an essay',
-            '30min sport',
-            'Topic in finances/economy',
-            'Make some art',
-            'Solve linguistic task',
-            'Learn by heart 30 geo objects'
-          ]
-        }
-    }
 </script>
 
 <svelte:head>
@@ -66,15 +41,22 @@
       <TimelineItem date="December 2022">
         <h3>Rebirth</h3>
         <p class="mb-4 text-base font-normal">
-          Wait a minuite, this app can help a lot of people, maybe I can make a pet-project out of it to learn nowadays
-          industry technologies, concepts, standarts...
+          Wait a minute, this app can help a lot of people, maybe I can make a pet-project out of it to learn nowadays
+          industry technologies, concepts, standards...
         </p>
       </TimelineItem>
       <TimelineItem date="January 2023">
         <h3>New Era</h3>
         <p class="mb-4 text-base font-normal">
-          Yep. This is a perfect pet-project to work with SvelteKit, gRPC, Redis, microservices and also help
+          Yep. This is a perfect pet-project to work with SvelteKit, gRPC, microservices and also help
           some people to be more productive and happy.
+        </p>
+      </TimelineItem>
+      <TimelineItem date="August 2023">
+        <h3 class='beta'>Finally in Beta</h3>
+        <p class="mb-4 text-base font-normal">
+          Oh my God that was a long journey, but here it is. Yes with bugs. Yes in fact it's just an MVP.
+          But I'm happy to play it with my friends and receive feedback!
         </p>
       </TimelineItem>
     </Timeline>
@@ -84,8 +66,12 @@
 <style>
     .link {
         font-family: Prompt;
-        color: #618fb7;
+        color: #ff7cb2;
         font-weight: 400;
+    }
+
+    .beta {
+      color: #40ee90;
     }
 
     .text {
