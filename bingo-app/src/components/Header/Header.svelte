@@ -1,7 +1,6 @@
 <script lang="ts">
     import { Navbar, NavBrand, NavLi, NavUl, NavHamburger } from 'flowbite-svelte'
     import { onMount } from "svelte";
-    import { goto } from '$app/navigation';
 
     onMount(() => {
         isAuthorized()

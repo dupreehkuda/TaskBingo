@@ -119,11 +119,12 @@
 <style>
     .disabled-div {
         pointer-events: none;
-    
     }
+
     .top-spacer {
         margin-top: 7%; 
     }
+
     span {
         text-align: left;
         font-weight: 300;

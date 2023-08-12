@@ -21,7 +21,7 @@
     <main>
         <form on:submit={submit}>
             <div class="mb-4">
-                <Label color="disabled" for="input-group-1" class="block mb-2">Task Name</Label>
+                <Label color="disabled" for="input-group-1" class="block mb-2">Pack Name</Label>
                 <Input label="Task Name" id="name" name="name" required/>
             </div>
 

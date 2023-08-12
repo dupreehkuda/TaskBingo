@@ -37,5 +37,5 @@ export async function _Submit(event: any): Promise<number> {
 }
 
 function redirectOnFinish() {
-    goto('/account');
-  }
+    goto('/');
+}

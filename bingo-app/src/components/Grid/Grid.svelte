@@ -55,7 +55,7 @@
     }
 
     .grid-item.empty {
-      background-color: #f1eebc;
+      background-color: #acddff;
     }
 
     .grid-item p {

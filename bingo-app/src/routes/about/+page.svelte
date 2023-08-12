@@ -99,7 +99,7 @@
     h3 {
       font-weight: 400;
       font-size: large;
-      color: #72a8d7;
+      color: #ffffff;
       font-style: italic;
     }
 </style>

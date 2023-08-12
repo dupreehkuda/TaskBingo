@@ -1,5 +1,5 @@
 <script>
-	import Header from '../components/Header.svelte';
+	import Header from '../components/Header/Header.svelte';
 	import '../app.postcss';
 </script>
 
