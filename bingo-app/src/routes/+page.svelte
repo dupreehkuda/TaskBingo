@@ -12,7 +12,6 @@
 </svelte:head>
 
 <body>
-<!--        <h1 class='spacer'>the odds are always in your favour</h1>-->
   <h1>Premise</h1>
   <div class='spacer flex flex-col inline-block container mx-auto px-4'>
     <span>
@@ -30,8 +29,6 @@
     <span>
       add friends on <a class='link' href='/people'>people tab</a> |
       create your own <a class='link' href='/newpack'>packs</a><br>
-      <a class='link' href='/account'>create games</a> with your friends |
-      challenge yourself
     </span>
   {:else }
     <span>
@@ -59,7 +56,7 @@
         font-size: large;
         font-weight: 200;
         color: #ffffff;
-        line-height: 40px;
+        line-height: 30px;
         text-align: center;
     }
 
