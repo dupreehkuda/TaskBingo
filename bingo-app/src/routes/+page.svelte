@@ -27,8 +27,9 @@
 
   {#if show}
     <span>
-      add friends on <a class='link' href='/people'>people tab</a> |
+      add friends on <a class='link' href='/people'>people tab</a><br>
       create your own <a class='link' href='/newpack'>packs</a><br>
+      <a class='link' href='/account'>create games</a> with friends
     </span>
   {:else }
     <span>
@@ -48,6 +49,7 @@
     .beta {
       color: #7dffc6;
       font-weight: 400;
+      margin-top: 0.75em;
     }
 
     span {
