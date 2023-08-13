@@ -30,7 +30,7 @@
 </svelte:head>
 
 <main>
-    <Navbar let:hidden let:toggle color="none">
+    <Navbar let:hidden let:toggle color="none" class='dark'>
         <NavBrand href="/">
             <span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">taskbingo<span class='beta'>beta</span></span>
         </NavBrand>

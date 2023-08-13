@@ -11,52 +11,58 @@
 <div>
     <body>
         <h1>About</h1>
-        <p>Made by @dupreehkuda</p>
-        <p>Repo on <a class="link" href="https://github.com/dupreehkuda/taskbingo">Github</a></p>
+        <p>Made by <a class='link' href='https://t.me/dupreehkuda' target="_blank" rel="noopener noreferrer">@dupreehkuda</a></p>
+        <p>Repo on <a class="link" href="https://github.com/dupreehkuda/taskbingo" target="_blank" rel="noopener noreferrer">github</a></p>
     </body>
 </div>
 <div class="text">
     <Timeline>
       <TimelineItem date="May 2020">
-        <h3>The birth of the idea</h3>
+        <h3>Genesis</h3>
         <p class="text-base font-normal">
-          Covid lockdowns. Decreased productivity. Feeling depressed.
-          The idea of task bingo was born and implemented then. Yeah.
+          In the throes of Covid lockdowns, when days melded into nights, my productivity levels were so low,
+          they would make a sloth look like an overachiever. But then, amidst the haze of takeout containers
+          and unwashed laundry, the concept of Task Bingo took its first breath.
         </p>
       </TimelineItem>
       <TimelineItem date="June 2020">
-        <h3>First steps</h3>
+        <h3>Humble Beginnings</h3>
         <p class="text-base font-normal">
-          Very quirky version was built quick and dirty, 
-          so two people could at least start playing and be more productive.
+          Frankly, our initial version wasn't winning any beauty contests. It was a scrappy mess hastily pieced together.
+          The graphics? Primitive. The UX? Don’t even ask. But it worked, and that's what mattered.
         </p>
       </TimelineItem>
       <TimelineItem date="August 2020">
-        <h3>End of task bingo</h3>
+        <h3>Hiatus</h3>
         <p class="mb-4 text-base font-normal">
-          The quarantine ended. We were focused, productive, sporty and happy. 
-          That was time to move on and files of the original bingo was lost in abbys of other projects, plans and routine.
+          As quarantine faded, our lives began to resume some semblance of normality.
+          Energized, productive, and even a tad athletic, we drifted away from our creation.
+          The Task Bingo files were cast aside, lost in the chaos of other fleeting aspirations.
         </p>
       </TimelineItem>
       <TimelineItem date="December 2022">
-        <h3>Rebirth</h3>
+        <h3>The Awakening</h3>
         <p class="mb-4 text-base font-normal">
-          Wait a minute, this app can help a lot of people, maybe I can make a pet-project out of it to learn nowadays
-          industry technologies, concepts, standards...
+          Fast forward a bit. Motivation? Plummeted. Enthusiasm? Non-existent.
+          In this foggy haze, a ghost of an idea whispered, "Remember Task Bingo?"
+          It wasn't so much an epiphany, more like stubbing your toe and finding a lost toy.
+          However, this time, the bar was set higher.
         </p>
       </TimelineItem>
       <TimelineItem date="January 2023">
-        <h3>New Era</h3>
+        <h3>The Grind</h3>
         <p class="mb-4 text-base font-normal">
-          Yep. This is a perfect pet-project to work with SvelteKit, gRPC, microservices and also help
-          some people to be more productive and happy.
+          Building the new version wasn't a walk in the park. More like trudging through a swamp with
+          a backpack full of bricks. Between the coding hiccups and the occasional bout of good ol'
+          procrastination, the journey had its fair share of bumps. But hey, nothing that a bit of elbow grease couldn't fix.
         </p>
       </TimelineItem>
       <TimelineItem date="August 2023">
-        <h3 class='beta'>Finally in Beta</h3>
+        <h3 class='beta'>Endgame</h3>
         <p class="mb-4 text-base font-normal">
-          Oh my God that was a long journey, but here it is. Yes with bugs. Yes in fact it's just an MVP.
-          But I'm happy to play it with my friends and receive feedback!
+          Here we are, a tad later than anticipated - the beta version of taskbingo is now a reality.
+          Still rough around the edges, maybe has a bug or twenty, but damn, isn't it a sight to behold?
+          Plans for development are brewing, but for the moment, taskbingo is taking a short intermission. Stay tuned.
         </p>
       </TimelineItem>
     </Timeline>
@@ -67,7 +73,7 @@
     .link {
         font-family: Prompt;
         color: #ff7cb2;
-        font-weight: 400;
+        font-weight: 300;
     }
 
     .beta {
