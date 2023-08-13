@@ -13,7 +13,7 @@
 
 <div>
     <body>
-        <h1 class='spacer'>taskbingo transforms routine tasks into a game</h1>
+        <h1 class='spacer'>routine gamification</h1>
         {#if show}
              <span>
                 add friends on <a class='link' href='/people'>people tab</a><br>

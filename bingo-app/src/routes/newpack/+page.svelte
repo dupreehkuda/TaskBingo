@@ -3,13 +3,9 @@
     import { _Submit } from "./+page";
     import { goto } from '$app/navigation';
 
-    function redirectOnAccount() {
-        goto('/account');
-    }
-
     async function submit(event: any) {
         const status = await _Submit(event)
-        if (status == 200) { redirectOnAccount }
+        if (status == 200) { goto('/account') }
     }
 </script>
 
