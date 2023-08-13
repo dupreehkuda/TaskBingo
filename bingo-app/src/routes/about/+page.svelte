@@ -44,7 +44,7 @@
         <h3>The Awakening</h3>
         <p class="mb-4 text-base font-normal">
           Fast forward a bit. Motivation? Plummeted. Enthusiasm? Non-existent.
-          In this foggy haze, a ghost of an idea whispered, "Remember Task Bingo?"
+          As the days blurred, a ghost of an idea whispered, "Remember Task Bingo?"
           It wasn't so much an epiphany, more like stubbing your toe and finding a lost toy.
           However, this time, the bar was set higher.
         </p>
