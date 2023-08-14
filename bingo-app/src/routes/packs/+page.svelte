@@ -23,12 +23,14 @@
             <div class="rectangle flex flex-col justify-between mx-1">
                 <h5 class="mb-2 text-xl cardText">{pack.pack.title}</h5>
                 <ul class="my-1 space-y-1.5">
-                    {#each pack.pack.tasks as task, i}
-                        <li class="flex flex-row leftspace">
-                            <span class="basis-1/5 leading-tight cardText">{i+1}</span>
-                            <span class="basis-4/5 leading-tight cardText">{task}</span>
-                        </li>
-                    {/each}
+                    <div class='grow'>
+                        {#each pack.pack.tasks as task, i}
+                            <li class="flex flex-row leftspace">
+                                <span class="basis-1/5 leading-tight cardText">{i+1}</span>
+                                <span class="basis-4/5 leading-tight cardText">{task}</span>
+                            </li>
+                        {/each}
+                    </div>
 
                     <div class="flex flex-col">
                         <li class="flex space-x-2">
@@ -64,6 +66,10 @@
 </main>
 
 <style>
+    li {
+        margin-bottom: 3px;
+    }
+
     h5 {
         font-weight: 400;
     }
@@ -76,6 +82,7 @@
     .cardText {
         color: #112a41
     }
+
     main {
         min-width: 50%;
         text-align: center;
@@ -93,6 +100,7 @@
         background-color: #e8e8e6;
         /* margin-bottom: 0.5em; */
         padding: 0.6em;
-        min-width: 23em; 
+        min-width: 23em;
+        max-width: 23em;
     }
 </style>

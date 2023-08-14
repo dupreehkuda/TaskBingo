@@ -190,7 +190,8 @@
         background-color: #e8e8e6;
         margin-bottom: 0.5em;
         padding: 0.6em;
-        min-width: 22em; 
+        min-width: 23em;
+        max-width: 23em;
     }
 
     .game {
