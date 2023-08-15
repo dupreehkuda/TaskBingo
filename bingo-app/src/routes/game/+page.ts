@@ -9,7 +9,7 @@ export interface gameUpdate {
     status: number;
     userID: string;
     bingo: number;
-    numbers: number[];
+    userNumbers: number[];
 }
 
 let update: gameUpdate;
@@ -68,7 +68,7 @@ export function _SendUpdate(socket: WebSocket, newNum: number, close: boolean) {
 
     let update = {
         userID: account.userID,
-        finished: close ? true : false,
+        finished: close,
         numbers: (account.userID === game.user1ID) ? game.user1Numbers : game.user2Numbers,
     }
 
@@ -90,17 +90,12 @@ function processUpdate(update: gameUpdate) {
     }
 
     game.status = update.status
-
-    if (update.numbers === null || update.userID === "") {
-        CurrentGame.set(game)
-        return
-    }
     
     if (update.userID === game.user1ID) {
-        game.user1Numbers = update.numbers
+        game.user1Numbers = update.userNumbers
         game.user1Bingo = update.bingo
     } else if (update.userID === game.user2ID) {
-        game.user2Numbers = update.numbers
+        game.user2Numbers = update.userNumbers
         game.user2Bingo = update.bingo
     }
 
