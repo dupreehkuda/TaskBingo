@@ -8,6 +8,7 @@
 	  import Keypad from "../../components/Keypad/Keypad.svelte";
     import { Button } from "flowbite-svelte";
 	  import TasksCard from "../../components/TasksCard/TasksCard.svelte";
+    import { browser } from '$app/environment';
 
     let gameHandler: { socket: WebSocket, closer: () => void };
     let socket: WebSocket
@@ -43,9 +44,11 @@
         closer();
     });
 
-    window.addEventListener('beforeunload', function() {
-        closer();
-    })
+    if ( browser ) {
+        window.addEventListener('beforeunload', function() {
+            closer();
+        })
+    }
 
     let submittedValue: number;
 
