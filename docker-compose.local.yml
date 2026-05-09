@@ -1,0 +1,39 @@
+version: '3.4'
+
+services:
+  server:
+    build: .
+    container_name: taskbingo-server
+    environment:
+      - GAME_SERVICE_ADDRESS=${GAME_SERVICE_ADDRESS}
+      - DATABASE_DSN=postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}?sslmode=disable
+      - secret=${SECRET}
+      - CURRENT_DOMAIN=${CURRENT_DOMAIN}
+      - ALLOWED_WS_ORIGINS=${ALLOWED_WS_ORIGINS}
+      - MIGRATIONS_PATH=/app/migrations/postgresql
+    env_file: .env
+    ports:
+      - '8082:8082'
+    restart: always
+    depends_on:
+      postgres:
+        condition: service_started
+
+  postgres:
+    image: postgres:latest
+    container_name: taskbingo-postgres
+    restart: on-failure
+    env_file: .env
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    ports:
+      - '${HOST_DB_PORT:-5432}:5432'
+    volumes:
+      # Named volume so `make rebuild` (compose down + up) doesn't wipe the DB.
+      # PG18+ wants the mount at /var/lib/postgresql, not /var/lib/postgresql/data.
+      - taskbingo_pgdata:/var/lib/postgresql
+
+volumes:
+  taskbingo_pgdata:

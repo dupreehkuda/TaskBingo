@@ -1,74 +1,105 @@
 <script lang="ts">
-    import { browser } from '$app/environment';
+    import Page from '$lib/ui/Page.svelte';
+    import Cluster from '$lib/ui/Cluster.svelte';
+    import Button from '$lib/ui/Button.svelte';
+    import HeroDemo from '$lib/feature/HeroDemo.svelte';
+    import { Auth } from '$lib/stores/auth';
 
-    let show: boolean
-    if ( browser ) {
-        show = RegExp("auth=[^;]+").exec(document.cookie) !== null
-    }
+    $: authed = $Auth;
 </script>
 
 <svelte:head>
     <title>taskbingo</title>
 </svelte:head>
 
-<body>
-  <h1>Premise</h1>
-  <div class='spacer flex flex-col inline-block container mx-auto px-4'>
-    <span>
-      Two players agree upon a list of 16 tasks, which forms a 'pack'.
-      Once a pack is set, the game commences.
-      Players input the tasks they've completed, and these populate a 4x4 field.
-      But here's the twist: tasks are scattered randomly across the field,
-      introducing a delightful element of luck.
-      The objective? Secure as many '4 in a row' combinations as possible.
-    </span>
-    <span class='beta'>the odds are always in your favour</span>
-  </div>
+<Page width="normal">
+    <div class="hero">
+        <div class="hero__text">
+            <span class="eyebrow">premise</span>
+            <h1 class="display">Sixteen tasks.<br/><em>One quiet board.</em></h1>
+            <p class="lead">
+                Agree on sixteen tasks, mark them off as you go,
+                and collect 4-in-a-row lines.
+            </p>
+            <p class="kicker">the odds are always in your favour.</p>
+            <Cluster gap="m" align="center">
+                {#if authed}
+                    <Button variant="accent" size="lg" href="/account">Continue playing</Button>
+                    <Button variant="quiet" href="/packs">browse packs</Button>
+                {:else}
+                    <Button variant="accent" size="lg" href="/register">Start a game</Button>
+                    <Button variant="quiet" href="/login">log in</Button>
+                {/if}
+            </Cluster>
+        </div>
 
-  {#if show}
-    <span>
-      add friends on <a class='link' href='/people'>people tab</a><br>
-      create your own <a class='link' href='/newpack'>packs</a><br>
-      <a class='link' href='/account'>create games</a> with friends
-    </span>
-  {:else }
-    <span>
-      <a class='link' href='/register'>register</a> or <a class='link' href='/login'>login</a>
-    </span>
-  {/if }
-</body>
+        <div class="hero__demo">
+            <HeroDemo />
+        </div>
+    </div>
+</Page>
 
 <style>
-    h1 {
-        color: #ffffff;
-        font-family: Prompt, serif;
-        font-size: xx-large;
-        font-weight: 300;
+    .hero {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: var(--space-6);
+        align-items: center;
+        min-height: calc(100vh - 12rem);
+    }
+    @media (max-width: 900px) {
+        .hero {
+            grid-template-columns: 1fr;
+            gap: var(--space-7);
+            min-height: 0;
+        }
     }
 
-    .beta {
-      color: #7dffc6;
-      font-weight: 400;
-      margin-top: 0.75em;
+    .hero__text {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-4);
+        max-width: 28rem;
     }
 
-    span {
-        display: inline-block;
-        font-family: Prompt, serif;
-        font-size: large;
-        font-weight: 200;
-        color: #ffffff;
-        line-height: 30px;
-        text-align: center;
+    .hero__demo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
-    .spacer {
-        margin-bottom: 3em;
+    .eyebrow {
+        font-size: 0.65rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--ink-3);
     }
 
-    .link {
-        text-decoration: underline;
-        color: #c8fff7;
+    .display {
+        font-family: var(--font-display);
         font-weight: 400;
+        font-size: clamp(2.2rem, 4vw, 2.8rem);
+        line-height: 1.05;
+        letter-spacing: -0.022em;
+        color: var(--ink);
+    }
+    .display em { font-style: italic; color: var(--ink-3); font-weight: 300; }
+
+    .lead {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: var(--ink-2);
+        max-width: 36ch;
+    }
+
+    .kicker {
+        font-family: var(--font-display);
+        font-style: italic;
+        font-weight: 400;
+        font-size: 1.1rem;
+        line-height: 1.3;
+        letter-spacing: -0.01em;
+        color: var(--accent-from);
+        margin-top: calc(var(--space-1) * -1);
     }
 </style>

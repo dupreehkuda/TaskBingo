@@ -1,0 +1,73 @@
+:root {
+    /* === Atmosphere base === */
+    --atmos-base-from: #f4f6fa;
+    --atmos-base-to: #efeaf1;
+    --atmos-sky: #d3dfe8;
+    --atmos-lilac: #e2d7e3;
+
+    /* === Surfaces === */
+    --paper: #fbfaf6;
+    --paper-soft: #f1f0eb;
+    --hairline: rgba(40, 50, 80, 0.06);
+
+    /* === Accent (use as background-image, not background-color) === */
+    --accent: linear-gradient(135deg, #94aacf 0%, #b8a3cd 100%);
+    --accent-from: #94aacf;
+    --accent-to: #b8a3cd;
+    --accent-shadow: rgba(95, 110, 160, 0.4);
+    --accent-ring: rgba(148, 170, 207, 0.6);
+
+    /* === Win (coral mist for completed bingo lines) ===
+       Alternatives kept for easy swap (3 tokens swap together):
+         sage  : #9ec9b4 → #bbdcc1, shadow/ring rgba(110, 160, 130, X)
+         honey : #e8c89a → #f0d8b0, shadow/ring rgba(160, 130, 70, X)
+         mint  : #9eddb9 → #c1e9c4, shadow/ring rgba(80, 160, 110, X)
+    */
+    --win: linear-gradient(135deg, #eeb8a8 0%, #f3cdbd 100%);
+    --win-from: #eeb8a8;
+    --win-to: #f3cdbd;
+    --win-shadow: rgba(180, 100, 80, 0.4);
+    --win-ring: rgba(180, 100, 80, 0.35);
+    --win-ring-soft: rgba(180, 100, 80, 0.32);
+
+    /* === Text === */
+    --ink: #1c2540;
+    --ink-2: #4d5878;
+    --ink-3: #7e88a8;
+    --ink-4: #97a0bb;
+    --on-accent: #ffffff;
+
+    /* === Typography === */
+    --font-display: 'Fraunces', 'DM Serif Display', Georgia, serif;
+    --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+
+    /* === Spacing scale (4-pt) === */
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.5rem;
+    --space-6: 2rem;
+    --space-7: 3rem;
+    --space-8: 4rem;
+
+    /* === Radii === */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 18px;
+    --radius-pill: 999px;
+
+    /* === Motion === */
+    --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    --dur-fast: 140ms;
+    --dur-base: 220ms;
+    --dur-slow: 380ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :root {
+        --dur-fast: 0ms;
+        --dur-base: 0ms;
+        --dur-slow: 0ms;
+    }
+}

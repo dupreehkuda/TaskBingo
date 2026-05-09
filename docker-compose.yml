@@ -1,50 +1,59 @@
-version: '3.4'
+version: '3.9'
+
+# Production deploy. Auto-detected by Timeweb (and any other "drop-in
+# compose" host) because the file is named docker-compose.yml.
+#
+# - Server (Go monolith) runs migrations on startup and listens on :8082.
+# - Web (SvelteKit + adapter-node) listens on :3000.
+# - Nginx is the only externally-exposed service: routes /api and /ws to
+#   the server, everything else to the web. Same-origin in the browser
+#   → no CORS surprises.
+# - External Postgres (Timeweb DBaaS) — DATABASE_DSN comes from .env.
+#
+# Local development uses docker-compose.local.yml instead, which spins up
+# its own Postgres and binds dev-friendly ports. See `make compose-local`.
 
 services:
-  game-service:
-    build: ./game-service
-    container_name: game-service
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: taskbingo-server
+    restart: always
+    env_file: .env
     environment:
-      - GAME_SERVICE_ADDRESS=${GAME_SERVICE_ADDRESS}
-      - FULL_USER_SERVICE_ADDRESS=${FULL_USER_SERVICE_ADDRESS}
+      - GAME_SERVICE_ADDRESS=:8082
+      - DATABASE_DSN=${DATABASE_DSN}
       - secret=${SECRET}
       - CURRENT_DOMAIN=${CURRENT_DOMAIN}
-    env_file: .env
-    ports:
-      - '8082:8082'
-    restart: always
-    volumes:
-      - .:/game_service
-    depends_on:
-      - user-service
+      - ALLOWED_WS_ORIGINS=${ALLOWED_WS_ORIGINS}
+      - MIGRATIONS_PATH=/app/migrations/postgresql
+    expose:
+      - '8082'
 
-  user-service:
-    build: ./user-data-service
-    container_name: user-service
-    environment:
-      - DATABASE_URI=postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}
-      - RUN_ADDRESS=${USER_SERVICE_ADDRESS}
-      - MIGRATION_FILE_PATH=${MIGRATION_FILE_PATH}
-      - CURRENT_DOMAIN=${CURRENT_DOMAIN}
-    env_file: .env
-    ports:
-      - '8081:8081'
+  web:
+    build:
+      context: ./bingo-app
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: ${VITE_API_URL}
+        VITE_WS_URL: ${VITE_WS_URL}
+        VITE_WEB_URL: ${VITE_WEB_URL}
+    container_name: taskbingo-web
     restart: always
-    volumes:
-      - .:/user_service
     depends_on:
-      user-data:
-        condition: service_started
+      - server
+    expose:
+      - '3000'
 
-  user-data:
-    image: postgres:latest
-    container_name: user-data
-    restart: on-failure
-    env_file: .env
-    environment:
-      - POSTGRES_USER=${DB_USER}
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
-      - POSTGRES_DB=${DB_NAME}
-      - DATABASE_HOST=${DB_HOST}
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: taskbingo-nginx
+    restart: always
+    depends_on:
+      - server
+      - web
     ports:
-      - '5432:5432'
+      - '80:80'
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro

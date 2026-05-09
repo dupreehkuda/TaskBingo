@@ -17,6 +17,14 @@ export const load = (async ({ fetch }) => {
 
     const userInfo: AccountData = await res.json()
 
+    // Backend returns nil slices as JSON null. Normalise once so the rest of
+    // the app can treat these as arrays without sprinkling ?? everywhere.
+    userInfo.friends ??= []
+    userInfo.likedPacks ??= []
+    userInfo.ratedPacks ??= []
+    userInfo.packs ??= []
+    userInfo.games ??= []
+
     const newReq = {
       ids: userInfo.games
         .map(obj => obj.packId)

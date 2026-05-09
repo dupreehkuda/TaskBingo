@@ -12,6 +12,7 @@ export interface Game {
     numbers: number[],
     user1Numbers: number[],
     user2Numbers: number[],
+    kind?: 'duo' | 'solo',
 }
 
 const CurrentGame = writable<Game>();

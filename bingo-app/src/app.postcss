@@ -1,108 +1,54 @@
+@import './lib/tokens.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-span {
-    font-family: Prompt;
-}
-
-h5 {
-    font-family: Prompt;
-    font-weight: 300;
-}
-
-.fonty {
-    font-family: Prompt;
-    font-size: large;
-    font-weight: 400;
-    color: #ffffff;
+/* Fallback canvas; Atmosphere primitive overrides this on body.atmos */
+html, body {
+    background: linear-gradient(140deg, var(--atmos-base-from) 0%, var(--atmos-base-to) 100%);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-    text-align: center;
-    color: #ffffff;
-    background-color: #07417b;
+    min-height: 100vh;
 }
 
-.dark {
-    color: #ffffff;
-    background-color: #07417b; 
+/* Reset Tailwind's default heading styling — we set type via primitives */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    color: var(--ink);
 }
 
-.card {
-    color: #ffffff;
-    background-color: #07417b;
-    /* aspect-ratio: 2.5/3; */
-    display: inline-block;
-    margin-left: 0.35em;
-    margin-right: 0.35em;
+a {
+    color: inherit;
 }
 
-.scrolling-wrapper {
-    display: flex;
-    flex-wrap: nowrap;
+button, input, textarea, select {
+    font-family: inherit;
+    font-size: inherit;
 }
 
-.spacer {
-    margin-bottom: 2em;
+/* Skip link for keyboard users */
+.skip-link {
+    position: absolute;
+    top: -100px;
+    left: var(--space-4);
+    padding: var(--space-2) var(--space-4);
+    background: var(--paper);
+    color: var(--ink);
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--hairline);
+    z-index: 100;
+    transition: top var(--dur-base) var(--ease);
 }
-
-.spacer05 {
-    margin-bottom: 0.5em;
-}
-
-.allWidth {
-    display: block;
-    /* width: 100% */
-}
-
-.rightAlign {
-    margin-left: 2em;
-    display: block;
-    margin-right: 0;
-}
-
-.packs {
-    max-width: min-content;
-}
-
-div {
-    -ms-overflow-style: none;
-    scrollbar-width: none; 
-    overflow-y: scroll; 
-}
-
-div::-webkit-scrollbar {
-    display: none; 
-}
-
-.leftspace {
-    margin-left: 0.35em;
-}
-
-.leftalign {
-    margin-left: 0.35em;
-    text-align: left;
-}
-
-.leftspaceheading {
-    margin-left: 0.7em;
-    text-align: left;
-}
-
-.test {
-  padding-left: 2rem;
-}
-
-.lefty {
-    text-align: left;
-}
-
-.text {
-    text-align: left;
-    padding: 1em;
-    max-width: 740px;
-    margin: 0 auto;
-    font-family: Prompt;
-    color: #ffffff;
+.skip-link:focus {
+    top: var(--space-4);
 }
