@@ -87,6 +87,7 @@ type (
 		ID        string `json:"id"`
 		Pack      Pack   `json:"pack"`
 		IsPrivate bool   `json:"isPrivate"`
+		Creator   string `json:"creator,omitempty"`
 	}
 
 	TaskPackRequest struct {

@@ -11,7 +11,7 @@ import (
 )
 
 type storage interface {
-	TopRated(ctx context.Context) (models.Packs, error)
+	TopRated(ctx context.Context, userID string) (models.Packs, error)
 }
 
 type Usecase struct {
@@ -21,6 +21,6 @@ type Usecase struct {
 
 func New(s storage, l *zap.Logger) *Usecase { return &Usecase{storage: s, logger: l} }
 
-func (u *Usecase) Run(ctx context.Context) (models.Packs, error) {
-	return u.storage.TopRated(ctx)
+func (u *Usecase) Run(ctx context.Context, userID string) (models.Packs, error) {
+	return u.storage.TopRated(ctx, userID)
 }

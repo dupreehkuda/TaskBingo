@@ -1,243 +1,258 @@
 <script lang="ts">
-    import { Button } from "flowbite-svelte";
-    import { _LikePack, _DeleteGame, _GetGame } from "./+page"
+    import { onMount } from 'svelte';
+    import { browser } from '$app/environment';
+    import Account from '../accountStore';
+    import Page from '$lib/ui/Page.svelte';
+    import Stack from '$lib/ui/Stack.svelte';
+    import Cluster from '$lib/ui/Cluster.svelte';
+    import Paper from '$lib/ui/Paper.svelte';
+    import Button from '$lib/ui/Button.svelte';
+    import TabBar from '$lib/ui/TabBar.svelte';
+    import GameModal from '$lib/feature/GameModal.svelte';
+    import StatsBoard from '$lib/feature/StatsBoard.svelte';
+    import ContinuePlaying from '$lib/feature/ContinuePlaying.svelte';
+    import AccountFriendRow from '$lib/feature/AccountFriendRow.svelte';
+    import AccountPackRow from '$lib/feature/AccountPackRow.svelte';
+    import AccountGameRow from '$lib/feature/AccountGameRow.svelte';
+    import { _LikePack, _DeleteGame, _GetGame } from './+page';
     import { DeleteFriend, AcceptFriend } from '../friendRequests';
-    import Account from "../accountStore";
-    import CurrentGame from "../currentGame";
-    import { get } from 'svelte/store';
-    import GameModal from '../../components/GameModal/GameModal.svelte';
+    import { _StartSolo } from '../packs/+page';
 
-	let showModal = false;
-    let selectedPackID: string;
-    let selectedFriendID: string;
+    type TabKey = 'friends' | 'packs' | 'games';
 
-    function getOpponentUsername(userId: string) {
-        for (const friend of $Account.friends) {
-            if (friend.userID === userId) {
-                return friend.username
-            }
-        }
+    let tab: TabKey = 'friends';
+    let showModal = false;
+    let selectedPackID = '';
+    let selectedFriendID = '';
+    let showPastGames = false;
+
+    function readHashTab(): TabKey {
+        if (!browser) return 'friends';
+        const h = window.location.hash.slice(1);
+        if (h === 'packs' || h === 'games' || h === 'friends') return h;
+        return 'friends';
     }
 
+    function writeHashTab(next: TabKey) {
+        if (!browser) return;
+        history.replaceState(null, '', `#${next}`);
+    }
+
+    onMount(() => {
+        tab = readHashTab();
+    });
+
+    $: if (browser) writeHashTab(tab);
+
+    function getOpponentUsername(userId: string) {
+        for (const f of $Account?.friends ?? []) if (f.userID === userId) return f.username;
+        return '—';
+    }
     function getPackTitle(packID: string) {
-        let idx = $Account.likedPacks.findIndex(pack => pack.id === packID)
+        const liked = $Account?.likedPacks.find((p) => p.id === packID);
+        if (liked) return liked.pack.title;
+        const owned = $Account?.packs?.find((p) => p.id === packID);
+        return owned?.pack.title ?? '—';
+    }
 
-        if (idx !== -1) {
-            return $Account.likedPacks[idx].pack.title
-        }
+    $: friendsAll = (() => {
+        const all = $Account?.friends ?? [];
+        const byOrder = (s: number) => (s === 2 ? 0 : s === 1 ? 1 : 2);
+        return [...all].sort((a, b) => byOrder(a.status) - byOrder(b.status));
+    })();
+    $: packsAll = $Account?.likedPacks ?? [];
+    $: activeGames = ($Account?.games ?? []).filter((g) => g.status !== 3);
+    $: pastGames = ($Account?.games ?? []).filter((g) => g.status === 3);
+    $: featuredGame = activeGames[0];
 
-        idx = $Account.packs.findIndex(pack => pack.id === packID)
+    function openWithPack(packID: string) { selectedPackID = packID; selectedFriendID = ''; showModal = true; }
+    function openWithFriend(friendID: string) { selectedFriendID = friendID; selectedPackID = ''; showModal = true; }
 
-        if (idx !== -1) {
-            return $Account.packs[idx].pack.title
-        }
-
-        return ""
+    function gameLabel(game: { kind: string; user1Id: string; user2Id: string; packId: string }): string {
+        const pack = getPackTitle(game.packId);
+        if (game.kind === 'solo') return `Solo · ${pack}`;
+        const me = $Account?.userID;
+        const opp = me === game.user1Id ? game.user2Id : game.user1Id;
+        return `vs. ${getOpponentUsername(opp)} · ${pack}`;
     }
 </script>
 
-<svelte:head>
-    <title>Account</title>
-</svelte:head>
+<svelte:head><title>{$Account?.username ?? 'Account'} · taskbingo</title></svelte:head>
 
-<main>
-    <div class="leftalign spacer">
-        <h1>{$Account.username}
-            <span class="leftalign">{$Account.bingo}</span>
-            {#if $Account.soloBingo}
-                <span class="leftalign solo">solo: {$Account.soloBingo}</span>
+<Page width="normal">
+    <Stack gap="xl">
+        {#if $Account}
+            <header class="greet">
+                <h1 class="name">{$Account.username}</h1>
+                <Cluster gap="m" align="baseline">
+                    <span class="score">{$Account.bingo}</span>
+                    <span class="score-label">total bingos</span>
+                    {#if $Account.soloBingo}
+                        <span class="solo">solo: {$Account.soloBingo}</span>
+                    {/if}
+                </Cluster>
+                <p class="city">{$Account.city}</p>
+            </header>
+
+            <StatsBoard />
+
+            {#if featuredGame}
+                <ContinuePlaying
+                    game={featuredGame}
+                    opponentName={featuredGame.kind === 'solo'
+                        ? ''
+                        : getOpponentUsername($Account.userID === featuredGame.user1Id ? featuredGame.user2Id : featuredGame.user1Id)}
+                    packTitle={getPackTitle(featuredGame.packId)}
+                    on:resume={(e) => _GetGame(e.detail)}
+                />
             {/if}
-        </h1>
-        
-        <h4>{$Account.city}</h4>
-    </div>
 
-    <div class="leftspaceheading"><h3 class="mb-2">Friends</h3></div>
-    <div class="leftspace scrolling-wrapper gap-1.5">
-        {#each $Account.friends as friend}
-            <div class="friend flex flex-col">
-                <div class="basis-5/12 cardText">
-                    <h5>{friend.username}</h5>
-                </div>
-
-                <div class="basis-4/12">
-                    <span class="text-xs cardText">{friend.wins}/{friend.loses}</span>
-                </div>
-                <div class="flex flex-row gap-1.5 basis-3/12">
-                    {#if friend.status === 3}
-                        <Button class="basis-2/3 fonty" size="xs" on:click={() => (showModal = true, selectedFriendID = friend.userID)}>Play</Button>
-                        <Button class="basis-1/3 dark:!text-white-800" size="xs" color="red" on:click={() => DeleteFriend(friend.userID)}>X</Button>
-                    {:else if friend.status === 2}
-                        <Button class="basis-2/3 fonty" size="xs" on:click={() => AcceptFriend(friend.userID)}>Accept</Button>
-                        <Button class="basis-1/3 dark:!text-white-800" size="xs" color="red" on:click={() => DeleteFriend(friend.userID)}>X</Button>
-                    {:else if friend.status === 1}
-                        <Button class="basis-2/3 fonty" disabled size="xs" on:click={() => AcceptFriend(friend.userID)}>Sent</Button>
-                        <Button class="basis-1/3 dark:!text-white-800" size="xs" color="red" on:click={() => DeleteFriend(friend.userID)}>X</Button>
+            <section class="tabs-section">
+                <Cluster gap="m" align="center" justify="between">
+                    <TabBar
+                        bind:value={tab}
+                        items={[
+                            { value: 'friends', label: 'Friends' },
+                            { value: 'packs', label: 'Packs' },
+                            { value: 'games', label: 'Games' },
+                        ]}
+                        ariaLabel="Account sections"
+                    />
+                    {#if tab === 'packs'}
+                        <Button variant="ghost" size="sm" href="/newpack">New pack</Button>
+                    {:else if tab === 'games'}
+                        <Button variant="ghost" size="sm" on:click={() => (showModal = true)}>New game</Button>
                     {/if}
-                </div>
-            </div>
-        {/each}
-    </div>
+                </Cluster>
 
-    <div class="leftspaceheading"><h3 class="mb-2">Packs</h3></div>
-    <div class="flex leftalign spacer05">
-        <Button href="/newpack" class="fonty">Create new pack</Button>
-    </div>
-    <div class="scrolling-wrapper spacer">
-        {#each $Account.likedPacks as pack}
-            <div class="pack flex flex-col justify-between mx-1">
-                <h5 class="mb-2 text-xl cardText">
-                    {pack.pack.title}
-                    {#if pack.isPrivate}
-                        <span class="badge">private</span>
-                    {/if}
-                </h5>
-                <ul class="my-1 space-y-1.5">
-                    {#each pack.pack.tasks as task, i}
-                        <li class="flex flex-row leftspace">
-                            <span class="basis-1/5 leading-tight cardText">{i+1}</span>
-                            <span class="basis-4/5 leading-tight cardText">{task}</span>
-                        </li>
-                    {/each}
-
-                    <div class="flex flex-row gap-2">
-                        <Button class="basis-4/5 fonty" on:click={() => (showModal = true, selectedPackID = pack.id)}>Choose pack</Button>
-                        <Button class="basis-1/5" color="light" on:click={() => _LikePack(pack, $Account?.likedPacks.some(e => e.id === pack.id))}>
-                            {#if $Account?.likedPacks.some(e => e.id === pack.id)}
-                                <img src="heart-solid.svg" alt="solid heart"/>
-                            {:else}
-                                <img src="heart-regular.svg" alt="regular heart"/>
+                <Paper padding="md">
+                    {#if tab === 'friends'}
+                        {#if friendsAll.length === 0}
+                            <p class="empty">No friends yet — <a href="/people">find people →</a></p>
+                        {:else}
+                            {#each friendsAll as friend (friend.userID)}
+                                <AccountFriendRow
+                                    {friend}
+                                    on:play={(e) => openWithFriend(e.detail)}
+                                    on:accept={(e) => AcceptFriend(e.detail)}
+                                    on:remove={(e) => DeleteFriend(e.detail)}
+                                />
+                            {/each}
+                        {/if}
+                    {:else if tab === 'packs'}
+                        {#if packsAll.length === 0}
+                            <p class="empty">No liked packs yet — <a href="/packs">browse public packs →</a></p>
+                        {:else}
+                            {#each packsAll as pack (pack.id)}
+                                <AccountPackRow
+                                    {pack}
+                                    on:play={(e) => openWithPack(e.detail)}
+                                    on:solo={(e) => _StartSolo(e.detail)}
+                                    on:unlike={(e) => _LikePack({ id: e.detail }, true)}
+                                />
+                            {/each}
+                        {/if}
+                    {:else}
+                        {#if activeGames.length === 0 && pastGames.length === 0}
+                            <p class="empty">Your first board awaits.</p>
+                        {:else}
+                            {#each activeGames as game (game.gameId)}
+                                <AccountGameRow
+                                    {game}
+                                    label={gameLabel(game)}
+                                    on:resume={(e) => _GetGame(e.detail)}
+                                    on:delete={(e) => _DeleteGame(e.detail)}
+                                />
+                            {/each}
+                            {#if pastGames.length > 0}
+                                <button class="see-all" on:click={() => (showPastGames = !showPastGames)}>
+                                    {showPastGames ? 'Hide past games' : `Show ${pastGames.length} past games`}
+                                </button>
+                                {#if showPastGames}
+                                    {#each pastGames as game (game.gameId)}
+                                        <AccountGameRow
+                                            {game}
+                                            label={gameLabel(game)}
+                                            past
+                                            on:delete={(e) => _DeleteGame(e.detail)}
+                                        />
+                                    {/each}
+                                {/if}
                             {/if}
-                        </Button>
-                    </div>
-                </ul>
-            </div>
-        {/each}
-    </div>
-    <div class="leftspaceheading"><h3 class="mb-2">Games</h3></div>
-    <div class="flex leftalign spacer05">
-        <Button class="fonty" on:click={() => (showModal = true)}>Create new game</Button>
-    </div>
-    <div class="scrolling-wrapper spacer">
-        {#each $Account.games.filter(game => game.status !== 3) as game}
-            <div class="game flex flex-col justify-between mx-1">
-                {#if game.kind === 'solo'}
-                    <h5 class="mb-2 text-xl cardText">Solo
-                        <span class="badge">solo</span>
-                    </h5>
-                {:else if $Account.userID === game.user1Id}
-                    <h5 class="mb-2 text-xl cardText">{getOpponentUsername(game.user2Id)}</h5>
-                {:else}
-                    <h5 class="mb-2 text-xl cardText">{getOpponentUsername(game.user1Id)}</h5>
-                {/if}
-                <span class="text-xs cardText">{getPackTitle(game.packId)}</span>
-                <ul class="my-1 space-y-1.5">
-                    <div class="flex flex-row gap-2">
-                        <Button href={game.kind === 'solo' ? '/game?solo=true' : '/game'} class="basis-4/5 fonty"
-                        on:mouseenter={() => (_GetGame(game.gameId))}>
-                            {game.kind === 'solo' ? 'Resume' : 'Start'}
-                        </Button>
-                        <Button class="basis-1/5 dark:!text-white-800" size="xs" color="red" on:click={() => _DeleteGame(game.gameId)}>X</Button>
-                    </div>
-                </ul>
-            </div>
-        {/each}
-    </div>
+                        {/if}
+                    {/if}
+                </Paper>
+            </section>
+        {/if}
+    </Stack>
 
-    <GameModal bind:showModal {selectedFriendID} {selectedPackID}/>
-</main>
+    <GameModal bind:showModal {selectedFriendID} {selectedPackID} />
+</Page>
 
 <style>
-    .badge {
-        display: inline-block;
-        font-size: 0.6em;
-        padding: 0.1em 0.5em;
-        border-radius: 999px;
-        background-color: #7dffc6;
-        color: #112a41;
-        margin-left: 0.3em;
-        vertical-align: middle;
+    .greet { display: flex; flex-direction: column; gap: var(--space-2); }
+    .name {
+        font-family: var(--font-display);
+        font-size: 2rem;
+        font-weight: 400;
+        letter-spacing: -0.02em;
     }
-
+    .score {
+        font-family: var(--font-display);
+        font-size: 2rem;
+        font-weight: 400;
+        color: var(--ink);
+        line-height: 1;
+    }
+    .score-label {
+        font-size: 0.65rem;
+        text-transform: uppercase;
+        letter-spacing: 0.16em;
+        color: var(--ink-3);
+    }
     .solo {
-        font-size: 0.7em;
-        color: #7dffc6;
-        margin-left: 0.4em;
+        font-family: var(--font-display);
+        font-style: italic;
+        font-size: 0.95rem;
+        color: var(--ink-3);
+    }
+    .city { color: var(--ink-3); font-size: 0.85rem; }
+
+    .tabs-section {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-3);
     }
 
-    span {
-        text-align: left;
-        font-weight: 300;
-    }
-
-    h1 {
-        text-align: left;
-        font-family: Prompt;
-        font-weight: 400;
-        margin-left: 0.35em;
-        font-size: xx-large;
-    }
-
-    h3 {
-        font-weight: 400;
-        font-size: large;
-        text-align: left;
-        margin-left: 0.35em;
-        font-family: Prompt;
-    }
-
-    h4 {
-        text-align: left;
-        margin-left: 0.70em;
-        font-family: Prompt;
-        font-weight: 200;
-        margin-bottom: 1em;
-    }
-
-    h5 {
-        font-weight: 400;
-        font-size: large;
-    }
-
-    .spacer {
-        margin-bottom: 2em;
-    }
-
-    .cardText {
-        color: #112a41
-    }
-
-    main {
-        min-width: 50%;
+    .empty {
+        font-family: var(--font-display);
+        font-style: italic;
+        color: var(--ink-3);
         text-align: center;
-        max-width:min-content;
-        margin: 0 auto;
+        margin: var(--space-3) 0;
+        font-size: 0.95rem;
+    }
+    .empty a {
+        color: var(--ink);
+        border-bottom: 1px solid rgba(40, 55, 95, 0.25);
+        text-decoration: none;
+    }
+    .empty a:hover {
+        color: var(--accent-from);
+        border-bottom-color: var(--accent-from);
     }
 
-    .pack {
-        border-radius: 10px; 
-        background-color: #e8e8e6;
-        margin-bottom: 0.5em;
-        padding: 0.6em;
-        min-width: 23em;
-        max-width: 23em;
+    .see-all {
+        background: transparent;
+        border: none;
+        color: var(--ink-2);
+        font-size: 0.78rem;
+        cursor: pointer;
+        padding: var(--space-3) 0;
+        align-self: flex-start;
+        text-decoration: underline;
+        text-underline-offset: 4px;
+        font-family: var(--font-body);
     }
-
-    .game {
-        border-radius: 10px; 
-        background-color: #e8e8e6;
-        margin-bottom: 0.5em;
-        padding: 0.6em;
-        min-width: 12em; 
-    }
-
-    .friend {
-        border-radius: 10px; 
-        background-color: #e8e8e6;
-        margin-bottom: 1em;
-        padding: 0.5em;
-        padding-top: 1em;
-        min-height: 10em;
-        min-width: 10em;
-    }
+    .see-all:hover { color: var(--ink); }
 </style>

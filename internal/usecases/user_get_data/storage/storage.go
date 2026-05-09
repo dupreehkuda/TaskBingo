@@ -27,6 +27,13 @@ func (s *Storage) Get(ctx context.Context, userID string) (*models.UserAccountIn
 		likedIDs []string
 	)
 
+	// Initialise the slice fields so nil slices don't marshal as JSON null.
+	// The frontend treats these as arrays unconditionally; getting null back
+	// causes runtime crashes for users with no friends/packs/games yet.
+	out.Friends = []models.FriendsInfo{}
+	out.LikedPacks = []models.TaskPack{}
+	out.Games = []models.GameShort{}
+
 	if err := s.pool.QueryRow(ctx,
 		`SELECT id, username, city, wins, lose, bingo, solo_bingo, likedpacks, ratedpacks
          FROM users WHERE id = $1`, userID,

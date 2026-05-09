@@ -39,6 +39,7 @@ export interface TaskPack {
     id: string;
     pack: Pack;
     isPrivate?: boolean;
+    creator?: string;
 }
 
 export interface Pack {

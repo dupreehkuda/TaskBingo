@@ -60,6 +60,8 @@ import (
 	userLoginStore "github.com/dupreehkuda/TaskBingo/internal/usecases/user_login/storage"
 	userRegister "github.com/dupreehkuda/TaskBingo/internal/usecases/user_register"
 	userRegisterStore "github.com/dupreehkuda/TaskBingo/internal/usecases/user_register/storage"
+	userStats "github.com/dupreehkuda/TaskBingo/internal/usecases/user_stats"
+	userStatsStore "github.com/dupreehkuda/TaskBingo/internal/usecases/user_stats/storage"
 
 	soloFinish "github.com/dupreehkuda/TaskBingo/internal/usecases/solo_game_finish"
 	soloFinishStore "github.com/dupreehkuda/TaskBingo/internal/usecases/solo_game_finish/storage"
@@ -109,6 +111,7 @@ func New(ctx context.Context, cfg *config.Config) (*App, error) {
 	login := userLogin.New(userLoginStore.New(pool), h, ts, log)
 	getData := userGetData.New(userGetDataStore.New(pool, log), log)
 	getAll := userGetAll.New(userGetAllStore.New(pool), log)
+	stats := userStats.New(userStatsStore.New(pool, log), log)
 
 	// pack
 	pSet := packSet.New(packSetStore.New(pool), txm, log)
@@ -151,6 +154,7 @@ func New(ctx context.Context, cfg *config.Config) (*App, error) {
 		UserLogin:    user.NewLoginHandler(login, cfg.CurrentDomain, log),
 		UserGetData:  user.NewGetDataHandler(getData, log),
 		UserGetAll:   user.NewGetAllHandler(getAll, log),
+		UserStats:    user.NewStatsHandler(stats, log),
 
 		PackSet:      pack.NewSetHandler(pSet, log),
 		PackGetMany:  pack.NewGetManyHandler(pGetMany, log),

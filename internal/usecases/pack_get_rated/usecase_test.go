@@ -19,9 +19,9 @@ func TestUsecase_Run(t *testing.T) {
 	t.Parallel()
 	ctrl := gomock.NewController(t)
 	s := mocks.NewMockstorage(ctrl)
-	s.EXPECT().TopRated(gomock.Any()).Return(models.Packs{{ID: "p"}}, nil)
+	s.EXPECT().TopRated(gomock.Any(), "u1").Return(models.Packs{{ID: "p"}}, nil)
 	uc := pack_get_rated.New(s, zap.NewNop())
-	got, err := uc.Run(context.Background())
+	got, err := uc.Run(context.Background(), "u1")
 	require.NoError(t, err)
 	require.Len(t, got, 1)
 }

@@ -21,6 +21,7 @@ type Routes struct {
 	UserLogin    *user.LoginHandler
 	UserGetData  *user.GetDataHandler
 	UserGetAll   *user.GetAllHandler
+	UserStats    *user.StatsHandler
 
 	PackSet      *pack.SetHandler
 	PackGetMany  *pack.GetManyHandler
@@ -65,8 +66,8 @@ func New(routes Routes, mw middleware.Middleware, isLocal bool) http.Handler {
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"},
 		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type"},
 		ExposedHeaders:   []string{"Link"},
-		AllowCredentials: false,
-		MaxAge:           300,
+		AllowCredentials: true,
+		MaxAge:           0,
 	}))
 
 	r.Route("/api", func(r chi.Router) {
@@ -82,6 +83,7 @@ func New(routes Routes, mw middleware.Middleware, isLocal bool) http.Handler {
 			r.Group(func(r chi.Router) {
 				r.Use(mw.CheckToken)
 				r.Method(http.MethodGet, "/getUserData", routes.UserGetData)
+				r.Method(http.MethodGet, "/stats", routes.UserStats)
 				r.Method(http.MethodPost, "/likePack", routes.PackLike)
 				r.Method(http.MethodPost, "/dislikePack", routes.PackDislike)
 				r.Method(http.MethodPost, "/ratePack", routes.PackRate)

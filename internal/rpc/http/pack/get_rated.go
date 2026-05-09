@@ -11,7 +11,7 @@ import (
 )
 
 type RatedGetter interface {
-	Run(ctx context.Context) (models.Packs, error)
+	Run(ctx context.Context, userID string) (models.Packs, error)
 }
 
 type GetRatedHandler struct {
@@ -24,7 +24,8 @@ func NewGetRatedHandler(uc RatedGetter, logger *zap.Logger) *GetRatedHandler {
 }
 
 func (h *GetRatedHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	packs, err := h.uc.Run(r.Context())
+	userID, _ := r.Context().Value(models.CtxUserIDKey).(string)
+	packs, err := h.uc.Run(r.Context(), userID)
 	if err != nil {
 		h.logger.Error("pack_get_rated failed", zap.Error(err))
 		w.WriteHeader(http.StatusInternalServerError)

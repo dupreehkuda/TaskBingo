@@ -1,21 +1,38 @@
-import Account from '../accountStore';
+import Account, { type AccountData } from '../accountStore';
 import CurrentGame from '../currentGame';
 import { get } from 'svelte/store';
 import { goto } from '$app/navigation';
 import type { PageLoad } from '../../../.svelte-kit/types/src/routes/game/$types';
 import { API_URL, WEB_URL } from '../temporary';
+import { markLoggedOut } from '$lib/stores/auth';
 export const ssr = false
 
 export const load = (async ({ fetch }) => {
-  const userData = await fetch(`${API_URL}/api/user/getUserData`, {
-    method: 'GET',
-    headers: {'Origin': WEB_URL},
-    credentials: 'include',
-  })
+  // User data is best-effort: if the session is gone (cookie pointing at a
+  // wiped DB, expired JWT, network blip), we still render the page with the
+  // public packs so the user is not stuck on a 500.
+  try {
+    const userData = await fetch(`${API_URL}/api/user/getUserData`, {
+      method: 'GET',
+      headers: {'Origin': WEB_URL},
+      credentials: 'include',
+    })
 
-  const userInfo = await userData.json()
-
-  Account.set(userInfo)
+    if (userData.ok) {
+      const userInfo: AccountData = await userData.json()
+      // Backend may serialise empty slices as null — normalise once.
+      userInfo.friends ??= []
+      userInfo.likedPacks ??= []
+      userInfo.ratedPacks ??= []
+      userInfo.packs ??= []
+      userInfo.games ??= []
+      Account.set(userInfo)
+    } else if (userData.status === 401) {
+      markLoggedOut()
+    }
+  } catch {
+    // Backend down — keep going with no account info.
+  }
 
   const res = await fetch(`${API_URL}/api/task/getRatedPacks`, {
     method: 'GET',
@@ -23,9 +40,8 @@ export const load = (async ({ fetch }) => {
     credentials: 'include',
   })
 
-  const packs = await res.json()
-
-  return { packs }
+  const packs = res.ok ? await res.json() : []
+  return { packs: packs ?? [] }
 }) satisfies PageLoad;
 
 export async function _Like(pack: any, liked: boolean) {

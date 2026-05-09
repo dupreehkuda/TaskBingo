@@ -42,16 +42,16 @@ func (m *Mockstorage) EXPECT() *MockstorageMockRecorder {
 }
 
 // TopRated mocks base method.
-func (m *Mockstorage) TopRated(ctx context.Context) (models.Packs, error) {
+func (m *Mockstorage) TopRated(ctx context.Context, userID string) (models.Packs, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "TopRated", ctx)
+	ret := m.ctrl.Call(m, "TopRated", ctx, userID)
 	ret0, _ := ret[0].(models.Packs)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // TopRated indicates an expected call of TopRated.
-func (mr *MockstorageMockRecorder) TopRated(ctx any) *gomock.Call {
+func (mr *MockstorageMockRecorder) TopRated(ctx, userID any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "TopRated", reflect.TypeOf((*Mockstorage)(nil).TopRated), ctx)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "TopRated", reflect.TypeOf((*Mockstorage)(nil).TopRated), ctx, userID)
 }
