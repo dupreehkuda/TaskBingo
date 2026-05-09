@@ -1,4 +1,16 @@
 services:
+  nginx:
+    build:
+      context: .
+      dockerfile: nginx.Dockerfile
+    container_name: taskbingo-nginx
+    restart: always
+    depends_on:
+      - server
+      - web
+    ports:
+      - '8080:80'
+
   server:
     build:
       context: .
@@ -29,15 +41,3 @@ services:
       - server
     expose:
       - '3000'
-
-  nginx:
-    build:
-      context: .
-      dockerfile: nginx.Dockerfile
-    container_name: taskbingo-nginx
-    restart: always
-    depends_on:
-      - server
-      - web
-    ports:
-      - '80:80'
