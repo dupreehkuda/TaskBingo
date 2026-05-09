@@ -1,50 +1,32 @@
 version: '3.4'
 
 services:
-  game-service:
-    build: ./game-service
-    container_name: game-service
+  server:
+    build: .
+    container_name: taskbingo-server
     environment:
       - GAME_SERVICE_ADDRESS=${GAME_SERVICE_ADDRESS}
-      - FULL_USER_SERVICE_ADDRESS=${FULL_USER_SERVICE_ADDRESS}
+      - DATABASE_DSN=postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}
       - secret=${SECRET}
       - CURRENT_DOMAIN=${CURRENT_DOMAIN}
+      - ALLOWED_WS_ORIGINS=${ALLOWED_WS_ORIGINS}
+      - MIGRATIONS_PATH=/app/migrations/postgresql
     env_file: .env
     ports:
       - '8082:8082'
     restart: always
-    volumes:
-      - .:/game_service
     depends_on:
-      - user-service
-
-  user-service:
-    build: ./user-data-service
-    container_name: user-service
-    environment:
-      - DATABASE_URI=postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}
-      - RUN_ADDRESS=${USER_SERVICE_ADDRESS}
-      - MIGRATION_FILE_PATH=${MIGRATION_FILE_PATH}
-      - CURRENT_DOMAIN=${CURRENT_DOMAIN}
-    env_file: .env
-    ports:
-      - '8081:8081'
-    restart: always
-    volumes:
-      - .:/user_service
-    depends_on:
-      user-data:
+      postgres:
         condition: service_started
 
-  user-data:
+  postgres:
     image: postgres:latest
-    container_name: user-data
+    container_name: taskbingo-postgres
     restart: on-failure
     env_file: .env
     environment:
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_DB=${DB_NAME}
-      - DATABASE_HOST=${DB_HOST}
     ports:
       - '5432:5432'

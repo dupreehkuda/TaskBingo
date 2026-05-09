@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Label, Input, Button } from "flowbite-svelte";
+    import { Label, Input, Button, Checkbox } from "flowbite-svelte";
     import { _Submit } from "./+page";
     import { goto } from '$app/navigation';
 
@@ -39,6 +39,10 @@
                 <Input size="sm" defaultClass="spacer05" label="Task 14" id="task14" name="task14" required/>
                 <Input size="sm" defaultClass="spacer05" label="Task 15" id="task15" name="task15" required/>
                 <Input size="sm" defaultClass="spacer05" label="Task 16" id="task16" name="task16" required/>
+            </div>
+
+            <div class="mb-3 flex justify-start">
+                <Checkbox id="isPrivate" name="isPrivate">private (only you can see and play)</Checkbox>
             </div>
 
             <Button class="mb-3" type="submit" color="light">Create pack</Button>

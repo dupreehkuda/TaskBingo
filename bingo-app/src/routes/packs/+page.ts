@@ -1,5 +1,7 @@
 import Account from '../accountStore';
+import CurrentGame from '../currentGame';
 import { get } from 'svelte/store';
+import { goto } from '$app/navigation';
 import type { PageLoad } from '../../../.svelte-kit/types/src/routes/game/$types';
 import { API_URL, WEB_URL } from '../temporary';
 export const ssr = false
@@ -58,6 +60,39 @@ export async function _Like(pack: any, liked: boolean) {
     }
   }
 };
+
+export async function _StartSolo(packID: string) {
+  const res = await fetch(`${API_URL}/api/game/solo/start`, {
+    method: 'POST',
+    headers: { 'Origin': WEB_URL, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ packID }),
+    credentials: 'include',
+  })
+
+  if (!res.ok) {
+    return
+  }
+
+  const { gameID, numbers } = await res.json()
+  const account = get(Account)
+
+  CurrentGame.set({
+    gameID,
+    user1ID: account.userID,
+    user2ID: '',
+    packID,
+    status: 1,
+    user1Bingo: 0,
+    user2Bingo: 0,
+    winner: '',
+    numbers,
+    user1Numbers: new Array(16).fill(0),
+    user2Numbers: new Array(16).fill(0),
+    kind: 'solo',
+  })
+
+  goto('/game?solo=true')
+}
 
 export async function _Rate(pack: any, rated: boolean) {
   const newReq = {

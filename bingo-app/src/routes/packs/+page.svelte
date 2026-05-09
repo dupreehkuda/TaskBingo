@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { PageData } from './$types';
     import { Button } from "flowbite-svelte";
-	import { _Like, _Rate } from "./+page";
+	import { _Like, _Rate, _StartSolo } from "./+page";
     import Account from "../accountStore";
     import GameModal from '../../components/GameModal/GameModal.svelte';
 
@@ -35,10 +35,12 @@
                     <div class="flex flex-col">
                         <li class="flex space-x-2">
                             {#if $Account?.likedPacks.some(e => e.id === pack.id)}
-                                <Button class="basis-3/5 fonty" on:click={() => (showModal = true, selectedPackID = pack.id)}>Play</Button>
+                                <Button class="basis-2/5 fonty" on:click={() => (showModal = true, selectedPackID = pack.id)}>Play</Button>
                             {:else}
-                                <Button class="basis-3/5 fonty" disabled>Like to Play</Button>
+                                <Button class="basis-2/5 fonty" disabled>Like to Play</Button>
                             {/if}
+
+                            <Button class="basis-1/5 fonty" color="green" on:click={() => _StartSolo(pack.id)}>Solo</Button>
                             
                             <Button class="basis-1/5" color="light" on:click={() => _Rate(pack, $Account?.ratedPacks.some(e => e === pack.id))}>
                                 {#if $Account?.ratedPacks.some(e => e === pack.id)}

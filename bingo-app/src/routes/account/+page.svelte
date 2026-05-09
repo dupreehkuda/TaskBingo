@@ -44,6 +44,9 @@
     <div class="leftalign spacer">
         <h1>{$Account.username}
             <span class="leftalign">{$Account.bingo}</span>
+            {#if $Account.soloBingo}
+                <span class="leftalign solo">solo: {$Account.soloBingo}</span>
+            {/if}
         </h1>
         
         <h4>{$Account.city}</h4>
@@ -83,7 +86,12 @@
     <div class="scrolling-wrapper spacer">
         {#each $Account.likedPacks as pack}
             <div class="pack flex flex-col justify-between mx-1">
-                <h5 class="mb-2 text-xl cardText">{pack.pack.title}</h5>
+                <h5 class="mb-2 text-xl cardText">
+                    {pack.pack.title}
+                    {#if pack.isPrivate}
+                        <span class="badge">private</span>
+                    {/if}
+                </h5>
                 <ul class="my-1 space-y-1.5">
                     {#each pack.pack.tasks as task, i}
                         <li class="flex flex-row leftspace">
@@ -113,7 +121,11 @@
     <div class="scrolling-wrapper spacer">
         {#each $Account.games.filter(game => game.status !== 3) as game}
             <div class="game flex flex-col justify-between mx-1">
-                {#if $Account.userID === game.user1Id}
+                {#if game.kind === 'solo'}
+                    <h5 class="mb-2 text-xl cardText">Solo
+                        <span class="badge">solo</span>
+                    </h5>
+                {:else if $Account.userID === game.user1Id}
                     <h5 class="mb-2 text-xl cardText">{getOpponentUsername(game.user2Id)}</h5>
                 {:else}
                     <h5 class="mb-2 text-xl cardText">{getOpponentUsername(game.user1Id)}</h5>
@@ -121,9 +133,9 @@
                 <span class="text-xs cardText">{getPackTitle(game.packId)}</span>
                 <ul class="my-1 space-y-1.5">
                     <div class="flex flex-row gap-2">
-                        <Button href="/game" class="basis-4/5 fonty" 
+                        <Button href={game.kind === 'solo' ? '/game?solo=true' : '/game'} class="basis-4/5 fonty"
                         on:mouseenter={() => (_GetGame(game.gameId))}>
-                            Start
+                            {game.kind === 'solo' ? 'Resume' : 'Start'}
                         </Button>
                         <Button class="basis-1/5 dark:!text-white-800" size="xs" color="red" on:click={() => _DeleteGame(game.gameId)}>X</Button>
                     </div>
@@ -136,6 +148,23 @@
 </main>
 
 <style>
+    .badge {
+        display: inline-block;
+        font-size: 0.6em;
+        padding: 0.1em 0.5em;
+        border-radius: 999px;
+        background-color: #7dffc6;
+        color: #112a41;
+        margin-left: 0.3em;
+        vertical-align: middle;
+    }
+
+    .solo {
+        font-size: 0.7em;
+        color: #7dffc6;
+        margin-left: 0.4em;
+    }
+
     span {
         text-align: left;
         font-weight: 300;

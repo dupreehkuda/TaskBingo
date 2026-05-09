@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {_GameHandler, _SendUpdate, _RedirectOnAccount} from "./+page"
+    import {_GameHandler, _SendUpdate, _RedirectOnAccount, _PlaceSoloNumber, _SoloFinish} from "./+page"
     import { onDestroy, onMount } from 'svelte';
     import CurrentGame from '../currentGame';
     import {get, type Unsubscriber} from "svelte/store";
@@ -8,14 +8,16 @@
 	  import Keypad from "../../components/Keypad/Keypad.svelte";
     import { Button } from "flowbite-svelte";
 	  import TasksCard from "../../components/TasksCard/TasksCard.svelte";
+	  import Comments from "../../components/Comments/Comments.svelte";
     import { browser } from '$app/environment';
 
     let gameHandler: { socket: WebSocket, closer: () => void };
     let socket: WebSocket
-    let closer: () => void;
+    let closer: () => void = () => {};
     let account = get(Account)
     let game = get(CurrentGame)
     let finished: boolean = false
+    let isSolo = game?.kind === 'solo'
 
     let unsubscribe: Unsubscriber;
     let usersBingo: number;
@@ -24,29 +26,29 @@
     onMount(() => {
         if (game === undefined || game === null) {
             _RedirectOnAccount();
+            return;
         }
 
-        if (!gameHandler) {
+        if (!isSolo && !gameHandler) {
             gameHandler = _GameHandler();
+            socket = gameHandler.socket;
+            closer = gameHandler.closer;
         }
-
-        socket = gameHandler.socket;
-        closer = gameHandler.closer;
 
         unsubscribe = CurrentGame.subscribe(value => {
             usersBingo = value.user1ID === account.userID ? value.user1Bingo : value.user2Bingo
             opponentsBingo = value.user1ID === account.userID ? value.user2Bingo : value.user1Bingo
         });
     });
-    
+
     onDestroy(() => {
-        unsubscribe();
-        closer();
+        if (unsubscribe) unsubscribe();
+        if (closer) closer();
     });
 
     if ( browser ) {
         window.addEventListener('beforeunload', function() {
-            closer();
+            if (closer) closer();
         })
     }
 
@@ -56,12 +58,24 @@
         submittedValue = event.detail;
 
         if (submittedValue !== 0 && Number(submittedValue) <= 16) {
-            _SendUpdate(socket, submittedValue, false)
+            if (isSolo) {
+                _PlaceSoloNumber(submittedValue)
+            } else {
+                _SendUpdate(socket, submittedValue, false)
+            }
         }
     }
 
-    function handleGameFinish() {
+    async function handleGameFinish() {
         finished = !finished
+
+        if (isSolo) {
+            if (finished) {
+                await _SoloFinish()
+                _RedirectOnAccount()
+            }
+            return
+        }
 
         _SendUpdate(socket, 0, finished)
     }
@@ -72,7 +86,7 @@
 </svelte:head>
 
 <main>
-    {#if $CurrentGame.status < 3}
+    {#if !isSolo && $CurrentGame.status < 3}
         <h3 class="fonty">Waiting for the opponent</h3>
     {:else}
         <body class="grid grid-cols-3 gap-4">
@@ -90,6 +104,7 @@
                         </div>
                         <div class="lefty basis-1/12"></div>
                     </div>
+                    {#if !isSolo}
                     <div class="rectangle flex flex-row">
                         <div class="lefty basis-1/12"></div>
                         <div class="lefty basis-5/12">
@@ -100,6 +115,7 @@
                         </div>
                         <div class="lefty basis-1/12"></div>
                     </div>
+                    {/if}
                     <div>
                         <Button class="w-full" on:click={() => handleGameFinish()}>
                             {#if !finished}
@@ -114,9 +130,13 @@
                 <div class:disabled-div="{finished}"><Keypad on:submit={handleNewNumberSubmit}/></div>
 
                 <TasksCard packID={game.packID}/>
+
+                {#if game?.gameID}
+                    <Comments gameID={game.gameID}/>
+                {/if}
             </div>
         </body>
-    {/if}    
+    {/if}
 </main>
 
 <style>

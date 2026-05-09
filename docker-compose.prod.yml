@@ -1,32 +1,17 @@
 version: '3.4'
 
 services:
-  game-service:
-    image: ghcr.io/dupreehkuda/game-service-prod:latest
+  server:
+    image: ghcr.io/dupreehkuda/taskbingo-server-prod:latest
+    container_name: taskbingo-server
     environment:
       - GAME_SERVICE_ADDRESS=${GAME_SERVICE_ADDRESS}
-      - FULL_USER_SERVICE_ADDRESS=${FULL_USER_SERVICE_ADDRESS}
+      - DATABASE_DSN=${PSQL_DSN_SERVER}
       - secret=${SECRET}
       - CURRENT_DOMAIN=${CURRENT_DOMAIN}
+      - ALLOWED_WS_ORIGINS=${ALLOWED_WS_ORIGINS}
+      - MIGRATIONS_PATH=/app/migrations/postgresql
     env_file: .env
     ports:
       - '8082:8082'
     restart: always
-    volumes:
-      - .:/game_service
-    depends_on:
-      - user-service
-
-  user-service:
-    image: ghcr.io/dupreehkuda/user-data-service-prod:latest
-    environment:
-      - DATABASE_URI=${PSQL_DSN_SERVER}
-      - RUN_ADDRESS=${USER_SERVICE_ADDRESS}
-      - MIGRATION_FILE_PATH=${MIGRATION_FILE_PATH}
-      - CURRENT_DOMAIN=${CURRENT_DOMAIN}
-    env_file: .env
-    ports:
-      - '8081:8081'
-    restart: always
-    volumes:
-      - .:/user_service

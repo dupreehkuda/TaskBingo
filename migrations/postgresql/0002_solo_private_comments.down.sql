@@ -1,0 +1,6 @@
+DROP INDEX IF EXISTS game_comments_game_user_idx;
+DROP TABLE IF EXISTS game_comments;
+ALTER TABLE users DROP COLUMN IF EXISTS solo_bingo;
+ALTER TABLE games DROP COLUMN IF EXISTS kind;
+ALTER TABLE games ALTER COLUMN user2_id SET NOT NULL;
+ALTER TABLE packs DROP COLUMN IF EXISTS is_private;

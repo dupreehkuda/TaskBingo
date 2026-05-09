@@ -2,6 +2,7 @@ import { goto } from '$app/navigation';
 import Account from '../accountStore';
 import CurrentGame from '../currentGame';
 import { get } from 'svelte/store';
+import { API_URL, WEB_URL } from '../temporary';
 
 const WS_URL = (import.meta.env.VITE_WS_URL) ? import.meta.env.VITE_WS_URL : 'wss://taskbingo.com';
 
@@ -106,6 +107,42 @@ function processUpdate(update: gameUpdate) {
 
 export function _RedirectOnAccount() {
   goto('/account');
+}
+
+// _PlaceSoloNumber toggles the cell locally and fires a progress request (best
+// effort — failures are logged but don't block the UI).
+export async function _PlaceSoloNumber(num: number) {
+    const game = get(CurrentGame)
+    placeNumber(num)
+    const updated = get(CurrentGame)
+
+    fetch(`${API_URL}/api/game/solo/progress`, {
+        method: 'PUT',
+        headers: { 'Origin': WEB_URL, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ gameID: game.gameID, userNumbers: updated.user1Numbers }),
+        credentials: 'include',
+    }).catch(err => console.error('solo progress failed', err))
+}
+
+// _SoloFinish submits the final state, the server recounts bingo, and we
+// redirect to /account on success.
+export async function _SoloFinish() {
+    const game = get(CurrentGame)
+
+    const res = await fetch(`${API_URL}/api/game/solo/finish`, {
+        method: 'POST',
+        headers: { 'Origin': WEB_URL, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ gameID: game.gameID, userNumbers: game.user1Numbers }),
+        credentials: 'include',
+    })
+
+    if (res.ok) {
+        const { bingo } = await res.json()
+        const g = get(CurrentGame)
+        g.user1Bingo = bingo
+        g.status = 6
+        CurrentGame.set(g)
+    }
 }
 
 function placeNumber(num: number) {

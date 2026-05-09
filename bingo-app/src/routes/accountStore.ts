@@ -7,6 +7,7 @@ export interface AccountData {
     wins:       number;
     lose:       number;
     bingo:      number;
+    soloBingo:  number;
     friends:    Friend[];
     likedPacks: TaskPack[];
     ratedPacks: string[];
@@ -23,6 +24,7 @@ export interface Game {
     user1Bingo: number;
     user2Bingo: number;
     winner: string;
+    kind: 'duo' | 'solo';
 }
 
 export interface Friend {
@@ -36,6 +38,7 @@ export interface Friend {
 export interface TaskPack {
     id: string;
     pack: Pack;
+    isPrivate?: boolean;
 }
 
 export interface Pack {
